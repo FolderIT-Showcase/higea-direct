@@ -1,0 +1,48 @@
+/* You can add global styles to this file, and also import other style files */
+
+.brand-no-auth {
+  padding: 2em;
+}
+
+// Colors
+$white: #ffffff;
+$gray-1: #f5f7fa;
+$gray-2: #e6e9ec;
+$gray-3: #cdd1d9;
+$gray-4: #aab2bd;
+$gray-5: #666d78;
+$gray-6: #444a54;
+$black: #353b44;
+$green: #67c18c;
+$red: #ec5665;
+$yellow: #f0ad4e;
+$light-blue: #ecf6fc;
+$medium-light-blue: #5bc0de;
+
+html,
+body {
+  //font-family: 'Open Sans', sans-serif;
+  //font-family: 'Lato', sans-serif;
+  //font-family: 'Raleway', sans-serif;
+  //font-family: 'PT Sans', sans-serif;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  height: 100%;
+}
+
+// diseño para moviles
+
+.app-form {
+  padding: 1em;
+  margin: 0 auto;
+}
+
+// diseño para escritorio
+
+@media only screen and (min-width: 768px) {
+  .app-form {
+    padding: 2em;
+    margin: 0 auto;
+    max-width: 35em;
+  }
+}
