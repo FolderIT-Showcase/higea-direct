@@ -18,6 +18,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
 
+    @Autowired
+    OAuth2ClientContext oauth2ClientContext;
+
     public DataSource getDataSource() {
         return dataSource;
     }
