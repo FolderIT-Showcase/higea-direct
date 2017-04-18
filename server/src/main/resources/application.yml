@@ -30,6 +30,7 @@ facebook:
     clientAuthenticationScheme: form
   resource:
     userInfoUri: https://graph.facebook.com/me
+
 google:
   client:
     clientId: bd1c0a783ccdd1c9b9e4
@@ -39,3 +40,11 @@ google:
     clientAuthenticationScheme: form
   resource:
     userInfoUri: https://api.github.com/user
+
+security:
+  oauth2:
+    client:
+      client-id: acme
+      client-secret: acmesecret
+      scope: read,write
+      auto-approve-scopes: '.*'

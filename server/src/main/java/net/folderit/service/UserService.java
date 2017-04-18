@@ -9,7 +9,6 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
-@Transactional
 public class UserService {
 
     private final UserRepository userRepository;
@@ -23,14 +22,17 @@ public class UserService {
         return userRepository.findByLastName(lastName);
     }
 
+    @Transactional
     public User save(User customer) {
         return userRepository.save(customer);
     }
 
+    @Transactional
     public User update(User customer) {
         return userRepository.save(customer);
     }
 
+    @Transactional
     public void delete(User customer) {
         userRepository.delete(customer);
     }

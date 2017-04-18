@@ -1,16 +1,13 @@
 package net.folderit.web;
 
 import net.folderit.domain.User;
-import net.folderit.security.AccountCredentials;
 import net.folderit.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -39,7 +36,7 @@ public class UserController {
         return ResponseEntity.ok(mUser.getId());
     }
 
-    @RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+/*    @RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     public ResponseEntity<?> create(@RequestBody User customer) {
         return new ResponseEntity<>(userService.save(customer), HttpStatus.CREATED);
     }
@@ -49,4 +46,12 @@ public class UserController {
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
+
+    @PostMapping("/user")
+    public Map<String, String> user(@RequestBody Principal principal) {
+        Map<String, String> map = new LinkedHashMap<>();
+        map.put("name", principal.getName());
+        return map;
+    }
+*/
 }

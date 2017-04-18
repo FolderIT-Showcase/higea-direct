@@ -14,11 +14,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @Configuration
 @EnableJpaRepositories
 @EnableCaching
-public class Application {
-
+public class TurneroWebApplication {
     public static void main(String[] args) {
         System.setProperty("spring.devtools.restart.enabled", "true");
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(TurneroWebApplication.class, args);
     }
-
 }
