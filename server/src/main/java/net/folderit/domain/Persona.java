@@ -38,6 +38,8 @@ public class Persona implements Serializable {
 
 	private String nombre;
 
+	private User userAsociado;
+
 	private Documento documento;
 
 	private EstadoCivil estadoCivil;
