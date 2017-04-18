@@ -4,7 +4,7 @@ import {ApiService} from '../core/service/api.service';
 import {User} from '../core/domain/user';
 
 @Injectable()
-export class AuthService {
+export class AppAuthService {
   constructor(private api: ApiService) {
   }
 

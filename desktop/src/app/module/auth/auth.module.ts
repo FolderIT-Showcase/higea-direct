@@ -7,6 +7,8 @@ import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {routing} from './auth.routing';
 import {RouterModule} from '@angular/router';
+import {FacebookService} from 'ng2-facebook-sdk';
+import {GoogleSignInComponent} from 'angular-google-signin';
 
 @NgModule({
   imports: [
@@ -19,7 +21,11 @@ import {RouterModule} from '@angular/router';
   ],
   declarations: [
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    GoogleSignInComponent
+  ],
+  providers: [
+    FacebookService
   ]
 })
 export class AuthModule {

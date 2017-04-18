@@ -1,3 +1,14 @@
+<button (click)="loginWithFacebook()">facebook</button>
+<google-signin
+  [clientId]="myClientId"
+  [width]="myWidth"
+  [theme]="myTheme"
+  [scope]="myScope"
+  [longTitle]="'Ingresa con Google'"
+  (googleSignInSuccess)="onGoogleSignInSuccess($event)">
+</google-signin>
+<button (click)="googleLogOut()">logout google</button>
+
 
 <div class="col-md-6 col-md-offset-3">
   <h2>Login</h2>
@@ -19,3 +30,4 @@
     </div>
   </form>
 </div>
+
