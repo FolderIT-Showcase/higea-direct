@@ -34,7 +34,7 @@ public class User implements Serializable {
     private String lastName;
 
     //@OneToMany(orphanRemoval=true, cascade={CascadeType.ALL})
-    @ManyToMany
+    @ManyToMany(cascade={CascadeType.ALL})
     @JoinTable
             (
                     name = "users_roles",

@@ -1,6 +1,7 @@
 package net.folderit.web;
 
 import net.folderit.domain.Persona;
+import net.folderit.dto.ResultAfipDto;
 import net.folderit.service.PersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
@@ -8,10 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 /**
  * Created by gheng on 18/4/2017.
@@ -34,16 +32,32 @@ public class PersonaController {
         return new ResponseEntity<>((Collection<Persona>) personaService.findAll(), HttpStatus.OK);
     }
 
+    @GetMapping("/persona/{id}")
+    public ResponseEntity<Collection<Persona>> getById(@PathVariable Long id) {
+        return new ResponseEntity<>((Collection<Persona>) personaService.findById(id), HttpStatus.OK);
+    }
+
     @PostMapping("/persona")
     public ResponseEntity<Long> createUser(@RequestBody Persona persona) {
         Persona mPersona = personaService.save(persona);
         return ResponseEntity.ok(mPersona.getId());
     }
 
-    @RequestMapping({"/persona", "/me"})
-    public Map<String, String> persona(Principal principal) {
-        Map<String, String> map = new LinkedHashMap<>();
-        map.put("name", principal.getName());
-        return map;
+    @GetMapping("/persona/afip")
+    public ResponseEntity validPersona(@RequestParam(name = "documento") String documento,
+                                       @RequestParam(name = "nombre") String nombre,
+                                       @RequestParam(name = "apellido") String apellido,
+                                       @RequestParam(name = "sexo") String sexo) {
+
+
+        ResultAfipDto dto = null;
+        try {
+            dto = personaService.isDocumentValid(documento, nombre, apellido, sexo);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Sexo o DNI no valido. La longitud no corresponde");
+        }
+        if (dto.getData() != null) return ResponseEntity.ok(dto);
+        else return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+
     }
 }

@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import net.folderit.domain.enums.EstadoCivil;
+import net.folderit.domain.enums.Genero;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -34,7 +35,7 @@ public class Persona implements Serializable {
 
     private Date fechaNacimiento;
 
-    private String genero;
+	private Genero genero;
 
     private String nombre;
 
