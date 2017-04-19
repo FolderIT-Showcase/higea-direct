@@ -44,11 +44,19 @@ div.well {
 }
 
 .absolute-center.is-responsive {
-  width: 50%;
-  height: 50%;
+  width: 100%;
+  height: 75%;
   min-width: 200px;
   max-width: 400px;
-  padding: 40px;
+  padding: 1em;
+}
+
+.absolute-center.align-top {
+  width: 100%;
+  height: 100%;
+  min-width: 200px;
+  max-width: 400px;
+  padding: 1em;
 }
 
 #logo-container {
@@ -58,3 +66,8 @@ div.well {
   height: 30px;
 }
 
+.caret {
+  position: absolute;
+  left: 95%;
+  top: 45%;
+}

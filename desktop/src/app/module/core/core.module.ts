@@ -6,6 +6,7 @@ import {HttpModule} from '@angular/http';
 import {BrowserModule} from '@angular/platform-browser';
 import {RouterModule} from '@angular/router';
 import {HomeComponent} from './component/home/home.component';
+import {Store} from './service/store';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import {HomeComponent} from './component/home/home.component';
   declarations: [
     AlertComponent,
     HomeComponent
-  ]
+  ],
+  providers: [ Store ]
 })
 export class CoreModule {
 }
