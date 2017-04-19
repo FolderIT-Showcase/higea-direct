@@ -5,7 +5,7 @@ export class Config {
     },
     'facebook': {
       'clientId': '285797451868355',
-      'apiVersion': '2.8' // like v2.4
+      'apiVersion': '2.8'
     }
   };
 }

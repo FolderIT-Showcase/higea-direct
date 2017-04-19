@@ -1,11 +1,10 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {AlertService} from '../../core/service/alert.service';
-import {AppAuthService} from '../auth.service';
 import {FacebookService, InitParams, LoginResponse} from 'ng2-facebook-sdk';
-import {GoogleSignInSuccess} from 'angular-google-signin';
-import GoogleAuth = gapi.auth2.GoogleAuth;
-import GoogleUser = gapi.auth2.GoogleUser;
+import {AlertService} from '../../../core/service/alert.service';
+import {AppAuthService} from '../../auth.service';
+
+declare const gapi: any;
 
 @Component({
   selector: 'app-login',
@@ -19,14 +18,24 @@ export class LoginComponent implements OnInit, OnDestroy {
   sub1: any;
   user;
   googleUser: gapi.auth2.GoogleUser = null;
+  public auth2: any;
 
-  myClientId = '170472707371-iqab7gbqta7jq9kgt1fbs8ajrh7llcfc.apps.googleusercontent.com';
+  clientId = '170472707371-iqab7gbqta7jq9kgt1fbs8ajrh7llcfc.apps.googleusercontent.com';
+
+  private scope = [
+    'profile',
+    'email',
+    'https://www.googleapis.com/auth/plus.me',
+    'https://www.googleapis.com/auth/contacts.readonly',
+    'https://www.googleapis.com/auth/admin.directory.user.readonly'
+  ].join(' ');
 
   constructor(private router: Router,
               private alertService: AlertService,
               private auth: AppAuthService,
               // oauth auth service
-              private fb: FacebookService) {
+              private fb: FacebookService,
+              private element: ElementRef) {
 
     const initParams: InitParams = {
       appId: '285797451868355',
@@ -44,7 +53,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.sub1.unsubscribe();
+    if (this.sub1) {
+      this.sub1.unsubscribe();
+    }
   }
 
   onSubmit() {
@@ -72,19 +83,6 @@ export class LoginComponent implements OnInit, OnDestroy {
       .then((response: LoginResponse) => console.log(response))
       .catch((error: any) => console.error(error));
 
-  }
-
-  onGoogleSignInSuccess(event: GoogleSignInSuccess) {
-    this.googleUser = event.googleUser;
-    const googleUser: gapi.auth2.GoogleUser = event.googleUser;
-    const id: string = googleUser.getId();
-    const profile: gapi.auth2.BasicProfile = googleUser.getBasicProfile();
-    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-    console.log('Name: ' + profile.getName());
-  }
-
-  googleLogOut() {
-    this.googleUser.disconnect();
   }
 
 }
