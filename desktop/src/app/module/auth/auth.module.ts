@@ -9,8 +9,8 @@ import {routing} from './auth.routing';
 import {RouterModule} from '@angular/router';
 import {FacebookService} from 'ng2-facebook-sdk';
 import {GoogleSignInComponent} from 'angular-google-signin';
-import { GoogleSigninComponent } from './component/google-signin/google-signin.component';
-import { FacebookSigninComponent } from './component/facebook-signin/facebook-signin.component';
+import {GoogleSigninComponent} from './component/google-signin/google-signin.component';
+import {FacebookSigninComponent} from './component/facebook-signin/facebook-signin.component';
 
 @NgModule({
   imports: [

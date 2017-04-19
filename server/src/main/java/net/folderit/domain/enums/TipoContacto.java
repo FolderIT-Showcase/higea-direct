@@ -6,7 +6,7 @@ package net.folderit.domain.enums;
  * @created 18-abr.-2017 11:26:35 a. m.
  */
 public enum TipoContacto {
-	telefono,
-	mail,
-	celular
+    telefono,
+    mail,
+    celular
 }

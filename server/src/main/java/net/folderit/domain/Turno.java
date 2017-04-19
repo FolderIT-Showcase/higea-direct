@@ -24,21 +24,21 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 @JsonInclude(NON_NULL)
 public class Turno implements Serializable {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-	private Date dia;
+    private Date dia;
 
-	private Date fecha;
+    private Date fecha;
 
-	private Date hora;
+    private Date hora;
 
-	private String observaciones;
+    private String observaciones;
 
-	private CentroSalud centroSalud;
+    private CentroSalud centroSalud;
 
-	public void finalize() throws Throwable {
+    public void finalize() throws Throwable {
 
-	}
+    }
 }//end Turno

@@ -1,10 +1,7 @@
 package net.folderit.web;
 
 import net.folderit.domain.Persona;
-import net.folderit.domain.User;
-import net.folderit.repository.PersonaRepository;
 import net.folderit.service.PersonaService;
-import net.folderit.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
@@ -43,7 +40,7 @@ public class PersonaController {
         return ResponseEntity.ok(mPersona.getId());
     }
 
-    @RequestMapping({ "/persona", "/me" })
+    @RequestMapping({"/persona", "/me"})
     public Map<String, String> persona(Principal principal) {
         Map<String, String> map = new LinkedHashMap<>();
         map.put("name", principal.getName());

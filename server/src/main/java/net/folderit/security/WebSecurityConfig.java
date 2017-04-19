@@ -60,7 +60,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                                 "and A.id = UR.roles_id " +
                                 "and U.username = ?")
                 .rolePrefix("ROLE_");
-
+// TODO: solo para testing o backup, cambiar o mejorar
         auth.inMemoryAuthentication().withUser("admin").password("admin");
     }
 

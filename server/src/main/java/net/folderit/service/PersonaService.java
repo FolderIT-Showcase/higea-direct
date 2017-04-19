@@ -1,9 +1,7 @@
 package net.folderit.service;
 
 import net.folderit.domain.Persona;
-import net.folderit.domain.User;
 import net.folderit.repository.PersonaRepository;
-import net.folderit.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

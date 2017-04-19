@@ -24,15 +24,13 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 @JsonInclude(NON_NULL)
 public class Contacto implements Serializable {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+    public TipoContacto tipoContacto;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    private String dato;
 
-	private String dato;
+    public void finalize() throws Throwable {
 
-	public TipoContacto tipoContacto;
-
-	public void finalize() throws Throwable {
-
-	}
+    }
 }//end Contacto

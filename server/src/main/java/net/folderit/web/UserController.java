@@ -38,7 +38,7 @@ public class UserController {
         return ResponseEntity.ok(mUser.getId());
     }
 
-    @RequestMapping({ "/user", "/me" })
+    @RequestMapping({"/user", "/me"})
     public Map<String, String> user(Principal principal) {
         Map<String, String> map = new LinkedHashMap<>();
         map.put("name", principal.getName());
