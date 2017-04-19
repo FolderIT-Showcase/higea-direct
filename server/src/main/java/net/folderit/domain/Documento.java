@@ -22,18 +22,15 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(NON_NULL)
-public class Documento implements Serializable{
+public class Documento implements Serializable {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+    public TipoDocumento tipoDocumento;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    private Integer numero;
 
-	private Integer numero;
+    public void finalize() throws Throwable {
 
-	public TipoDocumento tipoDocumento;
-
-
-	public void finalize() throws Throwable {
-
-	}
+    }
 }//end Documento

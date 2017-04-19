@@ -8,10 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 @RestController
@@ -38,8 +36,7 @@ public class UserController {
         return ResponseEntity.ok(mUser.getId());
     }
 
-
-/*    @RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+  /*    @RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     public ResponseEntity<?> create(@RequestBody User customer) {
         return new ResponseEntity<>(userService.save(customer), HttpStatus.CREATED);
     }

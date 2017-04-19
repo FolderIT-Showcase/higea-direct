@@ -23,19 +23,15 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 @JsonInclude(NON_NULL)
 public class Domicilio implements Serializable {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+    public Pais pais;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    private String calle;
+    private String departamento;
+    private Integer piso;
 
-	private String calle;
+    public void finalize() throws Throwable {
 
-	private String departamento;
-
-	private Integer piso;
-
-	public Pais pais;
-
-	public void finalize() throws Throwable {
-
-	}
+    }
 }//end Domicilio

@@ -6,10 +6,10 @@ package net.folderit.domain.enums;
  * @created 18-abr.-2017 11:26:48 a. m.
  */
 public enum TipoDocumento {
-	dni,
-	pasaporte,
-	cedulaIdentidad,
-	libretaEnrolamiento,
-	libretaCivica,
-	documentoExtranjero
+    dni,
+    pasaporte,
+    cedulaIdentidad,
+    libretaEnrolamiento,
+    libretaCivica,
+    documentoExtranjero
 }

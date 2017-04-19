@@ -9,10 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 /**
  * Created by gheng on 18/4/2017.
@@ -46,24 +43,21 @@ public class PersonaController {
         return ResponseEntity.ok(mPersona.getId());
     }
 
-     @GetMapping("/persona/afip")
-     public ResponseEntity validPersona(@RequestParam(name = "documento") String documento,
-                                                    @RequestParam(name = "nombre") String nombre,
-                                                    @RequestParam(name = "apellido") String apellido,
-                                                    @RequestParam(name = "sexo") String sexo) {
+    @GetMapping("/persona/afip")
+    public ResponseEntity validPersona(@RequestParam(name = "documento") String documento,
+                                       @RequestParam(name = "nombre") String nombre,
+                                       @RequestParam(name = "apellido") String apellido,
+                                       @RequestParam(name = "sexo") String sexo) {
 
 
         ResultAfipDto dto = null;
         try {
-            dto = personaService.isDocumentValid(documento, nombre, apellido,sexo);
-        }catch (Exception e){
+            dto = personaService.isDocumentValid(documento, nombre, apellido, sexo);
+        } catch (Exception e) {
             throw new IllegalArgumentException("Sexo o DNI no valido. La longitud no corresponde");
         }
-        if(dto.getData()!=null)return  ResponseEntity.ok(dto);
-         else return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-
+        if (dto.getData() != null) return ResponseEntity.ok(dto);
+        else return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 
     }
-
-
 }

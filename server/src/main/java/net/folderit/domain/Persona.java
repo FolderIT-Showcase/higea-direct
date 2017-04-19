@@ -27,55 +27,55 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 @JsonInclude(NON_NULL)
 public class Persona implements Serializable {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-	private String apellido;
+    private String apellido;
 
-	private Date fechaNacimiento;
+    private Date fechaNacimiento;
 
 	private Genero genero;
 
-	private String nombre;
+    private String nombre;
 
-	private User userAsociado;
+    private User userAsociado;
 
-	private Documento documento;
+    private Documento documento;
 
-	private EstadoCivil estadoCivil;
+    private EstadoCivil estadoCivil;
 
-	private Domicilio domicilio;
+    private Domicilio domicilio;
 
-	@OneToMany
-	@JoinTable
-			(
-					name = "persona_integrante",
-					joinColumns = {@JoinColumn(name = "persona_id", referencedColumnName = "id")},
-					inverseJoinColumns = {@JoinColumn(name = "integrante_id", referencedColumnName = "id", unique = false)}
-			)
-	private List<Persona> integrantes;
+    @OneToMany
+    @JoinTable
+            (
+                    name = "persona_integrante",
+                    joinColumns = {@JoinColumn(name = "persona_id", referencedColumnName = "id")},
+                    inverseJoinColumns = {@JoinColumn(name = "integrante_id", referencedColumnName = "id", unique = false)}
+            )
+    private List<Persona> integrantes;
 
-	@OneToMany
-	@JoinTable
-			(
-					name = "persona_contacto",
-					joinColumns = {@JoinColumn(name = "persona_id", referencedColumnName = "id")},
-					inverseJoinColumns = {@JoinColumn(name = "contacto_id", referencedColumnName = "id", unique = false)}
-			)
-	private List<Contacto> contacto;
+    @OneToMany
+    @JoinTable
+            (
+                    name = "persona_contacto",
+                    joinColumns = {@JoinColumn(name = "persona_id", referencedColumnName = "id")},
+                    inverseJoinColumns = {@JoinColumn(name = "contacto_id", referencedColumnName = "id", unique = false)}
+            )
+    private List<Contacto> contacto;
 
-	@ManyToMany
-	@JoinTable
-			(
-					name = "persona_turno",
-					joinColumns = {@JoinColumn(name = "persona_id", referencedColumnName = "id")},
-					inverseJoinColumns = {@JoinColumn(name = "turno_id", referencedColumnName = "id", unique = false)}
-			)
-	private List<Turno> turno;
+    @ManyToMany
+    @JoinTable
+            (
+                    name = "persona_turno",
+                    joinColumns = {@JoinColumn(name = "persona_id", referencedColumnName = "id")},
+                    inverseJoinColumns = {@JoinColumn(name = "turno_id", referencedColumnName = "id", unique = false)}
+            )
+    private List<Turno> turno;
 
 
-	public void finalize() throws Throwable {
+    public void finalize() throws Throwable {
 
-	}
+    }
 }//end Persona

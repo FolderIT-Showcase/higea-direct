@@ -23,16 +23,13 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 @JsonInclude(NON_NULL)
 public class Pais implements Serializable {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+    public Provincia provincia;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    private String nombre;
 
-	private String nombre;
+    public void finalize() throws Throwable {
 
-	public Provincia provincia;
-
-
-	public void finalize() throws Throwable {
-
-	}
+    }
 }//end Pais
