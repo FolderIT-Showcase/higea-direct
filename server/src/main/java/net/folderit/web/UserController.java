@@ -38,12 +38,6 @@ public class UserController {
         return ResponseEntity.ok(mUser.getId());
     }
 
-    @RequestMapping({ "/user", "/me" })
-    public Map<String, String> user(Principal principal) {
-        Map<String, String> map = new LinkedHashMap<>();
-        map.put("name", principal.getName());
-        return map;
-    }
 
 /*    @RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     public ResponseEntity<?> create(@RequestBody User customer) {
