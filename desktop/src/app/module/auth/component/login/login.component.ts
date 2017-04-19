@@ -1,8 +1,9 @@
-import {Component, ElementRef, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {FacebookService, InitParams, LoginResponse} from 'ng2-facebook-sdk';
+import {LoginResponse} from 'ng2-facebook-sdk';
 import {AlertService} from '../../../core/service/alert.service';
 import {AppAuthService} from '../../auth.service';
+import {User} from '../../../core/domain/user';
 
 declare const gapi: any;
 
@@ -32,18 +33,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   constructor(private router: Router,
               private alertService: AlertService,
-              private auth: AppAuthService,
-              // oauth auth service
-              private fb: FacebookService,
-              private element: ElementRef) {
+              private auth: AppAuthService) {
 
-    const initParams: InitParams = {
-      appId: '285797451868355',
-      xfbml: true,
-      version: 'v2.8'
-    };
-
-    fb.init(initParams);
 
   }
 
@@ -60,28 +51,20 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   onSubmit() {
 
-    this.router.navigate(['/home']);
+    // this.router.navigate(['/home']);
 
-    /*    this.loading = true;
-     const user = new User();
-     user.username = this.model.username;
-     user.password = this.model.password;
-     this.authenticationService.login(user)
-     .then(() => {
-     this.router.navigate(['/']);
-     })
-     .catch(error => {
-     this.alertService.error(error);
-     this.loading = false;
-     });*/
-
-  }
-
-  loginWithFacebook(): void {
-
-    this.fb.login()
-      .then((response: LoginResponse) => console.log(response))
-      .catch((error: any) => console.error(error));
+    this.loading = true;
+    const user = new User();
+    user.username = this.model.username;
+    user.password = this.model.password;
+    this.auth.login(user)
+      .then(() => {
+        this.router.navigate(['/']);
+      })
+      .catch(error => {
+        this.alertService.error(error);
+        this.loading = false;
+      });
 
   }
 

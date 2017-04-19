@@ -1,13 +1,11 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import 'rxjs/Rx';
 import {AppState} from '../domain/app-state';
 
 // estado inicial
 const state: AppState = {
-  user: {},
-  isLoading: false,
-  items: []
+  user: null,
+  paises: []
 };
 
 const store = new BehaviorSubject<AppState>(state);
@@ -15,11 +13,11 @@ const store = new BehaviorSubject<AppState>(state);
 @Injectable()
 export class Store {
   private store = store;
-  private changes = store
+  public changes = store
     .asObservable()
     .distinctUntilChanged()
     // log new state
-    .do(changes => console.log('new state', changes))
+    .do(changes => console.log('new state', changes));
 
   public getState(): AppState {
     return this.store.value;

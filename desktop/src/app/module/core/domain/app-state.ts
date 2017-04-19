@@ -1,5 +1,6 @@
+import {Pais} from './pais';
+import {User} from './user';
 export class AppState {
-  user: Object;
-  isLoading: boolean;
-  items: any[];
+  user: User;
+  paises: Pais[];
 }

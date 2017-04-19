@@ -5,12 +5,14 @@ import {RegisterComponent} from './component/register/register.component';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
-import {routing} from './auth.routing';
 import {RouterModule} from '@angular/router';
 import {FacebookService} from 'ng2-facebook-sdk';
 import {GoogleSignInComponent} from 'angular-google-signin';
 import {GoogleSigninComponent} from './component/google-signin/google-signin.component';
 import {FacebookSigninComponent} from './component/facebook-signin/facebook-signin.component';
+import {RegisterExtendedComponent} from './component/register-extended/register-extended.component';
+import {BsDropdownModule} from 'ngx-bootstrap';
+import {DatepickerModule} from 'ngx-bootstrap/datepicker';
 
 @NgModule({
   imports: [
@@ -19,14 +21,16 @@ import {FacebookSigninComponent} from './component/facebook-signin/facebook-sign
     FormsModule,
     HttpModule,
     RouterModule,
-    routing
+    BsDropdownModule.forRoot(),
+    DatepickerModule.forRoot()
   ],
   declarations: [
     LoginComponent,
     RegisterComponent,
     GoogleSignInComponent,
     GoogleSigninComponent,
-    FacebookSigninComponent
+    FacebookSigninComponent,
+    RegisterExtendedComponent
   ],
   providers: [
     FacebookService
