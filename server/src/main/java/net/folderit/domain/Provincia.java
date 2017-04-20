@@ -23,11 +23,14 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 @JsonInclude(NON_NULL)
 public class Provincia implements Serializable {
 
-    public Localidad localidad;
+    @ManyToOne
+    @JoinColumn(name="pais_id")
+    public Pais pais;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String nombre;
+    private Integer codigo;
 
     public void finalize() throws Throwable {
 

@@ -23,6 +23,8 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 @JsonInclude(NON_NULL)
 public class Especialidad implements Serializable {
 
+    @ManyToOne
+    @JoinColumn(name="profesional_id")
     public Profesional profesional;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -23,6 +23,8 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 @JsonInclude(NON_NULL)
 public class CentroSalud implements Serializable {
 
+    @ManyToOne
+    @JoinColumn(name="especialidad_id")
     public Especialidad especialidad;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -30,6 +30,14 @@ public class Localidad implements Serializable {
 
     private String nombre;
 
+    @ManyToOne
+    @JoinColumn(name="provincia_id")
+    private Provincia provincia;
+
+    private Integer codPostal;
+
+    private Integer codigo;
+
     public void finalize() throws Throwable {
 
     }

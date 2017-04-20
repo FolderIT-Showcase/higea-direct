@@ -36,6 +36,8 @@ public class Turno implements Serializable {
 
     private String observaciones;
 
+    @ManyToOne
+    @JoinColumn(name="centro_id")
     private CentroSalud centroSalud;
 
     public void finalize() throws Throwable {
