@@ -39,12 +39,18 @@ public class Persona implements Serializable {
 
     private String nombre;
 
+    @ManyToOne
+    @JoinColumn(name="user_id")
     private User userAsociado;
 
+    @ManyToOne
+    @JoinColumn(name="documento_id")
     private Documento documento;
 
     private EstadoCivil estadoCivil;
 
+    @ManyToOne
+    @JoinColumn(name="domicilio_id")
     private Domicilio domicilio;
 
     @OneToMany

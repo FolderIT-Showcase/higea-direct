@@ -57,9 +57,7 @@ public class PersonaService {
         personaRepository.delete(customer);
     }
 
-    public Iterable<Persona> findAll() {
-        return personaRepository.findAll();
-    }
+    public Iterable<Persona> findAll() {return personaRepository.findAll();}
 
     public Persona findById(Long id) {
         return personaRepository.findOne(id);

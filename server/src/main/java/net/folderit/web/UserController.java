@@ -36,6 +36,13 @@ public class UserController {
         return ResponseEntity.ok(mUser.getId());
     }
 
+    @GetMapping("/users/external")
+    public ResponseEntity<Long> finByTypeAndExternalId(@RequestParam String externalId,@RequestParam String type) {
+        User mUser = userService.finByTypeAndExternalId(externalId,type);
+        if(mUser!=null) ResponseEntity.ok(mUser.getId());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+    }
+
   /*    @RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     public ResponseEntity<?> create(@RequestBody User customer) {
         return new ResponseEntity<>(userService.save(customer), HttpStatus.CREATED);

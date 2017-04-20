@@ -35,6 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable().authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
+                .antMatchers(HttpMethod.GET, "/users/external").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 // We filter the api/login requests
@@ -61,7 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                                 "and U.username = ?")
                 .rolePrefix("ROLE_");
 // TODO: solo para testing o backup, cambiar o mejorar
-        auth.inMemoryAuthentication().withUser("admin").password("admin");
+        auth.inMemoryAuthentication().withUser("admin").password("admin").roles("ADMIN");
     }
 
 
