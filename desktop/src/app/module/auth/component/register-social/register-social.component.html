@@ -1,84 +1,75 @@
 <div class="container">
   <div class="row">
-    <div class="absolute-center is-responsive">
+    <div class="absolute-center align-top">
 
       <div class="col-md-12 col-sm-12">
-        <h2>Datos</h2>
+        <h2 class="app-header text-center">
+          Datos Obligatorios
+        </h2>
+
         <form name="form" (ngSubmit)="f.form.valid && register()" #f="ngForm" novalidate>
 
-          <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
-            <label for="pais">País de origen</label>
+          <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !model.pais }">
+            <label>País de origen</label>
             <div class="btn-group btn-block" dropdown>
               <button dropdownToggle type="button" class="btn btn-block btn-default dropdown-toggle">
-                País de origen
+                {{ model.pais ? model.pais : 'País de origen'}}
                 <span class="caret"></span>
               </button>
               <ul *dropdownMenu class="dropdown-menu">
-                <li *ngFor="let tipoDocumento of tipoDocumentos">
-                  <a class="dropdown-item" href="#">{{tipoDocumento}}</a>
+                <li *ngFor="let pais of paises">
+                  <a class="dropdown-item" (click)="handleCountriesClick(pais)">{{pais.nombre}}</a>
                 </li>
               </ul>
             </div>
-            <div *ngIf="f.submitted && !lastName.valid" class="help-block">Ingrese su País de origen</div>
+            <div *ngIf="f.submitted && !model.pais" class="help-block">Ingrese su País de origen</div>
           </div>
 
-          <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
+          <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !model.tipoDocumento }">
             <label for="tipoDocumento">Tipo de Documento</label>
             <div class="btn-group btn-block" dropdown>
               <button dropdownToggle type="button" class="btn btn-block btn-default dropdown-toggle">
-                Tipo de Documento
+                {{ model.tipoDocumento ? model.tipoDocumento : 'Tipo de Documento'}}
                 <span class="caret"></span>
               </button>
               <ul *dropdownMenu class="dropdown-menu">
                 <li *ngFor="let tipoDocumento of tipoDocumentos">
-                  <a class="dropdown-item" href="#">{{tipoDocumento}}</a>
+                  <a class="dropdown-item" (click)="handleTipoDocumentoClick(tipoDocumento)">{{tipoDocumento}}</a>
                 </li>
               </ul>
             </div>
-            <div *ngIf="f.submitted && !firstName.valid" class="help-block">Ingrese su Tipo de Documento</div>
+            <div *ngIf="f.submitted && !model.tipoDocumento" class="help-block">Ingrese su Tipo de Documento</div>
           </div>
 
-          <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
+          <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !numeroDocumento.valid }">
             <label for="numeroDocumento">Número de documento</label>
             <input type="text" class="form-control" name="lastName" [(ngModel)]="model.numeroDocumento"
                    #numeroDocumento="ngModel"
                    required/>
-            <div *ngIf="f.submitted && !lastName.valid" class="help-block">Ingrese su Número de documento</div>
+            <div *ngIf="f.submitted && !numeroDocumento.valid" class="help-block">Ingrese su Número de documento</div>
           </div>
 
-          <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
-            <label for="genero">Género</label>
-            <div class="btn-group btn-block" dropdown>
+          <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !model.genero }">
+            <label>Género</label>
+            <div name="genero" class="btn-group btn-block" dropdown required>
               <button dropdownToggle type="button" class="btn btn-block btn-default dropdown-toggle">
-                Género
+                {{ model.genero ? model.genero : 'Seleccione un género'}}
                 <span class="caret"></span>
               </button>
               <ul *dropdownMenu class="dropdown-menu">
-                <li *ngFor="let tipoDocumento of tipoDocumentos">
-                  <a class="dropdown-item" href="#">{{tipoDocumento}}</a>
+                <li *ngFor="let genero of generos">
+                  <a class="dropdown-item" (click)="handleGeneroClick(genero)">{{genero}}</a>
                 </li>
               </ul>
             </div>
-            <div *ngIf="f.submitted && !lastName.valid" class="help-block">Ingrese su Género</div>
+            <div *ngIf="f.submitted && !model.genero" class="help-block">Ingrese su Género</div>
           </div>
 
-          <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
-            <label for="fechaNacimiento">Fecha de Nacimiento</label>
-            <input type="text" class="form-control" name="username" [(ngModel)]="model.fechaNacimiento"
-                   #username="ngModel"
-                   required/>
-            <div>
-              <div class="card">
-                <pre class="card-block card-header">Selected date is: <em
-                  *ngIf="dt">{{ getDate() | date:'fullDate'}}</em></pre>
-              </div>
-
-              <datepicker [(ngModel)]="dt" [minDate]="minDate" [showWeeks]="false"
-                          [dateDisabled]="false"></datepicker>
-
+          <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !captcha }">
+            <div class="g-recaptcha-container">
+              <re-captcha class="g-recaptcha" (captchaResponse)="handleCorrectCaptcha($event)" language="es" site_key="6Lcf4B0UAAAAAFnu4amKAVQ-I2onmCv9OvLw0J_i"></re-captcha>
             </div>
-
-            <div *ngIf="f.submitted && !username.valid" class="help-block">Ingrese su Fecha de Nacimiento</div>
+            <div *ngIf="f.submitted && !captcha" class="help-block">Acepte el captcha</div>
           </div>
 
           <div class="form-group">

@@ -1,42 +1,50 @@
-import {Component, OnInit} from '@angular/core';
-
-declare const FB: any;
+import {Component} from '@angular/core';
+import {AppAuthService} from '../../auth.service';
+import {FacebookService, InitParams, LoginOptions, LoginResponse} from 'ngx-facebook';
+import {User} from '../../../core/domain/user';
 
 @Component({
   selector: 'app-facebook-signin',
-  templateUrl: './facebook-signin.component.html',
-  styleUrls: ['./facebook-signin.component.scss']
+  templateUrl: './facebook-signin.component.html'
 })
-export class FacebookSigninComponent implements OnInit {
+export class FacebookSigninComponent {
 
-  constructor() {
-    FB.init({
+  constructor(private auth: AppAuthService, private fb: FacebookService) {
+
+    const initParams: InitParams = {
       appId: '285797451868355',
-      cookie: false,  // enable cookies to allow the server to access
-      // the session
-      xfbml: true,  // parse social plugins on this page
-      version: 'v2.8' // use graph api version 2.5
-    });
+      xfbml: true,
+      version: 'v2.8'
+    };
+
+    fb.init(initParams);
+
   }
 
   onFacebookLoginClick() {
-    FB.login();
-  }
-
-  statusChangeCallback(resp) {
-    if (resp.status === 'connected') {
-      // connect here with your server for facebook login by passing access token given by facebook
-    } else if (resp.status === 'not_authorized') {
-
-    } else {
-
-    }
-  };
-
-  ngOnInit() {
-    FB.getLoginStatus(response => {
-      this.statusChangeCallback(response);
-    });
+    const options: LoginOptions = {
+      scope: 'email',
+      return_scopes: true,
+      enable_profile_selector: true
+    };
+    this.fb.login(options)
+      .then((response: LoginResponse) => {
+        this.fb.api('/me', 'get', {fields: 'email'})
+          .then(data => {
+            const user: User = new User();
+            user.externalId = response.authResponse.userID;
+            user.email = data.email;
+            user.username = data.email;
+            this.auth.login(user, 'facebook');
+            this.fb.logout();
+          })
+          .catch(error => {
+            console.error(error);
+          });
+      })
+      .catch((error: any) => {
+        console.error(error);
+      });
   }
 
 }

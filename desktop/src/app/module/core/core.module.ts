@@ -20,7 +20,7 @@ import {Store} from './service/store';
     AlertComponent,
     HomeComponent
   ],
-  providers: [ Store ]
+  providers: [Store]
 })
 export class CoreModule {
 }
