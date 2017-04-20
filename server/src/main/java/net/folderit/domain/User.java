@@ -33,6 +33,10 @@ public class User implements Serializable {
 
     private String lastName;
 
+    private String externalId;
+
+    private String type;
+
     //@OneToMany(orphanRemoval=true, cascade={CascadeType.ALL})
     @ManyToMany(cascade={CascadeType.ALL})
     @JoinTable

@@ -4,6 +4,7 @@ import net.folderit.domain.User;
 import net.folderit.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -35,6 +36,11 @@ public class UserService {
     @Transactional
     public void delete(User customer) {
         userRepository.delete(customer);
+    }
+
+    @Transactional
+    public User finByTypeAndExternalId( String externalId,  String type) {
+        return userRepository.findByExternalIdAndType(externalId,type);
     }
 
     public Iterable<User> findAll() {
