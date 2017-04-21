@@ -1,3 +1,35 @@
-<p>
-  home
-</p>
+<div class="container">
+  <h1 class="app-header text-center">Turnero Web</h1>
+  <div class="row">
+    <div class="absolute-center card-container">
+      <div class="col-md-6 text-center">
+        <div class="card">
+          <div class="card-image">
+            <img class="img-responsive" src="../../../../../assets/turnos.jpeg">
+            <span class="card-title"> <strong>Turnos</strong> </span>
+          </div>
+          <div class="card-action">
+            <div class="btn-group btn-group-justified">
+              <a [routerLink]="['/nuevo-turno']" class="btn btn-link"><strong>Nuevo</strong></a>
+              <a [routerLink]="['/']" class="btn btn-link"><strong>Modificar</strong></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-image">
+            <img class="img-responsive" src="../../../../../assets/familia.jpg">
+            <span class="card-title"><strong>Grupo familiar</strong></span>
+          </div>
+          <div class="card-action">
+            <div class="btn-group btn-group-justified">
+              <a [routerLink]="['/']" class="btn btn-link"><strong>Gestionar</strong></a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

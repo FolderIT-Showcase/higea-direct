@@ -95,7 +95,8 @@
 
           <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !captcha }">
             <div class="g-recaptcha-container">
-            <re-captcha class="g-recaptcha" (captchaResponse)="handleCorrectCaptcha($event)" language="es" site_key="6Lcf4B0UAAAAAFnu4amKAVQ-I2onmCv9OvLw0J_i"></re-captcha>
+              <re-captcha class="g-recaptcha" (captchaResponse)="handleCorrectCaptcha($event)" language="es"
+                          site_key="6Lcf4B0UAAAAAFnu4amKAVQ-I2onmCv9OvLw0J_i"></re-captcha>
             </div>
             <div *ngIf="f.submitted && !captcha" class="help-block">Acepte el captcha</div>
           </div>

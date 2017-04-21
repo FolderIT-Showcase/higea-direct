@@ -1,0 +1,63 @@
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Día</th>
+      <th>Fecha</th>
+      <th>Hora</th>
+      <th>Centro de Salud</th>
+      <th>Sub Especialidad</th>
+      <th>Profesional</th>
+      <th>Observaciones</th>
+      <th width="1em"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>Miercoles</td>
+      <td>19/04/2017</td>
+      <td>14:30</td>
+      <td>Hospital</td>
+      <td>Alergia</td>
+      <td>Profesional 1</td>
+      <td></td>
+      <td>
+        <a (click)="showModal()" class="btn btn-success btn-block">
+          <span class="fa fa-check"></span>
+        </a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<div *ngIf="isModalShown" [config]="{ show: true }" (onHidden)="onHidden()" bsModal #autoShownModal="bs-modal"
+     class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left"><strong>Confirmación</strong></h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>¿Querés tomar este turno?</p>
+        <p>Para el dia <strong></strong> en el horario <strong></strong></p>
+        <p>Para la especialidad <strong></strong> atendido por </p>
+        <p>En el <strong></strong></p>
+        <sebm-google-map [latitude]="lat" [longitude]="lng">
+          <sebm-google-map-marker [latitude]="lat" [longitude]="lng"></sebm-google-map-marker>
+        </sebm-google-map>
+        <div class="row">
+          <div class="col-sm-8"></div>
+          <div class="col-sm-4">
+            <div class="btn-group btn-group-justified">
+              <a type="submit" class="btn btn-primary">SI</a>
+              <a (click)="hideModal()" class="btn btn-default">NO</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
