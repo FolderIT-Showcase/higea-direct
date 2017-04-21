@@ -1,14 +1,44 @@
 <div class="container">
   <div class="row">
-    <div class="absolute-center is-responsive">
+    <div class="absolute-center align-top">
 
       <div class="col-md-12 col-sm-12">
-        <h2>Registro</h2>
+        <h2 class="app-header text-center">
+          Registro
+        </h2>
 
         <form name="form" (ngSubmit)="f.form.valid && register()" #f="ngForm" novalidate>
 
-          <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !pais.valid }">
-            <label for="pais">País de origen</label>
+          <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
+            <label for="username">Usuario</label>
+            <input type="text" class="form-control" name="username" [(ngModel)]="model.username" #username="ngModel"
+                   required/>
+            <div *ngIf="f.submitted && !username.valid" class="help-block">Ingrese un nombre de usuario</div>
+          </div>
+          <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
+            <label for="email">Correo Electrónico</label>
+            <input type="text" class="form-control" name="email" [(ngModel)]="model.email" #email="ngModel" required/>
+            <div *ngIf="f.submitted && !email.valid" class="help-block">Ingrese un correo eléctronico</div>
+          </div>
+          <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password1.valid }">
+            <label for="password1">Contraseña</label>
+            <input type="text" class="form-control" name="password1" [(ngModel)]="model.password1" #password1="ngModel"
+                   required/>
+            <div *ngIf="f.submitted && !password1.valid" class="help-block">Ingrese una contraseña</div>
+
+          </div>
+          <div class="form-group"
+               [ngClass]="{ 'has-error': f.submitted && !model.password2 && model.password1 != model.password2 }">
+            <label for="password2">Repita su contraseña</label>
+            <input type="text" class="form-control" name="password2" [(ngModel)]="model.password2" #password2="ngModel"
+                   required/>
+            <div *ngIf="f.submitted && model.password1 != model.password2" class="help-block">Sus contraseñas no
+              coinciden, revise por favor
+            </div>
+          </div>
+
+          <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !model.pais }">
+            <label>País de origen</label>
             <div class="btn-group btn-block" dropdown>
               <button dropdownToggle type="button" class="btn btn-block btn-default dropdown-toggle">
                 {{ model.pais ? model.pais : 'País de origen'}}
@@ -20,10 +50,10 @@
                 </li>
               </ul>
             </div>
-            <div *ngIf="f.submitted && !pais.valid" class="help-block">Ingrese su País de origen</div>
+            <div *ngIf="f.submitted && !model.pais" class="help-block">Ingrese su País de origen</div>
           </div>
 
-          <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !tipoDocumento.valid }">
+          <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !model.tipoDocumento }">
             <label for="tipoDocumento">Tipo de Documento</label>
             <div class="btn-group btn-block" dropdown>
               <button dropdownToggle type="button" class="btn btn-block btn-default dropdown-toggle">
@@ -36,7 +66,7 @@
                 </li>
               </ul>
             </div>
-            <div *ngIf="f.submitted && !tipoDocumento.valid" class="help-block">Ingrese su Tipo de Documento</div>
+            <div *ngIf="f.submitted && !model.tipoDocumento" class="help-block">Ingrese su Tipo de Documento</div>
           </div>
 
           <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !numeroDocumento.valid }">
@@ -47,10 +77,9 @@
             <div *ngIf="f.submitted && !numeroDocumento.valid" class="help-block">Ingrese su Número de documento</div>
           </div>
 
-          <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !genero.valid }">
-            <label for="genero">Género</label>
-            <div [(ngModel)]="model.genero" name="genero" #genero="ngModel" class="btn-group btn-block" dropdown
-                 required>
+          <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !model.genero }">
+            <label>Género</label>
+            <div name="genero" class="btn-group btn-block" dropdown required>
               <button dropdownToggle type="button" class="btn btn-block btn-default dropdown-toggle">
                 {{ model.genero ? model.genero : 'Seleccione un género'}}
                 <span class="caret"></span>
@@ -61,7 +90,14 @@
                 </li>
               </ul>
             </div>
-            <div *ngIf="f.submitted && !genero.valid" class="help-block">Ingrese su Género</div>
+            <div *ngIf="f.submitted && !model.genero" class="help-block">Ingrese su Género</div>
+          </div>
+
+          <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !captcha }">
+            <div class="g-recaptcha-container">
+            <re-captcha class="g-recaptcha" (captchaResponse)="handleCorrectCaptcha($event)" language="es" site_key="6Lcf4B0UAAAAAFnu4amKAVQ-I2onmCv9OvLw0J_i"></re-captcha>
+            </div>
+            <div *ngIf="f.submitted && !captcha" class="help-block">Acepte el captcha</div>
           </div>
 
           <div class="form-group">

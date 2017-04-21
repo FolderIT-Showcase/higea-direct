@@ -1,16 +1,16 @@
 import {AfterViewInit, Component, ElementRef} from '@angular/core';
+import {AppAuthService} from '../../auth.service';
+import {User} from '../../../core/domain/user';
 
-declare var gapi: any;
+declare const gapi: any;
 
 @Component({
   selector: 'app-google-signin',
-  templateUrl: './google-signin.component.html',
-  styleUrls: ['./google-signin.component.scss']
+  templateUrl: './google-signin.component.html'
 })
 export class GoogleSigninComponent implements AfterViewInit {
 
   private clientId = '170472707371-iqab7gbqta7jq9kgt1fbs8ajrh7llcfc.apps.googleusercontent.com';
-  private googleUser: gapi.auth2.GoogleUser = null;
 
   private scope = [
     'profile',
@@ -21,6 +21,10 @@ export class GoogleSigninComponent implements AfterViewInit {
   ].join(' ');
 
   public auth2: any;
+
+  constructor(private element: ElementRef, private auth: AppAuthService) {
+
+  }
 
   public googleInit() {
     gapi.load('auth2', () => {
@@ -35,27 +39,23 @@ export class GoogleSigninComponent implements AfterViewInit {
 
   public attachSignin(element) {
     this.auth2.attachClickHandler(element, {},
-      (googleUser) => {
-        this.googleUser = googleUser;
-        const profile = googleUser.getBasicProfile();
-        console.log('Token || ' + googleUser.getAuthResponse().id_token);
-        console.log('ID: ' + profile.getId());
-        // ...
-      }, function (error) {
-        console.log(JSON.stringify(error, undefined, 2));
+      (googleUser: gapi.auth2.GoogleUser) => {
+        const user: User = new User();
+        user.email = googleUser.getBasicProfile().getEmail();
+        user.username = googleUser.getBasicProfile().getEmail();
+        user.externalId = googleUser.getBasicProfile().getId();
+        console.log(user);
+        this.auth.login(user, 'google');
+        googleUser.disconnect();
+      }, (error) => {
+        console.error(error);
       });
   }
 
-  constructor(private element: ElementRef) {
-    console.log('ElementRef: ', this.element);
-  }
 
   ngAfterViewInit() {
     this.googleInit();
   }
 
-  logOut() {
-    this.googleUser.disconnect();
-  }
-
 }
+

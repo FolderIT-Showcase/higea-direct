@@ -71,3 +71,26 @@ div.well {
   left: 95%;
   top: 45%;
 }
+
+.app-header {
+  margin: 1em 0.5em 1em;
+}
+
+.text-xs-center {
+  text-align: center;
+}
+
+.g-recaptcha{
+  margin: 0 auto !important;
+  width: auto !important;
+  height: auto !important;
+  text-align: -webkit-center;
+  text-align: -moz-center;
+  text-align: -o-center;
+  text-align: -ms-center;
+}
+
+.g-recaptcha-container{
+  padding-top: 1em;
+  padding-bottom: 1em;
+}

@@ -4,7 +4,7 @@ import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {AppComponent} from './app.component';
 import {AuthGuard} from './module/core/guard/auth.guard';
-import {UserService} from './module/core/service/user.service';
+import {PersonaService} from './module/core/service/persona.service';
 import {AlertService} from './module/core/service/alert.service';
 import {ApiService} from './module/core/service/api.service';
 import {CoreModule} from './module/core/core.module';
@@ -25,7 +25,7 @@ import {AppAuthService} from './module/auth/auth.service';
   providers: [
     AuthGuard,
     AlertService,
-    UserService,
+    PersonaService,
     ApiService,
     AppAuthService
   ],

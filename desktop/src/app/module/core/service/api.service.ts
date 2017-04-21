@@ -37,7 +37,16 @@ export class ApiService {
     this.headers.append('authorization', user.token);
   }
 
-  public get(path: string): Observable<any> {
+  removeJwt() {
+    this.headers.delete('authorization');
+  }
+
+  get(path: string, search: URLSearchParams = undefined, headers: Headers = undefined): Observable<any> {
+    const options = {
+      headers: headers || this.headers,
+      search: search
+    };
+
     return this.http.get(`${this.baseURL}${path}`, {headers: this.headers})
       .map(ApiService.checkForError)
       .catch(err => Observable.throw(err))
@@ -46,9 +55,7 @@ export class ApiService {
 
   public post(path: string, body): Observable<any> {
     return this.http
-      .post(
-        `${this.baseURL}${path}`, JSON.stringify(body),
-        {headers: this.headers})
+      .post(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
       .map(ApiService.checkForError)
       .catch(err => Observable.throw(err))
       .map(ApiService.getJson);
@@ -56,9 +63,7 @@ export class ApiService {
 
   public put(path: string, body): Observable<any> {
     return this.http
-      .put(
-        `${this.baseURL}${path}`, JSON.stringify(body),
-        {headers: this.headers})
+      .put(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
       .map(ApiService.checkForError)
       .catch(err => Observable.throw(err));
     // .map(this.getJson);
@@ -66,9 +71,7 @@ export class ApiService {
 
   public patch(path: string, body): Observable<any> {
     return this.http
-      .patch(
-        `${this.baseURL}${path}`, JSON.stringify(body),
-        {headers: this.headers})
+      .patch(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
       .map(ApiService.checkForError)
       .catch(err => Observable.throw(err));
     // .map(this.getJson);
@@ -83,9 +86,7 @@ export class ApiService {
 
   public loginPost(path: string, body): Observable<any> {
     return this.http
-      .post(
-        `${this.baseURL}${path}`, JSON.stringify(body),
-        {headers: this.headers})
+      .post(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
       .map(ApiService.checkForError)
       .catch(err => Observable.throw(err));
   }

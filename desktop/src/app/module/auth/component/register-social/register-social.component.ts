@@ -1,12 +1,12 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {PersonaService} from '../../../core/service/persona.service';
-import {AlertService} from '../../../core/service/alert.service';
+import {Component, OnInit} from '@angular/core';
 import {TipoDocumentos} from '../../../core/domain/enums/tipo-documento';
 import {Generos} from '../../../core/domain/enums/genero';
 import {Pais} from '../../../core/domain/pais';
-import {User} from '../../../core/domain/user';
+import {Router} from '@angular/router';
 import {Store} from '../../../core/service/store';
+import {PersonaService} from '../../../core/service/persona.service';
+import {AlertService} from '../../../core/service/alert.service';
+import {User} from '../../../core/domain/user';
 import {Persona} from '../../../core/domain/persona';
 import {Documento} from '../../../core/domain/documento';
 
@@ -16,17 +16,15 @@ class Datos {
   numeroDocumento: number;
   genero: string;
   username: string;
-  password1: string;
-  password2: string;
   email: string;
 }
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  selector: 'app-register-social',
+  templateUrl: './register-social.component.html',
+  styleUrls: ['./register-social.component.scss']
 })
-export class RegisterComponent implements OnInit, OnDestroy {
+export class RegisterSocialComponent implements OnInit {
 
   model: Datos = new Datos;
   paises: Pais[] = [];
@@ -40,6 +38,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
               private alertService: AlertService,
               private store: Store) {
 
+    const user: User = JSON.parse(localStorage.getItem('socialUser'));
+    if (user) {
+      this.model.email = user.email;
+      this.model.username = user.username;
+    }
+
   }
 
   ngOnInit(): void {
@@ -52,10 +56,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
       });
   }
 
-  ngOnDestroy(): void {
-    this.captcha = null;
-  }
-
   register() {
 
     if (!this.captcha) {
@@ -63,11 +63,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
       return;
     }
 
-
     this.loading = true;
     const user: User = new User();
     user.username = this.model.username;
-    user.password = this.model.password1;
     const persona: Persona = new Persona();
     persona.genero = this.model.genero;
     persona.documento = new Documento();
@@ -98,10 +96,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   handleGeneroClick(genero: string) {
     this.model.genero = genero;
-  }
-
-  handleCorrectCaptcha(event) {
-    this.captcha = event;
   }
 
 }

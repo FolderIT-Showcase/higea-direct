@@ -5,7 +5,8 @@ import {AppState} from '../domain/app-state';
 // estado inicial
 const state: AppState = {
   user: null,
-  paises: []
+  paises: [],
+  loginType: null
 };
 
 const store = new BehaviorSubject<AppState>(state);
