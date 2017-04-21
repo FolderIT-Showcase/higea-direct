@@ -6,6 +6,9 @@ import {AppState} from '../domain/app-state';
 const state: AppState = {
   user: null,
   paises: [],
+  provincias: [],
+  localidades: [],
+  personas: [],
   loginType: null
 };
 

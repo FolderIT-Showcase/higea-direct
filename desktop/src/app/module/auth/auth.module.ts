@@ -14,7 +14,7 @@ import {BsDropdownModule} from 'ngx-bootstrap';
 import {DatepickerModule} from 'ngx-bootstrap/datepicker';
 import {StoreService} from '../core/service/store.service';
 import {FacebookService} from 'ngx-facebook';
-import { ReCaptchaModule } from 'angular2-recaptcha';
+import {ReCaptchaModule} from 'angular2-recaptcha';
 
 @NgModule({
   imports: [
