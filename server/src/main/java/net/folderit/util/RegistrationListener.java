@@ -45,7 +45,7 @@ public class RegistrationListener implements
         service.createVerificationToken(user, token);
 
         String recipientAddress = user.getEmail();
-        String subject = "Registration Confirmation Turnero Folder IT";
+        String subject = "Confirmacion de Registro Turnero Folder IT";
         String confirmationUrl
                 = event.getAppUrl() + "/users/regitrationConfirm?token=" + token;
 

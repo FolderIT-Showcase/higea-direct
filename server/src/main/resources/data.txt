@@ -9,6 +9,6 @@ Trust this certificate: [Yes]
 
 openssl s_client -connect smtp.gmail.com:465 -starttls smtp > gmail-smtp.cer
 
-luego
+luego si usamos gmail, para la cuenta que nos de servicio
 
 https://myaccount.google.com/lesssecureapps?pli=1
