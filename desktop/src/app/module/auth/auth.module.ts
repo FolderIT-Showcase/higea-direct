@@ -30,7 +30,7 @@ import {ReCaptchaModule} from 'angular2-recaptcha';
   declarations: [
     LoginComponent,
     RegisterComponent,
-    GoogleSignInComponent,
+    // GoogleSignInComponent,
     GoogleSigninComponent,
     FacebookSigninComponent,
     RegisterSocialComponent

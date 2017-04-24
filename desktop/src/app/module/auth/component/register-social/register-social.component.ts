@@ -98,4 +98,8 @@ export class RegisterSocialComponent implements OnInit {
     this.model.genero = genero;
   }
 
+  handleCorrectCaptcha(event) {
+
+  }
+
 }

@@ -10,6 +10,13 @@
     <div *ngIf="f.submitted && !model.centroSalud" class="help-block">Ingrese su Centro de Salud</div>
   </div>
 
+  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
+    <label class="col-sm-4 control-label"><strong>Nuevo Turno para</strong></label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" name="email" [(ngModel)]="model.email" #email="ngModel" required/>
+      <div *ngIf="f.submitted && !email.valid" class="help-block">Ingrese un correo eléctronico</div>
+    </div>
+  </div>
 
   <div class="form-group">
     <label class="col-sm-4 control-label">Centro de Salud</label>
