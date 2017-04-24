@@ -12,7 +12,7 @@ const appRoutes: Routes = [
   {
     path: '',
     component: HomeComponent,
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     // resolve: {      metadata: MetadataResolveService    }
   },
   {path: 'login', component: LoginComponent},
