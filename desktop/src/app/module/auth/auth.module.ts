@@ -31,7 +31,7 @@ import {UserActiveComponent} from "./component/user-activate/user.active.compone
   declarations: [
     LoginComponent,
     RegisterComponent,
-    GoogleSignInComponent,
+    // GoogleSignInComponent,
     GoogleSigninComponent,
     FacebookSigninComponent,
     RegisterSocialComponent,

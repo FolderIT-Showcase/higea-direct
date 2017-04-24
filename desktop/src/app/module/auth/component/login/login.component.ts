@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
   }
 
-  onSubmit() {
+  login() {
     this.loading = true;
     const user = new User();
     user.username = this.model.username;

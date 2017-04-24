@@ -5,6 +5,8 @@ import {RegisterComponent} from '../auth/component/register/register.component';
 import {RegisterSocialComponent} from '../auth/component/register-social/register-social.component';
 import {TurnoComponent} from '../turno/turno.component';
 import {UserActiveComponent} from "../auth/component/user-activate/user.active.component";
+import {AuthGuard} from './guard/auth.guard';
+
 
 const appRoutes: Routes = [
   {
