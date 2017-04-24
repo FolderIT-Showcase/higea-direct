@@ -6,6 +6,7 @@ import net.folderit.domain.Persona;
 import net.folderit.domain.Provincia;
 import net.folderit.service.MetadataService;
 import net.folderit.service.PersonaService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,7 @@ import java.util.Collection;
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class MetadataController {
 
+    @Autowired
     private MetadataService metadataService;
 
     @GetMapping("/pais")

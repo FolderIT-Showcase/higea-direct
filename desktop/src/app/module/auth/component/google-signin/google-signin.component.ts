@@ -37,12 +37,14 @@ export class GoogleSigninComponent implements AfterViewInit {
   }
 
   public attachSignin(element) {
+    gapi
     this.auth2.attachClickHandler(element, {},
-      (googleUser: gapi.auth2.GoogleUser) => {
+      (googleUser) => {
         const user: User = new User();
         user.email = googleUser.getBasicProfile().getEmail();
         user.username = googleUser.getBasicProfile().getEmail();
         user.externalId = googleUser.getBasicProfile().getId();
+
         console.log(user);
         this.auth.login(user, 'google');
         googleUser.disconnect();

@@ -9,12 +9,14 @@ import net.folderit.repository.PaisRepository;
 import net.folderit.repository.PersonaRepository;
 import net.folderit.repository.ProvinciaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
 /**
  * Created by gheng on 19/4/2017.
  */
+@Service
 public class MetadataService {
 
     private PaisRepository paisRepository;
