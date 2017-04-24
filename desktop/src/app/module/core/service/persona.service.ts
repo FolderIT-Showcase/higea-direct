@@ -20,8 +20,4 @@ export class PersonaService {
     return this.api.put('users/' + user.id, user).first().toPromise();
   }
 
-  activate(token: any) {
-    return this.api.get('users/regitrationConfirm', token).first().toPromise();
-  }
-
 }

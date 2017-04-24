@@ -1,4 +1,4 @@
-<div *ngIf="message"
+<div *ngIf="message" style="position:absolute; z-index:1; width: 80%; margin: 0 auto; top: 2%; left: 10%; "
      [ngClass]="{ 'alert': message, 'alert-success': message.type === 'success', 'alert-danger': message.type === 'error' }">
-  {{message.text}}
+  <div class="alert-label"> <strong>{{message.text}}</strong> </div>
 </div>

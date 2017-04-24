@@ -3,8 +3,7 @@ import {AlertService} from '../../service/alert.service';
 
 @Component({
   selector: 'app-alert',
-  templateUrl: './alert.component.html',
-  styleUrls: ['./alert.component.scss']
+  templateUrl: './alert.component.html'
 })
 export class AlertComponent implements OnInit {
 
@@ -16,6 +15,9 @@ export class AlertComponent implements OnInit {
   ngOnInit() {
     this.alertService.getMessage().subscribe(message => {
       this.message = message;
+      setTimeout(() => {
+        this.message = undefined;
+      }, 3000);
     });
   }
 
