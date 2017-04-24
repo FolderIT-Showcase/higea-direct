@@ -22,7 +22,7 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
  */
 
  @Data
- @Configuration
+ //@Configuration
  @AllArgsConstructor
  @NoArgsConstructor
  @JsonInclude(NON_NULL)
@@ -30,10 +30,25 @@ public class TurneroException implements Serializable {
 
     public static final String MESSAGE_MAIL_EXIST  = "message.mail.exist";
 
+    public static final String MESSAGE_ERROR_GENERIC  = "message.error.create.user";
+
+    public static final String MESSAGE_INVALID_TOKEN  = "message.auth.invalidToken";
+
+    public static final String MESSAGE_TOKEN_EXPIRED  = "auth.message.expired";
+
     private String error;
 
-    @Bean
-    @JsonIgnore
+    public static TurneroException instance;
+
+    public static TurneroException getInstance(){
+        if(instance==null){
+            instance = new TurneroException();
+        }
+        return instance;
+    }
+
+    //@Bean
+    //@JsonIgnore
     public MessageSource messageSource() {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
         messageSource.setBasenames("i18//message");

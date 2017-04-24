@@ -34,14 +34,9 @@ public class UserController {
     private final UserService userService;
     private final PersonaService personaService;
     private final RoleRepository roleRepository;
-    @Value("${auth.message.expired}")
-    private String expiredMessage ;
-    @Value("${auth.message.invalidToken}")
-    private String invalidTokenMessage ;
+ ;
     @Autowired
     ApplicationEventPublisher eventPublisher;
-    @Autowired
-    private TurneroException turneroException;
 
     @Autowired
     public UserController(UserService userService,PersonaService personaService,RoleRepository roleRepository) {
@@ -73,49 +68,55 @@ public class UserController {
 
         User registered = persona.getUserAsociado();
         if (registered == null) {
-            result.rejectValue("email", "message.regError");
+            TurneroException.getInstance().getMessage(TurneroException.MESSAGE_MAIL_EXIST,new String[] { registered.getEmail() });
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(TurneroException.getInstance());
         }
         if(userService.findByEmail(registered.getEmail())!=null){
 
-            turneroException.getMessage(TurneroException.MESSAGE_MAIL_EXIST,new String[] { registered.getEmail() });
+            TurneroException.getInstance().getMessage(TurneroException.MESSAGE_MAIL_EXIST,new String[] { registered.getEmail() });
 
-            return ResponseEntity.ok(turneroException);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(TurneroException.getInstance());
         }
         //cambiar a user
         Roles role = roleRepository.findByAuthority(Roles.ROLE_ADMIN);
         List<Roles> roles = new ArrayList<>();
         roles.add(role);
         registered.setRoles(roles);
+
         try {
             String appUrl = request.getContextPath();
             eventPublisher.publishEvent(new OnRegistrationCompleteEvent
                     (registered, request.getLocale(), appUrl));
         } catch (Exception me) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+
+            TurneroException.getInstance().getMessage(TurneroException.MESSAGE_ERROR_GENERIC,null);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(TurneroException.getInstance());
         }
-        //return new ResponseEntity.ok(registered);
-        return ResponseEntity.status(HttpStatus.OK).body(null);
+        personaService.save(persona);
+        return ResponseEntity.status(HttpStatus.OK).body(persona);
     }
 
     @RequestMapping(value = "/users/regitrationConfirm", method = RequestMethod.GET)
-    public ResponseEntity<User> confirmRegistration
+    public ResponseEntity confirmRegistration
             (WebRequest request, Model model, @RequestParam("token") String token) {
-
-        Locale locale = request.getLocale();
 
         VerificationToken verificationToken = userService.getVerificationToken(token);
         if (verificationToken == null) {
-            //String message = messages.getMessage("auth.message.invalidToken", null, locale);
-            model.addAttribute("message", invalidTokenMessage);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+
+            TurneroException.getInstance().getMessage(TurneroException.MESSAGE_INVALID_TOKEN,null);
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(TurneroException.getInstance());
         }
 
         User user = verificationToken.getUser();
         Calendar cal = Calendar.getInstance();
         if ((verificationToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
-           // String messageValue = messages.getMessage("auth.message.expired", null, locale)
-            model.addAttribute("message", expiredMessage);
-            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(user);
+
+            TurneroException.getInstance().getMessage(TurneroException.MESSAGE_TOKEN_EXPIRED,null);
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(TurneroException.getInstance());
+
         }
 
         user.setEnabled(true);

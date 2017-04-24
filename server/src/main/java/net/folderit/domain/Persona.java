@@ -39,7 +39,7 @@ public class Persona implements Serializable {
 
     private String nombre;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="user_id")
     private User userAsociado;
 
