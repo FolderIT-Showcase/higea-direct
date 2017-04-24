@@ -5,6 +5,9 @@ import net.folderit.domain.security.VerificationToken;
 import net.folderit.repository.UserRepository;
 import net.folderit.repository.VerificationTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +21,11 @@ public class UserService {
     private final UserRepository userRepository;
 
     private VerificationTokenRepository tokenRepository;
+
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Autowired
     public UserService(UserRepository userRepository,VerificationTokenRepository tokenRepository) {

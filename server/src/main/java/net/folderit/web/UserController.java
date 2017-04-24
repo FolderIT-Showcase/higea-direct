@@ -12,10 +12,13 @@ import net.folderit.util.OnRegistrationCompleteEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Role;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
@@ -34,7 +37,11 @@ public class UserController {
     private final UserService userService;
     private final PersonaService personaService;
     private final RoleRepository roleRepository;
- ;
+
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
     @Autowired
     ApplicationEventPublisher eventPublisher;
 
@@ -72,6 +79,8 @@ public class UserController {
 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(TurneroException.getInstance());
         }
+
+        registered.setPassword( passwordEncoder().encode(registered.getPassword()));
         if(userService.findByEmail(registered.getEmail())!=null){
 
             TurneroException.getInstance().getMessage(TurneroException.MESSAGE_MAIL_EXIST,new String[] { registered.getEmail() });

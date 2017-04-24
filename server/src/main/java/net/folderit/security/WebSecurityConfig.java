@@ -2,12 +2,15 @@ package net.folderit.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
@@ -23,6 +26,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final DataSource dataSource;
     private final OAuth2ClientContext oAuth2ClientContext;
+
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Autowired
     public WebSecurityConfig(@Qualifier("dataSource") DataSource dataSource, @Qualifier("oauth2ClientContext") OAuth2ClientContext oAuth2ClientContext) {
@@ -54,8 +62,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         // Create a default account
+        // Create a default account
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
+                .passwordEncoder(passwordEncoder())
                 .usersByUsernameQuery("select username as principal, password as credentials, true from users where username = ?")
                 .authoritiesByUsernameQuery(
                         "select U.username as principal, A.authority as role " +
