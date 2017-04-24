@@ -3,6 +3,7 @@ package net.folderit.web;
 import net.folderit.domain.Persona;
 import net.folderit.domain.Roles;
 import net.folderit.domain.User;
+import net.folderit.domain.exception.TurneroException;
 import net.folderit.domain.security.VerificationToken;
 import net.folderit.repository.RoleRepository;
 import net.folderit.service.PersonaService;
@@ -39,6 +40,8 @@ public class UserController {
     private String invalidTokenMessage ;
     @Autowired
     ApplicationEventPublisher eventPublisher;
+    @Autowired
+    private TurneroException turneroException;
 
     @Autowired
     public UserController(UserService userService,PersonaService personaService,RoleRepository roleRepository) {
@@ -62,17 +65,21 @@ public class UserController {
     public ResponseEntity registerUserAccount(@RequestBody Persona persona, BindingResult result,
                                             WebRequest request,
                                             Errors errors) {
-       // User mUser = userService.save(user);
-       // return ResponseEntity.ok(mUser.getId());
 
         if (result.hasErrors()) {
-           // return new ModelAndView("registration", "user", persona.getUserAsociado());
+
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
 
         User registered = persona.getUserAsociado();
         if (registered == null) {
             result.rejectValue("email", "message.regError");
+        }
+        if(userService.findByEmail(registered.getEmail())!=null){
+
+            turneroException.getMessage(TurneroException.MESSAGE_MAIL_EXIST,new String[] { registered.getEmail() });
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(turneroException);
         }
         Roles role = roleRepository.findOne(1L);
         List<Roles> roles = new ArrayList<>();
