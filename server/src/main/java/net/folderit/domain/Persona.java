@@ -43,7 +43,7 @@ public class Persona implements Serializable {
     @JoinColumn(name="user_id")
     private User userAsociado;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="documento_id")
     private Documento documento;
 
