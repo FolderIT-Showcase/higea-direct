@@ -42,7 +42,7 @@ export class AppAuthService {
   }
 
   public getUser(type: string, id: string) {
-    const path = 'user/external';
+    const path = 'users/external';
     const params: URLSearchParams = new URLSearchParams();
     params.set('type', type);
     params.set('externalId', id);

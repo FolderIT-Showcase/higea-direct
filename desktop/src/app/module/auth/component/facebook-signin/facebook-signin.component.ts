@@ -34,7 +34,6 @@ export class FacebookSigninComponent {
             const user: User = new User();
             user.externalId = response.authResponse.userID;
             user.email = data.email;
-            user.username = data.email;
             this.auth.login(user, 'facebook');
             this.fb.logout();
           })

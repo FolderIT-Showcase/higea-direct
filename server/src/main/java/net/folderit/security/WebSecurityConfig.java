@@ -66,13 +66,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
                 .passwordEncoder(passwordEncoder())
-                .usersByUsernameQuery("select username as principal, password as credentials, true from users where username = ?")
+                .usersByUsernameQuery("select email as principal, password as credentials, true from users where email = ?")
                 .authoritiesByUsernameQuery(
-                        "select U.username as principal, A.authority as role " +
+                        "select U.email as principal, A.authority as role " +
                                 "from authorities A, users U, users_roles UR " +
                                 "where U.id = UR.users_id " +
                                 "and A.id = UR.roles_id " +
-                                "and U.username = ?")
+                                "and U.email = ?")
                 .rolePrefix("ROLE_");
 // TODO: solo para testing o backup, cambiar o mejorar
         auth.inMemoryAuthentication().withUser("admin").password("admin").roles("ADMIN");

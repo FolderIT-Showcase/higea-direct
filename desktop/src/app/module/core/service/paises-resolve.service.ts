@@ -10,7 +10,7 @@ export class PaisesResolveService implements Resolve<Metadata> {
   }
 
   resolve(): Promise<Metadata> {
-    return this.metadataService.getPaises().toPromise();
+    return this.metadataService.getPaises().first().toPromise();
   }
 
 }

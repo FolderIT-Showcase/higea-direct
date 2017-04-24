@@ -41,7 +41,6 @@ export class RegisterSocialComponent implements OnInit {
     const user: User = JSON.parse(localStorage.getItem('socialUser'));
     if (user) {
       this.model.email = user.email;
-      this.model.username = user.username;
     }
 
   }
@@ -65,7 +64,6 @@ export class RegisterSocialComponent implements OnInit {
 
     this.loading = true;
     const user: User = new User();
-    user.username = this.model.username;
     const persona: Persona = new Persona();
     persona.genero = this.model.genero;
     persona.documento = new Documento();

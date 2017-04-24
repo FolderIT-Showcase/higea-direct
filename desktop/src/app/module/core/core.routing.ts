@@ -19,9 +19,7 @@ const appRoutes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
-    resolve: {
-      paises: PaisesResolveService
-    }
+
   },
   {
     path: 'home',
@@ -29,7 +27,10 @@ const appRoutes: Routes = [
   },
   {
     path: 'register',
-    component: RegisterComponent
+    component: RegisterComponent,
+    resolve: {
+      paises: PaisesResolveService
+    }
   },
   {path: 'register-social', component: RegisterSocialComponent},
   {path: 'regitrationConfirm', component: UserActiveComponent},

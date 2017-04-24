@@ -17,7 +17,6 @@ class Datos {
   tipoDocumento = '';
   numeroDocumento: number;
   genero = '';
-  username = '';
   password1 = '';
   password2 = '';
   email = '';
@@ -67,15 +66,14 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
     this.loading = true;
     const user: User = new User();
-    user.username = this.model.username;
     user.password = this.model.password1;
+    user.email = this.model.email;
     const persona: Persona = new Persona();
+    persona.userAsociado = user;
     persona.genero = this.model.genero.toUpperCase();
     persona.documento = new Documento();
     persona.documento.tipoDocumento = this.model.tipoDocumento;
     persona.documento.numero = this.model.numeroDocumento;
-    user.email = this.model.email;
-    persona.userAsociado = user;
 
     this.personaService.create(persona)
       .then(data => {
