@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewContainerRef} from '@angular/core';
 import {Router} from '@angular/router';
 import {PersonaService} from '../../../core/service/persona.service';
 import {AlertService} from '../../../core/service/alert.service';
@@ -39,7 +39,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
               private userService: PersonaService,
               private alertService: AlertService,
               private store: Store) {
-
   }
 
   ngOnInit(): void {
@@ -78,7 +77,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
     this.userService.create(persona)
       .then(data => {
-        this.alertService.success('Registro Exitoso', true);
+        this.alertService.success('Registro Exitoso');
         this.router.navigate(['/login']);
       })
       .catch(error => {

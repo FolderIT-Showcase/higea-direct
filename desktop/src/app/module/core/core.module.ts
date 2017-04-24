@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {AlertComponent} from './component/alert/alert.component';
 import {routing} from './core.routing';
 import {HttpModule} from '@angular/http';
 import {BrowserModule} from '@angular/platform-browser';
@@ -14,6 +13,7 @@ import {ApiService} from './service/api.service';
 import {PersonaService} from './service/persona.service';
 import {AlertService} from './service/alert.service';
 import {AuthGuard} from './guard/auth.guard';
+import {AlertComponent} from './component/alert/alert.component';
 
 @NgModule({
   imports: [
@@ -23,6 +23,7 @@ import {AuthGuard} from './guard/auth.guard';
     RouterModule,
     routing
   ],
+  exports: [BrowserModule, AlertComponent],
   declarations: [
     AlertComponent,
     HomeComponent

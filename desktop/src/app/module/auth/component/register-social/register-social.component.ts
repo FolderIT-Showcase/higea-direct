@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewContainerRef} from '@angular/core';
 import {TipoDocumentos} from '../../../core/domain/enums/tipo-documento';
 import {Generos} from '../../../core/domain/enums/genero';
 import {Pais} from '../../../core/domain/pais';
@@ -76,7 +76,7 @@ export class RegisterSocialComponent implements OnInit {
 
     this.userService.create(persona)
       .then(data => {
-        this.alertService.success('Registro Exitoso', true);
+        this.alertService.success('Registro Exitoso');
         this.router.navigate(['/login']);
       })
       .catch(error => {

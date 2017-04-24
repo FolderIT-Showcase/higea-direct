@@ -7,6 +7,7 @@ import {CoreModule} from './module/core/core.module';
 import {AuthModule} from './module/auth/auth.module';
 import {RouterModule} from '@angular/router';
 import {TurnoModule} from './module/turno/turno.module';
+import {AlertComponent} from './module/core/component/alert/alert.component';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,7 +20,8 @@ import {TurnoModule} from './module/turno/turno.module';
     AuthModule,
     TurnoModule
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  providers: [AlertComponent]
 })
 export class AppModule {
 }

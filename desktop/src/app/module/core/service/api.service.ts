@@ -8,22 +8,21 @@ import {User} from '../domain/user';
 @Injectable()
 export class ApiService {
 
- // private baseURL = 'proxy/';  // https://localhost:8080/
+  private baseURL = 'api/';  // https://localhost:8080/
 
-  private baseURL = 'https://localhost:8080/';  // https://localhost:8080/
-  private headers = new Headers({'Content-Type': 'application/json','Access-Control-Allow-Origin': '*','Accept': 'application/json','X-Requested-With': 'XMLHttpRequest' });
-
-  /*private headers: Headers = new Headers({
+  // private baseURL = 'https://localhost:8080/';  // https://localhost:8080/
+  private headers = new Headers({
     'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
     'Accept': 'application/json',
     'X-Requested-With': 'XMLHttpRequest'
-  });*/
+  });
 
-  private static getJson(response: Response) {
+  static getJson(response: Response) {
     return response.json();
   }
 
-  private static checkForError(response: Response): Response | Observable<any> {
+  static checkForError(response: Response): Response | Observable<any> {
     if (response.status >= 200 && response.status < 300) {
       return response;
     }
@@ -50,7 +49,7 @@ export class ApiService {
       search: search
     };
 
-    return this.http.get(`${this.baseURL}${path}`, {headers: this.headers})
+    return this.http.get(`${this.baseURL}${path}`, options)
       .map(ApiService.checkForError)
       .catch(err => Observable.throw(err))
       .map(ApiService.getJson);
