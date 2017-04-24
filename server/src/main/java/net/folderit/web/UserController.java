@@ -79,9 +79,10 @@ public class UserController {
 
             turneroException.getMessage(TurneroException.MESSAGE_MAIL_EXIST,new String[] { registered.getEmail() });
 
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(turneroException);
+            return ResponseEntity.ok(turneroException);
         }
-        Roles role = roleRepository.findOne(1L);
+        //cambiar a user
+        Roles role = roleRepository.findByAuthority(Roles.ROLE_ADMIN);
         List<Roles> roles = new ArrayList<>();
         roles.add(role);
         registered.setRoles(roles);
