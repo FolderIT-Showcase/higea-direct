@@ -21,13 +21,10 @@ export class NuevoTurnoComponent {
   model: Data = new Data();
   centrosSalud: CentroSalud[] = [];
   especialidades: Especialidad[] = [];
+  filteredEspecialidades: Especialidad[] = [];
   profesionales: Profesional[] = [];
   filteredProfesionales: Profesional[] = [];
   personas: Persona[] = [];
-
-  public getDate(): number {
-    return this.model.fechaDesde && this.model.fechaDesde.getTime() || new Date().getTime();
-  }
 
   buscar() {
 
