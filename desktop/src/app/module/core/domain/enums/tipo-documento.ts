@@ -1,6 +1,6 @@
 export class TipoDocumento {
-  dni = 'Documento Nacional de Identidad';
-  pasaporte = 'Pasaporte';
+  dni = 'dni';
+  pasaporte = 'pasaporte';
   cedulaIdentidad = 'Cedula de Identidad';
   libretaEnrolamiento = 'Libreta de Enrolamiento';
   libretaCivica = 'Libreta Cívica';
@@ -19,4 +19,5 @@ export class TipoDocumentos {
     tipoDocumentos.push(tipoDocumento.documentoExtranjero);
     return tipoDocumentos;
   }
+
 }

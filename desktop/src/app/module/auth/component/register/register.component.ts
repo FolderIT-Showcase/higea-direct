@@ -9,16 +9,18 @@ import {User} from '../../../core/domain/user';
 import {Store} from '../../../core/service/store';
 import {Persona} from '../../../core/domain/persona';
 import {Documento} from '../../../core/domain/documento';
+import {StoreService} from '../../../core/service/store.service';
+import {MetadataService} from '../../../core/service/metadata.service';
 
 class Datos {
-  pais: string;
-  tipoDocumento: string;
+  pais = '';
+  tipoDocumento = '';
   numeroDocumento: number;
-  genero: string;
-  username: string;
-  password1: string;
-  password2: string;
-  email: string;
+  genero = '';
+  username = '';
+  password1 = '';
+  password2 = '';
+  email = '';
 }
 
 @Component({
@@ -36,19 +38,20 @@ export class RegisterComponent implements OnInit, OnDestroy {
   captcha: string = null;
 
   constructor(private router: Router,
-              private userService: PersonaService,
+              private personaService: PersonaService,
               private alertService: AlertService,
-              private store: Store) {
+              private store: Store,
+              private storeService: StoreService,
+              private metadataService: MetadataService) {
+
   }
 
   ngOnInit(): void {
-    this.store.changes.pluck('paises').first().toPromise()
-      .then((data: any) => {
-        this.paises = data;
-      })
-      .catch(error => {
-        console.error(error);
-      });
+    this.metadataService.getPaises().first().toPromise();
+    this.paises = this.storeService.get('paises');
+    this.model.tipoDocumento = this.tipoDocumentos[0].toLowerCase();
+    this.model.genero = this.generos[0].toLowerCase();
+    this.model.pais = this.paises[0].nombre;
   }
 
   ngOnDestroy(): void {
@@ -57,27 +60,29 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   register() {
 
-    if (!this.captcha) {
-      this.alertService.error('Por Favor complete todos los datos');
-      return;
-    }
+    // if (!this.captcha) {
+    //   this.alertService.error('Por Favor complete todos los datos');
+    //   return;
+    // }
 
     this.loading = true;
     const user: User = new User();
     user.username = this.model.username;
     user.password = this.model.password1;
     const persona: Persona = new Persona();
-    persona.genero = this.model.genero.toLowerCase();
+    persona.genero = this.model.genero.toUpperCase();
     persona.documento = new Documento();
     persona.documento.tipoDocumento = this.model.tipoDocumento;
     persona.documento.numero = this.model.numeroDocumento;
     user.email = this.model.email;
     persona.userAsociado = user;
 
-    this.userService.create(persona)
+    this.personaService.create(persona)
       .then(data => {
-        this.alertService.success('Registro Exitoso');
         this.router.navigate(['/login']);
+        setTimeout(() => {
+          this.alertService.success('Registro Exitoso');
+        }, 500);
       })
       .catch(error => {
         this.alertService.error(error);

@@ -20,7 +20,7 @@ export class GoogleSigninComponent implements AfterViewInit {
     'https://www.googleapis.com/auth/admin.directory.user.readonly'
   ].join(' ');
 
-  public auth2: any;
+  public auth2: any = gapi.auth2;
 
   constructor(private element: ElementRef, private auth: AppAuthService) {
   }

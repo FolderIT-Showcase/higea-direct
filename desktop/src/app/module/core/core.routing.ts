@@ -14,13 +14,14 @@ const appRoutes: Routes = [
     path: '',
     component: HomeComponent,
     canActivate: [AuthGuard],
-    resolve: {
-      paises: PaisesResolveService
-    }
+
   },
   {
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent,
+    resolve: {
+      paises: PaisesResolveService
+    }
   },
   {
     path: 'home',
