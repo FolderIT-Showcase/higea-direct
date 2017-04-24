@@ -2,10 +2,11 @@ import {User} from './user';
 import {Documento} from './documento';
 import {EstadoCivil} from './enums/estado-civil';
 import {Domicilio} from './domicilio';
+import {Genero} from './enums/genero';
 export class Persona {
   id: number;
   apellido: string;
-  fechaNacimiento: string;
+  fechaNacimiento: Date;
   genero: string;
   nombre: string;
   userAsociado: User;

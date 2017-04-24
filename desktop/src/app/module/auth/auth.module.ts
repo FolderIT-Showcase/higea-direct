@@ -6,7 +6,6 @@ import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {RouterModule} from '@angular/router';
-import {GoogleSignInComponent} from 'angular-google-signin';
 import {GoogleSigninComponent} from './component/google-signin/google-signin.component';
 import {FacebookSigninComponent} from './component/facebook-signin/facebook-signin.component';
 import {RegisterSocialComponent} from './component/register-social/register-social.component';
@@ -15,7 +14,7 @@ import {DatepickerModule} from 'ngx-bootstrap/datepicker';
 import {StoreService} from '../core/service/store.service';
 import {FacebookService} from 'ngx-facebook';
 import {ReCaptchaModule} from 'angular2-recaptcha';
-import {UserActiveComponent} from "./component/user-activate/user.active.component";
+import {UserActiveComponent} from './component/user-activate/user.active.component';
 
 @NgModule({
   imports: [

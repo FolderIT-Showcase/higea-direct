@@ -20,23 +20,25 @@
     </div>
   </div>
 
-  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !model.especialidad }">
+  <div class="form-group">
     <label class="col-sm-4 control-label">Especialidad</label>
     <div class="col-sm-8">
       <select class="minimal btn btn-block dropdown-toggle">
-        <option *ngFor="let especialidad of filteredEspecialidades" (click)="handleEspecialidadClick(especialidad)">{{especialidad.nombre}}</option>
+        <option *ngFor="let especialidad of filteredEspecialidades" (click)="handleEspecialidadClick(especialidad)">
+          {{especialidad.nombre}}
+        </option>
       </select>
-      <div *ngIf="f.submitted && !model.especialidad" class="help-block">Ingrese la especialidad requerida</div>
     </div>
   </div>
 
-  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !model.profesional }">
+  <div class="form-group">
     <label class="col-sm-4 control-label">Profesional</label>
     <div class="col-sm-8">
       <select class="minimal btn btn-block dropdown-toggle">
-        <option *ngFor="let profesional of filteredProfesionales" (click)="handleProfesionalClick(profesional)">{{profesional.nombre}}</option>
+        <option *ngFor="let profesional of filteredProfesionales" (click)="handleProfesionalClick(profesional)">
+          {{profesional.nombre}}
+        </option>
       </select>
-      <div *ngIf="f.submitted && !model.especialidad" class="help-block">Ingrese el profesional deseado</div>
     </div>
   </div>
 
@@ -49,11 +51,11 @@
 
   <div class="form-group">
     <label class="col-sm-4 control-label"></label>
-    <div class="col-sm-8">
-      <div class="btn-group btn-group-justified">
-        <a type="submit" class="btn btn-primary">Buscar</a>
-        <a class="btn btn-default">Limpiar Busqueda</a>
-      </div>
+    <div class="col-sm-4">
+      <button type="submit" class="btn btn-block btn-primary">Buscar</button>
+    </div>
+    <div class="col-sm-4">
+      <a class="btn btn-block btn-default">Limpiar Busqueda</a>
     </div>
   </div>
 

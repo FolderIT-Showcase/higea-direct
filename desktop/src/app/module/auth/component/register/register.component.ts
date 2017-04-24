@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewContainerRef} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {PersonaService} from '../../../core/service/persona.service';
 import {AlertService} from '../../../core/service/alert.service';
@@ -31,7 +31,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   model: Datos = new Datos;
   paises: Pais[] = [];
   tipoDocumentos: TipoDocumentos = new TipoDocumentos();
-  generos: Generos = new Generos();
+  generos: String[] = Generos.build();
   loading = false;
   captcha: string = null;
 
@@ -62,13 +62,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
       return;
     }
 
-
     this.loading = true;
     const user: User = new User();
     user.username = this.model.username;
     user.password = this.model.password1;
     const persona: Persona = new Persona();
-    persona.genero = this.model.genero;
+    persona.genero = this.model.genero.toLowerCase();
     persona.documento = new Documento();
     persona.documento.tipoDocumento = this.model.tipoDocumento;
     persona.documento.numero = this.model.numeroDocumento;

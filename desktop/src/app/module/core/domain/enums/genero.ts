@@ -5,7 +5,7 @@ export class Genero {
 }
 
 export class Generos {
-  constructor() {
+  static build() {
     const genero = new Genero();
     const generos: String[] = [];
     generos.push(genero.masculino);

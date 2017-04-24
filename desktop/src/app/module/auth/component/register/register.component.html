@@ -7,7 +7,7 @@
           Registro
         </h2>
 
-        <form class="form-horizontal" name="form" (ngSubmit)="f.form.valid && register()" #f="ngForm" novalidate>
+        <form class="form-horizontal" name="f" (ngSubmit)="f.form.valid && register()" #f="ngForm" novalidate>
 
           <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
             <label class="col-sm-4 control-label" for="username">Usuario</label>
@@ -21,7 +21,8 @@
           <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password1.valid }">
             <label class="col-sm-4 control-label" for="password1">Contraseña</label>
             <div class="col-sm-8">
-              <input type="text" class="form-control" name="password1" [(ngModel)]="model.password1" #password1="ngModel"
+              <input type="text" class="form-control" name="password1" [(ngModel)]="model.password1"
+                     #password1="ngModel"
                      required/>
               <div *ngIf="f.submitted && !password1.valid" class="help-block">Ingrese una contraseña</div>
             </div>
@@ -31,7 +32,8 @@
                [ngClass]="{ 'has-error': f.submitted && !model.password2 && model.password1 != model.password2 }">
             <label class="col-sm-4 control-label" for="password2">Repita su contraseña</label>
             <div class="col-sm-8">
-              <input type="text" class="form-control" name="password2" [(ngModel)]="model.password2" #password2="ngModel"
+              <input type="text" class="form-control" name="password2" [(ngModel)]="model.password2"
+                     #password2="ngModel"
                      required/>
               <div *ngIf="f.submitted && model.password1 != model.password2" class="help-block">Sus contraseñas no
                 coinciden, revise por favor
@@ -53,7 +55,9 @@
             <label class="col-sm-4 control-label">Tipo de Documento</label>
             <div class="col-sm-8">
               <select class="minimal btn btn-block dropdown-toggle">
-                <option *ngFor="let tipoDocumento of tipoDocumentos" (click)="handleTipoDocumentoClick(tipoDocumento)">{{tipoDocumento}}</option>
+                <option *ngFor="let tipoDocumento of tipoDocumentos" (click)="handleTipoDocumentoClick(tipoDocumento)">
+                  {{tipoDocumento}}
+                </option>
               </select>
               <div *ngIf="f.submitted && !model.tipoDocumento" class="help-block">Ingrese su Tipo de Documento</div>
             </div>
@@ -80,24 +84,22 @@
           </div>
 
           <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !captcha }">
-
-              <div class="g-recaptcha-container">
-                <re-captcha class="g-recaptcha" (captchaResponse)="handleCorrectCaptcha($event)" language="es"
-                            site_key="6Lcf4B0UAAAAAFnu4amKAVQ-I2onmCv9OvLw0J_i"></re-captcha>
-              </div>
-
+            <div class="g-recaptcha-container">
+              <re-captcha class="g-recaptcha" (captchaResponse)="handleCorrectCaptcha($event)" language="es"
+                          site_key="6Lcf4B0UAAAAAFnu4amKAVQ-I2onmCv9OvLw0J_i"></re-captcha>
+            </div>
             <div *ngIf="f.submitted && !captcha" class="help-block">Acepte el captcha</div>
           </div>
 
           <div class="form-group">
-            <label class="col-sm-3 control-label"></label>
-            <div class="col-sm-6">
-              <div class="btn-group btn-group-justified">
-                <a class="btn btn-block btn-primary">Registrarse</a>
-                <a [routerLink]="['/login']" class="btn btn-block btn-default">Cancelar</a>
-              </div>
+            <div class="col-sm-2"></div>
+            <div class="col-sm-4">
+              <button type="submit" class="btn btn-block btn-primary">Registrarse</button>
             </div>
-            <label class="col-sm-3 control-label"></label>
+            <div class="col-sm-4">
+              <a [routerLink]="['/login']" class="btn btn-block btn-default">Cancelar</a>
+            </div>
+            <div class="col-sm-2"></div>
           </div>
 
         </form>
