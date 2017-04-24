@@ -29,7 +29,7 @@ public class MetadataController {
 
     @GetMapping("/pais")
     public ResponseEntity<Collection<Pais>> getAllPais() {
-        return new ResponseEntity<>((Collection<Pais>) metadataService.findAllPaisOrderByNombreAsc(), HttpStatus.OK);
+        return new ResponseEntity<>((Collection<Pais>) metadataService.findAllPais(), HttpStatus.OK);
     }
 
     @GetMapping("/provincia")
