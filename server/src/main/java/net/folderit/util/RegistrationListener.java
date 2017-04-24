@@ -47,7 +47,7 @@ public class RegistrationListener implements
         String recipientAddress = user.getEmail();
         String subject = "Confirmacion de Registro Turnero Folder IT";
         String confirmationUrl
-                = event.getAppUrl() + "/users/regitrationConfirm?token=" + token;
+                = event.getAppUrl() + "/regitrationConfirm?token=" + token;
 
         SimpleMailMessage email = new SimpleMailMessage();
         email.setTo(recipientAddress);
