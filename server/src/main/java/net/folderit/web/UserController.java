@@ -1,16 +1,28 @@
 package net.folderit.web;
 
+import net.folderit.domain.Persona;
+import net.folderit.domain.Roles;
 import net.folderit.domain.User;
+import net.folderit.domain.security.VerificationToken;
+import net.folderit.repository.RoleRepository;
+import net.folderit.service.PersonaService;
 import net.folderit.service.UserService;
+import net.folderit.util.OnRegistrationCompleteEvent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Role;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @ComponentScan
@@ -19,10 +31,20 @@ public class UserController {
 
     private static final Map<String, String> credentials = new HashMap<>();
     private final UserService userService;
+    private final PersonaService personaService;
+    private final RoleRepository roleRepository;
+    @Value("${auth.message.expired}")
+    private String expiredMessage ;
+    @Value("${auth.message.invalidToken}")
+    private String invalidTokenMessage ;
+    @Autowired
+    ApplicationEventPublisher eventPublisher;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService,PersonaService personaService,RoleRepository roleRepository) {
         this.userService = userService;
+        this.personaService = personaService;
+        this.roleRepository = roleRepository;
     }
 
     @GetMapping("/users")
@@ -36,6 +58,63 @@ public class UserController {
         return ResponseEntity.ok(mUser.getId());
     }
 
+    @PostMapping("/users/registration")
+    public ResponseEntity registerUserAccount(@RequestBody Persona persona, BindingResult result,
+                                            WebRequest request,
+                                            Errors errors) {
+       // User mUser = userService.save(user);
+       // return ResponseEntity.ok(mUser.getId());
+
+        if (result.hasErrors()) {
+           // return new ModelAndView("registration", "user", persona.getUserAsociado());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+
+        User registered = persona.getUserAsociado();
+        if (registered == null) {
+            result.rejectValue("email", "message.regError");
+        }
+        Roles role = roleRepository.findOne(1L);
+        List<Roles> roles = new ArrayList<>();
+        roles.add(role);
+        registered.setRoles(roles);
+        try {
+            String appUrl = request.getContextPath();
+            eventPublisher.publishEvent(new OnRegistrationCompleteEvent
+                    (registered, request.getLocale(), appUrl));
+        } catch (Exception me) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+        //return new ResponseEntity.ok(registered);
+        return ResponseEntity.status(HttpStatus.OK).body(null);
+    }
+
+    @RequestMapping(value = "/users/regitrationConfirm", method = RequestMethod.GET)
+    public ResponseEntity<User> confirmRegistration
+            (WebRequest request, Model model, @RequestParam("token") String token) {
+
+        Locale locale = request.getLocale();
+
+        VerificationToken verificationToken = userService.getVerificationToken(token);
+        if (verificationToken == null) {
+            //String message = messages.getMessage("auth.message.invalidToken", null, locale);
+            model.addAttribute("message", invalidTokenMessage);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+
+        User user = verificationToken.getUser();
+        Calendar cal = Calendar.getInstance();
+        if ((verificationToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
+           // String messageValue = messages.getMessage("auth.message.expired", null, locale)
+            model.addAttribute("message", expiredMessage);
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(user);
+        }
+
+        user.setEnabled(true);
+        userService.saveRegisteredUser(user);
+        return ResponseEntity.ok(user);
+    }
+
     @GetMapping("/users/external")
     public ResponseEntity<Long> finByTypeAndExternalId(@RequestParam String externalId,@RequestParam String type) {
         User mUser = userService.finByTypeAndExternalId(externalId,type);
@@ -43,22 +122,5 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
 
-  /*    @RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
-    public ResponseEntity<?> create(@RequestBody User customer) {
-        return new ResponseEntity<>(userService.save(customer), HttpStatus.CREATED);
-    }
 
-    @RequestMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
-    public ResponseEntity<?> isLoggedIn(HttpServletResponse httpServletResponse, @RequestBody AccountCredentials user) {
-        return new ResponseEntity<>(null, HttpStatus.OK);
-    }
-
-
-    @PostMapping("/user")
-    public Map<String, String> user(@RequestBody Principal principal) {
-        Map<String, String> map = new LinkedHashMap<>();
-        map.put("name", principal.getName());
-        return map;
-    }
-*/
 }

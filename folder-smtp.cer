@@ -1,0 +1,93 @@
+CONNECTED(00000188)
+---
+Certificate chain
+ 0 s:/OU=Domain Control Validated/CN=*.siteground.biz
+   i:/C=BE/O=GlobalSign nv-sa/CN=AlphaSSL CA - SHA256 - G2
+ 1 s:/C=BE/O=GlobalSign nv-sa/CN=AlphaSSL CA - SHA256 - G2
+   i:/OU=GlobalSign Root CA - R3/O=GlobalSign/CN=GlobalSign
+---
+Server certificate
+-----BEGIN CERTIFICATE-----
+MIIHVDCCBjygAwIBAgIMTXfgFYOO+TKNCaJIMA0GCSqGSIb3DQEBCwUAMEwxCzAJ
+BgNVBAYTAkJFMRkwFwYDVQQKExBHbG9iYWxTaWduIG52LXNhMSIwIAYDVQQDExlB
+bHBoYVNTTCBDQSAtIFNIQTI1NiAtIEcyMB4XDTE3MDMxNDExMDY1OFoXDTE4MDUx
+NDA4MzAzN1owPjEhMB8GA1UECxMYRG9tYWluIENvbnRyb2wgVmFsaWRhdGVkMRkw
+FwYDVQQDDBAqLnNpdGVncm91bmQuYml6MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8A
+MIIBCgKCAQEAzEoZ5JRBYkQEZtJLdpddPdn7AL5OSM4lB7RLfZTCqq4KeYqsC573
+Z+20HCexeorFf1sEhsRvJ/BZxPtUbkdoLTf1M6UVtKM6Jr/FqeEqxgr/Dy0sKnUq
+tAwmdw0ug/Mx8kb4rIafFtGi+pI7aeySCc7J8hjEseBaV5cNG/TiJne7SHoHZKuE
+Exnfh7KqAK8dZ01ExtoXV8x5RnNc/Ey4xzxItO8pPOBBctCRIaOp1mfo8Re/z1N7
+zRA65TSQn39VBu+cLWVt2SG0Y/a//GI18nwlv2mtRkTkZKJXI9yMNjw5TIVmKwZA
+rDwGSLocm6xIIYu7FPpjsy43Wm72gbPMNQIDAQABo4IEQjCCBD4wDgYDVR0PAQH/
+BAQDAgWgMIGJBggrBgEFBQcBAQR9MHswQgYIKwYBBQUHMAKGNmh0dHA6Ly9zZWN1
+cmUyLmFscGhhc3NsLmNvbS9jYWNlcnQvZ3NhbHBoYXNoYTJnMnIxLmNydDA1Bggr
+BgEFBQcwAYYpaHR0cDovL29jc3AyLmdsb2JhbHNpZ24uY29tL2dzYWxwaGFzaGEy
+ZzIwVwYDVR0gBFAwTjBCBgorBgEEAaAyAQoKMDQwMgYIKwYBBQUHAgEWJmh0dHBz
+Oi8vd3d3Lmdsb2JhbHNpZ24uY29tL3JlcG9zaXRvcnkvMAgGBmeBDAECATAJBgNV
+HRMEAjAAMD4GA1UdHwQ3MDUwM6AxoC+GLWh0dHA6Ly9jcmwyLmFscGhhc3NsLmNv
+bS9ncy9nc2FscGhhc2hhMmcyLmNybDArBgNVHREEJDAighAqLnNpdGVncm91bmQu
+Yml6gg5zaXRlZ3JvdW5kLmJpejAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYBBQUH
+AwIwHQYDVR0OBBYEFMKLp0z+2EfA3Zx0dYzaxVrX4cKSMB8GA1UdIwQYMBaAFPXN
+1TwIUPlqTzq3l9pWg+Zp0mj3MIICbgYKKwYBBAHWeQIEAgSCAl4EggJaAlgAdwDd
+6x0reg1PpiCLga2BaHB+Lo6dAdVciI09EcTNtuy+zAAAAVrMf+qEAAAEAwBIMEYC
+IQCr1zQtoJc8UwmeGPCfdWfm1wj6szOjzuOXFRn/fR0iRwIhAJCtfIBQPMm7Yp8V
+Ijv2ugxxL+HnEmNSXPnEkBWbNbbeAHUAVhQGmi/XwuzT9eG9RLI+x0Z2ubyZEVzA
+75SYVdaJ0N0AAAFazH/q1AAABAMARjBEAiBgbUug+46YLtlww78FP/wcZnka6MXO
+hc3QGhmisUiKTgIgN7ir+zTLN+lyjMuLhlG6Ie2vsPl5AuG0woPpF8kPwt8AdgC7
+2d+8H4pxtZOUI5eqkntHOFeVCqtS6BqQlmQ2jh7RhQAAAVrMf+4WAAAEAwBHMEUC
+ICoDqavWZ7V5Hk2CsBpevrlM0yk/isQelHg3vmzYCXJiAiEApbgjJFioafx8dqTp
+mkDnGHPEWRXxjlnBvobmPEv1JBgAdgCkuQmQtBhYFIe7E6LMZ3AKPDWYBPkb37jj
+d80OyA3cEAAAAVrMf+1KAAAEAwBHMEUCIExC9aYVhekV1nEEsDLVw5Y770SdR45/
+P6t7Sa3hSH+MAiEArTEi5yj4ImKr2LJcOfmixrnYwbgHitOVGUMnOreBNvsAdgDu
+S723dc5guuFCaR+r4Z5mow9+X7By2IMAxHuJeqj9ywAAAVrMf/BFAAAEAwBHMEUC
+IQCbsUlg7e0iQ5HBynYykDJyU2OvubLGQR/JOP+ccHjX4QIgHVbEIeOeIE8bCMDO
+aMBEtYzIXPKlR4hbMC1C3yK60fMwDQYJKoZIhvcNAQELBQADggEBADXBDHhHmfzW
+R7q0F3/aRIHta2dTa09pkAJnY1yFY/sPOyweD7zQvTKM/mcrrt0iDcJ39aJJfmbq
+aUsWnYiUhA6eHJxRmT0k5VZUFpaPyC/jytUS3QaNfeDypGppi01jPafjUHhBeo0K
++vIrPtHRLAwiG3aOgxT4yon18qlNVDlqJxnKJ/LZjth2z6d9BjOIDjO0LLtLp5tP
+y6lG8npFWzXb0Bw2/ZUAWR6cmTLp33B4HQV2x7b9MFJoq+ZaUcZrMp33GH8tMuot
+fIdCV3T++vtqO8+IVj3DbcbHgdM5Xup4Uolifj8DBRNr4/BmGI+K+QKnjQWPd+qf
+ofljPfoSfco=
+-----END CERTIFICATE-----
+subject=/OU=Domain Control Validated/CN=*.siteground.biz
+issuer=/C=BE/O=GlobalSign nv-sa/CN=AlphaSSL CA - SHA256 - G2
+---
+No client certificate CA names sent
+Peer signing digest: SHA512
+Server Temp Key: ECDH, P-256, 256 bits
+---
+SSL handshake has read 3974 bytes and written 479 bytes
+---
+New, TLSv1/SSLv3, Cipher is ECDHE-RSA-AES256-GCM-SHA384
+Server public key is 2048 bit
+Secure Renegotiation IS supported
+Compression: NONE
+Expansion: NONE
+No ALPN negotiated
+SSL-Session:
+    Protocol  : TLSv1.2
+    Cipher    : ECDHE-RSA-AES256-GCM-SHA384
+    Session-ID: F3135371A44D48522CF33785B6782783FBA6328070170DA58DCBB059E174C70E
+    Session-ID-ctx: 
+    Master-Key: 4D8337C16D37F24C0FE68D1381297006F994D671EC46043055B75333562112D60C9A558216C12CA4B47B9BFA745B2036
+    Key-Arg   : None
+    PSK identity: None
+    PSK identity hint: None
+    SRP username: None
+    TLS session ticket lifetime hint: 200 (seconds)
+    TLS session ticket:
+    0000 - 86 c8 59 b0 0c e7 6f 04-28 ed 80 ed c1 a5 b0 25   ..Y...o.(......%
+    0010 - 8f aa 7a cf 3f ef 53 9b-12 81 6f 01 e6 da 42 50   ..z.?.S...o...BP
+    0020 - 61 f6 e0 a0 32 1f 96 52-0d 5b 45 b0 a6 4a 47 dc   a...2..R.[E..JG.
+    0030 - 45 08 af f3 75 f7 b6 e6-f2 e3 a5 b3 a0 1c 38 89   E...u.........8.
+    0040 - f1 96 44 6f bd eb 91 77-93 4e bb ae bf 9f 9f 97   ..Do...w.N......
+    0050 - 99 54 a7 bb d5 17 28 26-e9 85 26 b0 d8 f6 9c 89   .T....(&..&.....
+    0060 - 23 4f 38 2e 2e d7 66 dc-14 91 4a b0 9a 03 ff 6d   #O8...f...J....m
+    0070 - ae ce dc 43 5d 71 67 28-d4 8c 6d 9f c6 86 69 6a   ...C]qg(..m...ij
+    0080 - 2b 94 e7 71 04 fb af 66-2e 9a 42 af 7c 6e cb b0   +..q...f..B.|n..
+    0090 - 77 a7 43 04 61 7b 06 ab-8a 8d fd 11 57 2e 3b 50   w.C.a{......W.;P
+
+    Start Time: 1492806905
+    Timeout   : 300 (sec)
+    Verify return code: 0 (ok)
+---

@@ -37,6 +37,11 @@ public class User implements Serializable {
 
     private String type;
 
+    private String email;
+
+    @Column(name = "enabled")
+    private boolean enabled = Boolean.FALSE;
+
     //@OneToMany(orphanRemoval=true, cascade={CascadeType.ALL})
     @ManyToMany(cascade={CascadeType.ALL})
     @JoinTable
