@@ -33,7 +33,7 @@ public class MetadataService {
     }
 
 
-    public Iterable<Pais> findAllPais() {return paisRepository.findAll();}
+    public Iterable<Pais> findAllPaisOrderByNombreAsc() {return paisRepository.findAllByOrderByNombreAsc();}
 
     public Iterable<Provincia> findAllProvincia() {return provinciaRepository.findAll();}
 
