@@ -8,13 +8,16 @@ import {User} from '../domain/user';
 @Injectable()
 export class ApiService {
 
-  private baseURL = 'proxy/';  // http://localhost:8080/
+ // private baseURL = 'proxy/';  // https://localhost:8080/
 
-  private headers: Headers = new Headers({
+  private baseURL = 'https://localhost:8080/';  // https://localhost:8080/
+  private headers = new Headers({'Content-Type': 'application/json','Access-Control-Allow-Origin': '*','Accept': 'application/json','X-Requested-With': 'XMLHttpRequest' });
+
+  /*private headers: Headers = new Headers({
     'Content-Type': 'application/json',
     'Accept': 'application/json',
     'X-Requested-With': 'XMLHttpRequest'
-  });
+  });*/
 
   private static getJson(response: Response) {
     return response.json();

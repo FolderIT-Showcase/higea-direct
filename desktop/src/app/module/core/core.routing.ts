@@ -4,6 +4,7 @@ import {LoginComponent} from '../auth/component/login/login.component';
 import {RegisterComponent} from '../auth/component/register/register.component';
 import {RegisterSocialComponent} from '../auth/component/register-social/register-social.component';
 import {TurnoComponent} from '../turno/turno.component';
+import {UserActiveComponent} from "../auth/component/user-activate/user.active.component";
 
 const appRoutes: Routes = [
   {
@@ -19,6 +20,7 @@ const appRoutes: Routes = [
     component: RegisterComponent,
   },
   {path: 'register-social', component: RegisterSocialComponent},
+  {path: 'regitrationConfirm', component: UserActiveComponent},
   {path: 'nuevo-turno', component: TurnoComponent},
 
   // otherwise redirect to home

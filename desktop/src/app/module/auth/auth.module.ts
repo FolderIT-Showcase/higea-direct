@@ -15,6 +15,7 @@ import {DatepickerModule} from 'ngx-bootstrap/datepicker';
 import {StoreService} from '../core/service/store.service';
 import {FacebookService} from 'ngx-facebook';
 import {ReCaptchaModule} from 'angular2-recaptcha';
+import {UserActiveComponent} from "./component/user-activate/user.active.component";
 
 @NgModule({
   imports: [
@@ -33,7 +34,8 @@ import {ReCaptchaModule} from 'angular2-recaptcha';
     GoogleSignInComponent,
     GoogleSigninComponent,
     FacebookSigninComponent,
-    RegisterSocialComponent
+    RegisterSocialComponent,
+    UserActiveComponent
   ],
   providers: [
     StoreService,

@@ -1,6 +1,4 @@
 ﻿import {Injectable} from '@angular/core';
-
-
 import {ApiService} from './api.service';
 import {User} from '../domain/user';
 import {Persona} from '../domain/persona';
@@ -20,6 +18,10 @@ export class PersonaService {
 
   update(user: User) {
     return this.api.put('users/' + user.id, user).first().toPromise();
+  }
+
+  activate(token: any) {
+    return this.api.get('users/regitrationConfirm', token).first().toPromise();
   }
 
 }
