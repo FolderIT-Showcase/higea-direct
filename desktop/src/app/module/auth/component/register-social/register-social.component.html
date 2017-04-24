@@ -1,68 +1,54 @@
 <div class="container">
   <div class="row">
-    <div class="absolute-center align-top">
-
-      <div class="col-md-12 col-sm-12">
+    <div class="absolute-center form-center">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-8">
         <h2 class="app-header text-center">
           Datos Obligatorios
         </h2>
 
-        <form name="form" (ngSubmit)="f.form.valid && register()" #f="ngForm" novalidate>
+        <form class="form-horizontal" name="f" (ngSubmit)="f.form.valid && register()" #f="ngForm" novalidate>
 
           <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !model.pais }">
-            <label>País de origen</label>
-            <div class="btn-group btn-block" dropdown>
-              <button dropdownToggle type="button" class="btn btn-block btn-default dropdown-toggle">
-                {{ model.pais ? model.pais : 'País de origen'}}
-                <span class="caret"></span>
-              </button>
-              <ul *dropdownMenu class="dropdown-menu">
-                <li *ngFor="let pais of paises">
-                  <a class="dropdown-item" (click)="handleCountriesClick(pais)">{{pais.nombre}}</a>
-                </li>
-              </ul>
+            <label class="col-sm-4 control-label">País de origen</label>
+            <div class="col-sm-8">
+              <select class="minimal btn btn-block dropdown-toggle">
+                <option *ngFor="let pais of paises" (click)="handleCountriesClick(pais)">{{pais.nombre}}</option>
+              </select>
+              <div *ngIf="f.submitted && !model.pais" class="help-block">Ingrese su País de origen</div>
             </div>
-            <div *ngIf="f.submitted && !model.pais" class="help-block">Ingrese su País de origen</div>
           </div>
 
           <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !model.tipoDocumento }">
-            <label for="tipoDocumento">Tipo de Documento</label>
-            <div class="btn-group btn-block" dropdown>
-              <button dropdownToggle type="button" class="btn btn-block btn-default dropdown-toggle">
-                {{ model.tipoDocumento ? model.tipoDocumento : 'Tipo de Documento'}}
-                <span class="caret"></span>
-              </button>
-              <ul *dropdownMenu class="dropdown-menu">
-                <li *ngFor="let tipoDocumento of tipoDocumentos">
-                  <a class="dropdown-item" (click)="handleTipoDocumentoClick(tipoDocumento)">{{tipoDocumento}}</a>
-                </li>
-              </ul>
+            <label class="col-sm-4 control-label">Tipo de Documento</label>
+            <div class="col-sm-8">
+              <select class="minimal btn btn-block dropdown-toggle">
+                <option *ngFor="let tipoDocumento of tipoDocumentos" (click)="handleTipoDocumentoClick(tipoDocumento)">
+                  {{tipoDocumento}}
+                </option>
+              </select>
+              <div *ngIf="f.submitted && !model.tipoDocumento" class="help-block">Ingrese su Tipo de Documento</div>
             </div>
-            <div *ngIf="f.submitted && !model.tipoDocumento" class="help-block">Ingrese su Tipo de Documento</div>
           </div>
 
           <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !numeroDocumento.valid }">
-            <label for="numeroDocumento">Número de documento</label>
-            <input type="text" class="form-control" name="lastName" [(ngModel)]="model.numeroDocumento"
-                   #numeroDocumento="ngModel"
-                   required/>
+            <label class="col-sm-4 control-label" for="numeroDocumento">Número de documento</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" name="lastName" [(ngModel)]="model.numeroDocumento"
+                     #numeroDocumento="ngModel"
+                     required/>
+            </div>
             <div *ngIf="f.submitted && !numeroDocumento.valid" class="help-block">Ingrese su Número de documento</div>
           </div>
 
           <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !model.genero }">
-            <label>Género</label>
-            <div name="genero" class="btn-group btn-block" dropdown required>
-              <button dropdownToggle type="button" class="btn btn-block btn-default dropdown-toggle">
-                {{ model.genero ? model.genero : 'Seleccione un género'}}
-                <span class="caret"></span>
-              </button>
-              <ul *dropdownMenu class="dropdown-menu">
-                <li *ngFor="let genero of generos">
-                  <a class="dropdown-item" (click)="handleGeneroClick(genero)">{{genero}}</a>
-                </li>
-              </ul>
+            <label class="col-sm-4 control-label">Género</label>
+            <div class="col-sm-8">
+              <select class="minimal btn btn-block dropdown-toggle">
+                <option *ngFor="let genero of generos" (click)="handleGeneroClick(genero)">{{genero}}</option>
+              </select>
+              <div *ngIf="f.submitted && !model.genero" class="help-block">Ingrese su Género</div>
             </div>
-            <div *ngIf="f.submitted && !model.genero" class="help-block">Ingrese su Género</div>
           </div>
 
           <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !captcha }">
@@ -74,15 +60,19 @@
           </div>
 
           <div class="form-group">
-            <button [disabled]="loading" class="btn btn-block btn-primary">Registrarse</button>
-            <img *ngIf="loading"
-                 src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
-            <a [routerLink]="['/login']" class="btn btn-block btn-link">Cancelar</a>
+            <div class="col-sm-2"></div>
+            <div class="col-sm-4">
+              <button type="submit" class="btn btn-block btn-primary">Registrarse</button>
+            </div>
+            <div class="col-sm-4">
+              <a [routerLink]="['/login']" class="btn btn-block btn-default">Cancelar</a>
+            </div>
+            <div class="col-sm-2"></div>
           </div>
 
         </form>
       </div>
-
+      <div class="col-sm-2"></div>
     </div>
   </div>
 </div>

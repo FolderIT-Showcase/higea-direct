@@ -4,13 +4,13 @@ import {MetadataService} from './metadata.service';
 import {Metadata} from '../domain/metadata';
 
 @Injectable()
-export class MetadataResolveService implements Resolve<Metadata> {
+export class PaisesResolveService implements Resolve<Metadata> {
 
   constructor(private metadataService: MetadataService) {
   }
 
   resolve(): Promise<Metadata> {
-    return this.metadataService.getMetadata().first().toPromise();
+    return this.metadataService.getPaises().first().toPromise();
   }
 
 }

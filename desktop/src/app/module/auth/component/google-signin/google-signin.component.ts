@@ -23,7 +23,6 @@ export class GoogleSigninComponent implements AfterViewInit {
   public auth2: any;
 
   constructor(private element: ElementRef, private auth: AppAuthService) {
-
   }
 
   public googleInit() {

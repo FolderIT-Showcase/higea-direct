@@ -4,8 +4,9 @@ import {LoginComponent} from '../auth/component/login/login.component';
 import {RegisterComponent} from '../auth/component/register/register.component';
 import {RegisterSocialComponent} from '../auth/component/register-social/register-social.component';
 import {TurnoComponent} from '../turno/turno.component';
-import {UserActiveComponent} from "../auth/component/user-activate/user.active.component";
+import {UserActiveComponent} from '../auth/component/user-activate/user.active.component';
 import {AuthGuard} from './guard/auth.guard';
+import {PaisesResolveService} from './service/paises-resolve.service';
 
 
 const appRoutes: Routes = [
@@ -13,13 +14,21 @@ const appRoutes: Routes = [
     path: '',
     component: HomeComponent,
     canActivate: [AuthGuard],
-    // resolve: {      metadata: MetadataResolveService    }
+    resolve: {
+      paises: PaisesResolveService
+    }
   },
-  {path: 'login', component: LoginComponent},
-  {path: 'home', component: HomeComponent},
+  {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
+    path: 'home',
+    component: HomeComponent
+  },
   {
     path: 'register',
-    component: RegisterComponent,
+    component: RegisterComponent
   },
   {path: 'register-social', component: RegisterSocialComponent},
   {path: 'regitrationConfirm', component: UserActiveComponent},

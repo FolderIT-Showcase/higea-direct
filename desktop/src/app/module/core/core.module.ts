@@ -6,7 +6,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {RouterModule} from '@angular/router';
 import {HomeComponent} from './component/home/home.component';
 import {Store} from './service/store';
-import {MetadataResolveService} from './service/metadata-resolve.service';
+import {PaisesResolveService} from './service/paises-resolve.service';
 import {MetadataService} from './service/metadata.service';
 import {AppAuthService} from '../auth/auth.service';
 import {ApiService} from './service/api.service';
@@ -30,7 +30,7 @@ import {AlertComponent} from './component/alert/alert.component';
   ],
   providers: [
     Store,
-    MetadataResolveService,
+    PaisesResolveService,
     MetadataService,
     AuthGuard,
     AlertService,
