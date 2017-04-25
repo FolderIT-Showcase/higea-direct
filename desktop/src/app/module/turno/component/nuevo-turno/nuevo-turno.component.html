@@ -1,18 +1,24 @@
-<form class="form-horizontal" name="form" (ngSubmit)="f.form.valid && buscar()" #f="ngForm" novalidate>
+<form class="form-horizontal" name="f" (ngSubmit)="f.form.valid && buscar()" #f="ngForm" novalidate>
 
   <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !model.persona }">
-    <label class="col-sm-4 control-label"><strong>Nuevo Turno para</strong></label>
-    <div class="col-sm-8">
+    <label class="col-sm-3 control-label"><strong>Nuevo Turno para</strong></label>
+    <div class="col-sm-5">
       <select class="minimal btn btn-block btn-default dropdown-toggle" required>
         <option *ngFor="let persona of personas" (click)="handlePersonaClick(persona)">{{persona.nombre}}</option>
       </select>
+    </div>
+    <div class="col-sm-4">
+      <a class="btn btn-primary">
+        <span class="app-icon fa fa-plus"></span>
+        AGREGAR INTEGRANTE
+      </a>
     </div>
     <div *ngIf="f.submitted && !model.persona" class="help-block">Ingrese para quien es el turno</div>
   </div>
 
   <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !model.centroSalud }" required>
-    <label class="col-sm-4 control-label">Centro de Salud</label>
-    <div class="col-sm-8">
+    <label class="col-sm-3 control-label">Centro de Salud</label>
+    <div class="col-sm-5">
       <select class="minimal btn btn-block dropdown-toggle">
         <option *ngFor="let centro of centrosSalud" (click)="handleCentroSaludClick(centro)">{{centro.nombre}}</option>
       </select>
@@ -21,8 +27,8 @@
   </div>
 
   <div class="form-group">
-    <label class="col-sm-4 control-label">Especialidad</label>
-    <div class="col-sm-8">
+    <label class="col-sm-3 control-label">Especialidad</label>
+    <div class="col-sm-5">
       <select class="minimal btn btn-block dropdown-toggle">
         <option *ngFor="let especialidad of filteredEspecialidades" (click)="handleEspecialidadClick(especialidad)">
           {{especialidad.nombre}}
@@ -32,8 +38,8 @@
   </div>
 
   <div class="form-group">
-    <label class="col-sm-4 control-label">Profesional</label>
-    <div class="col-sm-8">
+    <label class="col-sm-3 control-label">Profesional</label>
+    <div class="col-sm-5">
       <select class="minimal btn btn-block dropdown-toggle">
         <option *ngFor="let profesional of filteredProfesionales" (click)="handleProfesionalClick(profesional)">
           {{profesional.nombre}}
@@ -43,20 +49,26 @@
   </div>
 
   <div class="form-group">
-    <label for="fechaDesde" class="col-sm-4 control-label">Fecha desde</label>
-    <div class="col-sm-8">
+    <label for="fechaDesde" class="col-sm-3 control-label">Fecha desde</label>
+    <div class="col-sm-5">
       <input name="fechaDesde" [(ngModel)]="model.fechaDesde" class="form-control" id="date" type="date">
     </div>
   </div>
 
   <div class="form-group">
-    <label class="col-sm-4 control-label"></label>
-    <div class="col-sm-4">
-      <button type="submit" class="btn btn-block btn-primary">Buscar</button>
+    <div class="col-sm-3">
     </div>
-    <div class="col-sm-4">
-      <a class="btn btn-block btn-default">Limpiar Busqueda</a>
+    <div class="col-sm-5">
+      <button type="submit" class="btn btn-primary">
+        <span class="app-icon fa fa-search"></span>
+        Buscar
+      </button>
+      <a (click)="f.reset()" class="btn btn-default">
+        <span class="app-icon-dark fa fa-times-circle"></span>
+        Limpiar Busqueda
+      </a>
     </div>
+
   </div>
 
 </form>

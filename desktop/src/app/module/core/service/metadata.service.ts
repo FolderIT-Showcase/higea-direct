@@ -10,23 +10,29 @@ export class MetadataService {
 
   getPaises() {
     const path = '/pais';
-    return this.api.get(path).do((response) => {
-      this.storeHelper.update('paises', response);
-    });
+    return this.api.get(path)
+      .do((response) => {
+        this.storeHelper.update('paises', response);
+      })
+      .first().toPromise();
   }
 
   getProvincias() {
     const path = '/provincia';
-    return this.api.get(path).do((response) => {
-      this.storeHelper.update('provincias', response);
-    });
+    return this.api.get(path)
+      .do((response) => {
+        this.storeHelper.update('provincias', response);
+      })
+      .first().toPromise();
   }
 
   getLocalidades() {
     const path = '/localidad';
-    return this.api.get(path).do((response) => {
-      this.storeHelper.update('localidades', response);
-    });
+    return this.api.get(path)
+      .do((response) => {
+        this.storeHelper.update('localidades', response);
+      })
+      .first().toPromise();
   }
 
 }

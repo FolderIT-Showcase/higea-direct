@@ -53,5 +53,10 @@ export class PersonaService {
     return this.api.get(path, search).first().toPromise();
   }
 
+  getIntegrantes() {
+    const path = ''; // TODO: definir esto
+    return this.api.get(path).first().toPromise();
+  }
+
 
 }
