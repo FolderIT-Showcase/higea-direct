@@ -14,6 +14,7 @@ import {PersonaService} from './service/persona.service';
 import {AlertService} from './service/alert.service';
 import {AuthGuard} from './guard/auth.guard';
 import {AlertComponent} from './component/alert/alert.component';
+import { NavbarComponent } from './component/navbar/navbar.component';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import {AlertComponent} from './component/alert/alert.component';
   exports: [BrowserModule, AlertComponent],
   declarations: [
     AlertComponent,
-    HomeComponent
+    HomeComponent,
+    NavbarComponent
   ],
   providers: [
     Store,
