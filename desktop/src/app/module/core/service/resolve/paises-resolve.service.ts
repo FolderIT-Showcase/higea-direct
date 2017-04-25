@@ -10,7 +10,11 @@ export class PaisesResolveService implements Resolve<Metadata> {
   }
 
   resolve(): Promise<Metadata> {
+<<<<<<< Updated upstream:desktop/src/app/module/core/service/resolve/paises-resolve.service.ts
     return this.metadataService.getPaises();
+=======
+    return this.metadataService.getPaises().first().toPromise();
+>>>>>>> Stashed changes:desktop/src/app/module/core/service/paises-resolve.service.ts
   }
 
 }
