@@ -47,12 +47,12 @@ public class PersonaController {
     public ResponseEntity validPersona(@RequestParam(name = "documento") String documento,
                                        @RequestParam(name = "nombre") String nombre,
                                        @RequestParam(name = "apellido") String apellido,
-                                       @RequestParam(name = "sexo") String sexo) {
+                                       @RequestParam(name = "genero") String genero) {
 
 
         ResultAfipDto dto = null;
         try {
-            dto = personaService.isDocumentValid(documento, nombre, apellido, sexo);
+            dto = personaService.isDocumentValid(documento, nombre, apellido, genero);
         } catch (Exception e) {
             throw new IllegalArgumentException("Sexo o DNI no valido. La longitud no corresponde");
         }

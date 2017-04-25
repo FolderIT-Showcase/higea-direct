@@ -51,7 +51,7 @@ public class RegistrationListener implements
 
         SimpleMailMessage email = new SimpleMailMessage();
         email.setTo(recipientAddress);
-        email.setFrom("lbonsembiante@folderit.net");
+        email.setFrom("turnerofit@gmail.com");
         email.setSubject(subject);
         email.setText(mensajeSucces + " " + urlRegistration + confirmationUrl);
         mailSender.send(email);
