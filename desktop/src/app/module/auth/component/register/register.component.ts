@@ -96,7 +96,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.personaService.create(persona)
       .then(data => {
         this.router.navigate(['/login']);
-          this.alertService.success('Registro Exitoso');
+        this.alertService.success('Registro Exitoso');
       })
       .catch(error => {
         this.alertService.error(error);

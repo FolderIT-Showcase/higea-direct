@@ -2,7 +2,7 @@
 <div class="container">
   <div class="row">
     <div class="absolute-center card-container">
-      <div class="col-md-6 text-center">
+      <div class="col-md-4 text-center">
         <div class="card">
           <div class="card-image">
             <img class="img-responsive" src="../../../../../assets/turnos.jpeg">
@@ -11,13 +11,26 @@
           <div class="card-action">
             <div class="btn-group btn-group-justified">
               <a [routerLink]="['/nuevo-turno']" class="btn btn-link"><strong>SACAR TURNO</strong></a>
-              <!-- TODO: mejorar ux de los labels -->
-              <a [routerLink]="['/']" class="btn btn-link"><strong>REPROGRAMAR TURNO</strong></a>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-md-6">
+
+      <div class="col-md-4 text-center">
+        <div class="card">
+          <div class="card-image">
+            <img class="img-responsive" src="../../../../../assets/turnos.jpeg">
+            <span class="card-title"> <strong>Turnos</strong> </span>
+          </div>
+          <div class="card-action">
+            <div class="btn-group btn-group-justified">
+              <a [routerLink]="['/']" class="btn btn-link"><strong>CANCELAR O REPROGRAMAR TURNO</strong></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 text-center">
         <div class="card">
           <div class="card-image">
             <img class="img-responsive" src="../../../../../assets/familia.jpg">
@@ -30,6 +43,8 @@
           </div>
         </div>
       </div>
+
+
     </div>
   </div>
 </div>

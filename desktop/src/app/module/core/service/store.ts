@@ -9,7 +9,9 @@ const state: AppState = {
   provincias: [],
   localidades: [],
   personas: [],
-  loginType: null
+  loginType: null,
+  centroSalud: null,
+  turnos: []
 };
 
 const store = new BehaviorSubject<AppState>(state);

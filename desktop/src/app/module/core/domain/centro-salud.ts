@@ -1,6 +1,6 @@
 import {Especialidad} from './especialidad';
-export class CentroSalud {
+export class centroSalud {
   id: number;
   nombre: string;
-  especialidad: Especialidad;
+  especialidades: Especialidad[];
 }

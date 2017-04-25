@@ -4,9 +4,8 @@ import {NuevoTurnoComponent} from './component/nuevo-turno/nuevo-turno.component
 import {FormsModule} from '@angular/forms';
 import {DatepickerModule} from 'ngx-bootstrap/datepicker';
 import {PopoverModule} from 'ngx-bootstrap/popover';
-import {BusquedaComponent} from './component/busqueda/busqueda.component';
+import {ResultadoComponent} from './component/resultado/resultado.component';
 import {TurnoComponent} from './turno.component';
-import {ListaComponent} from './component/lista/lista.component';
 import {ModalModule} from 'ngx-bootstrap/modal';
 import {AgmCoreModule} from 'angular2-google-maps/core';
 import {RouterModule} from '@angular/router';
@@ -26,8 +25,7 @@ import {RouterModule} from '@angular/router';
   declarations: [
     TurnoComponent,
     NuevoTurnoComponent,
-    BusquedaComponent,
-    ListaComponent
+    ResultadoComponent,
   ]
 })
 export class TurnoModule {

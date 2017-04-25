@@ -93,7 +93,7 @@ export class RegisterSocialComponent implements OnInit {
     this.personaService.create(persona)
       .then(data => {
         this.router.navigate(['/login']);
-          this.alertService.success('Registro Exitoso');
+        this.alertService.success('Registro Exitoso');
       })
       .catch(error => {
         this.alertService.error(error);

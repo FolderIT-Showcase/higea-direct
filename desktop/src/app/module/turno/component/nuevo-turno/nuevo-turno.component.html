@@ -30,7 +30,7 @@
     <label class="col-sm-3 control-label">Especialidad</label>
     <div class="col-sm-5">
       <select class="minimal btn btn-block dropdown-toggle">
-        <option *ngFor="let especialidad of filteredEspecialidades" (click)="handleEspecialidadClick(especialidad)">
+        <option *ngFor="let especialidad of especialidades" (click)="handleEspecialidadClick(especialidad)">
           {{especialidad.nombre}}
         </option>
       </select>
@@ -41,7 +41,7 @@
     <label class="col-sm-3 control-label">Profesional</label>
     <div class="col-sm-5">
       <select class="minimal btn btn-block dropdown-toggle">
-        <option *ngFor="let profesional of filteredProfesionales" (click)="handleProfesionalClick(profesional)">
+        <option *ngFor="let profesional of profesionales" (click)="handleProfesionalClick(profesional)">
           {{profesional.nombre}}
         </option>
       </select>

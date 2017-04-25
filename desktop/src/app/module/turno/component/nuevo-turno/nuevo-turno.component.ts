@@ -1,13 +1,14 @@
 import {Component} from '@angular/core';
-import {CentroSalud} from '../../../core/domain/centro-salud';
+import {centroSalud} from '../../../core/domain/centro-salud';
 import {Especialidad} from '../../../core/domain/especialidad';
 import {Profesional} from '../../../core/domain/profesional';
 import {Persona} from '../../../core/domain/persona';
 import {StoreService} from '../../../core/service/store.service';
+import {TurnoService} from '../../../core/service/turno.service';
 
 class Data {
   persona: string;
-  centroSalud: CentroSalud;
+  centroSalud: centroSalud;
   especialidad: Especialidad;
   profesional: Profesional;
   fechaDesde: Date = new Date();
@@ -20,24 +21,25 @@ class Data {
 })
 export class NuevoTurnoComponent {
   model: Data = new Data();
-  centrosSalud: CentroSalud[] = [];
+  centrosSalud: centroSalud[] = [];
   especialidades: Especialidad[] = [];
-  filteredEspecialidades: Especialidad[] = [];
   profesionales: Profesional[] = [];
-  filteredProfesionales: Profesional[] = [];
   personas: Persona[] = [];
 
-  constructor(private storeService: StoreService) {
+  constructor(private storeService: StoreService, private turnoService: TurnoService) {
     this.personas = this.storeService.get('integrantes');
     this.centrosSalud = this.storeService.get('centrosSalud');
+    this.model.fechaDesde = new Date();
   }
 
-  handleCentroSaludClick(centroSalud: CentroSalud) {
+  handleCentroSaludClick(centroSalud: centroSalud) {
     this.model.centroSalud = centroSalud;
+    this.especialidades = centroSalud.especialidades;
   }
 
   handleEspecialidadClick(especialidad: Especialidad) {
     this.model.especialidad = especialidad;
+    this.profesionales = especialidad.profesionales;
   }
 
   handleProfesionalClick(profesional: Profesional) {
@@ -46,10 +48,18 @@ export class NuevoTurnoComponent {
 
   buscar() {
 
+    this.turnoService.getTurnos(this.model.centroSalud, this.model.especialidad, this.model.profesional, this.model.fechaDesde)
+      .then()
+      .catch((error) => {
+        console.log(error);
+      });
+
   }
 
   clearForm() {
     this.model = new Data();
+    this.storeService.update('centroSalud', null);
+    this.storeService.update('turnos', []);
   }
 
 }
