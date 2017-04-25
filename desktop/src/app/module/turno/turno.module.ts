@@ -9,7 +9,7 @@ import {TurnoComponent} from './turno.component';
 import {ListaComponent} from './component/lista/lista.component';
 import {ModalModule} from 'ngx-bootstrap/modal';
 import {AgmCoreModule} from 'angular2-google-maps/core';
-import {Router, RouterModule} from '@angular/router';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
   imports: [

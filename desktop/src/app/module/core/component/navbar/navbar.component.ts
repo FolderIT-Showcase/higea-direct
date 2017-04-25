@@ -20,7 +20,7 @@ export class NavbarComponent {
       })
       .catch(error => {
         console.error(error);
-      })
+      });
   }
 
 }

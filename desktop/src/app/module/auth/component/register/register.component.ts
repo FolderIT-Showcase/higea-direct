@@ -2,17 +2,15 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {PersonaService} from '../../../core/service/persona.service';
 import {AlertService} from '../../../core/service/alert.service';
-import {TipoDocumentos} from '../../../core/domain/enums/tipo-documento';
+import {TipoDocumentoEnum, TipoDocumentoLabel, TipoDocumentos} from '../../../core/domain/enums/tipo-documento';
 import {Generos} from '../../../core/domain/enums/genero';
 import {Pais} from '../../../core/domain/pais';
 import {User} from '../../../core/domain/user';
-import {Store} from '../../../core/service/store';
 import {Persona} from '../../../core/domain/persona';
 import {Documento} from '../../../core/domain/documento';
 import {StoreService} from '../../../core/service/store.service';
-import {MetadataService} from '../../../core/service/metadata.service';
 
-class Datos {
+class Data {
   pais = '';
   tipoDocumento = '';
   numeroDocumento: number;
@@ -29,27 +27,24 @@ class Datos {
 })
 export class RegisterComponent implements OnInit, OnDestroy {
 
-  model: Datos = new Datos;
+  model: Data = new Data;
   paises: Pais[] = [];
-  tipoDocumentos: TipoDocumentos = new TipoDocumentos();
-  generos: String[] = Generos.build();
+  tipoDocumentos: string[] = TipoDocumentos.build();
+  generos: string[] = Generos.build();
   loading = false;
   captcha: string = null;
 
   constructor(private router: Router,
               private personaService: PersonaService,
               private alertService: AlertService,
-              private store: Store,
-              private storeService: StoreService,
-              private metadataService: MetadataService) {
+              private storeService: StoreService) {
 
   }
 
   ngOnInit(): void {
-    this.metadataService.getPaises().first().toPromise();
     this.paises = this.storeService.get('paises');
-    this.model.tipoDocumento = this.tipoDocumentos[0].toLowerCase();
-    this.model.genero = this.generos[0].toLowerCase();
+    this.model.tipoDocumento = this.tipoDocumentos[0];
+    this.model.genero = this.generos[0];
     this.model.pais = this.paises[0].nombre;
   }
 
@@ -57,12 +52,18 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.captcha = null;
   }
 
-  register() {
+  public register(): void {
+
+    // TODO: habilitar captcha
 
     // if (!this.captcha) {
     //   this.alertService.error('Por Favor complete todos los datos');
     //   return;
     // }
+
+    if (this.model.pais.toLowerCase() !== 'argentina') {
+      this.model.tipoDocumento = TipoDocumentoLabel.documentoExtranjero;
+    }
 
     this.loading = true;
     const user: User = new User();
@@ -72,21 +73,35 @@ export class RegisterComponent implements OnInit, OnDestroy {
     persona.userAsociado = user;
     persona.genero = this.model.genero.toUpperCase();
     persona.documento = new Documento();
-    persona.documento.tipoDocumento = this.model.tipoDocumento;
+    persona.documento.tipoDocumento = PersonaService.convertTipoDocumento(this.model.tipoDocumento);
     persona.documento.numero = this.model.numeroDocumento;
 
+    if (persona.documento.tipoDocumento === TipoDocumentoEnum.dni) {
+      this.personaService.validateDni(persona.documento.numero.toString(), persona.nombre, persona.apellido, persona.genero)
+        .then(() => {
+          this.save(persona);
+        })
+        .catch(error => {
+          this.alertService.error(error);
+          console.log(error);
+        });
+      return;
+    }
+
+    this.save(persona);
+
+  }
+
+  private save(persona: Persona): void {
     this.personaService.create(persona)
       .then(data => {
         this.router.navigate(['/login']);
-        setTimeout(() => {
           this.alertService.success('Registro Exitoso');
-        }, 500);
       })
       .catch(error => {
         this.alertService.error(error);
         this.loading = false;
       });
-
   }
 
   handleCountriesClick(pais: Pais) {

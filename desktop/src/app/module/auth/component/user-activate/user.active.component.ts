@@ -46,9 +46,9 @@ export class UserActiveComponent implements OnInit {
         this.get('api/users/regitrationConfirm?token=' + this.token).first().toPromise()
           .then(data => {
             this.router.navigate(['/login']);
-            setTimeout(() => {
+
               this.alertService.success('Usuario Activado');
-            }, 500);
+
 
           })
           .catch(error => {

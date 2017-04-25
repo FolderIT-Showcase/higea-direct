@@ -2,7 +2,6 @@ import {User} from './user';
 import {Documento} from './documento';
 import {EstadoCivil} from './enums/estado-civil';
 import {Domicilio} from './domicilio';
-import {Genero} from './enums/genero';
 export class Persona {
   id: number;
   apellido: string;

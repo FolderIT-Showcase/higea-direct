@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ApiService} from './api.service';
 import {StoreService} from './store.service';
-import {Metadata} from '../domain/metadata';
 
 @Injectable()
 export class MetadataService {

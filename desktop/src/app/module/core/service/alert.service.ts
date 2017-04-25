@@ -7,6 +7,7 @@ import {Subject} from 'rxjs/Subject';
 export class AlertService {
   private subject = new Subject<any>();
   private keepAfterNavigationChange = false;
+  private await = 300; // tiempo pruedente antes de lanzar la notificacion
 
   constructor(private router: Router) {
     // clear alert message on route change
@@ -25,12 +26,16 @@ export class AlertService {
 
   success(message: string, keepAfterNavigationChange = false) {
     this.keepAfterNavigationChange = keepAfterNavigationChange;
-    this.subject.next({type: 'success', text: message});
+    setTimeout(() => {
+      this.subject.next({type: 'success', text: message});
+    }, this.await);
   }
 
   error(message: string, keepAfterNavigationChange = false) {
     this.keepAfterNavigationChange = keepAfterNavigationChange;
-    this.subject.next({type: 'error', text: message});
+    setTimeout(() => {
+      this.subject.next({type: 'error', text: message});
+    }, this.await);
   }
 
   getMessage(): Observable<any> {

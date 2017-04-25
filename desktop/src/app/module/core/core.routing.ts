@@ -32,7 +32,13 @@ const appRoutes: Routes = [
       paises: PaisesResolveService
     }
   },
-  {path: 'register-social', component: RegisterSocialComponent},
+  {
+    path: 'register-social',
+    component: RegisterSocialComponent,
+    resolve: {
+      paises: PaisesResolveService
+    }
+  },
   {path: 'regitrationConfirm', component: UserActiveComponent},
   {path: 'nuevo-turno', component: TurnoComponent},
   {path: 'grupo-familiar', component: GrupoFamiliarComponent},
