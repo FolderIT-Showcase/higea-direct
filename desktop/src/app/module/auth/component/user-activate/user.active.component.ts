@@ -1,8 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Store} from '../../../core/service/store';
 import {AlertService} from '../../../core/service/alert.service';
-import {PersonaService} from '../../../core/service/persona.service';
 import {ApiService} from '../../../core/service/api.service';
 import {Headers, Http, RequestOptions} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
@@ -25,9 +23,7 @@ export class UserActiveComponent implements OnInit {
 
   constructor(private router: Router,
               private http: Http,
-              private userService: PersonaService,
               private alertService: AlertService,
-              private store: Store,
               private route: ActivatedRoute) {
 
   }
@@ -45,17 +41,14 @@ export class UserActiveComponent implements OnInit {
 
         this.get('api/users/regitrationConfirm?token=' + this.token).first().toPromise()
           .then(data => {
-            this.router.navigate(['/login']);
-
+            this.router.navigate(['/login']).then(() => {
               this.alertService.success('Usuario Activado');
-
-
+            });
           })
           .catch(error => {
             console.error(error);
             this.alertService.error(error);
           });
-
       })
       .catch(error => {
         console.error(error);
