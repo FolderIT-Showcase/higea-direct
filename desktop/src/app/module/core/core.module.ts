@@ -16,9 +16,7 @@ import {AuthGuard} from './guard/auth.guard';
 import {AlertComponent} from './component/alert/alert.component';
 import {NavbarComponent} from './component/navbar/navbar.component';
 import {CentrosSaludResolveService} from './service/resolve/centros-salud-resolve.service';
-import {EspecialidadesResolveService} from './service/resolve/especialidades-resolve.service';
 import {IntegrantesResolveService} from './service/resolve/integrantes-resolve.service';
-import {ProfesionalesResolveService} from './service/resolve/profesionales-resolve.service';
 import {TurnoService} from './service/turno.service';
 
 @NgModule({
@@ -45,9 +43,7 @@ import {TurnoService} from './service/turno.service';
     ApiService,
     AppAuthService,
     CentrosSaludResolveService,
-    EspecialidadesResolveService,
     IntegrantesResolveService,
-    ProfesionalesResolveService,
     TurnoService
   ]
 })

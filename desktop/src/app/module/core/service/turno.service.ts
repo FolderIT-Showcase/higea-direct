@@ -13,17 +13,7 @@ export class TurnoService {
   }
 
   getCentrosDeSalud() {
-    const path = ''; // TODO: a ser definido
-    return this.api.get(path).first().toPromise();
-  }
-
-  getEspecialidades() {
-    const path = ''; // TODO: a ser definido
-    return this.api.get(path).first().toPromise();
-  }
-
-  getProfesionales() {
-    const path = ''; // TODO: a ser definido
+    const path = 'centroSalud'; // TODO: a ser definido
     return this.api.get(path).first().toPromise();
   }
 

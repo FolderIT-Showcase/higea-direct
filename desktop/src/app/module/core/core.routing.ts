@@ -9,9 +9,6 @@ import {UserActiveComponent} from '../auth/component/user-activate/user.active.c
 import {AuthGuard} from './guard/auth.guard';
 import {PaisesResolveService} from './service/resolve/paises-resolve.service';
 import {CentrosSaludResolveService} from './service/resolve/centros-salud-resolve.service';
-import {ProfesionalesResolveService} from './service/resolve/profesionales-resolve.service';
-import {EspecialidadesResolveService} from './service/resolve/especialidades-resolve.service';
-
 
 const appRoutes: Routes = [
   {
@@ -48,9 +45,7 @@ const appRoutes: Routes = [
     component: TurnoComponent,
     resolve: {
       integrantes: PaisesResolveService,
-      centrosSalud: CentrosSaludResolveService,
-      especialidades: EspecialidadesResolveService,
-      profesionales: ProfesionalesResolveService
+      centrosSalud: CentrosSaludResolveService
     }
   },
   {path: 'grupo-familiar', component: GrupoFamiliarComponent},
