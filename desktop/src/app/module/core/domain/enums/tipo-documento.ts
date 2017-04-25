@@ -1,22 +1,30 @@
-export class TipoDocumento {
-  dni = 'dni';
-  pasaporte = 'pasaporte';
-  cedulaIdentidad = 'Cedula de Identidad';
-  libretaEnrolamiento = 'Libreta de Enrolamiento';
-  libretaCivica = 'Libreta Cívica';
-  documentoExtranjero = 'Documento Extranjero';
+export class TipoDocumentoLabel {
+  static dni = 'dni';
+  static pasaporte = 'pasaporte';
+  static cedulaIdentidad = 'Cedula de Identidad';
+  static libretaEnrolamiento = 'Libreta de Enrolamiento';
+  static libretaCivica = 'Libreta Cívica';
+  static documentoExtranjero = 'Documento Extranjero';
+}
+
+export class TipoDocumentoEnum {
+  static dni = 'dni';
+  static pasaporte = 'pasaporte';
+  static cedulaIdentidad = 'cedulaIdentidad';
+  static libretaEnrolamiento = 'libretaEnrolamiento';
+  static libretaCivica = 'libretaCivica';
+  static documentoExtranjero = 'documentoExtranjero';
 }
 
 export class TipoDocumentos {
-  constructor() {
-    const tipoDocumento = new TipoDocumento();
-    const tipoDocumentos: String[] = [];
-    tipoDocumentos.push(tipoDocumento.dni);
-    tipoDocumentos.push(tipoDocumento.pasaporte);
-    tipoDocumentos.push(tipoDocumento.cedulaIdentidad);
-    tipoDocumentos.push(tipoDocumento.libretaEnrolamiento);
-    tipoDocumentos.push(tipoDocumento.libretaCivica);
-    tipoDocumentos.push(tipoDocumento.documentoExtranjero);
+  static build() {
+    const tipoDocumentos: string[] = [];
+    tipoDocumentos.push(TipoDocumentoLabel.dni);
+    tipoDocumentos.push(TipoDocumentoLabel.pasaporte);
+    tipoDocumentos.push(TipoDocumentoLabel.cedulaIdentidad);
+    tipoDocumentos.push(TipoDocumentoLabel.libretaEnrolamiento);
+    tipoDocumentos.push(TipoDocumentoLabel.libretaCivica);
+    tipoDocumentos.push(TipoDocumentoLabel.documentoExtranjero);
     return tipoDocumentos;
   }
 

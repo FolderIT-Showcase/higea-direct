@@ -26,7 +26,7 @@ body {
   height: 100%;
 }
 body{
-  background-color: #fdfdfd;
+  padding-top: 70px
 }
 
 div.well {
@@ -167,4 +167,16 @@ select.minimal {
 
 .btn-back{
   font-size: 1.8em;
+}
+
+.app-icon{
+  margin: 0.3em;
+  font-size: 1em;
+  color: white;
+}
+
+.app-icon-dark{
+  margin: 0.3em;
+  font-size: 1em;
+  color: black;
 }

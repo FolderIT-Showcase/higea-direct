@@ -1,80 +1,81 @@
 <div class="row">
-    <div class="col-md-12">
-        <div class="col-md-3">
-            <h3>Administrar</h3>
-        </div>
-        <div class="col-md-6">
-            <div class="input-group h3">
-                <input name="data[search]" class="form-control" id="search" type="text" placeholder="Buscar Integrantes">
-                <span class="input-group-btn">
+  <div class="col-md-12">
+    <div class="col-md-3">
+      <h3>Administrar</h3>
+    </div>
+    <div class="col-md-6">
+      <div class="input-group h3">
+        <input name="data[search]" class="form-control" id="search" type="text" placeholder="Buscar Integrantes">
+        <span class="input-group-btn">
                     <button class="btn btn-primary" type="submit">
                         <span class="fa fa-search"></span>
                     </button>
                 </span>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <a (click)="showModal('add')" class="btn btn-primary pull-right h3">
-                <span><i class="fa fa-user fa-fw"></i> Agregar Integrante</span>
-            </a>
-        </div>
+      </div>
     </div>
+    <div class="col-md-3">
+      <a (click)="showModal('add')" class="btn btn-primary pull-right h3">
+        <span><i class="fa fa-user fa-fw"></i> Agregar Integrante</span>
+      </a>
+    </div>
+  </div>
 
-    <div class="col-md-12">
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Integrante</th>
-                        <th>Fecha de Nacimiento</th>
-                        <th>Tipo y Nro. de Documento</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor='let integrante of integrantes'>
-                        <td>{{ integrante.nombre }} {{ integrante.apellido }}</td>
-                        <td>{{ integrante.fechaNacimiento }}</td>
-                        <td>{{ integrante.documentoTipo }} {{integrante.documentoNumero}}</td>
-                        <td>
-                            <div *ngIf="integrante.principal === true">
-                                <a (click)="showModal('view', integrante)" class="btn btn-default">
-                                    <span><i class="fa fa-user"></i> Ver</span>
-                                </a>
-                            </div>
-                            <div *ngIf="integrante.principal === false">
-                                <a (click)="showModal('edit', integrante)" class="btn btn-default">
-                                    <span><i class="fa fa-pencil"></i> Editar</span>
-                                </a>
-                                <a (click)="showModal('delete', integrante)" class="btn btn-danger">
-                                    <span><i class="fa fa-trash"></i> Borrar</span>
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+  <div class="col-md-12">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th>Integrante</th>
+          <th>Fecha de Nacimiento</th>
+          <th>Tipo y Nro. de Documento</th>
+          <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor='let integrante of integrantes'>
+          <td>{{ integrante.nombre }} {{ integrante.apellido }}</td>
+          <td>{{ integrante.fechaNacimiento }}</td>
+          <td>{{ integrante.documentoTipo }} {{integrante.documentoNumero}}</td>
+          <td>
+            <div *ngIf="integrante.principal === true">
+              <a (click)="showModal('view', integrante)" class="btn btn-default">
+                <span><i class="fa fa-user"></i> Ver</span>
+              </a>
+            </div>
+            <div *ngIf="integrante.principal === false">
+              <a (click)="showModal('edit', integrante)" class="btn btn-default">
+                <span><i class="fa fa-pencil"></i> Editar</span>
+              </a>
+              <a (click)="showModal('delete', integrante)" class="btn btn-danger">
+                <span><i class="fa fa-trash"></i> Borrar</span>
+              </a>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
     </div>
+  </div>
 </div>
 
-<div *ngIf="isModalShown && modalAction == 'delete'" [config]="{ show: true }" (onHidden)="onHidden('delete')" bsModal #autoShownModal="bs-modal"
+<div *ngIf="isModalShown && modalAction == 'delete'" [config]="{ show: true }" (onHidden)="onHidden('delete')" bsModal
+     #autoShownModal="bs-modal"
      class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title pull-left"><strong>Confirmación</strong></h4>
-                <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal('delete')">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>¿Está seguro que desea eliminar el integrante seleccionado?</p>
-            </div>
-            <div class="modal-footer">
-                <a (click)="confirmModal('delete')" type="submit" class="btn btn-danger">SI</a>
-                <a (click)="hideModal('delete')" class="btn btn-default">NO</a>
-            </div>
-        </div>
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left"><strong>Confirmación</strong></h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal('delete')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>¿Está seguro que desea eliminar el integrante seleccionado?</p>
+      </div>
+      <div class="modal-footer">
+        <a (click)="confirmModal('delete')" type="submit" class="btn btn-danger">SI</a>
+        <a (click)="hideModal('delete')" class="btn btn-default">NO</a>
+      </div>
     </div>
+  </div>
 </div>

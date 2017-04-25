@@ -1,6 +1,8 @@
 import {AfterViewInit, Component, ElementRef} from '@angular/core';
 import {AppAuthService} from '../../auth.service';
 import {User} from '../../../core/domain/user';
+import {Router} from '@angular/router';
+import {AlertService} from '../../../core/service/alert.service';
 
 declare const gapi: any;
 
@@ -22,7 +24,10 @@ export class GoogleSigninComponent implements AfterViewInit {
 
   public auth2: any = gapi.auth2;
 
-  constructor(private element: ElementRef, private auth: AppAuthService) {
+  constructor(private element: ElementRef,
+              private auth: AppAuthService,
+              private router: Router,
+              private alert: AlertService) {
   }
 
   public googleInit() {
@@ -42,11 +47,13 @@ export class GoogleSigninComponent implements AfterViewInit {
         const user: User = new User();
         user.email = googleUser.getBasicProfile().getEmail();
         user.externalId = googleUser.getBasicProfile().getId();
-
+        localStorage.setItem('socialUser', JSON.stringify(user));
         console.log(user);
         this.auth.login(user, 'google');
         googleUser.disconnect();
       }, (error) => {
+        this.router.navigate(['/login']);
+        this.alert.error('Error, por favor intente con otra forma autenticación');
         console.error(error);
       });
   }

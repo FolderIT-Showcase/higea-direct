@@ -9,7 +9,7 @@ import {GrupoFamiliarComponent} from './grupo-familiar.component';
 import {ListaIntegrantesComponent} from './component/lista-integrantes/lista-integrantes.component';
 import {ModalModule} from 'ngx-bootstrap/modal';
 import {AgmCoreModule} from 'angular2-google-maps/core';
-import {Router, RouterModule} from '@angular/router';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
   imports: [
