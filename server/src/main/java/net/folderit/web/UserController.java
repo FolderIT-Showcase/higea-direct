@@ -88,7 +88,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(TurneroException.getInstance());
         }
         //cambiar a user
-        Roles role = roleRepository.findByAuthority(Roles.ROLE_ADMIN);
+        Roles role = roleRepository.findByAuthority(Roles.ROLE_USER);
         List<Roles> roles = new ArrayList<>();
         roles.add(role);
         registered.setRoles(roles);
