@@ -1,9 +1,6 @@
 package net.folderit.web;
 
-import net.folderit.domain.Localidad;
-import net.folderit.domain.Pais;
-import net.folderit.domain.Persona;
-import net.folderit.domain.Provincia;
+import net.folderit.domain.*;
 import net.folderit.service.MetadataService;
 import net.folderit.service.PersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +37,21 @@ public class MetadataController {
     @GetMapping("/localidad")
     public ResponseEntity<Collection<Localidad>> getAllLocalidad() {
         return new ResponseEntity<>((Collection<Localidad>) metadataService.findAllLocalidad(), HttpStatus.OK);
+    }
+
+    @GetMapping("/centroSalud")
+    public ResponseEntity<Collection<CentroSalud>> getAllCentroSalud() {
+        return new ResponseEntity<>((Collection<CentroSalud>) metadataService.findAllCentroSalud(), HttpStatus.OK);
+    }
+
+    @GetMapping("/especialidad")
+    public ResponseEntity<Collection<Especialidad>> getAllEspecialidad() {
+        return new ResponseEntity<>((Collection<Especialidad>) metadataService.findAllEspecialidad(), HttpStatus.OK);
+    }
+
+    @GetMapping("/profesional")
+    public ResponseEntity<Collection<Profesional>> getAllProfesional() {
+        return new ResponseEntity<>((Collection<Profesional>) metadataService.findAllProfesional(), HttpStatus.OK);
     }
 
 }

@@ -1,13 +1,7 @@
 package net.folderit.service;
 
-import net.folderit.domain.Localidad;
-import net.folderit.domain.Pais;
-import net.folderit.domain.Persona;
-import net.folderit.domain.Provincia;
-import net.folderit.repository.LocalidadRepository;
-import net.folderit.repository.PaisRepository;
-import net.folderit.repository.PersonaRepository;
-import net.folderit.repository.ProvinciaRepository;
+import net.folderit.domain.*;
+import net.folderit.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,11 +19,26 @@ public class MetadataService {
 
     private LocalidadRepository localidadRepository;
 
+    private CentroSaludRepository centroSaludRepository;
+
+    private EspecialidadRepository especialidadRepository;
+
+    private ProfesionalRepository profesionalRepository;
+
     @Autowired
-    public MetadataService(PaisRepository paisRepository,ProvinciaRepository provinciaRepository,LocalidadRepository localidadRepositor) {
+    public MetadataService(PaisRepository paisRepository,
+                           ProvinciaRepository provinciaRepository,
+                           LocalidadRepository localidadRepositor,
+                           CentroSaludRepository centroSaludRepository,
+                           EspecialidadRepository especialidadRepository,
+                           ProfesionalRepository profesionalRepository
+    ) {
         this.paisRepository = paisRepository;
         this.provinciaRepository = provinciaRepository;
         this.localidadRepository = localidadRepository;
+        this.centroSaludRepository = centroSaludRepository;
+        this.especialidadRepository = especialidadRepository;
+        this.profesionalRepository  =    profesionalRepository;
     }
 
 
@@ -38,5 +47,11 @@ public class MetadataService {
     public Iterable<Provincia> findAllProvincia() {return provinciaRepository.findAllByOrderByNombreAsc();}
 
     public Iterable<Localidad> findAllLocalidad() {return localidadRepository.findAllByOrderByNombreAsc();}
+
+    public Iterable<CentroSalud> findAllCentroSalud() {return centroSaludRepository.findAllByOrderByNombreAsc();}
+
+    public Iterable<Especialidad> findAllEspecialidad() {return especialidadRepository.findAllByOrderByNombreAsc();}
+
+    public Iterable<Profesional> findAllProfesional() {return profesionalRepository.findAllByOrderByApellidoAsc();}
 
 }

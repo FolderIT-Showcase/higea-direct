@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
@@ -23,9 +24,15 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 @JsonInclude(NON_NULL)
 public class Especialidad implements Serializable {
 
-    @ManyToOne
-    @JoinColumn(name="profesional_id")
-    public Profesional profesional;
+
+    @OneToMany
+    @JoinTable
+            (
+                    name = "especialidad_profesional",
+                    joinColumns = {@JoinColumn(name = "especilidad_id", referencedColumnName = "id")},
+                    inverseJoinColumns = {@JoinColumn(name = "profesional_id", referencedColumnName = "id", unique = false)}
+            )
+    public List<Profesional> profesional;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

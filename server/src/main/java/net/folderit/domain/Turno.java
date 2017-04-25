@@ -40,6 +40,14 @@ public class Turno implements Serializable {
     @JoinColumn(name="centro_id")
     private CentroSalud centroSalud;
 
+    @ManyToOne
+    @JoinColumn(name="especialidad_id")
+    private Especialidad especialidad;
+
+    @ManyToOne
+    @JoinColumn(name="profesional_id")
+    private Profesional profesional;
+
     public void finalize() throws Throwable {
 
     }
