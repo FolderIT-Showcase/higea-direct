@@ -1,6 +1,6 @@
-import {Localidad} from './localidad';
+import {Partido} from './partido';
 export class Provincia {
-  id: number;
+  id?: number;
   nombre: string;
-  localidad: Localidad;
+  partido: Partido;
 }
