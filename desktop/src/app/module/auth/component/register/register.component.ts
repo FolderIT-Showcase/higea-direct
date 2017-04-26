@@ -77,9 +77,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
     persona.documento = new Documento();
     persona.documento.tipo = PersonaService.convertTipoDocumento(this.model.tipoDocumento);
     persona.documento.numero = this.model.numeroDocumento;
+    persona.nombre = this.model.nombre;
+    persona.apellido = this.model.apellido;
 
     if (persona.documento.tipo === TipoDocumentoEnum.dni) {
-      this.personaService.validateDni(persona.documento.numero.toString(), persona.nombre, persona.apellido, persona.genero)
+      this.personaService.validateDni(persona.documento.numero.toString(), persona.nombre, persona.apellido, persona.genero.slice(0, 1))
         .then(() => {
           this.save(persona);
         })

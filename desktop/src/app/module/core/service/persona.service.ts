@@ -43,7 +43,7 @@ export class PersonaService {
   }
 
   validateDni(documento: string, nombre: string, apellido: string, genero: string) {
-    const path = '/persona/afip?documento=' + documento + '&nombre=' + nombre + '&apellido=' + apellido + '&genero=' + genero;
+    const path = 'persona/afip?documento=' + documento + '&nombre=' + nombre + '&apellido=' + apellido + '&genero=' + genero;
     return this.api.get(path).first().toPromise();
   }
 

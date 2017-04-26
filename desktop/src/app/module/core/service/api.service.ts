@@ -37,8 +37,12 @@ export class ApiService {
   }
 
   useJwt() {
-    const user: User = JSON.parse(localStorage.getItem('currentUser'));
-    this.headers.append('authorization', user.token);
+    if (!this.headers.get('authorization')) {
+      const user: User = JSON.parse(localStorage.getItem('currentUser'));
+      if (user && user.token) {
+        this.headers.append('authorization', user.token);
+      }
+    }
   }
 
   removeJwt() {
@@ -54,6 +58,7 @@ export class ApiService {
   }
 
   get(path: string, search: URLSearchParams = undefined, headers: Headers = undefined): Observable<any> {
+    this.useJwt();
     this.checkLogged();
     const options = {
       headers: headers || this.headers,
@@ -67,6 +72,7 @@ export class ApiService {
   }
 
   public post(path: string, body): Observable<any> {
+    this.useJwt();
     this.checkLogged();
     return this.http
       .post(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
@@ -76,29 +82,29 @@ export class ApiService {
   }
 
   public put(path: string, body): Observable<any> {
+    this.useJwt();
     this.checkLogged();
     return this.http
       .put(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
       .map(ApiService.checkForError)
       .catch(err => Observable.throw(err));
-    // .map(this.getJson);
   }
 
   public patch(path: string, body): Observable<any> {
+    this.useJwt();
     this.checkLogged();
     return this.http
       .patch(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
       .map(ApiService.checkForError)
       .catch(err => Observable.throw(err));
-    // .map(this.getJson);
   }
 
   public delete(path): Observable<any> {
+    this.useJwt();
     this.checkLogged();
     return this.http.delete(`${this.baseURL}${path}`, {headers: this.headers})
       .map(ApiService.checkForError)
       .catch(err => Observable.throw(err));
-    // .map(this.getJson);
   }
 
   public loginPost(path: string, body): Observable<any> {

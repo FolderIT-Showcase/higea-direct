@@ -6,7 +6,7 @@ import {Persona} from '../../../core/domain/persona';
 
 class Data {
   persona: string;
-  centroSalud: string;
+  centro: string;
   especialidad: string;
   profesional: string;
   fechaDesde: Date = new Date();
