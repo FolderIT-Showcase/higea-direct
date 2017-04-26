@@ -11,6 +11,8 @@ import {Documento} from '../../../core/domain/documento';
 import {StoreService} from '../../../core/service/store.service';
 
 class Datos {
+  nombre = '';
+  apellido = '';
   pais: string;
   tipoDocumento: string;
   numeroDocumento: number;
@@ -46,10 +48,9 @@ export class RegisterSocialComponent implements OnInit {
 
   ngOnInit(): void {
     this.paises = this.storeService.get('paises');
-
     this.model.tipoDocumento = this.tipoDocumentos[0];
     this.model.genero = this.generos[0];
-    this.model.pais = this.paises[0].nombre;
+    this.model.pais = this.paises[11].nombre;
   }
 
   public register(): void {
@@ -66,14 +67,16 @@ export class RegisterSocialComponent implements OnInit {
     this.loading = true;
     const user: User = new User();
     const persona: Persona = new Persona();
+    persona.nombre = this.model.nombre;
+    persona.apellido = this.model.apellido;
     persona.genero = this.model.genero;
     persona.documento = new Documento();
-    persona.documento.tipoDocumento = PersonaService.convertTipoDocumento(this.model.tipoDocumento);
+    persona.documento.tipo = PersonaService.convertTipoDocumento(this.model.tipoDocumento);
     persona.documento.numero = this.model.numeroDocumento;
     user.email = this.model.email;
     persona.userAsociado = user;
 
-    if (persona.documento.tipoDocumento === TipoDocumentoEnum.dni) {
+    if (persona.documento.tipo === TipoDocumentoEnum.dni) {
       this.personaService.validateDni(persona.documento.numero.toString(), persona.nombre, persona.apellido, persona.genero)
         .then(() => {
           this.save(persona);

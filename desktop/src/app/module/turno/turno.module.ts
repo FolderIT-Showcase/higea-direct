@@ -9,6 +9,7 @@ import {TurnoComponent} from './turno.component';
 import {ModalModule} from 'ngx-bootstrap/modal';
 import {AgmCoreModule} from 'angular2-google-maps/core';
 import {RouterModule} from '@angular/router';
+import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import {RouterModule} from '@angular/router';
     RouterModule,
     FormsModule,
     DatepickerModule,
+    BsDropdownModule.forRoot(),
     PopoverModule.forRoot(),
     ModalModule.forRoot(),
     AgmCoreModule.forRoot({

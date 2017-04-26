@@ -1,6 +1,6 @@
 import {Profesional} from './profesional';
 export class Especialidad {
   id: number;
-  profesionales: Profesional[];
+  profesional: Profesional[];
   nombre: string;
 }

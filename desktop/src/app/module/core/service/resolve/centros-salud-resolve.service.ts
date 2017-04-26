@@ -1,16 +1,25 @@
 import {Injectable} from '@angular/core';
 import {Resolve} from '@angular/router';
-import {centroSalud} from '../../domain/centro-salud';
+import {CentroSalud} from '../../domain/centro-salud';
 import {TurnoService} from '../turno.service';
+import {StoreService} from 'app/module/core/service/store.service';
 
 @Injectable()
-export class CentrosSaludResolveService implements Resolve<centroSalud[]> {
+export class CentrosSaludResolveService implements Resolve<CentroSalud[]> {
 
-  constructor(private turnoService: TurnoService) {
+  constructor(private turnoService: TurnoService, private storeService: StoreService) {
   }
 
-  resolve(): Promise<centroSalud[]> {
-    return this.turnoService.getCentrosDeSalud();
+  resolve(): Promise<CentroSalud[]> {
+    const centro = this.storeService.get('centrosSalud');
+    if (centro[0]) {
+      console.log(centro)
+      return new Promise((resolve, reject) => {
+        resolve(centro);
+      });
+    } else {
+      return this.turnoService.getCentrosDeSalud();
+    }
   }
 
 }

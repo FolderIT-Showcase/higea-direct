@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {centroSalud} from '../../../core/domain/centro-salud';
+import {Component, OnInit} from '@angular/core';
+import {CentroSalud} from '../../../core/domain/centro-salud';
 import {Especialidad} from '../../../core/domain/especialidad';
 import {Profesional} from '../../../core/domain/profesional';
 import {Persona} from '../../../core/domain/persona';
@@ -7,8 +7,8 @@ import {StoreService} from '../../../core/service/store.service';
 import {TurnoService} from '../../../core/service/turno.service';
 
 class Data {
-  persona: string;
-  centroSalud: centroSalud;
+  persona: Persona;
+  centroSalud: CentroSalud;
   especialidad: Especialidad;
   profesional: Profesional;
   fechaDesde: Date = new Date();
@@ -19,27 +19,36 @@ class Data {
   templateUrl: './nuevo-turno.component.html',
   styleUrls: ['./nuevo-turno.component.scss']
 })
-export class NuevoTurnoComponent {
+export class NuevoTurnoComponent implements OnInit {
+
   model: Data = new Data();
-  centrosSalud: centroSalud[] = [];
+  centrosSalud: CentroSalud[] = [];
   especialidades: Especialidad[] = [];
   profesionales: Profesional[] = [];
   personas: Persona[] = [];
 
   constructor(private storeService: StoreService, private turnoService: TurnoService) {
+  }
+
+  ngOnInit(): void {
+    const personaUser = this.storeService.get('integrantes');
     this.personas = this.storeService.get('integrantes');
     this.centrosSalud = this.storeService.get('centrosSalud');
     this.model.fechaDesde = new Date();
   }
 
-  handleCentroSaludClick(centroSalud: centroSalud) {
+  handlePersonaClick(persona: Persona){
+    this.model.persona = persona;
+  }
+
+  handleCentroSaludClick(centroSalud: CentroSalud) {
     this.model.centroSalud = centroSalud;
-    this.especialidades = centroSalud.especialidades;
+    this.especialidades = centroSalud.especialidad;
   }
 
   handleEspecialidadClick(especialidad: Especialidad) {
     this.model.especialidad = especialidad;
-    this.profesionales = especialidad.profesionales;
+    this.profesionales = especialidad.profesional;
   }
 
   handleProfesionalClick(profesional: Profesional) {
@@ -58,7 +67,7 @@ export class NuevoTurnoComponent {
 
   clearForm() {
     this.model = new Data();
-    this.storeService.update('centroSalud', null);
+    this.storeService.update('CentroSalud', null);
     this.storeService.update('turnos', []);
   }
 

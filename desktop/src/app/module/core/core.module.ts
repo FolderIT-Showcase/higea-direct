@@ -18,6 +18,7 @@ import {NavbarComponent} from './component/navbar/navbar.component';
 import {CentrosSaludResolveService} from './service/resolve/centros-salud-resolve.service';
 import {IntegrantesResolveService} from './service/resolve/integrantes-resolve.service';
 import {TurnoService} from './service/turno.service';
+import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 
 @NgModule({
   imports: [
@@ -25,9 +26,10 @@ import {TurnoService} from './service/turno.service';
     BrowserModule,
     HttpModule,
     RouterModule,
+    BsDropdownModule.forRoot(),
     routing
   ],
-  exports: [BrowserModule, AlertComponent],
+  exports: [BrowserModule, AlertComponent, BsDropdownModule],
   declarations: [
     AlertComponent,
     HomeComponent,

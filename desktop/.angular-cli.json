@@ -51,8 +51,11 @@
       "config": "./karma.conf.js"
     }
   },
+  "packageManager": "yarn",
   "defaults": {
     "styleExt": "scss",
-    "component": {}
+    "component": {
+      "spec": false
+    }
   }
 }

@@ -42,11 +42,8 @@ export class AppAuthService {
   }
 
   public getUser(type: string, id: string) {
-    const path = 'users/external';
-    const params: URLSearchParams = new URLSearchParams();
-    params.set('type', type);
-    params.set('externalId', id);
-    return this.api.get(path, params).first().toPromise();
+    const path = 'users/external?externalId=' + id + '&type=' + type;
+    return this.api.get(path).first().toPromise();
   }
 
   normalLogin(user: User, type: string = '') {

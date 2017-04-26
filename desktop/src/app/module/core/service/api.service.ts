@@ -4,6 +4,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import {Observable} from 'rxjs/Rx';
 import {User} from '../domain/user';
+import {Router} from '@angular/router';
 
 @Injectable()
 export class ApiService {
@@ -31,7 +32,8 @@ export class ApiService {
     throw error;
   }
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private router: Router) {
+
   }
 
   useJwt() {
@@ -43,7 +45,16 @@ export class ApiService {
     this.headers.delete('authorization');
   }
 
+  checkLogged() {
+    if (!this.headers.get('authorization')) {
+      localStorage.removeItem('currentUser');
+      this.router.navigate(['/login']);
+      return;
+    }
+  }
+
   get(path: string, search: URLSearchParams = undefined, headers: Headers = undefined): Observable<any> {
+    this.checkLogged();
     const options = {
       headers: headers || this.headers,
       search: search
@@ -56,6 +67,7 @@ export class ApiService {
   }
 
   public post(path: string, body): Observable<any> {
+    this.checkLogged();
     return this.http
       .post(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
       .map(ApiService.checkForError)
@@ -64,6 +76,7 @@ export class ApiService {
   }
 
   public put(path: string, body): Observable<any> {
+    this.checkLogged();
     return this.http
       .put(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
       .map(ApiService.checkForError)
@@ -72,6 +85,7 @@ export class ApiService {
   }
 
   public patch(path: string, body): Observable<any> {
+    this.checkLogged();
     return this.http
       .patch(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
       .map(ApiService.checkForError)
@@ -80,6 +94,7 @@ export class ApiService {
   }
 
   public delete(path): Observable<any> {
+    this.checkLogged();
     return this.http.delete(`${this.baseURL}${path}`, {headers: this.headers})
       .map(ApiService.checkForError)
       .catch(err => Observable.throw(err));

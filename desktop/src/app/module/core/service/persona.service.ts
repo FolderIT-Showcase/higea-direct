@@ -2,6 +2,8 @@
 import {ApiService} from './api.service';
 import {Persona} from '../domain/persona';
 import {TipoDocumentoEnum, TipoDocumentoLabel} from '../domain/enums/tipo-documento';
+import {StoreService} from './store.service';
+import {User} from '../domain/user';
 
 @Injectable()
 export class PersonaService {
@@ -33,29 +35,33 @@ export class PersonaService {
     return tipo;
   }
 
-  constructor(private api: ApiService) {
+  constructor(private api: ApiService, private storeService: StoreService) {
   }
 
   create(persona: Persona) {
     return this.api.post('users/registration', persona).first().toPromise();
   }
 
-  // TODO: cambiar sexo por genero, frontend y backend
-  validateDni(documento: string, nombre: string, apellido: string, sexo: string) {
-    const path = '/persona/afip';
-    const search: URLSearchParams = new URLSearchParams();
-
-    search.set('documento', documento);
-    search.set('nombre', nombre);
-    search.set('apellido', apellido);
-    search.set('sexo', sexo);
-
-    return this.api.get(path, search).first().toPromise();
+  validateDni(documento: string, nombre: string, apellido: string, genero: string) {
+    const path = '/persona/afip?documento=' + documento + '&nombre=' + nombre + '&apellido=' + apellido + '&genero=' + genero;
+    return this.api.get(path).first().toPromise();
   }
 
   getIntegrantes() {
-    const path = ''; // TODO: definir esto
-    return this.api.get(path).first().toPromise();
+    const user: User = this.storeService.get('currentUser');
+    const path = 'user/' + user.email;
+    return this.api.get(path)
+      .do((data: Persona) => {
+        const userPersona: Persona = data;
+        userPersona.integrantes = null;
+        const personas: Persona[] = [];
+        personas.push(userPersona);
+        data.integrantes.forEach(x => {
+          personas.push(x);
+        });
+        this.storeService.update('integrantes', personas);
+      })
+      .first().toPromise();
   }
 
 
