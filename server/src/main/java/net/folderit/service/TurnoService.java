@@ -7,6 +7,12 @@ import net.folderit.repository.TurnoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,5 +28,6 @@ public class TurnoService {
         this.turnoRepository = turnoRepository;
     }
 
-    public List<Turno> finAllBy(FilterDto filterDto){return turnoRepository.finAllBy(filterDto.getFecha(),filterDto.getCentroSalud(),filterDto.getEspecialidad(),filterDto.getProfesional());}
+    public List<Turno> finAllBy(FilterDto filterDto){
+        return turnoRepository.finAllBy(filterDto.getFecha(),filterDto.getCentroSalud(),filterDto.getEspecialidad(),filterDto.getProfesional());}
 }

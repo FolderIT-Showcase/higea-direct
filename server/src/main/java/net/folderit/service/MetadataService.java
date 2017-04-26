@@ -5,12 +5,8 @@ import net.folderit.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-<<<<<<< HEAD
-import java.util.ArrayList;
-=======
 import java.util.List;
->>>>>>> 4f5eac3e857820e1193a6d72a808e96a58ee053c
+
 
 /**
  * Created by gheng on 19/4/2017.

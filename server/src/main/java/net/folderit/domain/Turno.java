@@ -30,16 +30,16 @@ public class Turno implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @JsonFormat(pattern="yyyy-MM-dd'T'hh:mm:ss'Z'")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'hh:mm:ss'Z'")
+    @JsonFormat(pattern="EE",timezone="America/Buenos_Aires")
+    @DateTimeFormat(pattern = "EE")
     private Date dia;
 
-    @JsonFormat(pattern="yyyy-MM-dd'T'hh:mm:ss'Z'")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'hh:mm:ss'Z'")
+    @JsonFormat(pattern="yyyy-MM-dd",timezone="America/Buenos_Aires")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fecha;
 
-    @JsonFormat(pattern="yyyy-MM-dd'T'hh:mm:ss'Z'")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'hh:mm:ss'Z'")
+    @JsonFormat(pattern="HH:mm:ss",timezone="America/Buenos_Aires")
+    @DateTimeFormat(pattern = "HH:mm:ss")
     private Date hora;
 
     private String observaciones;
