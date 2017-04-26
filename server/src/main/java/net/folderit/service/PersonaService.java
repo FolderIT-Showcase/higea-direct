@@ -63,6 +63,11 @@ public class PersonaService {
         return personaRepository.findOne(id);
     }
 
+    @Transactional
+    public Persona findByUserAsociadoEmail(String email) {
+       return personaRepository.findByUserAsociadoEmail(email);
+    }
+
     public ResultAfipDto isDocumentValid(String documento, String nombre, String apellido,String sexo)throws Exception{
         AfipUtil au = AfipUtil.getInstance();
         String cuit = au.getCuit(documento,(sexo.equals("M")? Genero.MASCULINO:Genero.FEMENINO));

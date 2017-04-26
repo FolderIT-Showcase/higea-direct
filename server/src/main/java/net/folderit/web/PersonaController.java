@@ -43,6 +43,11 @@ public class PersonaController {
         return ResponseEntity.ok(mPersona.getId());
     }
 
+    @GetMapping("/persona/email")
+    public ResponseEntity<Collection<Persona>> findByUserAsociadoEmail(@RequestParam String email) {
+        return new ResponseEntity<>((Collection<Persona>) personaService.findByUserAsociadoEmail(email), HttpStatus.OK);
+    }
+
     @GetMapping("/persona/afip")
     public ResponseEntity validPersona(@RequestParam(name = "documento") String documento,
                                        @RequestParam(name = "nombre") String nombre,
