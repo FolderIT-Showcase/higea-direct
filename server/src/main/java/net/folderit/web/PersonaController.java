@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by gheng on 18/4/2017.
@@ -44,8 +45,8 @@ public class PersonaController {
     }
 
     @GetMapping("/persona/email")
-    public ResponseEntity<Collection<Persona>> findByUserAsociadoEmail(@RequestParam String email) {
-        return new ResponseEntity<>((Collection<Persona>) personaService.findByUserAsociadoEmail(email), HttpStatus.OK);
+    public ResponseEntity findByUserAsociadoEmail(@RequestParam String email) {
+        return new ResponseEntity<>((Persona) personaService.findByUserAsociadoEmail(email), HttpStatus.OK);
     }
 
     @GetMapping("/persona/afip")
