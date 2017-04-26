@@ -37,7 +37,7 @@ export class NuevoTurnoComponent implements OnInit {
     this.model.fechaDesde = new Date();
   }
 
-  handlePersonaClick(persona: Persona){
+  handlePersonaClick(persona: Persona) {
     this.model.persona = persona;
   }
 
