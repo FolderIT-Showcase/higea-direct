@@ -13,7 +13,7 @@ export class TurnoService {
   }
 
   getCentrosDeSalud() {
-    const path = 'centro';
+    const path = 'centrosSalud';
     return this.api.get(path)
       .do(data => {
         this.storeService.update('centrosSalud', data);
