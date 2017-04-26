@@ -44,6 +44,13 @@ public class PersonaController {
         return ResponseEntity.ok(mPersona.getId());
     }
 
+    @DeleteMapping("/persona")
+    public ResponseEntity<Long> deleteLogical(@RequestBody Persona persona) {
+        persona.setEnabled(Boolean.FALSE);
+        Persona mPersona = personaService.save(persona);
+        return ResponseEntity.ok(mPersona.getId());
+    }
+
     @GetMapping("/persona/email")
     public ResponseEntity findByUserAsociadoEmail(@RequestParam String email) {
         return new ResponseEntity<>((Persona) personaService.findByUserAsociadoEmail(email), HttpStatus.OK);
