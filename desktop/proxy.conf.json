@@ -1,11 +1,11 @@
 {
-  "/": {
-    "target": "https://localhost:8080",
+  "/api": {
+    "target": "https://turnero.folderit.net/api",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug",
     "pathRewrite": {
-      "^/": ""
+      "^/api": ""
     }
   }
 }

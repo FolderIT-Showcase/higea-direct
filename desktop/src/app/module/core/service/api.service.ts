@@ -9,7 +9,7 @@ import {Router} from '@angular/router';
 @Injectable()
 export class ApiService {
 
-  private baseURL = '/';  // https://localhost:8080/
+  private baseURL = 'api/';  // https://localhost:8080/
 
   // private baseURL = 'https://localhost:8080/';  // https://localhost:8080/
   private headers = new Headers({
