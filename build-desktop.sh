@@ -35,9 +35,9 @@ function dev_mode
     npm run build
 
     # Deploy commands
-    rm -rf /var/www/html/turnero.folderit.net/public_html/*
+    sudo rm -rf /var/www/html/turnero.folderit.net/public_html/*
     cd /home/turnero/turnero-ute/desktop/dist/
-    cp -rf * /var/www/html/turnero.folderit.net/public_html/
+    sudo cp -rf * /var/www/html/turnero.folderit.net/public_html/
 
 }
 

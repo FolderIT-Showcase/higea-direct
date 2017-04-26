@@ -34,8 +34,8 @@ function dev_mode
     mvn clean package -DskipTests
 
     # Deploy commands
-    cp -f /opt/api/api.jar /opt/api/api-last.jar
-    cp -f /home/turnero/turnero-ute/server/target/turnero-web-0.0.1-SNAPSHOT.jar /opt/api/api.jar
+    sudo cp -f /opt/api/api.jar /opt/api/api-last.jar
+    sudo cp -f /home/turnero/turnero-ute/server/target/turnero-web-0.0.1-SNAPSHOT.jar /opt/api/api.jar
     sudo systemctl restart api.service
     
 }
