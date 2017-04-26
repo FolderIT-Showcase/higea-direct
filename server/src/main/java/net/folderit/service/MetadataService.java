@@ -6,7 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+<<<<<<< HEAD
 import java.util.ArrayList;
+=======
+import java.util.List;
+>>>>>>> 4f5eac3e857820e1193a6d72a808e96a58ee053c
 
 /**
  * Created by gheng on 19/4/2017.
@@ -49,7 +53,7 @@ public class MetadataService {
 
     public Iterable<Localidad> findAllLocalidad() {return localidadRepository.findAllByOrderByNombreAsc();}
 
-    public ArrayList<CentroSalud> findAllCentroSalud() {return centroSaludRepository.findAllByOrderByNombreAsc();}
+    public List<CentroSalud> findAllCentroSalud() {return centroSaludRepository.findAllByOrderByNombreAsc();}
 
     public Iterable<Especialidad> findAllEspecialidad() {return especialidadRepository.findAllByOrderByNombreAsc();}
 

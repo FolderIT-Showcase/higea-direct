@@ -1,5 +1,5 @@
 export class Documento {
-  id: number;
-  tipoDocumento: string;
+  id?: number;
+  tipo: string;
   numero: number;
 }
