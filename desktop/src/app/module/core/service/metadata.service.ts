@@ -9,7 +9,7 @@ export class MetadataService {
   }
 
   getPaises() {
-    const path = '/pais';
+    const path = 'pais';
     return this.api.get(path)
       .do((response) => {
         this.storeHelper.update('paises', response);
@@ -18,7 +18,7 @@ export class MetadataService {
   }
 
   getProvincias() {
-    const path = '/provincia';
+    const path = 'provincia';
     return this.api.get(path)
       .do((response) => {
         this.storeHelper.update('provincias', response);
@@ -27,7 +27,7 @@ export class MetadataService {
   }
 
   getLocalidades() {
-    const path = '/localidad';
+    const path = 'localidad';
     return this.api.get(path)
       .do((response) => {
         this.storeHelper.update('localidades', response);
