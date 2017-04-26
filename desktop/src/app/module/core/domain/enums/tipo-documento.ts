@@ -1,5 +1,5 @@
 export class TipoDocumentoLabel {
-  static dni = 'dni';
+  static dni = 'DNI';
   static pasaporte = 'pasaporte';
   static cedulaIdentidad = 'Cedula de Identidad';
   static libretaEnrolamiento = 'Libreta de Enrolamiento';

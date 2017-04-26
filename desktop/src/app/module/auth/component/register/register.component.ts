@@ -11,6 +11,8 @@ import {Documento} from '../../../core/domain/documento';
 import {StoreService} from '../../../core/service/store.service';
 
 class Data {
+  nombre = '';
+  apellido = '';
   pais = '';
   tipoDocumento = '';
   numeroDocumento: number;
@@ -45,7 +47,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.paises = this.storeService.get('paises');
     this.model.tipoDocumento = this.tipoDocumentos[0];
     this.model.genero = this.generos[0];
-    this.model.pais = this.paises[0].nombre;
+    this.model.pais = this.paises[11].nombre;
   }
 
   ngOnDestroy(): void {

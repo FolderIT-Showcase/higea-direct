@@ -1,11 +1,19 @@
 <form class="form-horizontal" name="f" (ngSubmit)="f.form.valid && buscar()" #f="ngForm" novalidate>
 
   <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !model.persona }">
-    <label class="col-sm-3 control-label"><strong>Nuevo Turno para</strong></label>
+    <label class="col-sm-3 control-label">Nuevo Turno para</label>
     <div class="col-sm-5">
-      <select class="minimal btn btn-block btn-default dropdown-toggle" required>
-        <option *ngFor="let persona of personas" (click)="handlePersonaClick(persona)">{{persona.nombre}}</option>
-      </select>
+      <div class="btn-group btn-block" dropdown>
+        <button dropdownToggle type="button" class="minimal btn btn-block btn-default">
+          {{ model.persona ? model.persona.nombre : 'Nuevo Turno para'}}
+        </button>
+        <ul *dropdownMenu class="dropdown-menu" role="menu">
+          <li role="menuitem" *ngFor="let persona of personas">
+            <a class="dropdown-item" (click)="handlePersonaClick(persona)">{{persona.nombre}}</a>
+          </li>
+        </ul>
+      </div>
+      <div *ngIf="f.submitted && !model.persona" class="help-block">Ingrese para quien es el turno</div>
     </div>
     <div class="col-sm-4">
       <a class="btn btn-primary">
@@ -13,15 +21,21 @@
         AGREGAR INTEGRANTE
       </a>
     </div>
-    <div *ngIf="f.submitted && !model.persona" class="help-block">Ingrese para quien es el turno</div>
   </div>
 
-  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !model.centroSalud }" required>
+  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !model.centro }">
     <label class="col-sm-3 control-label">Centro de Salud</label>
     <div class="col-sm-5">
-      <select class="minimal btn btn-block dropdown-toggle">
-        <option *ngFor="let centro of centrosSalud" (click)="handleCentroSaludClick(centro)">{{centro.nombre}}</option>
-      </select>
+      <div class="btn-group btn-block" dropdown>
+        <button dropdownToggle type="button" class="minimal btn btn-block btn-default">
+          {{ model.centroSalud ? model.centroSalud.nombre : 'Centro de Salud'}}
+        </button>
+        <ul *dropdownMenu class="dropdown-menu" role="menu">
+          <li role="menuitem" *ngFor="let centro of centrosSalud">
+            <a class="dropdown-item" (click)="handleCentroSaludClick(centro)">{{centro.nombre}}</a>
+          </li>
+        </ul>
+      </div>
       <div *ngIf="f.submitted && !model.centroSalud" class="help-block">Ingrese su Centro de Salud</div>
     </div>
   </div>
@@ -29,22 +43,32 @@
   <div class="form-group">
     <label class="col-sm-3 control-label">Especialidad</label>
     <div class="col-sm-5">
-      <select class="minimal btn btn-block dropdown-toggle">
-        <option *ngFor="let especialidad of especialidades" (click)="handleEspecialidadClick(especialidad)">
-          {{especialidad.nombre}}
-        </option>
-      </select>
+      <div class="btn-group btn-block" dropdown>
+        <button dropdownToggle type="button" class="minimal btn btn-block btn-default">
+          {{ model.especialidad ? model.especialidad.nombre : 'Especialidad'}}
+        </button>
+        <ul *dropdownMenu class="dropdown-menu" role="menu">
+          <li role="menuitem" *ngFor="let especialidad of especialidades">
+            <a class="dropdown-item" (click)="handleEspecialidadClick(especialidad)">{{especialidad.nombre}}</a>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 
   <div class="form-group">
     <label class="col-sm-3 control-label">Profesional</label>
     <div class="col-sm-5">
-      <select class="minimal btn btn-block dropdown-toggle">
-        <option *ngFor="let profesional of profesionales" (click)="handleProfesionalClick(profesional)">
-          {{profesional.nombre}}
-        </option>
-      </select>
+      <div class="btn-group btn-block" dropdown>
+        <button dropdownToggle type="button" class="minimal btn btn-block btn-default">
+          {{ model.profesional ? model.profesional.nombre : 'Profesional'}}
+        </button>
+        <ul *dropdownMenu class="dropdown-menu" role="menu">
+          <li role="menuitem" *ngFor="let profesional of profesionales">
+            <a class="dropdown-item" (click)="handleProfesionalClick(profesional)">{{profesional.nombre}}</a>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 
@@ -68,7 +92,6 @@
         Limpiar Busqueda
       </a>
     </div>
-
   </div>
 
 </form>

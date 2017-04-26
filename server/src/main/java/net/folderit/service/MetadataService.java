@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 
 /**
  * Created by gheng on 19/4/2017.
@@ -48,7 +49,7 @@ public class MetadataService {
 
     public Iterable<Localidad> findAllLocalidad() {return localidadRepository.findAllByOrderByNombreAsc();}
 
-    public Iterable<CentroSalud> findAllCentroSalud() {return centroSaludRepository.findAllByOrderByNombreAsc();}
+    public ArrayList<CentroSalud> findAllCentroSalud() {return centroSaludRepository.findAllByOrderByNombreAsc();}
 
     public Iterable<Especialidad> findAllEspecialidad() {return especialidadRepository.findAllByOrderByNombreAsc();}
 

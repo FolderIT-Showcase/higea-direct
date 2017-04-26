@@ -9,6 +9,7 @@ export class Persona {
   genero: string;
   nombre: string;
   userAsociado: User;
+  integrantes: Persona[];
   documento: Documento;
   estadoCivil: EstadoCivil;
   domicilio: Domicilio;

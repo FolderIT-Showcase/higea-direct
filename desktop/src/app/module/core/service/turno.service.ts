@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ApiService} from './api.service';
-import {centroSalud} from '../domain/centro-salud';
+import {CentroSalud} from '../domain/centro-salud';
 import {Especialidad} from '../domain/especialidad';
 import {Profesional} from '../domain/profesional';
 import {StoreService} from './store.service';
@@ -13,11 +13,15 @@ export class TurnoService {
   }
 
   getCentrosDeSalud() {
-    const path = 'centroSalud'; // TODO: a ser definido
-    return this.api.get(path).first().toPromise();
+    const path = 'centroSalud';
+    return this.api.get(path)
+      .do(data => {
+        this.storeService.update('centrosSalud', data);
+      })
+      .first().toPromise();
   }
 
-  getTurnos(centro: centroSalud, especialidad: Especialidad, profesional: Profesional, fecha: Date) {
+  getTurnos(centro: CentroSalud, especialidad: Especialidad, profesional: Profesional, fecha: Date) {
     const path = ''; // TODO: a ser definido
 
     const filtro = new FiltroTurno;
@@ -28,7 +32,7 @@ export class TurnoService {
 
     return this.api.post(path, filtro)
       .do(data => {
-        this.storeService.update('centroSalud', centro);
+        this.storeService.update('CentroSalud', centro);
         this.storeService.update('turnos', data);
       })
       .first().toPromise();

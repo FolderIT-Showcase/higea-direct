@@ -15,7 +15,6 @@ const appRoutes: Routes = [
     path: '',
     component: HomeComponent,
     canActivate: [AuthGuard],
-
   },
   {
     path: 'login',
@@ -29,14 +28,14 @@ const appRoutes: Routes = [
     path: 'register',
     component: RegisterComponent,
     resolve: {
-      paises: PaisesResolveService
+      paises: PaisesResolveService,
     }
   },
   {
     path: 'register-social',
     component: RegisterSocialComponent,
     resolve: {
-      paises: PaisesResolveService
+      paises: PaisesResolveService,
     }
   },
   {path: 'regitrationConfirm', component: UserActiveComponent},

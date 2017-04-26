@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ModalDirective} from 'ngx-bootstrap';
 import {Turno} from 'app/module/core/domain/turno';
-import {centroSalud} from '../../../core/domain/centro-salud';
+import {CentroSalud} from '../../../core/domain/centro-salud';
 import {StoreService} from '../../../core/service/store.service';
 import {Store} from '../../../core/service/store';
 import {Subscription} from 'rxjs/Subscription';
@@ -15,7 +15,7 @@ export class ResultadoComponent implements OnInit, OnDestroy {
 
   @ViewChild('autoShownModal') public autoShownModal: ModalDirective;
 
-  centro: centroSalud = new centroSalud();
+  centro: CentroSalud = new CentroSalud();
   turnos: Turno[] = [];
   subs: Subscription[] = [];
 
@@ -30,7 +30,7 @@ export class ResultadoComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subs.push(
-      this.store.changes.pluck('centroSalud').subscribe(
+      this.store.changes.pluck('CentroSalud').subscribe(
         (data: any) => {
           this.centro = data;
         }));

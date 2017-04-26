@@ -5,9 +5,9 @@ export class GeneroLabel {
 }
 
 export class GeneroEnum {
-  static masculino = 'masculino';
-  static femenino = 'femenino';
-  static otro = 'otro';
+  static masculino = 'MASCULINO';
+  static femenino = 'FEMENINO';
+  static otro = 'OTRO';
 }
 
 export class Generos {

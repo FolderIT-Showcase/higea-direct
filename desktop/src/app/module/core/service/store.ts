@@ -11,6 +11,7 @@ const state: AppState = {
   personas: [],
   loginType: null,
   centroSalud: null,
+  centrosSalud: [],
   turnos: []
 };
 
@@ -23,14 +24,14 @@ export class Store {
     .asObservable()
     .distinctUntilChanged()
     // log new state
-    .do(changes => console.log('new state', changes));
+    .do(changes => {
+    });
 
   public getState(): AppState {
     return this.store.value;
   }
 
   public setState(appState: AppState) {
-    console.log('setState ', appState); // log update
     this.store.next(appState);
   }
 

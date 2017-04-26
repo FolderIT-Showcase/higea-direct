@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {centroSalud} from '../../../core/domain/centro-salud';
+import {CentroSalud} from '../../../core/domain/centro-salud';
 import {Especialidad} from '../../../core/domain/especialidad';
 import {Profesional} from '../../../core/domain/profesional';
 import {Persona} from '../../../core/domain/persona';
@@ -19,7 +19,7 @@ class Data {
 })
 export class ModificarIntegranteComponent {
   model: Data = new Data();
-  centrosSalud: centroSalud[] = [];
+  centrosSalud: CentroSalud[] = [];
   especialidades: Especialidad[] = [];
   filteredEspecialidades: Especialidad[] = [];
   profesionales: Profesional[] = [];

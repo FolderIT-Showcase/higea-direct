@@ -3,7 +3,7 @@ import {User} from './user';
 import {Provincia} from './provincia';
 import {Localidad} from './localidad';
 import {Persona} from './persona';
-import {centroSalud} from './centro-salud';
+import {CentroSalud} from './centro-salud';
 import {Turno} from './turno';
 export class AppState {
   user: User;
@@ -12,6 +12,7 @@ export class AppState {
   localidades: Localidad[];
   personas: Persona[];
   loginType: string;
-  centroSalud: centroSalud;
+  centroSalud: CentroSalud;
+  centrosSalud: CentroSalud[];
   turnos: Turno[];
 }
