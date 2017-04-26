@@ -28,6 +28,18 @@ public class TurnoService {
         this.turnoRepository = turnoRepository;
     }
 
-    public List<Turno> finAllBy(FilterDto filterDto){
-        return turnoRepository.finAllBy(filterDto.getFecha(),filterDto.getCentroSalud(),filterDto.getEspecialidad(),filterDto.getProfesional());}
+    public List<Turno> finAllBy(FilterDto filterDto) {
+        List<Turno> turnos = null;
+        if (filterDto.getProfesional() != null && filterDto.getEspecialidad() != null) {
+            turnos = turnoRepository.finAllBy(filterDto.getFecha(), filterDto.getCentroSalud(), filterDto.getEspecialidad(), filterDto.getProfesional());
+        }if(filterDto.getProfesional()==null && filterDto.getEspecialidad()==null){
+            turnos = turnoRepository.finAllByFechaAndCentro(filterDto.getFecha(), filterDto.getCentroSalud());
+        }else if(filterDto.getProfesional()==null){
+            turnos = turnoRepository.finAllByFechaAndCentroAndEspecialidad(filterDto.getFecha(), filterDto.getCentroSalud(),filterDto.getEspecialidad());
+        }else if (filterDto.getEspecialidad()==null){
+            turnos = turnoRepository.finAllByFechaAndCentroAndProfesional(filterDto.getFecha(), filterDto.getCentroSalud(),filterDto.getProfesional());
+        }
+
+        return turnos;
+    }
 }
