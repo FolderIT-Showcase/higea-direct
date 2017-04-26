@@ -75,10 +75,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
     persona.userAsociado = user;
     persona.genero = this.model.genero.toUpperCase();
     persona.documento = new Documento();
-    persona.documento.tipoDocumento = PersonaService.convertTipoDocumento(this.model.tipoDocumento);
+    persona.documento.tipo = PersonaService.convertTipoDocumento(this.model.tipoDocumento);
     persona.documento.numero = this.model.numeroDocumento;
 
-    if (persona.documento.tipoDocumento === TipoDocumentoEnum.dni) {
+    if (persona.documento.tipo === TipoDocumentoEnum.dni) {
       this.personaService.validateDni(persona.documento.numero.toString(), persona.nombre, persona.apellido, persona.genero)
         .then(() => {
           this.save(persona);

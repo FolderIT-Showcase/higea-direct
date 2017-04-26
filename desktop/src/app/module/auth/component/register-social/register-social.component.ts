@@ -71,12 +71,12 @@ export class RegisterSocialComponent implements OnInit {
     persona.apellido = this.model.apellido;
     persona.genero = this.model.genero;
     persona.documento = new Documento();
-    persona.documento.tipoDocumento = PersonaService.convertTipoDocumento(this.model.tipoDocumento);
+    persona.documento.tipo = PersonaService.convertTipoDocumento(this.model.tipoDocumento);
     persona.documento.numero = this.model.numeroDocumento;
     user.email = this.model.email;
     persona.userAsociado = user;
 
-    if (persona.documento.tipoDocumento === TipoDocumentoEnum.dni) {
+    if (persona.documento.tipo === TipoDocumentoEnum.dni) {
       this.personaService.validateDni(persona.documento.numero.toString(), persona.nombre, persona.apellido, persona.genero)
         .then(() => {
           this.save(persona);
