@@ -10,13 +10,13 @@
     <div *ngIf="f.submitted && !model.persona" class="help-block">Ingrese para quien es el turno</div>
   </div>
 
-  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !model.centroSalud }" required>
+  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !model.centro }" required>
     <label class="col-sm-4 control-label">Centro de Salud</label>
     <div class="col-sm-8">
       <select class="minimal btn btn-block dropdown-toggle">
         <option *ngFor="let centro of centrosSalud" (click)="handleCentroSaludClick(centro)">{{centro.nombre}}</option>
       </select>
-      <div *ngIf="f.submitted && !model.centroSalud" class="help-block">Ingrese su Centro de Salud</div>
+      <div *ngIf="f.submitted && !model.centro" class="help-block">Ingrese su Centro de Salud</div>
     </div>
   </div>
 

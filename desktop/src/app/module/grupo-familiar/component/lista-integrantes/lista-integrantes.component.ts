@@ -26,7 +26,7 @@ export class ListaIntegrantesComponent {
     'documentoNumero': '521456369'
   }];
 
-  public showModal(action, integrante) {
+  public showModal(action, integrante = '') {
     this.isModalShown = true;
     this.modalAction = action;
     //         alert('showModal');
@@ -42,7 +42,7 @@ export class ListaIntegrantesComponent {
     //         alert('onHidden');
   }
 
-  public confirmModal(action, integrante) {
+  public confirmModal(action, integrante = '') {
     this.autoShownModal.hide();
     //         alert('confirmModal');
   }

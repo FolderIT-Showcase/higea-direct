@@ -8,7 +8,7 @@ import {TurnoService} from '../../../core/service/turno.service';
 
 class Data {
   persona: Persona;
-  centroSalud: CentroSalud;
+  centro: CentroSalud;
   especialidad: Especialidad;
   profesional: Profesional;
   fechaDesde: Date = new Date();
@@ -42,7 +42,7 @@ export class NuevoTurnoComponent implements OnInit {
   }
 
   handleCentroSaludClick(centroSalud: CentroSalud) {
-    this.model.centroSalud = centroSalud;
+    this.model.centro = centroSalud;
     this.especialidades = centroSalud.especialidad;
   }
 
@@ -57,7 +57,7 @@ export class NuevoTurnoComponent implements OnInit {
 
   buscar() {
 
-    this.turnoService.getTurnos(this.model.centroSalud, this.model.especialidad, this.model.profesional, this.model.fechaDesde)
+    this.turnoService.getTurnos(this.model.centro, this.model.especialidad, this.model.profesional, this.model.fechaDesde)
       .then()
       .catch((error) => {
         console.log(error);
