@@ -1,9 +1,11 @@
 package net.folderit.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -28,10 +30,16 @@ public class Turno implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @JsonFormat(pattern="yyyy-MM-dd'T'hh:mm:ss'Z'")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'hh:mm:ss'Z'")
     private Date dia;
 
+    @JsonFormat(pattern="yyyy-MM-dd'T'hh:mm:ss'Z'")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'hh:mm:ss'Z'")
     private Date fecha;
 
+    @JsonFormat(pattern="yyyy-MM-dd'T'hh:mm:ss'Z'")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'hh:mm:ss'Z'")
     private Date hora;
 
     private String observaciones;
