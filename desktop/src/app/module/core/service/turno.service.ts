@@ -8,8 +8,6 @@ import {FiltroTurno} from '../domain/filter-turno';
 
 import {Turno} from '../domain/turno';
 
-
-
 @Injectable()
 export class TurnoService {
 

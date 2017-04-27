@@ -1,11 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {Persona} from '../../core/domain/persona';
-import {CentroSalud} from '../../core/domain/centro-salud';
-import {Especialidad} from '../../core/domain/especialidad';
-import {Profesional} from '../../core/domain/profesional';
-import {StoreService} from '../../core/service/store.service';
-import {TurnoService} from '../../core/service/turno.service';
-
+import { Component, OnInit } from '@angular/core';
+import {Persona} from '../../../core/domain/persona';
+import {CentroSalud} from '../../../core/domain/centro-salud';
+import {Especialidad} from '../../../core/domain/especialidad';
+import {Profesional} from '../../../core/domain/profesional';
+import {StoreService} from '../../../core/service/store.service';
+import {TurnoService} from '../../../core/service/turno.service';
 
 class Data {
   persona: Persona;
@@ -17,8 +16,9 @@ class Data {
 }
 
 @Component({
-  selector: 'app-administrator',
-  templateUrl: './admin-turno.component.html'
+  selector: 'app-admin-turno',
+  templateUrl: './admin-turno.component.html',
+  styleUrls: ['./admin-turno.component.scss']
 })
 export class AdminTurnoComponent implements OnInit {
 

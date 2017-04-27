@@ -53,16 +53,20 @@
   <div class="form-group">
     <label for="date" class="col-sm-3 control-label">Fecha</label>
     <div class="col-sm-5">
-      <input name="date" [(ngModel)]="model.fechaDesde" class="form-control" id="date" type="date">
+      <!--<input name="date" #date="ngModel" [(ngModel)]="model.fechaDesde" class="form-control" id="date" type="date">-->
+      <div style="display:inline-block; min-height:290px;">
+        <datepicker name="date" #date="ngModel" [(ngModel)]="model.fechaDesde"></datepicker>
+      </div>
     </div>
   </div>
 
   <div class="form-group">
     <label for="hora" class="col-sm-3 control-label">Hora</label>
     <div class="col-sm-5">
-      <input name="hora" [(ngModel)]="model.hora" class="form-control" id="hora" type="date">
+      <timepicker name="hora" #hora="ngModel" [(ngModel)]="model.hora"></timepicker>
     </div>
   </div>
+
 
   <div class="form-group">
     <div class="col-sm-3">

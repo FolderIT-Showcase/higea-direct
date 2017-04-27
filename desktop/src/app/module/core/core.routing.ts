@@ -12,7 +12,8 @@ import {CentrosSaludResolveService} from './service/resolve/centros-salud-resolv
 
 import {IntegrantesResolveService} from './service/resolve/integrantes-resolve.service';
 import {ModificarTurnoComponent} from '../turno/component/modificar-turno/modificar-turno.component';
-import {AdminTurnoComponent} from '../admin/admin-turno/admin-turno.component';
+import {AdminTurnoComponent} from '../admin/component/admin-turno/admin-turno.component';
+
 
 
 

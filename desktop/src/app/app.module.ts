@@ -9,6 +9,7 @@ import {RouterModule} from '@angular/router';
 import {TurnoModule} from './module/turno/turno.module';
 import {GrupoFamiliarModule} from './module/grupo-familiar/grupo-familiar.module';
 import {AlertComponent} from './module/core/component/alert/alert.component';
+import {AdminModule} from './module/admin/admin.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,7 +21,8 @@ import {AlertComponent} from './module/core/component/alert/alert.component';
     CoreModule,
     AuthModule,
     TurnoModule,
-    GrupoFamiliarModule
+    GrupoFamiliarModule,
+    AdminModule
   ],
   bootstrap: [AppComponent],
   providers: [AlertComponent]

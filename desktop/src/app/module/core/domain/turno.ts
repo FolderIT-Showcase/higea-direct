@@ -3,9 +3,9 @@ import {Especialidad} from './especialidad';
 import {Profesional} from './profesional';
 export class Turno {
   id: number;
-  dia: string;
-  fecha: string;
-  hora: string;
+  dia: Date;
+  fecha: Date;
+  hora: Date;
   observaciones = '';
   centroSalud: CentroSalud;
   especialidad: Especialidad;
