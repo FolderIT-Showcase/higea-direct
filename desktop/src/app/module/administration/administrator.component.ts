@@ -1,0 +1,80 @@
+import {Component, OnInit} from '@angular/core';
+
+import {Persona} from "../core/domain/persona";
+import {CentroSalud} from "../core/domain/centro-salud";
+import {Especialidad} from "../core/domain/especialidad";
+import {Profesional} from "../core/domain/profesional";
+import {StoreService} from "../core/service/store.service";
+import {TurnoService} from "../core/service/turno.service";
+
+class Data {
+  persona: Persona;
+  centro: CentroSalud;
+  especialidad: Especialidad;
+  profesional: Profesional;
+  fechaDesde: Date = new Date();
+  hora: Date = new Date();
+}
+
+@Component({
+  selector: 'app-administrator',
+  templateUrl: './administrator.component.html'
+})
+export class AdministratosComponent implements OnInit {
+
+  model: Data = new Data();
+  observaciones:String;
+  centrosSalud: CentroSalud[] = [];
+  especialidades: Especialidad[] = [];
+  profesionales: Profesional[] = [];
+  personas: Persona[] = [];
+
+
+
+  constructor(private storeService: StoreService, private turnoService: TurnoService) {
+  }
+
+  ngOnInit(): void {
+
+    this.centrosSalud = this.storeService.get('centrosSalud');
+    this.model.fechaDesde = new Date();
+    this.model.hora = new Date();
+    //this.observaciones = "";
+  }
+
+
+handlePersonaClick(persona: Persona) {
+  this.model.persona = persona;
+}
+
+handleCentroSaludClick(centroSalud: CentroSalud) {
+  this.model.centro = centroSalud;
+  this.especialidades = centroSalud.especialidad;
+}
+
+handleEspecialidadClick(especialidad: Especialidad) {
+  this.model.especialidad = especialidad;
+  this.profesionales = especialidad.profesional;
+}
+
+handleProfesionalClick(profesional: Profesional) {
+  this.model.profesional = profesional;
+}
+
+crear(){
+
+  this.turnoService.saveTurno(this.model.centro, this.model.especialidad, this.model.profesional, this.model.fechaDesde, this.model.hora)
+    .then()
+    .catch((error) => {
+      console.log(error);
+    });
+
+}
+
+clearForm() {
+  this.model = new Data();
+  this.storeService.update('CentroSalud', null);
+  this.storeService.update('turnos', []);
+}
+
+}

@@ -42,4 +42,8 @@ public class TurnoService {
 
         return turnos;
     }
+
+    public Turno saveTurno(Turno turno) {
+        return turnoRepository.save(turno);
+    }
 }

@@ -34,4 +34,10 @@ public class TurnoController {
         List<Turno> turnos = turnoService.finAllBy(filterDto);
         return new ResponseEntity<>((List<Turno>) turnos, HttpStatus.OK);
     }
+
+    @PutMapping("/turno")
+    public ResponseEntity<Turno> saveTurno(@RequestBody Turno turno) {
+        Turno result = turnoService.saveTurno(turno);
+        return new ResponseEntity<>((Turno) result, HttpStatus.OK);
+    }
 }
