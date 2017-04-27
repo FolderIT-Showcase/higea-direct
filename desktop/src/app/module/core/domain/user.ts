@@ -1,4 +1,3 @@
-import {Turno} from './turno';
 export class User {
   id: number;
   externalId: string;

@@ -11,9 +11,9 @@ import {AgmCoreModule} from 'angular2-google-maps/core';
 import {RouterModule} from '@angular/router';
 import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 
-import { ModificarTurnoComponent } from './component/modificar-turno/modificar-turno.component';
+import {ModificarTurnoComponent} from './component/modificar-turno/modificar-turno.component';
 
-import {AdministratosComponent} from "../administration/administrator.component";
+import {AdministratosComponent} from '../admin/admin-turno/admin-turno.component';
 
 
 @NgModule({
@@ -33,11 +33,7 @@ import {AdministratosComponent} from "../administration/administrator.component"
     TurnoComponent,
     NuevoTurnoComponent,
     ResultadoComponent,
-
-    ModificarTurnoComponent,
-
-    AdministratosComponent
-
+    ModificarTurnoComponent
   ]
 })
 export class TurnoModule {
