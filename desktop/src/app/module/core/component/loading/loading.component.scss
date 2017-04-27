@@ -6,13 +6,41 @@
   .modal:before {
     display: inline-block;
     vertical-align: middle;
-    content: " ";
+    content: "";
     height: 100%;
   }
+}
+
+.load-modal {
+  width: 60px;
 }
 
 .modal-dialog {
   display: inline-block;
   text-align: left;
   vertical-align: middle;
+}
+
+@media (min-width: 768px){
+  .modal-content {
+    box-shadow: 0 0 0 white;
+  }
+}
+
+.modal-content {
+  box-shadow: 0 0 0 white;
+}
+
+.modal-transparent {
+  background: rgba(255, 255, 255, 1);
+}
+.modal-transparent .modal-content {
+  background: rgba(255, 255, 255, 0);
+}
+.modal-backdrop.modal-backdrop-transparent {
+  background: transparent;
+}
+.modal-backdrop.modal-backdrop-transparent.in {
+  opacity: 1;
+  filter: alpha(opacity=1);
 }
