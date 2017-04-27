@@ -39,6 +39,9 @@ public class Persona implements Serializable {
 
     private String nombre;
 
+    @Column(name = "enabled")
+    private boolean enabled = Boolean.TRUE;
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="user_id")
     private User userAsociado;
