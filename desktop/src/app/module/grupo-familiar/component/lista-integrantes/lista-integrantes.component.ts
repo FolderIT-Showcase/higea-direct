@@ -125,7 +125,7 @@ export class ListaIntegrantesComponent {
     }
   }
 
-  public showModal(action, integrante) {
+  public showModal(action, integrante?) {
     this.isModalShown = true;
     this.modalAction = action;
     this.integranteSelected = integrante;
