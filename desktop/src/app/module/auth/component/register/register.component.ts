@@ -89,6 +89,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
           this.alertService.error(error);
           console.log(error);
         });
+
       return;
     }
 

@@ -12,7 +12,6 @@ import {User} from '../../../core/domain/user';
 export class LoginComponent implements OnInit, OnDestroy {
 
   model: any = {};
-  loading = false;
   sub1: any;
 
   constructor(private router: Router,
@@ -32,14 +31,12 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   login() {
-    this.loading = true;
     const user = new User();
     user.email = this.model.email;
     user.password = this.model.password;
     this.auth.login(user)
       .catch(error => {
         this.alertService.error(error);
-        this.loading = false;
       });
   }
 

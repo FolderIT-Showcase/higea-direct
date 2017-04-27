@@ -59,8 +59,8 @@
                   <td>{{turno.observaciones}}</td>
                   <td>
                     <div class="btn btn-group btn-group-justified">
-                      <a (click)="showModal()" class="btn btn-danger btn-block">
-                        <span class="fa fa-times"></span>
+                      <a (click)="showModal()" class="btn btn-primary btn-block">
+                        <span class="fa fa-ellipsis-h"></span>
                       </a>
                     </div>
                   </td>
@@ -68,31 +68,32 @@
                 </tbody>
               </table>
             </div>
-            <div *ngIf="isModalShown" [config]="{ show: true }" (onHidden)="onHidden()" bsModal
-                 #autoShownModal="bs-modal"
+
+            <div *ngIf="isModalShown"  [config]="{ show: true }" (onHidden)="onHidden()" bsModal #autoShownModal="bs-modal"
                  class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
               <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h4 class="modal-title pull-left"><strong>Confirmación</strong></h4>
+                    <h4 class="modal-title pull-left"><strong>Información</strong></h4>
                     <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
                   <div class="modal-body">
-                    <p>¿Querés tomar este turno?</p>
-                    <p>Para el dia <strong></strong> en el horario <strong></strong></p>
-                    <p>Para la especialidad <strong></strong> atendido por </p>
-                    <p>En el <strong></strong></p>
-                    <sebm-google-map [latitude]="lat" [longitude]="lng">
-                      <sebm-google-map-marker [latitude]="lat" [longitude]="lng"></sebm-google-map-marker>
-                    </sebm-google-map>
+                    <label>Para el dia <strong>{{turno.dia}}</strong> en el horario <strong>{{turno.hora}}</strong></label><br>
+                    <label>Para la especialidad <strong>{{turno.especialidad.nombre}}</strong> atendido por </label><br>
+                    <label>En el <strong>{{turno.centroSalud.nombre}}</strong></label><br>
+                    <div *ngIf="false">
+                      <sebm-google-map [latitude]="lat" [longitude]="lng">
+                        <sebm-google-map-marker [latitude]="lat" [longitude]="lng"></sebm-google-map-marker>
+                      </sebm-google-map>
+                    </div>
                     <div class="row">
                       <div class="col-sm-8"></div>
                       <div class="col-sm-4">
                         <div class="btn-group btn-group-justified">
-                          <a type="submit" class="btn btn-primary">SI</a>
-                          <a (click)="hideModal()" class="btn btn-default">NO</a>
+                          <a (click)="eliminarTurno(turno)" class="btn btn-danger">ELIMINAR</a>
+                          <a (click)="hideModal()" class="btn btn-default">CERRAR</a>
                         </div>
                       </div>
                     </div>
@@ -100,6 +101,7 @@
                 </div>
               </div>
             </div>
+
           </div>
         </div>
       </div>

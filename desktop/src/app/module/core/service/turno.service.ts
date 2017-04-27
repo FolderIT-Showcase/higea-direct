@@ -7,11 +7,13 @@ import {StoreService} from './store.service';
 import {FiltroTurno} from '../domain/filter-turno';
 
 import {Turno} from '../domain/turno';
+import {Persona} from '../domain/persona';
 
 @Injectable()
 export class TurnoService {
 
-  constructor(private api: ApiService, private storeService: StoreService) {
+  constructor(private api: ApiService,
+              private storeService: StoreService) {
   }
 
   getCentrosDeSalud() {
@@ -55,8 +57,12 @@ export class TurnoService {
       .first().toPromise();
   }
 
+  reservarTurno(persona: Persona) {
+    const path = '';
+    return this.api.post(path, persona).first().toPromise();
+  }
 
-  saveTurno(centro: CentroSalud, especialidad: Especialidad, profesional: Profesional, fecha: Date, hora:Date) {
+  saveTurno(centro: CentroSalud, especialidad: Especialidad, profesional: Profesional, fecha: Date, hora: Date) {
     const path = 'turno'; // TODO: a ser definido
 
     const turno = new Turno();
@@ -72,6 +78,11 @@ export class TurnoService {
         this.storeService.update('turnos', data);
       })
       .first().toPromise();
+  }
+
+  cancelarTurno(turno) {
+    const path = 'turno/' + turno.id;
+    return this.api.delete(path).first().toPromise();
   }
 
 }
