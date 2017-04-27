@@ -69,7 +69,8 @@
               </table>
             </div>
 
-            <div *ngIf="isModalShown"  [config]="{ show: true }" (onHidden)="onHidden()" bsModal #autoShownModal="bs-modal"
+            <div *ngIf="isModalShown" [config]="{ show: true }" (onHidden)="onHidden()" bsModal
+                 #autoShownModal="bs-modal"
                  class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
               <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -80,7 +81,8 @@
                     </button>
                   </div>
                   <div class="modal-body">
-                    <label>Para el dia <strong>{{turno.dia}}</strong> en el horario <strong>{{turno.hora}}</strong></label><br>
+                    <label>Para el dia <strong>{{turno.dia}}</strong> en el horario
+                      <strong>{{turno.hora}}</strong></label><br>
                     <label>Para la especialidad <strong>{{turno.especialidad.nombre}}</strong> atendido por </label><br>
                     <label>En el <strong>{{turno.centroSalud.nombre}}</strong></label><br>
                     <div *ngIf="false">

@@ -10,7 +10,6 @@ import {TurnoModule} from './module/turno/turno.module';
 import {GrupoFamiliarModule} from './module/grupo-familiar/grupo-familiar.module';
 import {AlertComponent} from './module/core/component/alert/alert.component';
 import {AdminModule} from './module/admin/admin.module';
-import { LoadingComponent } from './module/core/component/loading/loading.component';
 
 @NgModule({
   declarations: [AppComponent],
