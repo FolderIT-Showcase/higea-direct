@@ -38,7 +38,7 @@ public class Turno implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fecha;
 
-    @JsonFormat(pattern="HH:mm:ss",timezone="America/Buenos_Aires")
+    //@JsonFormat(pattern="HH:mm:ss",timezone="America/Buenos_Aires")
     @DateTimeFormat(pattern = "HH:mm:ss")
     private Date hora;
 
@@ -59,4 +59,6 @@ public class Turno implements Serializable {
     public void finalize() throws Throwable {
 
     }
+
+
 }//end Turno

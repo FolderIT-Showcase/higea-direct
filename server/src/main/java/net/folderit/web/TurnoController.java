@@ -24,9 +24,12 @@ public class TurnoController {
 
     private TurnoService turnoService;
 
+    private PersonaService  personaService;
+
     @Autowired
-    public TurnoController(TurnoService turnoService) {
+    public TurnoController(TurnoService turnoService,PersonaService  personaService) {
         this.turnoService = turnoService;
+        this.personaService = personaService;
     }
 
     @PostMapping("/turno")
@@ -39,5 +42,31 @@ public class TurnoController {
     public ResponseEntity<Turno> saveTurno(@RequestBody Turno turno) {
         Turno result = turnoService.saveTurno(turno);
         return new ResponseEntity<>((Turno) result, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/turno")
+    public ResponseEntity<Persona> deleteTurno(@RequestParam Long id) {
+        Persona persona = personaService.findByTurno(id);
+        //persona.getTurno().remove(persona.getTurno().)
+        Persona result = null;
+
+        if (persona != null) {
+            Turno turnoDelete = null;
+            int index = -1;
+            for (Turno turno : persona.getTurno()) {
+                index++;
+                if (turno.getId().equals(id)) {
+                    turnoDelete = turno;
+                    break;
+                }
+
+            }
+
+            if (turnoDelete != null) {
+                persona.getTurno().remove(index);
+            }
+            result = personaService.save(persona);
+        }
+        return new ResponseEntity<>((Persona) result, HttpStatus.OK);
     }
 }
