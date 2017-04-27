@@ -16,7 +16,7 @@ export class Persona {
     domicilio?: Domicilio;
     telefono?: string;
     nacionalidad?: string;
-    turno: Turno[];
+    turno?: Turno[];
 
     constructor() {
         this.principal = false;
