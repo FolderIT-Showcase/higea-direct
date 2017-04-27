@@ -18,10 +18,7 @@ export class ResultadoComponent implements OnInit, OnDestroy {
   centro: CentroSalud = new CentroSalud();
   turnos: Turno[] = [];
   subs: Subscription[] = [];
-
   public isModalShown = false;
-
-  title = 'My first angular2-google-maps project';
   lat = -31.623357;
   lng = -60.704956;
 

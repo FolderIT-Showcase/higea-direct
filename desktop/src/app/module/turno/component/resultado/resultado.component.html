@@ -1,11 +1,11 @@
-<div *ngIf="centro">
+<div *ngIf="turnos[0]">
   <h4>
     Seleccione un turno
   </h4>
   <div class="list-group">
     <a class="list-group-item active">
-      <h4 class="list-group-item-heading">Hospital 1</h4>
-      <p class="list-group-item-text"> n turnos disponibles a partir del fecha</p>
+      <h4 class="list-group-item-heading">{{centro.nombre}}</h4>
+      <p class="list-group-item-text"> {{turnos.length}} turnos disponibles a partir del {{turnos[0].fecha}}</p>
     </a>
     <div class="table-responsive">
       <table class="table table-striped">
@@ -27,8 +27,8 @@
           <td>{{turno.fecha}}</td>
           <td>{{turno.hora}}</td>
           <td>{{centro.nombre}}</td>
-          <td>{{turno.especialidad}}</td>
-          <td>{{turno.profesional}}</td>
+          <td>{{turno.especialidad.nombre}}</td>
+          <td>{{turno.profesional.nombre}}</td>
           <td>{{turno.observaciones}}</td>
           <td>
             <a (click)="showModal()" class="btn btn-success btn-block">

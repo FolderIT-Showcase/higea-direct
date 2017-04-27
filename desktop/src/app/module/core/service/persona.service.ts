@@ -48,17 +48,27 @@ export class PersonaService {
   }
 
   getIntegrantes() {
-    const user: User = this.storeService.get('currentUser');
-    const path = 'user/' + user.email;
+    const user: User = JSON.parse(localStorage.getItem('currentUser'));
+
+    console.log(user);
+
+    if (!user.email) {
+      return;
+    }
+
+    const path = 'persona/email?email=' + user.email;
     return this.api.get(path)
       .do((data: Persona) => {
         const userPersona: Persona = data;
         userPersona.integrantes = null;
         const personas: Persona[] = [];
         personas.push(userPersona);
-        data.integrantes.forEach(x => {
-          personas.push(x);
-        });
+        if (data.integrantes) {
+          data.integrantes.forEach(x => {
+            personas.push(x);
+          });
+        }
+
         this.storeService.update('integrantes', personas);
       })
       .first().toPromise();

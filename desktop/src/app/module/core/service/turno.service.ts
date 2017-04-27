@@ -22,12 +22,27 @@ export class TurnoService {
   }
 
   getTurnos(centro: CentroSalud, especialidad: Especialidad, profesional: Profesional, fecha: Date) {
-    const path = ''; // TODO: a ser definido
 
+    const path = 'turno';
     const filtro = new FiltroTurno;
-    filtro.centroSalud = centro;
-    filtro.profesional = profesional;
-    filtro.especialidad = especialidad;
+    if (centro) {
+      const tmpCentro: CentroSalud = new CentroSalud();
+      Object.assign(tmpCentro, centro);
+      filtro.centroSalud = tmpCentro;
+      filtro.centroSalud.nombre = null;
+      filtro.centroSalud.especialidad = null;
+    }
+    if (profesional) {
+      const tmpProfesional: Profesional = new Profesional();
+      Object.assign(tmpProfesional, profesional);
+      filtro.profesional = tmpProfesional;
+      filtro.profesional.nombre = null;
+      filtro.profesional.apellido = null;
+    }
+    if (especialidad) {
+      filtro.especialidad = especialidad;
+    }
+
     filtro.fecha = fecha;
 
     return this.api.post(path, filtro)

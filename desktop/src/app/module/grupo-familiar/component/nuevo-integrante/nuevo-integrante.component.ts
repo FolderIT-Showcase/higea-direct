@@ -9,7 +9,7 @@ class Data {
   centro: string;
   especialidad: string;
   profesional: string;
-  fechaDesde: Date = new Date();
+  fecha: Date = new Date();
 }
 
 @Component({

@@ -13,13 +13,11 @@ export class CentrosSaludResolveService implements Resolve<CentroSalud[]> {
   resolve(): Promise<CentroSalud[]> {
     const centro = this.storeService.get('centrosSalud');
     if (centro[0]) {
-      console.log(centro)
       return new Promise((resolve, reject) => {
         resolve(centro);
       });
-    } else {
-      return this.turnoService.getCentrosDeSalud();
     }
+    return this.turnoService.getCentrosDeSalud();
   }
 
 }

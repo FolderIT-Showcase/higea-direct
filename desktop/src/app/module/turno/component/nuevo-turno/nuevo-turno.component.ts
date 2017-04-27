@@ -11,7 +11,7 @@ class Data {
   centro: CentroSalud;
   especialidad: Especialidad;
   profesional: Profesional;
-  fechaDesde: Date = new Date();
+  fecha: Date = new Date();
 }
 
 @Component({
@@ -34,7 +34,7 @@ export class NuevoTurnoComponent implements OnInit {
     const personaUser = this.storeService.get('integrantes');
     this.personas = this.storeService.get('integrantes');
     this.centrosSalud = this.storeService.get('centrosSalud');
-    this.model.fechaDesde = new Date();
+    this.model.fecha = new Date();
   }
 
   handlePersonaClick(persona: Persona) {
@@ -56,13 +56,10 @@ export class NuevoTurnoComponent implements OnInit {
   }
 
   buscar() {
-
-    this.turnoService.getTurnos(this.model.centro, this.model.especialidad, this.model.profesional, this.model.fechaDesde)
-      .then()
+    this.turnoService.getTurnos(this.model.centro, this.model.especialidad, this.model.profesional, this.model.fecha)
       .catch((error) => {
         console.log(error);
       });
-
   }
 
   clearForm() {

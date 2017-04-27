@@ -16,9 +16,8 @@ export class PaisesResolveService implements Resolve<Metadata> {
       return new Promise((resolve, reject) => {
         resolve(paises);
       });
-    } else {
-      return this.metadataService.getPaises();
     }
+    return this.metadataService.getPaises();
   }
 
 }
