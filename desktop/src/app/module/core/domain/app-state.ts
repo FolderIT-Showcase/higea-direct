@@ -11,6 +11,7 @@ export class AppState {
   provincias: Provincia[];
   localidades: Localidad[];
   personas: Persona[];
+  persona: Persona;
   loginType: string;
   centroSalud: CentroSalud;
   centrosSalud: CentroSalud[];

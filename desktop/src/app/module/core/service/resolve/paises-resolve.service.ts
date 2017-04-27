@@ -3,11 +3,14 @@ import {Resolve} from '@angular/router';
 import {MetadataService} from '../metadata.service';
 import {Metadata} from '../../domain/metadata';
 import {StoreService} from '../store.service';
+import {LoadingService} from '../loading.service';
 
 @Injectable()
 export class PaisesResolveService implements Resolve<Metadata> {
 
-  constructor(private metadataService: MetadataService, private storeService: StoreService) {
+  constructor(private metadataService: MetadataService,
+              private storeService: StoreService,
+              private loadingService: LoadingService) {
   }
 
   resolve(): Promise<Metadata> {
@@ -17,7 +20,11 @@ export class PaisesResolveService implements Resolve<Metadata> {
         resolve(paises);
       });
     }
-    return this.metadataService.getPaises();
+    this.loadingService.start();
+    return this.metadataService.getPaises()
+      .then(() => {
+        this.loadingService.finish();
+      });
   }
 
 }

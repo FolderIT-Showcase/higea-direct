@@ -15,8 +15,6 @@ import {ModificarTurnoComponent} from '../turno/component/modificar-turno/modifi
 import {AdminTurnoComponent} from '../admin/component/admin-turno/admin-turno.component';
 
 
-
-
 const appRoutes: Routes = [
   {
     path: '',

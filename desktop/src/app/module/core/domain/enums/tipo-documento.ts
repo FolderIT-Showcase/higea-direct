@@ -1,5 +1,5 @@
 export class TipoDocumentoLabel {
-  static dni = 'DNI';
+  static dni = 'dni';
   static pasaporte = 'pasaporte';
   static cedulaIdentidad = 'Cedula de Identidad';
   static libretaEnrolamiento = 'Libreta de Enrolamiento';
@@ -25,6 +25,7 @@ export class TipoDocumentos {
     tipoDocumentos.push(TipoDocumentoLabel.libretaEnrolamiento);
     tipoDocumentos.push(TipoDocumentoLabel.libretaCivica);
     tipoDocumentos.push(TipoDocumentoLabel.documentoExtranjero);
+    tipoDocumentos.sort();
     return tipoDocumentos;
   }
 

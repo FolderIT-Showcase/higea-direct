@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Persona} from '../../../core/domain/persona';
 import {CentroSalud} from '../../../core/domain/centro-salud';
 import {Especialidad} from '../../../core/domain/especialidad';

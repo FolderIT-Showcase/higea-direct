@@ -4,32 +4,41 @@ import {ApiService} from '../core/service/api.service';
 import {User} from '../core/domain/user';
 import {StoreService} from '../core/service/store.service';
 import {Router} from '@angular/router';
+import {LoadingService} from '../core/service/loading.service';
 
 @Injectable()
 export class AppAuthService {
   constructor(private api: ApiService,
               private storeService: StoreService,
-              private router: Router) {
+              private router: Router,
+              private loadingService: LoadingService) {
   }
 
   public login(user: User, type: string = '') {
-
+    this.loadingService.start();
     switch (type) {
       case 'facebook' :
       case 'google' :
         this.getUser(type, user.externalId)
           .then(() => {
             // login exitoso rutear a la pagina principal
-            this.normalLogin(user, type);
+            this.normalLogin(user, type)
+              .then(() => {
+                this.loadingService.finish();
+              });
           })
           .catch(() => {
             // el usuario no existe, registrarlo
             localStorage.setItem('socialUser', JSON.stringify(user));
             this.router.navigate(['/register-social']);
+            this.loadingService.finish();
           });
         return;
       default :
-        return this.normalLogin(user);
+        return this.normalLogin(user)
+          .then(() => {
+            this.loadingService.finish();
+          });
     }
 
   }

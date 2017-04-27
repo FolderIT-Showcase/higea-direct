@@ -39,6 +39,7 @@ export class NuevoTurnoComponent implements OnInit {
 
   handlePersonaClick(persona: Persona) {
     this.model.persona = persona;
+    this.storeService.update('persona', persona);
   }
 
   handleCentroSaludClick(centroSalud: CentroSalud) {

@@ -16,6 +16,7 @@ export class Generos {
     generos.push(GeneroLabel.masculino);
     generos.push(GeneroLabel.femenino);
     generos.push(GeneroLabel.otro);
+    generos.sort();
     return generos;
   }
 }

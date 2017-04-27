@@ -3,11 +3,14 @@ import {Resolve} from '@angular/router';
 import {CentroSalud} from '../../domain/centro-salud';
 import {TurnoService} from '../turno.service';
 import {StoreService} from 'app/module/core/service/store.service';
+import {LoadingService} from '../loading.service';
 
 @Injectable()
 export class CentrosSaludResolveService implements Resolve<CentroSalud[]> {
 
-  constructor(private turnoService: TurnoService, private storeService: StoreService) {
+  constructor(private turnoService: TurnoService,
+              private storeService: StoreService,
+              private loadingService: LoadingService) {
   }
 
   resolve(): Promise<CentroSalud[]> {
@@ -17,7 +20,11 @@ export class CentrosSaludResolveService implements Resolve<CentroSalud[]> {
         resolve(centro);
       });
     }
-    return this.turnoService.getCentrosDeSalud();
+    this.loadingService.start();
+    return this.turnoService.getCentrosDeSalud()
+      .then(() => {
+        this.loadingService.finish();
+      });
   }
 
 }
