@@ -64,8 +64,9 @@ public class TurnoController {
 
             if (turnoDelete != null) {
                 persona.getTurno().remove(index);
+                result = personaService.save(persona);
             }
-            result = personaService.save(persona);
+
         }
         return new ResponseEntity<>((Persona) result, HttpStatus.OK);
     }
