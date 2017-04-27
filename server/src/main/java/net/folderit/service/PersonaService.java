@@ -64,6 +64,11 @@ public class PersonaService {
     }
 
     @Transactional
+    public Persona findByTurno(Long turnoId){
+       return  personaRepository.finByTurno(turnoId);
+    }
+
+    @Transactional
     public Persona findByUserAsociadoEmail(String email) {
        return personaRepository.findByUserAsociadoEmail(email);
     }
