@@ -10,10 +10,7 @@ import {ModalModule} from 'ngx-bootstrap/modal';
 import {AgmCoreModule} from 'angular2-google-maps/core';
 import {RouterModule} from '@angular/router';
 import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
-
 import {ModificarTurnoComponent} from './component/modificar-turno/modificar-turno.component';
-
-import {AdministratosComponent} from '../admin/admin-turno/admin-turno.component';
 
 
 @NgModule({

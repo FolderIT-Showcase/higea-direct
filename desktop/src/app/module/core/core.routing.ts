@@ -9,9 +9,12 @@ import {UserActiveComponent} from '../auth/component/user-activate/user.active.c
 import {AuthGuard} from './guard/auth.guard';
 import {PaisesResolveService} from './service/resolve/paises-resolve.service';
 import {CentrosSaludResolveService} from './service/resolve/centros-salud-resolve.service';
+
 import {IntegrantesResolveService} from './service/resolve/integrantes-resolve.service';
 import {ModificarTurnoComponent} from '../turno/component/modificar-turno/modificar-turno.component';
 import {AdminTurnoComponent} from '../admin/admin-turno/admin-turno.component';
+
+
 
 const appRoutes: Routes = [
   {
@@ -58,11 +61,13 @@ const appRoutes: Routes = [
     }
   },
   {path: 'grupo-familiar', component: GrupoFamiliarComponent},
+
   {
     path: 'admin', component: AdminTurnoComponent,
     resolve: {
       centrosSalud: CentrosSaludResolveService
     }
+
   },
 
 

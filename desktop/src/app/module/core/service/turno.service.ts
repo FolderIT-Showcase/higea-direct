@@ -5,7 +5,10 @@ import {Especialidad} from '../domain/especialidad';
 import {Profesional} from '../domain/profesional';
 import {StoreService} from './store.service';
 import {FiltroTurno} from '../domain/filter-turno';
+
 import {Turno} from '../domain/turno';
+
+
 
 @Injectable()
 export class TurnoService {
@@ -54,12 +57,13 @@ export class TurnoService {
       .first().toPromise();
   }
 
-  saveTurno(centro: CentroSalud, especialidad: Especialidad, profesional: Profesional, fecha: Date, hora: Date) {
+
+  saveTurno(centro: CentroSalud, especialidad: Especialidad, profesional: Profesional, fecha: Date, hora:Date) {
     const path = 'turno'; // TODO: a ser definido
 
     const turno = new Turno();
-    turno.fecha = fecha.toString();
-    turno.hora = hora.toString();
+    turno.fecha = fecha;
+    turno.hora = hora;
     turno.centroSalud = centro;
     turno.especialidad = especialidad;
     turno.profesional = profesional;
