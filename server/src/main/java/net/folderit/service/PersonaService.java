@@ -63,40 +63,41 @@ public class PersonaService {
         personaRepository.delete(customer);
     }
 
-    public Iterable<Persona> findAll() {return personaRepository.findAll();}
+    public Iterable<Persona> findAll() {
+        return personaRepository.findAll();
+    }
 
     public Persona findById(Long id) {
         return personaRepository.findOne(id);
     }
 
     @Transactional
-    public Persona findByTurno(Long turnoId){
-       return  personaRepository.finByTurno(turnoId);
+    public Persona findByTurno(Long turnoId) {
+        return personaRepository.finByTurno(turnoId);
     }
 
     @Transactional
     public Persona findByUserAsociadoEmail(String email) {
-       return personaRepository.findByUserAsociadoEmail(email);
+        return personaRepository.findByUserAsociadoEmail(email);
     }
 
-    public ResultAfipDto isDocumentValid(String documento, String nombre, String apellido,String sexo)throws Exception{
+    public ResultAfipDto isDocumentValid(String documento, String nombre, String apellido, String sexo) throws Exception {
         AfipUtil au = AfipUtil.getInstance();
-        String cuit = au.getCuit(documento,(sexo.equals("M")? Genero.MASCULINO:Genero.FEMENINO));
+        String cuit = au.getCuit(documento, (sexo.equals("M") ? Genero.MASCULINO : Genero.FEMENINO));
         ResultAfipDto data = AfipUtil.getInstance().getRestConexion().getForObject(
                 restProperty + cuit, ResultAfipDto.class);
         return data;
     }
 
 
-
-    public Boolean mandarMailDeBaja(Persona persona){
+    public Boolean mandarMailDeBaja(Persona persona) {
 
         User user = persona.getUserAsociado();
 
         String recipientAddress = user.getEmail();
         String subject = "Turno cancelado";
-        TurneroException.getInstance().getMessage(TurneroException.MESSAGE_TURNO_CANCELED,null)
-        String mensaje =  TurneroException.getInstance().getError();
+        TurneroException.getInstance().getMessage(TurneroException.MESSAGE_TURNO_CANCELED, null);
+        String mensaje = TurneroException.getInstance().getError();
 
         SimpleMailMessage email = new SimpleMailMessage();
         email.setTo(recipientAddress);
@@ -104,6 +105,7 @@ public class PersonaService {
         email.setSubject(subject);
         email.setText(mensaje);
         mailSender.send(email);
-
+        return Boolean.TRUE;
     }
+
 }
