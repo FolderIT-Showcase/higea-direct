@@ -45,13 +45,13 @@ public class TurnoController {
     }
 
     @DeleteMapping("/turno")
-    public ResponseEntity<Persona> deleteTurno(@RequestParam Long id) {
+    public ResponseEntity<Persona> deleteTurno(@RequestParam Long id,@RequestParam Boolean desactivate) {
         Persona persona = personaService.findByTurno(id);
         //persona.getTurno().remove(persona.getTurno().)
         Persona result = null;
-
+        Turno turnoDelete = null;
         if (persona != null) {
-            Turno turnoDelete = null;
+
             int index = -1;
             for (Turno turno : persona.getTurno()) {
                 index++;
@@ -67,6 +67,11 @@ public class TurnoController {
                 result = personaService.save(persona);
             }
 
+        }
+        if(desactivate){
+           if(turnoDelete==null){turnoDelete = turnoService.findById(id);}
+            turnoDelete.setEnabled(Boolean.FALSE);
+            this.turnoService.saveTurno(turnoDelete);
         }
         return new ResponseEntity<>((Persona) result, HttpStatus.OK);
     }

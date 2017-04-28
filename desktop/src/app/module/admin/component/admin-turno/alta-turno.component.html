@@ -1,0 +1,97 @@
+<div class="col-sm-12">
+<div class="app-header text-left">
+  <a [routerLink]="['/admin']" class="btn btn-block btn-link btn-back">
+    <span class="fa fa-arrow-left"></span>
+    VOLVER
+  </a>
+</div>
+  <form class="form-horizontal" name="f" (ngSubmit)="f.form.valid && crear()" #f="ngForm" novalidate>
+
+    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !model.centro }">
+      <label class="col-sm-3 control-label">Centro de Salud</label>
+      <div class="col-sm-5">
+        <div class="btn-group btn-block" dropdown>
+          <button dropdownToggle type="button" class="minimal btn btn-block btn-default">
+            {{ model.centro ? model.centro.nombre : 'Centro de Salud'}}
+          </button>
+          <ul *dropdownMenu class="dropdown-menu" role="menu">
+            <li role="menuitem" *ngFor="let centro of centrosSalud">
+              <a class="dropdown-item" (click)="handleCentroSaludClick(centro)">{{centro.nombre}}</a>
+            </li>
+          </ul>
+        </div>
+        <div *ngIf="f.submitted && !model.centro" class="help-block">Ingrese su Centro de Salud</div>
+      </div>
+    </div>
+
+    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !model.especialidad }">
+      <label class="col-sm-3 control-label">Especialidad</label>
+      <div class="col-sm-5">
+        <div class="btn-group btn-block" dropdown>
+          <button dropdownToggle type="button" class="minimal btn btn-block btn-default">
+            {{ model.especialidad ? model.especialidad.nombre : 'Especialidad'}}
+          </button>
+          <ul *dropdownMenu class="dropdown-menu" role="menu">
+            <li role="menuitem" *ngFor="let especialidad of especialidades">
+              <a class="dropdown-item" (click)="handleEspecialidadClick(especialidad)">{{especialidad.nombre}}</a>
+            </li>
+          </ul>
+        </div>
+        <div *ngIf="f.submitted && !model.especialidad" class="help-block">Ingrese especialidad</div>
+      </div>
+    </div>
+
+    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !model.profesional }">
+      <label class="col-sm-3 control-label">Profesional</label>
+      <div class="col-sm-5">
+        <div class="btn-group btn-block" dropdown>
+          <button dropdownToggle type="button" class="minimal btn btn-block btn-default">
+            {{ model.profesional ? model.profesional.nombre : 'Profesional'}}
+          </button>
+          <ul *dropdownMenu class="dropdown-menu" role="menu">
+            <li role="menuitem" *ngFor="let profesional of profesionales">
+              <a class="dropdown-item" (click)="handleProfesionalClick(profesional)">{{profesional.nombre}}</a>
+            </li>
+          </ul>
+        </div>
+        <div *ngIf="f.submitted && !model.profesional" class="help-block">Ingrese profesional</div>
+      </div>
+    </div>
+
+    <div class="form-group"  [ngClass]="{ 'has-error': f.submitted && !model.fechaDesde }">
+      <label for="date" class="col-sm-3 control-label">Fecha</label>
+      <div class="col-sm-5">
+        <!--<input name="date" #date="ngModel" [(ngModel)]="model.fechaDesde" class="form-control" id="date" type="date">-->
+        <div style="display:inline-block; min-height:290px;">
+          <datepicker name="date" #date="ngModel" [(ngModel)]="model.fechaDesde"></datepicker>
+        </div>
+        <div *ngIf="f.submitted && !model.fechaDesde" class="help-block">Ingrese Fecha</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="hora" class="col-sm-3 control-label">Hora</label>
+      <div class="col-sm-5">
+        <timepicker name="hora" #hora="ngModel" [(ngModel)]="model.hora"></timepicker>
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <div class="col-sm-3">
+      </div>
+      <div class="col-sm-5">
+        <button type="submit" class="btn btn-primary">
+          <span class="app-icon fa fa-save"></span>
+          Crear
+        </button>
+        <a (click)="f.reset()" class="btn btn-default">
+          <span class="app-icon-dark fa fa-times-circle"></span>
+          Limpiar
+        </a>
+      </div>
+    </div>
+
+  </form>
+</div>
+

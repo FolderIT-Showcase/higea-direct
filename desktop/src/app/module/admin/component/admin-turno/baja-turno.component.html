@@ -1,4 +1,4 @@
-<form class="form-horizontal" name="f" (ngSubmit)="f.form.valid && crear()" #f="ngForm" novalidate>
+<form class="form-horizontal" name="f" (ngSubmit)="buscar()" #f="ngForm" novalidate>
 
   <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !model.centro }">
     <label class="col-sm-3 control-label">Centro de Salud</label>
@@ -17,7 +17,7 @@
     </div>
   </div>
 
-  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !model.especialidad }">
+  <div class="form-group">
     <label class="col-sm-3 control-label">Especialidad</label>
     <div class="col-sm-5">
       <div class="btn-group btn-block" dropdown>
@@ -30,7 +30,6 @@
           </li>
         </ul>
       </div>
-      <div *ngIf="f.submitted && !model.especialidad" class="help-block">Ingrese especialidad</div>
     </div>
   </div>
 
@@ -51,36 +50,26 @@
   </div>
 
   <div class="form-group">
-    <label for="date" class="col-sm-3 control-label">Fecha</label>
+    <label class="col-sm-3 control-label">Fecha</label>
     <div class="col-sm-5">
-      <!--<input name="date" #date="ngModel" [(ngModel)]="model.fechaDesde" class="form-control" id="date" type="date">-->
-      <div style="display:inline-block; min-height:290px;">
-        <datepicker name="date" #date="ngModel" [(ngModel)]="model.fechaDesde"></datepicker>
-      </div>
+      <input name="fecha" #fecha="ngModel" [(ngModel)]="model.fecha" class="form-control" id="date" type="date">
     </div>
   </div>
-
-  <div class="form-group">
-    <label for="hora" class="col-sm-3 control-label">Hora</label>
-    <div class="col-sm-5">
-      <timepicker name="hora" #hora="ngModel" [(ngModel)]="model.hora"></timepicker>
-    </div>
-  </div>
-
 
   <div class="form-group">
     <div class="col-sm-3">
     </div>
     <div class="col-sm-5">
-      <button type="submit" class="btn btn-primary">
-        <span class="app-icon fa fa-save"></span>
-        Crear
+      <button (click)="buscar(); false" class="btn btn-primary">
+        <span class="app-icon fa fa-search"></span>
+        Buscar
       </button>
       <a (click)="f.reset()" class="btn btn-default">
         <span class="app-icon-dark fa fa-times-circle"></span>
-        Limpiar
+        Limpiar Busqueda
       </a>
     </div>
   </div>
 
 </form>
+<app-admin-busqueda></app-admin-busqueda>

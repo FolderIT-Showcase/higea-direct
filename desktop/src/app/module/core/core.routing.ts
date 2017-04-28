@@ -12,7 +12,10 @@ import {CentrosSaludResolveService} from './service/resolve/centros-salud-resolv
 
 import {IntegrantesResolveService} from './service/resolve/integrantes-resolve.service';
 import {ModificarTurnoComponent} from '../turno/component/modificar-turno/modificar-turno.component';
-import {AdminTurnoComponent} from '../admin/component/admin-turno/admin-turno.component';
+
+import {AdminHomeComponent} from "../admin/component/admin-home.component";
+import {AltaTurnoComponent} from "../admin/component/admin-turno/alta-turno.component";
+import {BajaTurnoComponent} from "../admin/component/admin-turno/baja-turno.component";
 
 
 const appRoutes: Routes = [
@@ -60,13 +63,20 @@ const appRoutes: Routes = [
     }
   },
   {path: 'grupo-familiar', component: GrupoFamiliarComponent},
-
+  {path: 'admin', component: AdminHomeComponent},
   {
-    path: 'admin', component: AdminTurnoComponent,
+    path: 'admin-turno', component: AltaTurnoComponent,
     resolve: {
       centrosSalud: CentrosSaludResolveService
     }
 
+  },
+  {
+    path: 'baja-turno',
+    component: BajaTurnoComponent,
+    resolve: {
+       centrosSalud: CentrosSaludResolveService
+    }
   },
 
 
