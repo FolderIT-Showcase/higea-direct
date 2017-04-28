@@ -21,10 +21,10 @@ export class ListaIntegrantesComponent {
      private integranteSelected = null;
      private selectUndefined: any;
      private currentUser = JSON.parse(localStorage.getItem('currentUser'));
-     private currentPersona = new Persona();
      public busy: Promise<any>;
 
      public isModalShown = false;
+     public currentPersona = new Persona();
      public modalAction = 'none';
      public formData = {};
      public lists = {
