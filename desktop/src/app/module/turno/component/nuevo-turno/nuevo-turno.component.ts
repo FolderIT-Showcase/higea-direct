@@ -35,11 +35,20 @@ export class NuevoTurnoComponent implements OnInit {
     this.personas = this.storeService.get('integrantes');
     this.centrosSalud = this.storeService.get('centrosSalud');
     this.model.fecha = new Date();
+    this.model.persona = this.personas[0];
   }
 
   handlePersonaClick(persona: Persona) {
     this.model.persona = persona;
     this.storeService.update('persona', persona);
+  }
+
+  labelPersona() {
+    if (!this.model.persona) {
+      return;
+    }
+    return (this.model.persona.nombre + ' ' + this.model.persona.apellido).toUpperCase();
+
   }
 
   handleCentroSaludClick(centroSalud: CentroSalud) {

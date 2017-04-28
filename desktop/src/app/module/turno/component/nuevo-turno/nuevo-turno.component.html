@@ -1,4 +1,5 @@
-<form class="form-horizontal" name="f" (ngSubmit)="buscar()" #f="ngForm" novalidate>
+<!--<form class="form-horizontal" name="f" (ngSubmit)="f.form.valid && buscar()" #f="ngForm" novalidate>-->
+<form class="form-horizontal" name="f" #f="ngForm" novalidate>
 
   <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !model.persona }">
     <label class="col-sm-3 control-label">Nuevo Turno para</label>
@@ -9,7 +10,7 @@
         </button>
         <ul *dropdownMenu class="dropdown-menu" role="menu">
           <li role="menuitem" *ngFor="let persona of personas">
-            <a class="dropdown-item" (click)="handlePersonaClick(persona)">{{persona.nombre}}</a>
+            <a class="dropdown-item" (click)="handlePersonaClick(persona)">{{labelPersona()}}</a>
           </li>
         </ul>
       </div>
@@ -80,17 +81,17 @@
   </div>
 
   <div class="form-group">
-    <div class="col-sm-3">
-    </div>
+    <div class="col-sm-3"></div>
     <div class="col-sm-5">
       <button (click)="buscar(); false" class="btn btn-primary">
         <span class="app-icon fa fa-search"></span>
         Buscar
       </button>
-      <a (click)="f.reset()" class="btn btn-default">
+      <!-- TODO: no esta limpiando el formulario-->
+      <button type="reset" (click)="f.form.reset()" class="btn btn-default">
         <span class="app-icon-dark fa fa-times-circle"></span>
         Limpiar Busqueda
-      </a>
+      </button>
     </div>
   </div>
 

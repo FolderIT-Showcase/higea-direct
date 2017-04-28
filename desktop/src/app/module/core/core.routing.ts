@@ -23,7 +23,10 @@ const appRoutes: Routes = [
   },
   {
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent,
+    resolve: {
+      paises: PaisesResolveService,
+    }
   },
   {
     path: 'home',

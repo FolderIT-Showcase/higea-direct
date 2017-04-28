@@ -35,7 +35,7 @@ export class FacebookSigninComponent {
     this.fb.login(options)
       .then((response: LoginResponse) => {
         this.fb.api('/me', 'get', {fields: 'email'})
-          .then(data => {
+          .then((data: any) => {
             const user: User = new User();
             user.externalId = response.authResponse.userID;
             user.email = data.email;
@@ -50,7 +50,6 @@ export class FacebookSigninComponent {
           });
       })
       .catch((error: any) => {
-        this.router.navigate(['/login']);
         console.error(error);
       });
   }

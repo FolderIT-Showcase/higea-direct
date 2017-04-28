@@ -77,25 +77,34 @@ export class RegisterSocialComponent implements OnInit {
     persona.userAsociado = user;
 
     if (persona.documento.tipo === TipoDocumentoEnum.dni) {
-      this.personaService.validateDni(persona.documento.numero.toString(), persona.nombre, persona.apellido, persona.genero)
-        .then(() => {
-          this.save(persona);
+      const dto = {
+        documento: persona.documento.numero.toString(),
+        nombre: persona.nombre,
+        apellido: persona.apellido,
+        genero: persona.genero.slice(0, 1)
+      };
+
+      this.personaService.validateDni(dto)
+        .then(data => {
+          // this.save(persona);
         })
         .catch(error => {
-          this.alertService.error(error);
+          this.alertService.error('Los datos de la persona no son válidos');
           console.log(error);
         });
+
       return;
+    } else {
+      // this.save(persona);
     }
 
-    this.save(persona);
 
   }
 
   private save(persona: Persona): void {
     this.personaService.create(persona)
       .then(data => {
-        this.router.navigate(['/login']);
+        // this.router.navigate(['/login']);
         this.alertService.success('Registro Exitoso');
       })
       .catch(error => {

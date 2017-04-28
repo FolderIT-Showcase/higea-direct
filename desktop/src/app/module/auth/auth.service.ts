@@ -5,13 +5,15 @@ import {User} from '../core/domain/user';
 import {StoreService} from '../core/service/store.service';
 import {Router} from '@angular/router';
 import {LoadingService} from '../core/service/loading.service';
+import {AlertService} from '../core/service/alert.service';
 
 @Injectable()
 export class AppAuthService {
   constructor(private api: ApiService,
               private storeService: StoreService,
               private router: Router,
-              private loadingService: LoadingService) {
+              private loadingService: LoadingService,
+              private alertService: AlertService) {
   }
 
   public login(user: User, type: string = '') {
@@ -37,6 +39,10 @@ export class AppAuthService {
       default :
         return this.normalLogin(user)
           .then(() => {
+            this.loadingService.finish();
+          })
+          .catch(error => {
+            this.alertService.error('Datos de ingreso incorrectos');
             this.loadingService.finish();
           });
     }
