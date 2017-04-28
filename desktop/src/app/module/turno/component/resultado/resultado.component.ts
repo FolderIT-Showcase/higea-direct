@@ -63,11 +63,16 @@ export class ResultadoComponent implements OnInit, OnDestroy {
   }
 
   public reservarTurno(turno: Turno) {
+
+    if (!this.persona.turno) {
+      this.persona.turno = [];
+    }
+
     this.persona.turno.push(turno);
     this.turnoService.reservarTurno(this.persona)
       .then(() => {
         // this.router.navigate(['/nuevo-turno'])
-        this.infoModal.show();
+        this.showInfoModal();
       })
       .catch(error => {
         console.error(error);
@@ -79,6 +84,7 @@ export class ResultadoComponent implements OnInit, OnDestroy {
   }
 
   public showInfoModal() {
+    this.hideModal()
     this.isInfoModalShown = true;
   }
 
