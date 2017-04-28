@@ -5,6 +5,7 @@ import {Especialidad} from '../../../core/domain/especialidad';
 import {Profesional} from '../../../core/domain/profesional';
 import {StoreService} from '../../../core/service/store.service';
 import {TurnoService} from '../../../core/service/turno.service';
+import {AlertService} from "../../../core/service/alert.service";
 
 class Data {
   persona: Persona;
@@ -16,11 +17,11 @@ class Data {
 }
 
 @Component({
-  selector: 'app-admin-turno',
-  templateUrl: './admin-turno.component.html',
-  styleUrls: ['./admin-turno.component.scss']
+  selector: 'app-alta-turno',
+  templateUrl: './alta-turno.component.html',
+  styleUrls: ['./alta-turno.component.scss']
 })
-export class AdminTurnoComponent implements OnInit {
+export class AltaTurnoComponent implements OnInit {
 
   model: Data = new Data();
   observaciones: string;
@@ -30,7 +31,7 @@ export class AdminTurnoComponent implements OnInit {
   personas: Persona[] = [];
 
 
-  constructor(private storeService: StoreService, private turnoService: TurnoService) {
+  constructor(private storeService: StoreService, private turnoService: TurnoService,  private alertService: AlertService) {
   }
 
   ngOnInit(): void {
@@ -63,9 +64,13 @@ export class AdminTurnoComponent implements OnInit {
   crear() {
 
     this.turnoService.saveTurno(this.model.centro, this.model.especialidad, this.model.profesional, this.model.fechaDesde, this.model.hora)
-      .then()
+      .then(data => {
+        this.clearForm();
+        this.alertService.success('Registro Exitoso');
+      })
       .catch((error) => {
         console.log(error);
+        this.alertService.success('Error');
       });
 
   }

@@ -62,6 +62,14 @@ export class TurnoService {
     return this.api.post(path, persona).first().toPromise();
   }
 
+  borrarTurno(turno: Turno,desactivate:boolean) {
+    const path = 'turno';
+
+    let url:String = path+"?id="+turno.id+"&"+"desactivate="+desactivate;
+    console.log("url "+url)
+    return this.api.delete(url).first().toPromise();
+  }
+
   saveTurno(centro: CentroSalud, especialidad: Especialidad, profesional: Profesional, fecha: Date, hora: Date) {
     const path = 'turno'; // TODO: a ser definido
 

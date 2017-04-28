@@ -46,4 +46,7 @@ public class TurnoService {
     public Turno saveTurno(Turno turno) {
         return turnoRepository.save(turno);
     }
+    public Turno findById(Long id) {
+        return turnoRepository.findOne(id);
+    }
 }

@@ -1,0 +1,94 @@
+<div *ngIf="turnos[0]">
+  <h4>
+    Seleccione un turno
+  </h4>
+  <div class="list-group">
+    <a class="list-group-item active">
+      <h4 class="list-group-item-heading">{{centro.nombre}}</h4>
+      <p class="list-group-item-text"> {{turnos.length}} turnos disponibles a partir del {{turnos[0].fecha}}</p>
+    </a>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th>Día</th>
+          <th>Fecha</th>
+          <th>Hora</th>
+          <th>Centro de Salud</th>
+          <th>Especialidad</th>
+          <th>Profesional</th>
+          <th>Observaciones</th>
+          <th width="1em"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let turno of turnos">
+          <td>{{turno.dia}}</td>
+          <td>{{turno.fecha }}</td>
+          <td>{{turno.hora | date: 'HH:mm'}}</td>
+          <td>{{centro.nombre}}</td>
+          <td>{{turno.especialidad.nombre}}</td>
+          <td>{{turno.profesional.nombre}}</td>
+          <td>{{turno.observaciones}}</td>
+          <td>
+            <a (click)="showModal(turno)" class="btn btn-success btn-block">
+              <span class="fa  fa-eraser"></span>
+            </a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div *ngIf="isModalShown" [config]="{ show: true }" (onHidden)="onHidden()" bsModal #autoShownModal="bs-modal"
+         class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title pull-left"><strong>Confirmación</strong></h4>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <label>¿Querés dar de baja a este turno?</label><br>
+            <label>Para el dia <strong>{{turno.dia}}</strong> en el horario <strong>{{turno.hora| date: 'HH:mm'}}</strong></label><br>
+            <label>Para la especialidad <strong>{{turno.especialidad.nombre}}</strong> atendido por <strong>{{turno.profesional.nombre}}</strong></label><br>
+            <label>En el <strong>{{turno.centroSalud.nombre}}</strong></label><br>
+            <div class="row">
+              <div class="col-sm-8"></div>
+              <div class="col-sm-4">
+                <div class="btn-group btn-group-justified">
+                  <a (click)="deleteTurno(turno)" class="btn btn-primary">SI</a>
+                  <a (click)="hideModal()" class="btn btn-default">NO</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="isInfoModalShown" [config]="{ show: true }" (onHidden)="onHidden()" bsModal #infoModal="bs-modal"
+         class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title pull-left"><strong>Confirmación</strong></h4>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="hideInfoModal()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <label>El turno ha sido dado de baja</label><br>
+
+            <div class="text-right">
+              <button (click)="hideInfoModal()" class="btn btn-default">CERRAR</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -56,6 +56,9 @@ public class Turno implements Serializable {
     @JoinColumn(name="profesional_id")
     private Profesional profesional;
 
+    @Column(name = "enabled")
+    private boolean enabled = Boolean.FALSE;
+
     public void finalize() throws Throwable {
 
     }

@@ -209,8 +209,6 @@ export class ListaIntegrantesComponent {
              if (res) {
                  this.currentPersona = _.merge(new Persona(), res);
                  this.currentPersona.integrantes = [];
-                 console.log('res', res);
-                 console.log('currentPersona', this.currentPersona);
                  _.forEach(res.integrantes, (e) => {
                      const i = _.merge(new Persona(), e);
                      this.currentPersona.integrantes.push(i);
