@@ -159,6 +159,7 @@ export class ListaIntegrantesComponent {
          this.autoShownModal.hide();
 
          if (action === 'delete') {
+             const prevPersona = _.merge({}, this.currentPersona);
              const i = _.findIndex(this.currentPersona.integrantes, integrante);
              if (i >= 0) {
                  this.currentPersona.integrantes.splice(i, 1);
@@ -167,26 +168,31 @@ export class ListaIntegrantesComponent {
              this.api.post(path, this.currentPersona).first().toPromise().then((res) => {
                  this.alertService.success('Integrante removido correctamente.');
              }, (error) => {
+                 this.currentPersona = _.merge({}, prevPersona);
                  this.alertService.error('Ocurrió un error al intentar remover al integrante..');
              });
          }
 
          if (action === 'add') {
+             const prevPersona = _.merge({}, this.currentPersona);
              this.currentPersona.integrantes.push(integrante);
              const path = 'persona';
              this.api.post(path, this.currentPersona).first().toPromise().then((res) => {
                  this.alertService.success('Integrante agregado correctamente.');
              }, (error) => {
+                 this.currentPersona = _.merge({}, prevPersona);
                  this.alertService.error('Ocurrió un error al intentar agregar al integrante..');
              });
          }
 
          if (action === 'edit') {
+             const prevPersona = _.merge({}, this.currentPersona);
              _.merge(this.integranteSelected, this.formData);
              const path = 'persona';
              this.api.post(path, this.currentPersona).first().toPromise().then((res) => {
                  this.alertService.success('Integrante editado correctamente.');
              }, (error) => {
+                 this.currentPersona = _.merge({}, prevPersona);
                  this.alertService.error('Ocurrió un error al intentar editar al integrante..');
              });
          }
