@@ -34,7 +34,7 @@ public class TurneroException implements Serializable {
 
     public static final String MESSAGE_INVALID_TOKEN  = "message.auth.invalidToken";
 
-    public static final String MESSAGE_TOKEN_EXPIRED  = "auth.message.expired";
+    public static final String MESSAGE_TURNO_CANCELED  = "message.turno.canceled";
 
     private String error;
 

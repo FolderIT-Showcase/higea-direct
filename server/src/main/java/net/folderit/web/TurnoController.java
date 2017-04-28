@@ -65,6 +65,7 @@ public class TurnoController {
             if (turnoDelete != null) {
                 persona.getTurno().remove(index);
                 result = personaService.save(persona);
+                personaService.mandarMailDeBaja(persona);
             }
 
         }
@@ -75,4 +76,6 @@ public class TurnoController {
         }
         return new ResponseEntity<>((Persona) result, HttpStatus.OK);
     }
+
+
 }

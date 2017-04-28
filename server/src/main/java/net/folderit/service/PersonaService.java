@@ -3,6 +3,7 @@ package net.folderit.service;
 import net.folderit.domain.Persona;
 import net.folderit.domain.User;
 import net.folderit.domain.enums.Genero;
+import net.folderit.domain.exception.TurneroException;
 import net.folderit.dto.DataDto;
 import net.folderit.dto.ResultAfipDto;
 import net.folderit.repository.PersonaRepository;
@@ -13,10 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.Transactional;
+import java.util.UUID;
 
 /**
  * Created by gheng on 18/4/2017.
@@ -26,6 +30,8 @@ public class PersonaService {
 
     private PersonaRepository personaRepository;
 
+    @Autowired
+    private JavaMailSender mailSender;
 
     @Value("${turnero.afip.url}")
     private String restProperty;
@@ -79,5 +85,25 @@ public class PersonaService {
         ResultAfipDto data = AfipUtil.getInstance().getRestConexion().getForObject(
                 restProperty + cuit, ResultAfipDto.class);
         return data;
+    }
+
+
+
+    public Boolean mandarMailDeBaja(Persona persona){
+
+        User user = persona.getUserAsociado();
+
+        String recipientAddress = user.getEmail();
+        String subject = "Turno cancelado";
+        TurneroException.getInstance().getMessage(TurneroException.MESSAGE_TURNO_CANCELED,null)
+        String mensaje =  TurneroException.getInstance().getError();
+
+        SimpleMailMessage email = new SimpleMailMessage();
+        email.setTo(recipientAddress);
+        email.setFrom("turnerofit@gmail.com");
+        email.setSubject(subject);
+        email.setText(mensaje);
+        mailSender.send(email);
+
     }
 }
