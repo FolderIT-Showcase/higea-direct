@@ -65,7 +65,7 @@ export class AltaTurnoComponent implements OnInit {
 
     this.turnoService.saveTurno(this.model.centro, this.model.especialidad, this.model.profesional, this.model.fechaDesde, this.model.hora)
       .then(data => {
-        this.clearForm();
+        //this.clearForm();
         this.alertService.success('Registro Exitoso');
       })
       .catch((error) => {
