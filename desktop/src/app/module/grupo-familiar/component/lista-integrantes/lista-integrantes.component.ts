@@ -22,6 +22,7 @@ export class ListaIntegrantesComponent {
      private selectUndefined: any;
      private currentUser = JSON.parse(localStorage.getItem('currentUser'));
      private currentPersona = new Persona();
+     public busy: Promise<any>;
 
      public isModalShown = false;
      public modalAction = 'none';
@@ -165,7 +166,7 @@ export class ListaIntegrantesComponent {
                  this.currentPersona.integrantes.splice(i, 1);
              }
              const path = 'persona';
-             this.api.post(path, this.currentPersona).first().toPromise().then((res) => {
+             this.busy = this.api.post(path, this.currentPersona).first().toPromise().then((res) => {
                  this.alertService.success('Integrante removido correctamente.');
              }, (error) => {
                  this.currentPersona = _.merge({}, prevPersona);
@@ -177,7 +178,7 @@ export class ListaIntegrantesComponent {
              const prevPersona = _.merge({}, this.currentPersona);
              this.currentPersona.integrantes.push(integrante);
              const path = 'persona';
-             this.api.post(path, this.currentPersona).first().toPromise().then((res) => {
+             this.busy = this.api.post(path, this.currentPersona).first().toPromise().then((res) => {
                  this.alertService.success('Integrante agregado correctamente.');
              }, (error) => {
                  this.currentPersona = _.merge({}, prevPersona);
@@ -189,7 +190,7 @@ export class ListaIntegrantesComponent {
              const prevPersona = _.merge({}, this.currentPersona);
              _.merge(this.integranteSelected, this.formData);
              const path = 'persona';
-             this.api.post(path, this.currentPersona).first().toPromise().then((res) => {
+             this.busy = this.api.post(path, this.currentPersona).first().toPromise().then((res) => {
                  this.alertService.success('Integrante editado correctamente.');
              }, (error) => {
                  this.currentPersona = _.merge({}, prevPersona);
@@ -203,7 +204,7 @@ export class ListaIntegrantesComponent {
          // Popular listas
          this.lists.paises = Paises.build();
          const path = 'persona/email?email=' + this.currentUser.email;
-         this.api.get(path).first().toPromise()
+         this.busy = this.api.get(path).first().toPromise()
              .then((res) => {
              if (res) {
                  this.currentPersona = _.merge(new Persona(), res);

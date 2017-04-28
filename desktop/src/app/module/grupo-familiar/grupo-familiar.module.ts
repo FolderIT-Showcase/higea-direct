@@ -8,23 +8,27 @@ import {ListaIntegrantesComponent} from './component/lista-integrantes/lista-int
 import {ModalModule} from 'ngx-bootstrap/modal';
 import {AgmCoreModule} from 'angular2-google-maps/core';
 import {RouterModule} from '@angular/router';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {BusyModule} from 'angular2-busy';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    RouterModule,
-    FormsModule,
-    DatepickerModule,
-    PopoverModule.forRoot(),
-    ModalModule.forRoot(),
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyAflntypuq6NWQj75NAk_IGgc2uPpJiVqs'
-    })
-  ],
-  declarations: [
-    GrupoFamiliarComponent,
-    ListaIntegrantesComponent
-  ]
+    imports: [
+        CommonModule,
+        RouterModule,
+        FormsModule,
+        DatepickerModule,
+        PopoverModule.forRoot(),
+        ModalModule.forRoot(),
+        AgmCoreModule.forRoot({
+            apiKey: 'AIzaSyAflntypuq6NWQj75NAk_IGgc2uPpJiVqs'
+        }),
+        BrowserAnimationsModule,
+        BusyModule
+    ],
+    declarations: [
+        GrupoFamiliarComponent,
+        ListaIntegrantesComponent
+    ]
 })
 export class GrupoFamiliarModule {
 }

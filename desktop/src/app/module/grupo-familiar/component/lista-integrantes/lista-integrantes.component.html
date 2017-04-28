@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" [ngBusy]="{busy: busy, message: 'Por favor espere...', wrapperClass: 'ng-busy ng-busy-custom',minDuration: 200000}">
     <div class="col-sm-12">
         <div class="col-sm-3">
             <h3>Administrar</h3>
@@ -19,9 +19,7 @@
             </a>
         </div>
     </div>
-</div>
-<hr/>
-<div class="row">
+    <hr/>
     <div class="col-sm-12">
         <div class="table-responsive">
             <table class="table table-striped">
@@ -34,7 +32,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr *ngIf="currentPersona.id">
                         <td>{{ currentPersona.nombre }} {{ currentPersona.apellido }}</td>
                         <td>{{ currentPersona.fechaNacimiento | date: 'dd/MM/yyyy' }}</td>
                         <td>{{ labels.tipoDocumentos(currentPersona.documento.tipo) }} {{currentPersona.documento.numero}}</td>
@@ -44,7 +42,7 @@
                             </a>
                         </td>
                     </tr>
-                    <tr *ngFor='let integrante of currentPersona.integrantes'>
+                    <tr *ngFor="let integrante of currentPersona.integrantes">
                         <td>{{ integrante.nombre }} {{ integrante.apellido }}</td>
                         <td>{{ integrante.fechaNacimiento | date: 'dd/MM/yyyy' }}</td>
                         <td>{{ integrante.documento.tipo | uppercase }} {{integrante.documento.numero}}</td>
