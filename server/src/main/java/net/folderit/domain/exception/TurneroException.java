@@ -53,14 +53,14 @@ public class TurneroException implements Serializable {
     //@JsonIgnore
     public MessageSource messageSource() {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-        messageSource.setBasenames("i18//message");
+        messageSource.setBasenames("i18/message");
         messageSource.setDefaultEncoding("UTF-8");
         return messageSource;
     }
 
    public void getMessage(String message,String[] arg){
         try {
-            this.setError(messageSource().getMessage(message,arg, new Locale("de")));
+            this.setError(messageSource().getMessage(message,arg, new Locale("es_AR")));
         }catch (Exception exception){
             throw  exception;
         }
