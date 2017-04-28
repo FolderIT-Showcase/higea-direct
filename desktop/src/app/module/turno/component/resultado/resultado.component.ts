@@ -68,6 +68,7 @@ export class ResultadoComponent implements OnInit, OnDestroy {
       this.persona.turno = [];
     }
 
+    turno.tomado = true;
     this.persona.turno.push(turno);
     this.turnoService.reservarTurno(this.persona)
       .then(() => {

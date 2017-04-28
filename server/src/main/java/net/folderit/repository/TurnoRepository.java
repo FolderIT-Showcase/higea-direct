@@ -17,26 +17,26 @@ public interface TurnoRepository extends CrudRepository<Turno, Long> {
     @Query("select t as turno "
             + "from Turno t where (to_char(t.fecha,'yyyy-mm-dd') >= ?1 and " +
             "to_char(t.fecha,'yyyy-mm-dd') <= ?1) and t.centroSalud= ?2 and" +
-            " t.especialidad=?3 and t.profesional=?4 and t.enabled=true order by t.fecha DESC")
+            " t.especialidad=?3 and t.profesional=?4 and t.enabled=true and t.tomado=false order by t.fecha DESC")
        List<Turno> finAllBy(String fecha, CentroSalud centro, Especialidad especialidad, Profesional profesional);
 
     @Query("select t as turno "
             + "from Turno t where (to_char(t.fecha,'yyyy-mm-dd') >= ?1 and " +
             "to_char(t.fecha,'yyyy-mm-dd') <= ?1) and t.centroSalud= ?2 " +
-            " and t.enabled=true order by t.fecha DESC")
+            " and t.enabled=true and t.tomado=false order by t.fecha DESC")
     List<Turno> finAllByFechaAndCentro(String fecha,CentroSalud centro);
 
     @Query("select t as turno "
             + "from Turno t where (to_char(t.fecha,'yyyy-mm-dd') >= ?1 and " +
             "to_char(t.fecha,'yyyy-mm-dd') <= ?1) and t.centroSalud= ?2 and" +
-            "  t.enabled=true and t.especialidad=?3 order by t.fecha DESC")
+            "  t.enabled=true and t.tomado=false and t.especialidad=?3 order by t.fecha DESC")
     List<Turno> finAllByFechaAndCentroAndEspecialidad(String fecha,CentroSalud centro,Especialidad especialidad);
 
 
     @Query("select t as turno "
             + "from Turno t where (to_char(t.fecha,'yyyy-mm-dd') >= ?1 and " +
             "to_char(t.fecha,'yyyy-mm-dd') <= ?1) and t.centroSalud= ?2 and" +
-            " t.profesional=?4 and t.enabled=true order by t.fecha DESC")
+            " t.profesional=?4 and t.enabled=true and t.tomado=false order by t.fecha DESC")
     List<Turno> finAllByFechaAndCentroAndProfesional(String fecha,CentroSalud centro, Profesional profesional);
 
 

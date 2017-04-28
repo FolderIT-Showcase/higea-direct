@@ -11,4 +11,5 @@ export class Turno {
   especialidad: Especialidad;
   profesional: Profesional;
   enabled = true;
+  tomado = false;
 }

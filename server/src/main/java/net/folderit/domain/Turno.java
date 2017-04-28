@@ -59,6 +59,9 @@ public class Turno implements Serializable {
     @Column(name = "enabled")
     private boolean enabled = Boolean.TRUE;
 
+    @Column(name = "tomado")
+    private boolean tomado = Boolean.FALSE;
+
     public void finalize() throws Throwable {
 
     }
