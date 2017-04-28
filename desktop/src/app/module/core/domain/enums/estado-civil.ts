@@ -1,21 +1,21 @@
 export class EstadosCiviles {
     static estadosCiviles = [{
-        'id': 'CASADO',
+        'id': 'Casado',
         'label': 'Casado'
     }, {
-        'id': 'DIVORCIADO',
+        'id': 'Divorciado',
         'label': 'Divorciado'
     }, {
-        'id': 'SEPARADO',
+        'id': 'Separado',
         'label': 'Separado'
     }, {
-        'id': 'SOLTERO',
+        'id': 'Soltero',
         'label': 'Soltero'
     }, {
-        'id': 'UNIDAD_DE_HECHO',
+        'id': 'Unidad_de_Hecho',
         'label': 'Unidad de Hecho'
     }, {
-        'id': 'VIUDO',
+        'id': 'Viudo',
         'label': 'Viudo'
     }];
 
