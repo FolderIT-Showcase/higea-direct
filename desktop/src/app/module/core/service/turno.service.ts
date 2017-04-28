@@ -58,16 +58,13 @@ export class TurnoService {
   }
 
   reservarTurno(persona: Persona) {
-    const path = '';
+    const path = 'persona';
     return this.api.post(path, persona).first().toPromise();
   }
 
-  borrarTurno(turno: Turno,desactivate:boolean) {
-    const path = 'turno';
-
-    let url:String = path+"?id="+turno.id+"&"+"desactivate="+desactivate;
-    console.log("url "+url)
-    return this.api.delete(url).first().toPromise();
+  borrarTurno(turno: Turno, desactivate: boolean) {
+    const path = 'turno' + '?id=' + turno.id + '&' + 'desactivate=' + desactivate;
+    return this.api.delete(path).first().toPromise();
   }
 
   saveTurno(centro: CentroSalud, especialidad: Especialidad, profesional: Profesional, fecha: Date, hora: Date) {

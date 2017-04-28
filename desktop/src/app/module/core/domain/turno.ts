@@ -10,5 +10,5 @@ export class Turno {
   centroSalud: CentroSalud;
   especialidad: Especialidad;
   profesional: Profesional;
-  enabled:boolean;
+  enabled = true;
 }
