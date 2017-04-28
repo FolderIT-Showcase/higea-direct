@@ -52,7 +52,7 @@ public class Persona implements Serializable {
 
     private EstadoCivil estadoCivil;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="domicilio_id")
     private Domicilio domicilio;
 
@@ -65,7 +65,7 @@ public class Persona implements Serializable {
             )
     private List<Persona> integrantes;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinTable
             (
                     name = "persona_contacto",
