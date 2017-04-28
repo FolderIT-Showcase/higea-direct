@@ -3,3 +3,15 @@
   padding-left: 5px;
   color: red;
 }
+
+.ng-busy-custom .ng-busy-default-sign {
+    margin-top: 2em;
+    border-top: 1px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.ng-busy-custom .ng-busy-default-wrapper {
+    background-color: rgba(0,0,0,0.1);
+    border-radius: 20px;
+}
