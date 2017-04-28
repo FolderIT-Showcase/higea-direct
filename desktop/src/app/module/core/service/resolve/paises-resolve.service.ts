@@ -6,14 +6,14 @@ import {StoreService} from '../store.service';
 import {LoadingService} from '../loading.service';
 
 @Injectable()
-export class PaisesResolveService implements Resolve<Metadata> {
+export class PaisesResolveService implements Resolve<any> {
 
   constructor(private metadataService: MetadataService,
               private storeService: StoreService,
               private loadingService: LoadingService) {
   }
 
-  resolve(): Promise<Metadata> {
+  resolve(): Promise<any> {
     const paises = this.storeService.get('paises');
     if (paises[0]) {
       return new Promise((resolve, reject) => {

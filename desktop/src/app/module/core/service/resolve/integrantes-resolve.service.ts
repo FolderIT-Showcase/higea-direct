@@ -5,12 +5,12 @@ import {PersonaService} from '../persona.service';
 import {LoadingService} from '../loading.service';
 
 @Injectable()
-export class IntegrantesResolveService implements Resolve<Persona[]> {
+export class IntegrantesResolveService implements Resolve<any> {
 
   constructor(private personaService: PersonaService, private loadingService: LoadingService) {
   }
 
-  resolve(): Promise<Persona[]> {
+  resolve(): Promise<any> {
     this.loadingService.start();
     return this.personaService.getIntegrantes()
       .then(() => {

@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {PersonaService} from '../../../core/service/persona.service';
 import {AlertService} from '../../../core/service/alert.service';
-import {TipoDocumentoEnum, TipoDocumentoLabel, TipoDocumentos} from '../../../core/domain/enums/tipo-documento';
+import {TipoDocumentoEnum, TipoDocumentos} from '../../../core/domain/enums/tipo-documento';
 import {Generos} from '../../../core/domain/enums/genero';
 import {Pais} from '../../../core/domain/pais';
 import {User} from '../../../core/domain/user';
@@ -45,6 +45,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.paises = this.storeService.get('paises');
+    console.log(this.paises);
     this.model.tipoDocumento = this.tipoDocumentos[0];
     this.model.genero = this.generos[0];
     this.model.pais = this.paises[11].nombre;
@@ -54,20 +55,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.captcha = null;
   }
 
-  public register(): void {
-
-    // TODO: habilitar captcha
-
-    // if (!this.captcha) {
-    //   this.alertService.error('Por Favor complete todos los datos');
-    //   return;
-    // }
-
-    if (this.model.pais.toLowerCase() !== 'argentina') {
-      this.model.tipoDocumento = TipoDocumentoLabel.documentoExtranjero;
-    }
-
-    this.loading = true;
+  public register() {
     const user: User = new User();
     user.password = this.model.password1;
     user.email = this.model.email;
@@ -80,33 +68,15 @@ export class RegisterComponent implements OnInit, OnDestroy {
     persona.nombre = this.model.nombre;
     persona.apellido = this.model.apellido;
 
-    if (persona.documento.tipo === TipoDocumentoEnum.dni) {
-      this.personaService.validateDni(persona.documento.numero.toString(), persona.nombre, persona.apellido, persona.genero.slice(0, 1))
-        .then(() => {
-          this.save(persona);
-        })
-        .catch(error => {
-          this.alertService.error(error);
-          console.log(error);
-        });
-
-      return;
-    }
-
-    this.save(persona);
-
-  }
-
-  private save(persona: Persona): void {
     this.personaService.create(persona)
-      .then(data => {
+      .then(() => {
         this.router.navigate(['/login']);
         this.alertService.success('Registro Exitoso');
       })
       .catch(error => {
-        this.alertService.error(error);
-        this.loading = false;
+        this.alertService.error('Hubo un error inesperado, vuelva a intentarlo más tarde');
       });
+
   }
 
   handleCountriesClick(pais: Pais) {
