@@ -30,7 +30,7 @@ export class TipoDocumentos {
     }
 
     static export() {
-        const tipoDocumentos: Object[] = [];
+        const tipoDocumentos: {'id': string, 'label': string}[] = [];
         for (const e in TipoDocumentoEnum) {
             if (!TipoDocumentoEnum.hasOwnProperty(e)) {
                 continue;
@@ -40,6 +40,9 @@ export class TipoDocumentos {
                 'label': TipoDocumentoLabel[e]
             });
         }
+        tipoDocumentos.sort((a, b) => {
+            return (a.label > b.label) ? 1 : ((b.label > a.label) ? -1 : 0);
+        });
         return tipoDocumentos;
     }
 

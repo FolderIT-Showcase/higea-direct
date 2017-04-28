@@ -47,6 +47,9 @@ export class Nacionalidades {
 
     static export() {
         const nacionalidades = Nacionalidades.nacionalidades;
+        nacionalidades.sort((a, b) => {
+            return (a.label > b.label) ? 1 : ((b.label > a.label) ? -1 : 0);
+        });
         return nacionalidades;
     }
 }

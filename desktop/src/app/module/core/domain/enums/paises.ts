@@ -316,6 +316,9 @@ export class Paises {
 
     static export() {
         const paises = Paises.paises;
+        paises.sort((a, b) => {
+            return (a.nombre > b.nombre) ? 1 : ((b.nombre > a.nombre) ? -1 : 0);
+        });
         return paises;
     }
 }

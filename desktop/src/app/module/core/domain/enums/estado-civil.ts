@@ -29,6 +29,9 @@ export class EstadosCiviles {
 
     static export() {
         const estadosCiviles = EstadosCiviles.estadosCiviles;
+        estadosCiviles.sort((a, b) => {
+            return (a.label > b.label) ? 1 : ((b.label > a.label) ? -1 : 0);
+        });
         return estadosCiviles;
     }
 }

@@ -21,7 +21,7 @@ export class Generos {
     }
 
     static export() {
-        const generos: Object[] = [];
+        const generos: {'id': string, 'label': string}[] = [];
         for (const e in GeneroEnum) {
             if (!GeneroEnum.hasOwnProperty(e)) {
                 continue;
@@ -31,6 +31,9 @@ export class Generos {
                 'label': GeneroLabel[e]
             });
         }
+        generos.sort((a, b) => {
+            return (a.label > b.label) ? 1 : ((b.label > a.label) ? -1 : 0);
+        });
         return generos;
     }
 }
