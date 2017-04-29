@@ -14,6 +14,7 @@ class Data {
   profesional: Profesional;
   fechaDesde: Date = new Date();
   hora: Date = new Date();
+  observaciones:string;
 }
 
 @Component({
@@ -29,6 +30,7 @@ export class AltaTurnoComponent implements OnInit {
   especialidades: Especialidad[] = [];
   profesionales: Profesional[] = [];
   personas: Persona[] = [];
+
 
 
   constructor(private storeService: StoreService, private turnoService: TurnoService,  private alertService: AlertService) {
@@ -63,7 +65,7 @@ export class AltaTurnoComponent implements OnInit {
 
   crear() {
 
-    this.turnoService.saveTurno(this.model.centro, this.model.especialidad, this.model.profesional, this.model.fechaDesde, this.model.hora)
+    this.turnoService.saveTurno(this.model.centro, this.model.especialidad, this.model.profesional, this.model.fechaDesde, this.model.hora, this.model.observaciones)
       .then(data => {
         //this.clearForm();
         this.alertService.success('Registro Exitoso');

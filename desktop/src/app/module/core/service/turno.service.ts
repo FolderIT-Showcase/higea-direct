@@ -67,7 +67,7 @@ export class TurnoService {
     return this.api.delete(path).first().toPromise();
   }
 
-  saveTurno(centro: CentroSalud, especialidad: Especialidad, profesional: Profesional, fecha: Date, hora: Date) {
+  saveTurno(centro: CentroSalud, especialidad: Especialidad, profesional: Profesional, fecha: Date, hora: Date, obs:string) {
     const path = 'turno'; // TODO: a ser definido
 
     const turno = new Turno();
@@ -76,7 +76,7 @@ export class TurnoService {
     turno.centroSalud = centro;
     turno.especialidad = especialidad;
     turno.profesional = profesional;
-
+    turno.observaciones = obs;
     return this.api.put(path, turno)
       .do(data => {
         this.storeService.update('CentroSalud', centro);
