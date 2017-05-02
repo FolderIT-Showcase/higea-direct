@@ -7,8 +7,6 @@ import {Subscription} from 'rxjs/Subscription';
 import {TurnoService} from '../../../core/service/turno.service';
 import {StoreService} from '../../../core/service/store.service';
 import {Persona} from '../../../core/domain/persona';
-import {AlertService} from '../../../core/service/alert.service';
-import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-busqueda',
@@ -32,9 +30,7 @@ export class ResultadoComponent implements OnInit, OnDestroy {
 
   constructor(private store: Store,
               private turnoService: TurnoService,
-              private storeService: StoreService,
-              private alertService: AlertService,
-              private router: Router) {
+              private storeService: StoreService) {
   }
 
   ngOnInit(): void {
@@ -59,7 +55,6 @@ export class ResultadoComponent implements OnInit, OnDestroy {
     this.turno = turno;
     this.isModalShown = true;
     this.persona = this.storeService.get('persona');
-    console.log(this.persona);
   }
 
   public reservarTurno(turno: Turno) {
@@ -85,7 +80,7 @@ export class ResultadoComponent implements OnInit, OnDestroy {
   }
 
   public showInfoModal() {
-    this.hideModal()
+    this.hideModal();
     this.isInfoModalShown = true;
   }
 

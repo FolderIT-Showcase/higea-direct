@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AlertService} from "../../core/service/alert.service";
+import {AlertService} from '../../core/service/alert.service';
 import {Router} from '@angular/router';
 
 @Component({
@@ -11,9 +11,9 @@ import {Router} from '@angular/router';
 export class AdminHomeComponent implements OnInit {
 
   constructor(private router: Router,
-              private alertService: AlertService
-              ) {
+              private alertService: AlertService) {
   }
+
   ngOnInit(): void {
 
   }

@@ -39,7 +39,7 @@ export class PersonaService {
   }
 
   create(persona: Persona) {
-    return this.api.post('users/registration', persona).first().toPromise();
+    return this.api.post('users/registration', persona, false).first().toPromise();
   }
 
   validateDni(dto: any) {
@@ -49,13 +49,11 @@ export class PersonaService {
       '&apellido=' + dto.apellido +
       '&genero=' + dto.genero;
 
-    return this.api.get(path).first().toPromise();
+    return this.api.get(path, false).first().toPromise();
   }
 
   getIntegrantes() {
     const user: User = JSON.parse(localStorage.getItem('currentUser'));
-
-    console.log(user);
 
     if (!user.email) {
       return;

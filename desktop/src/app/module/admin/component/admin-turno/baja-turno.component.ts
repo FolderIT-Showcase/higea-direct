@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {AlertService} from "../../../core/service/alert.service";
-import {Persona} from "../../../core/domain/persona";
-import {CentroSalud} from "../../../core/domain/centro-salud";
-import {Especialidad} from "../../../core/domain/especialidad";
-import {Profesional} from "../../../core/domain/profesional";
-import {StoreService} from "../../../core/service/store.service";
-import {TurnoService} from "../../../core/service/turno.service";
+import {AlertService} from '../../../core/service/alert.service';
+import {Persona} from '../../../core/domain/persona';
+import {CentroSalud} from '../../../core/domain/centro-salud';
+import {Especialidad} from '../../../core/domain/especialidad';
+import {Profesional} from '../../../core/domain/profesional';
+import {StoreService} from '../../../core/service/store.service';
+import {TurnoService} from '../../../core/service/turno.service';
 
 class Data {
   persona: Persona;
@@ -26,8 +26,7 @@ export class BajaTurnoComponent implements OnInit {
 
   constructor(private router: Router,
               private alertService: AlertService,
-              private storeService: StoreService, private turnoService: TurnoService
-  ) {
+              private storeService: StoreService, private turnoService: TurnoService) {
   }
 
   model: Data = new Data();

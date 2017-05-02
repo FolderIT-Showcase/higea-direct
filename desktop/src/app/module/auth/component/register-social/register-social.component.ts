@@ -90,7 +90,7 @@ export class RegisterSocialComponent implements OnInit {
         })
         .catch(error => {
           this.alertService.error('Los datos de la persona no son válidos');
-          console.log(error);
+          console.error(error);
         });
 
       return;

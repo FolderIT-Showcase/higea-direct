@@ -12,23 +12,23 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {BusyModule} from 'angular2-busy';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        RouterModule,
-        FormsModule,
-        DatepickerModule,
-        PopoverModule.forRoot(),
-        ModalModule.forRoot(),
-        AgmCoreModule.forRoot({
-            apiKey: 'AIzaSyAflntypuq6NWQj75NAk_IGgc2uPpJiVqs'
-        }),
-        BrowserAnimationsModule,
-        BusyModule
-    ],
-    declarations: [
-        GrupoFamiliarComponent,
-        ListaIntegrantesComponent
-    ]
+  imports: [
+    CommonModule,
+    RouterModule,
+    FormsModule,
+    DatepickerModule,
+    PopoverModule.forRoot(),
+    ModalModule.forRoot(),
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyAflntypuq6NWQj75NAk_IGgc2uPpJiVqs'
+    }),
+    BrowserAnimationsModule,
+    BusyModule
+  ],
+  declarations: [
+    GrupoFamiliarComponent,
+    ListaIntegrantesComponent
+  ]
 })
 export class GrupoFamiliarModule {
 }

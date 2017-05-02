@@ -9,6 +9,7 @@ import {User} from '../../../core/domain/user';
 import {Persona} from '../../../core/domain/persona';
 import {Documento} from '../../../core/domain/documento';
 import {StoreService} from '../../../core/service/store.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 class Data {
   nombre = '';
@@ -29,6 +30,8 @@ class Data {
 })
 export class RegisterComponent implements OnInit, OnDestroy {
 
+  complexForm: FormGroup;
+
   model: Data = new Data;
   paises: Pais[] = [];
   tipoDocumentos: string[] = TipoDocumentos.build();
@@ -36,16 +39,39 @@ export class RegisterComponent implements OnInit, OnDestroy {
   loading = false;
   captcha: string = null;
 
-  constructor(private router: Router,
+  constructor(private fb: FormBuilder,
+              private router: Router,
               private personaService: PersonaService,
               private alertService: AlertService,
               private storeService: StoreService) {
 
+    this.complexForm = fb.group({
+      'nombre': [null, Validators.required],
+      'apellido': [null, Validators.required],
+      'numeroDocumento': [null, Validators.required],
+      'password1': [null, Validators.required],
+      'password2': [null, Validators.required],
+      'email': [null, Validators.required],
+    });
+
+    this.complexForm.valueChanges.subscribe((form: any) => {
+      }
+    );
+
+  }
+
+  submitForm(value: any) {
+    this.model.nombre = value.nombre;
+    this.model.apellido = value.apellido;
+    this.model.numeroDocumento = value.numeroDocumento;
+    this.model.password1 = value.password1;
+    this.model.password2 = value.password2;
+    this.model.email = value.email;
+    this.register();
   }
 
   ngOnInit(): void {
     this.paises = this.storeService.get('paises');
-    console.log(this.paises);
     this.model.tipoDocumento = this.tipoDocumentos[0];
     this.model.genero = this.generos[0];
     this.model.pais = this.paises[11].nombre;
@@ -68,15 +94,41 @@ export class RegisterComponent implements OnInit, OnDestroy {
     persona.nombre = this.model.nombre;
     persona.apellido = this.model.apellido;
 
+    if (persona.documento.tipo === TipoDocumentoEnum.dni) {
+
+      const doc = {
+        documento: persona.documento.numero,
+        nombre: persona.nombre,
+        apellido: persona.apellido,
+        genero: persona.genero.slice(0, 1)
+      };
+
+      this.personaService.validateDni(doc)
+        .then(() => {
+          this.savePersona(persona);
+        })
+        .catch(error => {
+          this.alertService.error('Sus datos no son válidos, por favor revíselos.');
+          console.error(error);
+        });
+
+      return;
+    }
+
+    this.savePersona(persona);
+  }
+
+  savePersona(persona: Persona) {
     this.personaService.create(persona)
       .then(() => {
-        this.router.navigate(['/login']);
-        this.alertService.success('Registro Exitoso');
+        this.router.navigate(['/login'])
+          .then(() => {
+            this.alertService.success('Registro Exitoso');
+          });
       })
       .catch(error => {
         this.alertService.error('Hubo un error inesperado, vuelva a intentarlo más tarde');
       });
-
   }
 
   handleCountriesClick(pais: Pais) {

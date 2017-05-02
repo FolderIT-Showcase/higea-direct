@@ -57,23 +57,23 @@ export class ApiService {
     }
   }
 
-  get(path: string, search: URLSearchParams = undefined, headers: Headers = undefined): Observable<any> {
-    this.useJwt();
-    this.checkLogged();
-    const options = {
-      headers: headers || this.headers,
-      search: search
-    };
+  get(path: string, isAuthNecessary: boolean = true): Observable<any> {
+    if (isAuthNecessary) {
+      this.useJwt();
+      this.checkLogged();
+    }
 
-    return this.http.get(`${this.baseURL}${path}`, options)
+    return this.http.get(`${this.baseURL}${path}`, {headers: this.headers})
       .map(ApiService.checkForError)
       .catch(err => Observable.throw(err))
       .map(ApiService.getJson);
   }
 
-  public post(path: string, body): Observable<any> {
-    this.useJwt();
-    this.checkLogged();
+  public post(path: string, body, isAuthNecessary: boolean = true): Observable<any> {
+    if (isAuthNecessary) {
+      this.useJwt();
+      this.checkLogged();
+    }
     return this.http
       .post(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
       .map(ApiService.checkForError)
@@ -81,27 +81,33 @@ export class ApiService {
       .map(ApiService.getJson);
   }
 
-  public put(path: string, body): Observable<any> {
-    this.useJwt();
-    this.checkLogged();
+  public put(path: string, body, isAuthNecessary: boolean = true): Observable<any> {
+    if (isAuthNecessary) {
+      this.useJwt();
+      this.checkLogged();
+    }
     return this.http
       .put(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
       .map(ApiService.checkForError)
       .catch(err => Observable.throw(err));
   }
 
-  public patch(path: string, body): Observable<any> {
-    this.useJwt();
-    this.checkLogged();
+  public patch(path: string, body, isAuthNecessary: boolean = true): Observable<any> {
+    if (isAuthNecessary) {
+      this.useJwt();
+      this.checkLogged();
+    }
     return this.http
       .patch(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
       .map(ApiService.checkForError)
       .catch(err => Observable.throw(err));
   }
 
-  public delete(path): Observable<any> {
-    this.useJwt();
-    this.checkLogged();
+  public delete(path, isAuthNecessary: boolean = true): Observable<any> {
+    if (isAuthNecessary) {
+      this.useJwt();
+      this.checkLogged();
+    }
     return this.http.delete(`${this.baseURL}${path}`, {headers: this.headers})
       .map(ApiService.checkForError)
       .catch(err => Observable.throw(err));

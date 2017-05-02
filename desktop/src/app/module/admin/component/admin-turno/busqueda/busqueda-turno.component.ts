@@ -5,15 +5,14 @@ import {ModalDirective} from 'ngx-bootstrap';
 import {Subscription} from 'rxjs/Subscription';
 
 
-
 import {Router} from '@angular/router';
-import {AlertService} from "../../../../core/service/alert.service";
-import {StoreService} from "../../../../core/service/store.service";
-import {TurnoService} from "../../../../core/service/turno.service";
-import {Store} from "../../../../core/service/store";
-import {CentroSalud} from "../../../../core/domain/centro-salud";
-import {Turno} from "../../../../core/domain/turno";
-import {Persona} from "../../../../core/domain/persona";
+import {AlertService} from '../../../../core/service/alert.service';
+import {StoreService} from '../../../../core/service/store.service';
+import {TurnoService} from '../../../../core/service/turno.service';
+import {Store} from '../../../../core/service/store';
+import {CentroSalud} from '../../../../core/domain/centro-salud';
+import {Turno} from '../../../../core/domain/turno';
+import {Persona} from '../../../../core/domain/persona';
 
 @Component({
   selector: 'app-admin-busqueda',
@@ -70,16 +69,16 @@ export class BusquedaTurnoComponent implements OnInit, OnDestroy {
 
   public deleteTurno(turno: Turno) {
     //this.persona.turno.  push(turno);
-    const turnos:Turno[] =this.storeService.get('turnos');
+    const turnos: Turno[] = this.storeService.get('turnos');
     for (let turno of turnos) {
-      if(turno.id==this.turno.id){
-        this.storeService.findAndDelete('turnos',turno.id);
+      if (turno.id == this.turno.id) {
+        this.storeService.findAndDelete('turnos', turno.id);
         break;
       }
     }
 
-    console.log("id turno "+turno.id);
-    this.turnoService.borrarTurno(turno,true)
+    console.log("id turno " + turno.id);
+    this.turnoService.borrarTurno(turno, true)
       .then(() => {
         // this.router.navigate(['/nuevo-turno'])
 //        this.infoModal.show();

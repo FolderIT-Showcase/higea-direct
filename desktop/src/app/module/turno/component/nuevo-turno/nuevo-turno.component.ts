@@ -69,7 +69,7 @@ export class NuevoTurnoComponent implements OnInit {
   buscar() {
     this.turnoService.getTurnos(this.model.centro, this.model.especialidad, this.model.profesional, this.model.fecha)
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
   }
 

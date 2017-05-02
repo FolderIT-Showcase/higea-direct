@@ -1,8 +1,9 @@
 import {NgModule} from '@angular/core';
-import { RouterModule } from '@angular/router';
+import {RouterModule} from '@angular/router';
 import {CommonModule} from '@angular/common';
 import {TimepickerModule} from 'ngx-bootstrap/timepicker';
 import {BsDropdownModule, DatepickerModule} from 'ngx-bootstrap';
+
 import {AdminHomeComponent} from "./component/admin-home.component";
 import {AltaTurnoComponent} from "./component/admin-turno/alta-turno.component";
 import {BajaTurnoComponent} from "./component/admin-turno/baja-turno.component";
@@ -31,6 +32,7 @@ import {PagerService} from "../core/service/pager.service";
     PaginationModule.forRoot(),
     ModalModule.forRoot()
   ],
+
   declarations:[
     AdminHomeComponent,
     AltaTurnoComponent,
@@ -48,6 +50,7 @@ import {PagerService} from "../core/service/pager.service";
     PagerService
 
   ]
+
 })
 export class AdminModule {
 }

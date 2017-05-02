@@ -35,7 +35,6 @@ export class UserActiveComponent implements OnInit {
       .queryParams.first().toPromise()
       .then(params => {
         this.token = params['token'];
-        console.log('Token de activacion: ' + this.token);
 
         // do something with this.code and this.accesstoken
 
