@@ -1,150 +1,122 @@
-<div class="container">
-  <div class="row">
-    <div class="absolute-center form-center">
-      <div class="col-sm-3"></div>
-      <div class="col-sm-6">
-        <h2 class="app-header text-center">
-          Registro
-        </h2>
+<div class="col-sm-6 col-sm-offset-3">
 
-        <form class="form-horizontal" name="f" (ngSubmit)="f.form.valid && register()" #f="ngForm" novalidate>
-        <!--<form class="form-horizontal" name="f" #f="ngForm" novalidate>-->
-
-          <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !nombre.valid }">
-            <label class="col-sm-4 control-label" for="nombre">Nombre</label>
-            <div class="col-sm-6">
-              <input id="nombre" type="text" class="form-control" name="nombre" [(ngModel)]="model.nombre" #nombre="ngModel"
-                     required/>
-              <div *ngIf="f.submitted && !nombre.valid" class="help-block">Ingrese su Nombre</div>
-            </div>
-          </div>
-
-          <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !apellido.valid }">
-            <label class="col-sm-4 control-label" for="apellido">Apellido</label>
-            <div class="col-sm-6">
-              <input id="apellido" type="text" class="form-control" name="apellido" [(ngModel)]="model.apellido" #apellido="ngModel"
-                     required/>
-              <div *ngIf="f.submitted && !nombre.apellido" class="help-block">Ingrese su Apellido</div>
-            </div>
-          </div>
-
-          <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
-            <label class="col-sm-4 control-label" for="email">Correo Electrónico</label>
-            <div class="col-sm-6">
-              <input id="email" type="email" class="form-control" name="email" [(ngModel)]="model.email" #email="ngModel"
-                     required/>
-              <div *ngIf="f.submitted && !email.valid" class="help-block">Ingrese un Correo Electrónico</div>
-            </div>
-          </div>
-
-          <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password1.valid }">
-            <label class="col-sm-4 control-label" for="password1">Contraseña</label>
-            <div class="col-sm-6">
-              <input id="password1" type="password" class="form-control" name="password1" [(ngModel)]="model.password1"
-                     #password1="ngModel"
-                     required/>
-              <div *ngIf="f.submitted && !password1.valid" class="help-block">Ingrese una contraseña</div>
-            </div>
-          </div>
-
-          <div class="form-group"
-               [ngClass]="{ 'has-error': f.submitted && !model.password2 && model.password1 != model.password2 }">
-            <label class="col-sm-4 control-label" for="password2">Repita su contraseña</label>
-            <div class="col-sm-6">
-              <input id="password2" type="password" class="form-control" name="password2" [(ngModel)]="model.password2"
-                     #password2="ngModel"
-                     required/>
-              <div *ngIf="f.submitted && model.password1 != model.password2" class="help-block">Sus contraseñas no
-                coinciden, revise por favor
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !model.pais }">
-            <label class="col-sm-4 control-label">País de origen</label>
-            <div class="col-sm-6">
-              <div class="btn-group btn-block" dropdown>
-                <button dropdownToggle type="button" class="minimal btn btn-block btn-default">
-                  {{ model.pais ? model.pais : 'País de origen'}}
-                </button>
-                <ul *dropdownMenu class="dropdown-menu" role="menu">
-                  <li role="menuitem" *ngFor="let pais of paises">
-                    <a class="dropdown-item" (click)="handleCountriesClick(pais)">{{pais.nombre}}</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div *ngIf="f.submitted && !model.pais" class="help-block">Ingrese su País de origen</div>
-          </div>
-
-          <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !model.tipoDocumento }">
-            <label class="col-sm-4 control-label">Tipo de Documento</label>
-            <div class="col-sm-6">
-              <div class="btn-group btn-block" dropdown>
-                <button dropdownToggle type="button" class="minimal btn btn-block btn-default">
-                  {{ model.tipoDocumento ? model.tipoDocumento : 'Tipo de Documento'}}
-                </button>
-                <ul *dropdownMenu class="dropdown-menu" role="menu">
-                  <li role="menuitem" *ngFor="let tipoDocumento of tipoDocumentos">
-                    <a class="dropdown-item" (click)="handleTipoDocumentoClick(tipoDocumento)">{{tipoDocumento}}</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div *ngIf="f.submitted && !model.tipoDocumento" class="help-block">Ingrese su Tipo de Documento</div>
-          </div>
-
-          <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !numeroDocumento.valid }">
-            <label class="col-sm-4 control-label" for="numeroDocumento">Número de documento</label>
-            <div class="col-sm-6">
-              <input id="numeroDocumento" type="text" class="form-control" name="numeroDocumento" [(ngModel)]="model.numeroDocumento"
-                     #numeroDocumento="ngModel"
-                     required/>
-              <div *ngIf="f.submitted && !numeroDocumento.valid" class="help-block">Ingrese su Número de documento</div>
-            </div>
-          </div>
-
-          <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !model.genero }">
-            <label class="col-sm-4 control-label">Género</label>
-            <div class="col-sm-6">
-              <div class="btn-group btn-block" dropdown>
-                <button dropdownToggle type="button" class="minimal btn btn-block btn-default">
-                  {{ model.genero ? model.genero : 'Género'}}
-                </button>
-                <ul *dropdownMenu class="dropdown-menu" role="menu">
-                  <li role="menuitem" *ngFor="let genero of generos">
-                    <a class="dropdown-item" (click)="handleGeneroClick(genero)">{{genero}}</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div *ngIf="f.submitted && !model.genero" class="help-block">Ingrese su Género</div>
-          </div>
-
-          <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !captcha }">
-            <div class="g-recaptcha-container">
-              <re-captcha class="g-recaptcha" (captchaResponse)="handleCorrectCaptcha($event)" language="es"
-                          site_key="6Lcf4B0UAAAAAFnu4amKAVQ-I2onmCv9OvLw0J_i"></re-captcha>
-            </div>
-            <div *ngIf="f.submitted && !captcha" class="help-block">Acepte el captcha</div>
-          </div>
-
-          <div class="form-group">
-            <div class="col-sm-2"></div>
-            <div class="col-sm-4">
-              <button type="submit" class="btn btn-block btn-primary">Registrarse</button>
-            </div>
-            <div class="col-sm-4">
-              <a [routerLink]="['/login']" class="btn btn-block btn-default">Cancelar</a>
-            </div>
-            <div class="col-sm-2"></div>
-          </div>
-
-        </form>
+  <h2 class="app-header">Registro</h2>
+  <form [formGroup]="complexForm" (ngSubmit)="submitForm(complexForm.value)">
+    <div class="form-group"
+         [ngClass]="{'has-error':!complexForm.controls['nombre'].valid && complexForm.controls['nombre'].touched}">
+      <label>Nombre:</label>
+      <input class="form-control" type="text" placeholder="Jose" [formControl]="complexForm.controls['nombre']">
+      <div *ngIf="complexForm.controls['nombre'].hasError('required') && complexForm.controls['nombre'].touched"
+           class="help-block">Debes incluir tu nombre.
       </div>
-      <div class="col-sm-3"></div>
     </div>
-  </div>
+    <div class="form-group"
+         [ngClass]="{'has-error':!complexForm.controls['apellido'].valid && complexForm.controls['apellido'].touched}">
+      <label>Last Name</label>
+      <input class="form-control" type="text" placeholder="Perez" [formControl]="complexForm.controls['apellido']">
+      <div *ngIf="complexForm.controls['apellido'].hasError('required') && complexForm.controls['apellido'].touched"
+           class="help-block">Debes incluir tu apellido.
+      </div>
+    </div>
+
+    <div class="form-group"
+         [ngClass]="{'has-error':!complexForm.controls['email'].valid && complexForm.controls['email'].touched}">
+      <label>Correo Electrónico</label>
+      <input class="form-control" type="email" placeholder="tucorreo@hotmail.com"
+             [formControl]="complexForm.controls['email']">
+      <div *ngIf="complexForm.controls['email'].hasError('required') && complexForm.controls['email'].touched"
+           class="help-block">Debes incluir un correo electrónico.
+      </div>
+    </div>
+
+    <div class="form-group"
+         [ngClass]="{'has-error':!complexForm.controls['password1'].valid && complexForm.controls['password1'].touched}">
+      <label>Contraseña</label>
+      <input class="form-control" type="password" placeholder="una contraseña larga"
+             [formControl]="complexForm.controls['password1']">
+      <div *ngIf="complexForm.controls['password1'].hasError('required') && complexForm.controls['password1'].touched"
+           class="help-block">Debes incluir una contraseña.
+      </div>
+    </div>
+
+    <div class="form-group"
+         [ngClass]="{'has-error':!complexForm.controls['password2'].valid && complexForm.controls['password2'].touched}">
+      <label>Repita su contraseña</label>
+      <input class="form-control" type="password" placeholder="la misma contraseña larga"
+             [formControl]="complexForm.controls['password2']">
+      <div *ngIf="complexForm.controls['password2'].hasError('required') && complexForm.controls['password2'].touched"
+           class="help-block">Debes repetir la misma contraseña anterior.
+      </div>
+    </div>
+
+    <div class="form-group"
+         [ngClass]="{'has-error':!complexForm.controls['numeroDocumento'].valid && complexForm.controls['numeroDocumento'].touched}">
+      <label>Número de documento</label>
+      <input class="form-control" type="number" placeholder="35123123"
+             [formControl]="complexForm.controls['numeroDocumento']">
+      <div
+        *ngIf="complexForm.controls['numeroDocumento'].hasError('required') && complexForm.controls['numeroDocumento'].touched"
+        class="help-block">Debes incluir tu número de documento
+      </div>
+    </div>
+
+
+    <div class="form-group" [ngClass]="{ 'has-error': !model.pais }">
+      <label>País de origen</label>
+      <div class="btn-group btn-block" dropdown>
+        <button dropdownToggle type="button" class="minimal btn btn-block btn-default">
+          {{ model.pais ? model.pais : 'País de origen'}}
+        </button>
+        <ul *dropdownMenu class="dropdown-menu" role="menu">
+          <li role="menuitem" *ngFor="let pais of paises">
+            <a class="dropdown-item" (click)="handleCountriesClick(pais)">{{pais.nombre}}</a>
+          </li>
+        </ul>
+      </div>
+      <div *ngIf="!model.pais" class="help-block">Debes incluir tu País de origen</div>
+    </div>
+
+    <div class="form-group" [ngClass]="{ 'has-error': !model.tipoDocumento }">
+      <label>Tipo de Documento</label>
+
+      <div class="btn-group btn-block" dropdown>
+        <button dropdownToggle type="button" class="minimal btn btn-block btn-default">
+          {{ model.tipoDocumento ? model.tipoDocumento : 'Tipo de Documento'}}
+        </button>
+        <ul *dropdownMenu class="dropdown-menu" role="menu">
+          <li role="menuitem" *ngFor="let tipoDocumento of tipoDocumentos">
+            <a class="dropdown-item" (click)="handleTipoDocumentoClick(tipoDocumento)">{{tipoDocumento}}</a>
+          </li>
+        </ul>
+      </div>
+
+      <div *ngIf=" !model.tipoDocumento" class="help-block">Ingrese su Tipo de Documento</div>
+    </div>
+
+    <div class="form-group" [ngClass]="{ 'has-error': !model.genero }">
+      <label>Género</label>
+
+      <div class="btn-group btn-block" dropdown>
+        <button dropdownToggle type="button" class="minimal btn btn-block btn-default">
+          {{ model.genero ? model.genero : 'Género'}}
+        </button>
+        <ul *dropdownMenu class="dropdown-menu" role="menu">
+          <li role="menuitem" *ngFor="let genero of generos">
+            <a class="dropdown-item" (click)="handleGeneroClick(genero)">{{genero}}</a>
+          </li>
+        </ul>
+      </div>
+
+      <div *ngIf=" !model.genero" class="help-block">Ingrese su Género</div>
+    </div>
+
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary btn-block"
+              [disabled]="!complexForm.valid || !model.genero || !model.tipoDocumento || !model.pais">Registrarse
+      </button>
+      <a [routerLink]="['/login']" class="btn btn-block btn-default">Cancelar</a>
+    </div>
+  </form>
+
 </div>
-
-

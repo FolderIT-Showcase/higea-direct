@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {Resolve} from '@angular/router';
-import {Persona} from '../../domain/persona';
 import {PersonaService} from '../persona.service';
 import {LoadingService} from '../loading.service';
 

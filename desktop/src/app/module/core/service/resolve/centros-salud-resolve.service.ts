@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {Resolve} from '@angular/router';
-import {CentroSalud} from '../../domain/centro-salud';
 import {TurnoService} from '../turno.service';
 import {StoreService} from 'app/module/core/service/store.service';
 import {LoadingService} from '../loading.service';

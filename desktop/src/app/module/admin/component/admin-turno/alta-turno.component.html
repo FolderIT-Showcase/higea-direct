@@ -1,10 +1,10 @@
 <div class="col-sm-12">
-<div class="app-header text-left">
-  <a [routerLink]="['/admin']" class="btn btn-block btn-link btn-back">
-    <span class="fa fa-arrow-left"></span>
-    VOLVER
-  </a>
-</div>
+  <div class="app-header text-left">
+    <a [routerLink]="['/admin']" class="btn btn-block btn-link btn-back">
+      <span class="fa fa-arrow-left"></span>
+      VOLVER
+    </a>
+  </div>
   <form class="form-horizontal" name="f" (ngSubmit)="f.form.valid && crear()" #f="ngForm" novalidate>
 
     <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !model.centro }">
@@ -58,7 +58,7 @@
       </div>
     </div>
 
-    <div class="form-group"  [ngClass]="{ 'has-error': f.submitted && !model.fechaDesde }">
+    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !model.fechaDesde }">
       <label for="date" class="col-sm-3 control-label">Fecha</label>
       <div class="col-sm-5">
         <!--<input name="date" #date="ngModel" [(ngModel)]="model.fechaDesde" class="form-control" id="date" type="date">-->
@@ -79,7 +79,7 @@
     <div class="form-group">
       <label for="comment" class="col-sm-3 control-label">Observaciones</label>
       <div class="col-sm-5">
-      <textarea   id="comment" name="comment" #comment="ngModel" [(ngModel)]="model.observaciones"></textarea>
+        <textarea id="comment" name="comment" #comment="ngModel" [(ngModel)]="model.observaciones"></textarea>
       </div>
     </div>
 

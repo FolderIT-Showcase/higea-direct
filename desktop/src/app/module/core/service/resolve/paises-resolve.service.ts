@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Resolve} from '@angular/router';
 import {MetadataService} from '../metadata.service';
-import {Metadata} from '../../domain/metadata';
 import {StoreService} from '../store.service';
 import {LoadingService} from '../loading.service';
 
