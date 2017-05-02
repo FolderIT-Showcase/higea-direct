@@ -1,0 +1,28 @@
+<form class="form-horizontal" name="f" (ngSubmit)="f.form.valid && crear()" #f="ngForm" novalidate>
+
+  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !model.centro }">
+    <label class="col-sm-3 control-label">Ingrese la especialidad a crear</label>
+      <div class="col-sm-5">
+            <input class="btn-group btn-block">
+
+            </input>
+
+        <div *ngIf="f.submitted && !model.centro" class="help-block">Ingrese su Centro de Salud</div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-3">
+    </div>
+    <div class="col-sm-5">
+      <button type="submit" class="btn btn-primary">
+        <span class="app-icon fa fa-save"></span>
+        Crear
+      </button>
+      <a (click)="f.reset()" class="btn btn-default">
+        <span class="app-icon-dark fa fa-times-circle"></span>
+        Limpiar
+      </a>
+    </div>
+  </div>
+  </form>

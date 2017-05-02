@@ -25,7 +25,7 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 public class Especialidad implements Serializable {
 
 
-    @OneToMany
+    @ManyToMany
     @JoinTable
             (
                     name = "especialidad_profesional",
