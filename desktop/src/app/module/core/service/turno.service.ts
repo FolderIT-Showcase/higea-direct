@@ -86,7 +86,7 @@ export class TurnoService {
   }
 
   cancelarTurno(turno) {
-    const path = 'turno/' + turno.id;
+    const path = 'turno?id=' + turno.id + '&desactivate=false';
     return this.api.delete(path).first().toPromise();
   }
 

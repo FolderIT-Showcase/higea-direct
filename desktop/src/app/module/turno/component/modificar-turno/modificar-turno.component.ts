@@ -21,6 +21,7 @@ export class ModificarTurnoComponent implements OnInit {
   personas: Persona[] = [];
   model: Data = new Data();
   public isModalShown = false;
+  turno: Turno = new Turno();
 
   constructor(private storeService: StoreService,
               private turnoService: TurnoService,
@@ -43,6 +44,7 @@ export class ModificarTurnoComponent implements OnInit {
   }
 
   public showModal(turno: Turno) {
+    this.turno = turno;
     this.isModalShown = true;
   }
 

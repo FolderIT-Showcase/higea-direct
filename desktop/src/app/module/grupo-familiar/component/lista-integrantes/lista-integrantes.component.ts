@@ -158,7 +158,7 @@ export class ListaIntegrantesComponent {
 
   public confirmModal(action, integrante) {
     this.autoShownModal.hide();
-
+    console.log(integrante);
     if (action === 'delete') {
       const prevPersona = _.merge({}, this.currentPersona);
       const i = _.findIndex(this.currentPersona.integrantes, integrante);
