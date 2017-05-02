@@ -13,9 +13,15 @@ import {CentrosSaludResolveService} from './service/resolve/centros-salud-resolv
 import {IntegrantesResolveService} from './service/resolve/integrantes-resolve.service';
 import {ModificarTurnoComponent} from '../turno/component/modificar-turno/modificar-turno.component';
 
-import {AdminHomeComponent} from '../admin/component/admin-home.component';
-import {AltaTurnoComponent} from '../admin/component/admin-turno/alta-turno.component';
-import {BajaTurnoComponent} from '../admin/component/admin-turno/baja-turno.component';
+
+import {AdminHomeComponent} from "../admin/component/admin-home.component";
+import {AltaTurnoComponent} from "../admin/component/admin-turno/alta-turno.component";
+import {BajaTurnoComponent} from "../admin/component/admin-turno/baja-turno.component";
+import {AltaEspecialidadComponent} from "../admin/component/admin-especialidad/alta-especialidad.component";
+import {ProfesionalResolveService} from "./service/resolve/profesionales-resolve.service";
+
+
+
 
 
 const appRoutes: Routes = [
@@ -79,6 +85,13 @@ const appRoutes: Routes = [
     component: BajaTurnoComponent,
     resolve: {
       centrosSalud: CentrosSaludResolveService
+    }
+  },
+  {
+    path: 'alta-especialidad',
+    component: AltaEspecialidadComponent,
+    resolve: {
+      profesionales: ProfesionalResolveService
     }
   },
 

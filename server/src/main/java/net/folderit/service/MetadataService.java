@@ -53,6 +53,8 @@ public class MetadataService {
 
     public Iterable<Especialidad> findAllEspecialidad() {return especialidadRepository.findAllByOrderByNombreAsc();}
 
-    public Iterable<Profesional> findAllProfesional() {return profesionalRepository.findAllByOrderByApellidoAsc();}
+    public Especialidad saveEspecialidad(Especialidad especialidad) {return especialidadRepository.save(especialidad);}
+
+    public List<Profesional> findAllProfesional() {return profesionalRepository.findAllByOrderByApellidoAsc();}
 
 }
