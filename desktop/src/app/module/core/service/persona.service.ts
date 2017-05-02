@@ -55,8 +55,6 @@ export class PersonaService {
   getIntegrantes() {
     const user: User = JSON.parse(localStorage.getItem('currentUser'));
 
-    console.log(user);
-
     if (!user.email) {
       return;
     }

@@ -48,7 +48,6 @@ export class GoogleSigninComponent implements AfterViewInit {
         user.email = googleUser.getBasicProfile().getEmail();
         user.externalId = googleUser.getBasicProfile().getId();
         localStorage.setItem('socialUser', JSON.stringify(user));
-        console.log(user);
         this.auth.login(user, 'google');
         googleUser.disconnect();
       }, (error) => {

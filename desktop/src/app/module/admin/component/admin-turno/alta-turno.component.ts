@@ -5,7 +5,7 @@ import {Especialidad} from '../../../core/domain/especialidad';
 import {Profesional} from '../../../core/domain/profesional';
 import {StoreService} from '../../../core/service/store.service';
 import {TurnoService} from '../../../core/service/turno.service';
-import {AlertService} from "../../../core/service/alert.service";
+import {AlertService} from '../../../core/service/alert.service';
 
 class Data {
   persona: Persona;
@@ -14,7 +14,7 @@ class Data {
   profesional: Profesional;
   fechaDesde: Date = new Date();
   hora: Date = new Date();
-  observaciones:string;
+  observaciones: string;
 }
 
 @Component({
@@ -32,8 +32,7 @@ export class AltaTurnoComponent implements OnInit {
   personas: Persona[] = [];
 
 
-
-  constructor(private storeService: StoreService, private turnoService: TurnoService,  private alertService: AlertService) {
+  constructor(private storeService: StoreService, private turnoService: TurnoService, private alertService: AlertService) {
   }
 
   ngOnInit(): void {
@@ -71,7 +70,7 @@ export class AltaTurnoComponent implements OnInit {
         this.alertService.success('Registro Exitoso');
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
         this.alertService.success('Error');
       });
 

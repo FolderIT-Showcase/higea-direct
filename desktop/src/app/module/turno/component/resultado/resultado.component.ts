@@ -59,7 +59,6 @@ export class ResultadoComponent implements OnInit, OnDestroy {
     this.turno = turno;
     this.isModalShown = true;
     this.persona = this.storeService.get('persona');
-    console.log(this.persona);
   }
 
   public reservarTurno(turno: Turno) {

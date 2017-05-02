@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {PersonaService} from '../../../core/service/persona.service';
 import {AlertService} from '../../../core/service/alert.service';
-import {TipoDocumentoEnum, TipoDocumentos} from '../../../core/domain/enums/tipo-documento';
+import {TipoDocumentos} from '../../../core/domain/enums/tipo-documento';
 import {Generos} from '../../../core/domain/enums/genero';
 import {Pais} from '../../../core/domain/pais';
 import {User} from '../../../core/domain/user';
@@ -45,7 +45,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.paises = this.storeService.get('paises');
-    console.log(this.paises);
     this.model.tipoDocumento = this.tipoDocumentos[0];
     this.model.genero = this.generos[0];
     this.model.pais = this.paises[11].nombre;
@@ -70,8 +69,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
     this.personaService.create(persona)
       .then(() => {
-        this.router.navigate(['/login']);
-        this.alertService.success('Registro Exitoso');
+        this.router.navigate(['/login'])
+          .then(() => {
+            this.alertService.success('Registro Exitoso');
+          });
       })
       .catch(error => {
         this.alertService.error('Hubo un error inesperado, vuelva a intentarlo más tarde');
