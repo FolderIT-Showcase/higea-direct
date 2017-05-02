@@ -14,6 +14,9 @@ export class IntegrantesResolveService implements Resolve<any> {
     return this.personaService.getIntegrantes()
       .then(() => {
         this.loadingService.finish();
+      })
+      .catch(() => {
+        this.loadingService.finish();
       });
   }
 

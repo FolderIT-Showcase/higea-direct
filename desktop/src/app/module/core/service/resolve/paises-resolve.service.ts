@@ -23,6 +23,9 @@ export class PaisesResolveService implements Resolve<any> {
     return this.metadataService.getPaises()
       .then(() => {
         this.loadingService.finish();
+      })
+      .catch(() => {
+        this.loadingService.finish();
       });
   }
 

@@ -63,7 +63,7 @@ export class ApiService {
       this.checkLogged();
     }
 
-    return this.http.get(`${this.baseURL}${path}`)
+    return this.http.get(`${this.baseURL}${path}`, {headers: this.headers})
       .map(ApiService.checkForError)
       .catch(err => Observable.throw(err))
       .map(ApiService.getJson);

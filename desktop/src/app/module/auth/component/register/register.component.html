@@ -1,4 +1,4 @@
-<div class="col-sm-6 col-sm-offset-3">
+<div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
 
   <h2 class="app-header">Registro</h2>
   <form [formGroup]="complexForm" (ngSubmit)="submitForm(complexForm.value)">
@@ -12,7 +12,7 @@
     </div>
     <div class="form-group"
          [ngClass]="{'has-error':!complexForm.controls['apellido'].valid && complexForm.controls['apellido'].touched}">
-      <label>Last Name</label>
+      <label>Apellido</label>
       <input class="form-control" type="text" placeholder="Perez" [formControl]="complexForm.controls['apellido']">
       <div *ngIf="complexForm.controls['apellido'].hasError('required') && complexForm.controls['apellido'].touched"
            class="help-block">Debes incluir tu apellido.
