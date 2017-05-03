@@ -51,7 +51,7 @@ export class AltaCentroSaludComponent implements OnInit {
       })
       .catch((error) => {
         console.log(error);
-        this.alertService.success('Error');
+        this.alertService.error('Error al querer guardar el Centro de Salud');
       });;
   }
 

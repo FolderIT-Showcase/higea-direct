@@ -49,7 +49,7 @@ export class AltaEspecialidadComponent implements OnInit {
       })
       .catch((error) => {
         console.log(error);
-        this.alertService.success('Error');
+        this.alertService.error('Error al querer guardar la Especialidad');
       });;
   }
 }

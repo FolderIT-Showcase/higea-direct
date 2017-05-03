@@ -92,14 +92,13 @@ export class BusquedaEspecialidadComponent implements OnInit, OnDestroy {
   }
 
   public asignar(especialidad: Especialidad) {
-    console.log("Element "+especialidad);
+
     let element =  this.especialidadesSelected.find(x => x.id === especialidad.id);
-    console.log("Element "+element);
-    if(element){this.hideModal(); return};
+    if(element){this.hideModal();console.log("Repetido "+element); return};
     this.especialidadesSelected.push(especialidad);
     this.storeService.update('especialidadesSeleccionadas',  this.especialidadesSelected);
     this.hideModal();
-    this.showInfoModal();
+    especialidad.seleccionado = true;
 
   }
   public showModal(especialidad: Especialidad) {
