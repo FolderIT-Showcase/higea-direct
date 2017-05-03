@@ -9,28 +9,77 @@ import {UserActiveComponent} from '../auth/component/user-activate/user.active.c
 import {AuthGuard} from './guard/auth.guard';
 import {PaisesResolveService} from './service/resolve/paises-resolve.service';
 import {CentrosSaludResolveService} from './service/resolve/centros-salud-resolve.service';
-
 import {IntegrantesResolveService} from './service/resolve/integrantes-resolve.service';
 import {ModificarTurnoComponent} from '../turno/component/modificar-turno/modificar-turno.component';
-
-
-import {AdminHomeComponent} from "../admin/component/admin-home.component";
-import {AltaTurnoComponent} from "../admin/component/admin-turno/alta-turno.component";
-import {BajaTurnoComponent} from "../admin/component/admin-turno/baja-turno.component";
-import {AltaEspecialidadComponent} from "../admin/component/admin-especialidad/alta-especialidad.component";
-import {ProfesionalResolveService} from "./service/resolve/profesionales-resolve.service";
-import {AltaCentroSaludComponent} from "../admin/component/admin-centro-salud/alta-centro-salud-component";
-import {EspecialidadResolveService} from "./service/resolve/especialidad-resolve.service";
-
-
-
-
+import {AdminHomeComponent} from '../admin/component/admin-home.component';
+import {AltaTurnoComponent} from '../admin/component/admin-turno/alta-turno.component';
+import {BajaTurnoComponent} from '../admin/component/admin-turno/baja-turno.component';
+import {AltaEspecialidadComponent} from '../admin/component/admin-especialidad/alta-especialidad.component';
+import {ProfesionalResolveService} from './service/resolve/profesionales-resolve.service';
+import {CoreComponent} from './core.component';
+import {AltaCentroSaludComponent} from '../admin/component/admin-centro-salud/alta-centro-salud-component';
+import {EspecialidadResolveService} from './service/resolve/especialidad-resolve.service';
 
 const appRoutes: Routes = [
   {
     path: '',
-    component: HomeComponent,
+    component: CoreComponent,
     canActivate: [AuthGuard],
+    children: [
+      {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full'
+      },
+      {
+        path: 'home',
+        component: HomeComponent
+      },
+      {
+        path: 'nuevo-turno',
+        component: TurnoComponent,
+        resolve: {
+          integrantes: IntegrantesResolveService,
+          centrosSalud: CentrosSaludResolveService
+        }
+      },
+      {
+        path: 'mis-turnos',
+        component: ModificarTurnoComponent,
+        resolve: {
+          integrantes: IntegrantesResolveService
+        }
+      },
+      {
+        path: 'grupo-familiar',
+        component: GrupoFamiliarComponent
+      },
+      {
+        path: 'admin',
+        component: AdminHomeComponent,
+        children: [
+          {
+            path: 'alta-turno', component: AltaTurnoComponent,
+            resolve: {
+              centrosSalud: CentrosSaludResolveService
+            }
+          },
+          {
+            path: 'baja-turno',
+            component: BajaTurnoComponent,
+            resolve: {
+              centrosSalud: CentrosSaludResolveService
+            }
+          },
+          {
+            path: 'alta-especialidad',
+            component: AltaEspecialidadComponent,
+            resolve: {
+              profesionales: ProfesionalResolveService
+            }
+          },
+        ]
+      }]
   },
   {
     path: 'login',
@@ -38,10 +87,6 @@ const appRoutes: Routes = [
     resolve: {
       paises: PaisesResolveService,
     }
-  },
-  {
-    path: 'home',
-    component: HomeComponent
   },
   {
     path: 'register',
@@ -57,30 +102,9 @@ const appRoutes: Routes = [
       paises: PaisesResolveService,
     }
   },
-  {path: 'regitrationConfirm', component: UserActiveComponent},
   {
-    path: 'nuevo-turno',
-    component: TurnoComponent,
-    resolve: {
-      integrantes: IntegrantesResolveService,
-      centrosSalud: CentrosSaludResolveService
-    }
-  },
-  {
-    path: 'modificar-turno',
-    component: ModificarTurnoComponent,
-    resolve: {
-      integrantes: IntegrantesResolveService
-    }
-  },
-  {path: 'grupo-familiar', component: GrupoFamiliarComponent},
-  {path: 'admin', component: AdminHomeComponent},
-  {
-    path: 'admin-turno', component: AltaTurnoComponent,
-    resolve: {
-      centrosSalud: CentrosSaludResolveService
-    }
-
+    path: 'regitrationConfirm',
+    component: UserActiveComponent
   },
   {
     path: 'baja-turno',
@@ -104,6 +128,13 @@ const appRoutes: Routes = [
     }
   },
 
+
+  {
+    path: 'admin-turno', component: AltaTurnoComponent,
+    resolve: {
+      centrosSalud: CentrosSaludResolveService
+    }
+  },
 
   // otherwise redirect to home
   {path: '**', redirectTo: ''}

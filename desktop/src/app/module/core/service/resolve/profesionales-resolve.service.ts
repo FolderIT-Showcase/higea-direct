@@ -25,7 +25,11 @@ export class ProfesionalResolveService implements Resolve<any> {
     return this.adminService.getProfesionales()
       .then(() => {
         this.loadingService.finish();
-      });
+      })
+      .catch(error => {
+        this.loadingService.finish();
+        console.error(error);
+      })
   }
 
 }

@@ -22,6 +22,7 @@ import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 import {LoadingService} from './service/loading.service';
 import {LoadingComponent} from './component/loading/loading.component';
 import {ModalModule} from 'ngx-bootstrap/modal';
+import {CoreComponent} from './core.component';
 
 @NgModule({
   imports: [
@@ -38,7 +39,8 @@ import {ModalModule} from 'ngx-bootstrap/modal';
     AlertComponent,
     HomeComponent,
     NavbarComponent,
-    LoadingComponent
+    LoadingComponent,
+    CoreComponent
   ],
   providers: [
     Store,

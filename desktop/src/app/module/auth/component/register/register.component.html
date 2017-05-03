@@ -1,6 +1,6 @@
 <div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
 
-  <h2 class="app-header">Registro</h2>
+  <h2 class="app-header text-center">Registro</h2>
   <form [formGroup]="complexForm" (ngSubmit)="submitForm(complexForm.value)">
     <div class="form-group"
          [ngClass]="{'has-error':!complexForm.controls['nombre'].valid && complexForm.controls['nombre'].touched}">

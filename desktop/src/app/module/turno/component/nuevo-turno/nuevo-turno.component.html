@@ -1,99 +1,103 @@
-<!--<form class="form-horizontal" name="f" (ngSubmit)="f.form.valid && buscar()" #f="ngForm" novalidate>-->
-<form class="form-horizontal" name="f" #f="ngForm" novalidate>
+<div class="container">
+  <form class="form-horizontal" name="f" #f="ngForm" novalidate>
 
-  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !model.persona }">
-    <label class="col-sm-3 control-label">Nuevo Turno para</label>
-    <div class="col-sm-5">
-      <div class="btn-group btn-block" dropdown>
-        <button dropdownToggle type="button" class="minimal btn btn-block btn-default">
-          {{ model.persona ? (model.persona.nombre +' '+ model.persona.apellido) : 'Nuevo Turno para'}}
-        </button>
-        <ul *dropdownMenu class="dropdown-menu" role="menu">
-          <li role="menuitem" *ngFor="let persona of personas">
-            <a class="dropdown-item" (click)="handlePersonaClick(persona)">{{labelPersona()}}</a>
-          </li>
-        </ul>
+    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !model.persona }">
+      <label class="col-sm-3 col-md-4 control-label">Nuevo Turno para</label>
+      <div class="col-sm-5 col-md-4 col-lg-4 ">
+        <div class="btn-group btn-block" dropdown>
+          <button dropdownToggle type="button" class="minimal btn btn-block btn-default">
+            {{ model.persona ? (model.persona.nombre +' '+ model.persona.apellido) : 'Nuevo Turno para'}}
+          </button>
+          <ul *dropdownMenu class="dropdown-menu" role="menu">
+            <li role="menuitem" *ngFor="let persona of personas">
+              <a class="dropdown-item" (click)="handlePersonaClick(persona)">{{labelPersona()}}</a>
+            </li>
+          </ul>
+        </div>
+        <div *ngIf="f.submitted && !model.persona" class="help-block">Ingrese para quien es el turno</div>
       </div>
-      <div *ngIf="f.submitted && !model.persona" class="help-block">Ingrese para quien es el turno</div>
-    </div>
-    <div class="col-sm-4">
-      <a class="btn btn-primary">
-        <span class="app-icon fa fa-plus"></span>
-        AGREGAR INTEGRANTE
-      </a>
-    </div>
-  </div>
-
-  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !model.centro }">
-    <label class="col-sm-3 control-label">Centro de Salud</label>
-    <div class="col-sm-5">
-      <div class="btn-group btn-block" dropdown>
-        <button dropdownToggle type="button" class="minimal btn btn-block btn-default">
-          {{ model.centro ? model.centro.nombre : 'Centro de Salud'}}
-        </button>
-        <ul *dropdownMenu class="dropdown-menu" role="menu">
-          <li role="menuitem" *ngFor="let centro of centrosSalud">
-            <a class="dropdown-item" (click)="handleCentroSaludClick(centro)">{{centro.nombre}}</a>
-          </li>
-        </ul>
-      </div>
-      <div *ngIf="f.submitted && !model.centro" class="help-block">Ingrese su Centro de Salud</div>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label class="col-sm-3 control-label">Especialidad</label>
-    <div class="col-sm-5">
-      <div class="btn-group btn-block" dropdown>
-        <button dropdownToggle type="button" class="minimal btn btn-block btn-default">
-          {{ model.especialidad ? model.especialidad.nombre : 'Especialidad'}}
-        </button>
-        <ul *dropdownMenu class="dropdown-menu" role="menu">
-          <li role="menuitem" *ngFor="let especialidad of especialidades">
-            <a class="dropdown-item" (click)="handleEspecialidadClick(especialidad)">{{especialidad.nombre}}</a>
-          </li>
-        </ul>
+      <div class="col-sm-4 col-md-3 col-lg-3">
+        <a class="btn btn-primary btn-block">
+          <span class="app-icon fa fa-plus"></span>
+          AGREGAR INTEGRANTE
+        </a>
       </div>
     </div>
-  </div>
 
-  <div class="form-group">
-    <label class="col-sm-3 control-label">Profesional</label>
-    <div class="col-sm-5">
-      <div class="btn-group btn-block" dropdown>
-        <button dropdownToggle type="button" class="minimal btn btn-block btn-default">
-          {{ model.profesional ? model.profesional.nombre : 'Profesional'}}
-        </button>
-        <ul *dropdownMenu class="dropdown-menu" role="menu">
-          <li role="menuitem" *ngFor="let profesional of profesionales">
-            <a class="dropdown-item" (click)="handleProfesionalClick(profesional)">{{profesional.nombre}}</a>
-          </li>
-        </ul>
+    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !model.centro }">
+      <label class="col-sm-3 col-md-4 control-label">Centro de Salud</label>
+      <div class="col-sm-5 col-md-4 col-lg-4">
+        <div class="btn-group btn-block" dropdown>
+          <button dropdownToggle type="button" class="minimal btn btn-block btn-default">
+            {{ model.centro ? model.centro.nombre : 'Centro de Salud'}}
+          </button>
+          <ul *dropdownMenu class="dropdown-menu" role="menu">
+            <li role="menuitem" *ngFor="let centro of centrosSalud">
+              <a class="dropdown-item" (click)="handleCentroSaludClick(centro)">{{centro.nombre}}</a>
+            </li>
+          </ul>
+        </div>
+        <div *ngIf="f.submitted && !model.centro" class="help-block">Ingrese su Centro de Salud</div>
       </div>
     </div>
-  </div>
 
-  <div class="form-group">
-    <label class="col-sm-3 control-label">Fecha</label>
-    <div class="col-sm-5">
-      <input name="fecha" #fecha="ngModel" [(ngModel)]="model.fecha" class="form-control" id="date" type="date">
+    <div class="form-group">
+      <label class="col-sm-3 col-md-4 control-label">Especialidad</label>
+      <div class="col-sm-5 col-md-4 col-lg-4">
+        <div class="btn-group btn-block" dropdown>
+          <button dropdownToggle type="button" class="minimal btn btn-block btn-default">
+            {{ model.especialidad ? model.especialidad.nombre : 'Especialidad'}}
+          </button>
+          <ul *dropdownMenu class="dropdown-menu" role="menu">
+            <li role="menuitem" *ngFor="let especialidad of especialidades">
+              <a class="dropdown-item" (click)="handleEspecialidadClick(especialidad)">{{especialidad.nombre}}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
-  </div>
 
-  <div class="form-group">
-    <div class="col-sm-3"></div>
-    <div class="col-sm-5">
-      <button (click)="buscar(); false" class="btn btn-primary">
-        <span class="app-icon fa fa-search"></span>
-        Buscar
-      </button>
-      <!-- TODO: no esta limpiando el formulario-->
-      <button type="reset" (click)="f.form.reset()" class="btn btn-default">
-        <span class="app-icon-dark fa fa-times-circle"></span>
-        Limpiar Busqueda
-      </button>
+    <div class="form-group">
+      <label class="col-sm-3 col-md-4 control-label">Profesional</label>
+      <div class="col-sm-5 col-md-4 col-lg-4">
+        <div class="btn-group btn-block" dropdown>
+          <button dropdownToggle type="button" class="minimal btn btn-block btn-default">
+            {{ model.profesional ? model.profesional.nombre : 'Profesional'}}
+          </button>
+          <ul *dropdownMenu class="dropdown-menu" role="menu">
+            <li role="menuitem" *ngFor="let profesional of profesionales">
+              <a class="dropdown-item" (click)="handleProfesionalClick(profesional)">{{profesional.nombre}}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
-  </div>
 
-</form>
+    <div class="form-group">
+      <label class="col-sm-3 col-md-4 control-label">Fecha</label>
+      <div class="col-sm-5 col-md-4 col-lg-4">
+        <input name="fecha" #fecha="ngModel" [(ngModel)]="model.fecha" class="form-control" id="date" type="date">
+      </div>
+    </div>
 
+    <div class="form-group">
+      <div class="col-sm-5 col-sm-offset-3 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
+        <button (click)="buscar(); false" class="btn btn-primary btn-block">
+          <span class="app-icon fa fa-search"></span>
+          Buscar
+        </button>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-5 col-sm-offset-3 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
+        <!-- TODO: no esta limpiando el formulario-->
+        <button type="reset" (click)="f.form.reset()" class="btn btn-default btn-block">
+          <span class="app-icon-dark fa fa-times-circle"></span>
+          Limpiar Busqueda
+        </button>
+      </div>
+    </div>
+
+  </form>
+
+</div>

@@ -1,114 +1,113 @@
 <div class="container">
-  <div class="row">
-    <div class="absolute-center align-top">
-      <div class="app-header">
-        <h2>Mis Turnos</h2>
-        <p>Aca podes administrar tus turnos</p>
+
+  <div class="app-header">
+    <h2>Mis Turnos</h2>
+    <p>Aca podes administrar tus turnos</p>
+  </div>
+
+  <form class="form-horizontal">
+    <div class="form-group">
+      <label class="col-sm-4 control-label">Turnos de</label>
+      <div class="col-sm-4">
+        <div class="btn-group btn-block" dropdown>
+          <button dropdownToggle type="button" class="minimal btn btn-block btn-default">
+            {{ model.persona ? (model.persona.nombre +' '+ model.persona.apellido) : 'Turno de'}}
+          </button>
+          <ul *dropdownMenu class="dropdown-menu" role="menu">
+            <li role="menuitem" *ngFor="let persona of personas">
+              <a class="dropdown-item" (click)="handlePersonaClick(persona)">{{persona.nombre}}</a>
+            </li>
+          </ul>
+        </div>
       </div>
-      <form class="form-horizontal">
-        <div class="form-group">
-          <label class="col-sm-4 control-label">Turnos de</label>
-          <div class="col-sm-4">
-            <div class="btn-group btn-block" dropdown>
-              <button dropdownToggle type="button" class="minimal btn btn-block btn-default">
-                {{ model.persona ? (model.persona.nombre +' '+ model.persona.apellido) : 'Turno de'}}
-              </button>
-              <ul *dropdownMenu class="dropdown-menu" role="menu">
-                <li role="menuitem" *ngFor="let persona of personas">
-                  <a class="dropdown-item" (click)="handlePersonaClick(persona)">{{persona.nombre}}</a>
-                </li>
-              </ul>
-            </div>
-          </div>
+    </div>
+    <div class="form-group has-error" *ngIf="!turnos[0]">
+      <label class="col-sm-4 control-label"> <strong>No sacaste ningun turno</strong> </label>
+      <div class="col-sm-4"><a [routerLink]="['/nuevo-turno']" class="btn btn-block btn-primary">SACAR UN TURNO</a>
+      </div>
+    </div>
+  </form>
+
+  <div *ngIf="turnos[0]" class="col-sm-12">
+    <h4>
+      Seleccione un turno
+    </h4>
+    <div class="col-sm-12">
+      <div class="list-group">
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th>Día</th>
+              <th>Fecha</th>
+              <th>Hora</th>
+              <th>Centro de Salud</th>
+              <th>Especialidad</th>
+              <th>Profesional</th>
+              <th>Observaciones</th>
+              <th width="1em"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let turno of turnos">
+              <td>{{turno.dia}}</td>
+              <td>{{turno.fecha}}</td>
+              <td>{{turno.hora}}</td>
+              <td>{{turno.centroSalud.nombre}}</td>
+              <td>{{turno.especialidad.nombre}}</td>
+              <td>{{turno.profesional.nombre}}</td>
+              <td>{{turno.observaciones}}</td>
+              <td>
+
+                <a (click)="showModal(turno)" class="btn btn-primary btn-block">
+                  <span class="fa fa-ellipsis-h"></span>
+                </a>
+
+              </td>
+            </tr>
+            </tbody>
+          </table>
         </div>
-        <div class="form-group has-error" *ngIf="!turnos[0]">
-          <label class="col-sm-4 control-label"> <strong>No sacaste ningun turno</strong> </label>
-          <div class="col-sm-4"><a [routerLink]="['/nuevo-turno']" class="btn btn-block btn-primary">SACAR UN TURNO</a>
-          </div>
-        </div>
-      </form>
 
-      <div *ngIf="turnos[0]" class="col-sm-12">
-        <h4>
-          Seleccione un turno
-        </h4>
-        <div class="col-sm-12">
-          <div class="list-group">
-            <div class="table-responsive">
-              <table class="table table-striped">
-                <thead>
-                <tr>
-                  <th>Día</th>
-                  <th>Fecha</th>
-                  <th>Hora</th>
-                  <th>Centro de Salud</th>
-                  <th>Especialidad</th>
-                  <th>Profesional</th>
-                  <th>Observaciones</th>
-                  <th width="1em"></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr *ngFor="let turno of turnos">
-                  <td>{{turno.dia}}</td>
-                  <td>{{turno.fecha}}</td>
-                  <td>{{turno.hora}}</td>
-                  <td>{{turno.centroSalud.nombre}}</td>
-                  <td>{{turno.especialidad.nombre}}</td>
-                  <td>{{turno.profesional.nombre}}</td>
-                  <td>{{turno.observaciones}}</td>
-                  <td>
-
-                      <a (click)="showModal(turno)" class="btn btn-primary btn-block">
-                        <span class="fa fa-ellipsis-h"></span>
-                      </a>
-
-                  </td>
-                </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div *ngIf="isModalShown" [config]="{ show: true }" (onHidden)="onHidden()" bsModal
-                 #autoShownModal="bs-modal"
-                 class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-              <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h4 class="modal-title pull-left"><strong>Información</strong></h4>
-                    <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    <label>Para el dia <strong>{{turno.dia}}</strong> en el horario
-                      <strong>{{turno.hora}}</strong></label><br>
-                    <label>Para la especialidad <strong>{{turno.especialidad.nombre}}</strong> atendido por </label><br>
-                    <label>En el <strong>{{turno.centroSalud.nombre}}</strong></label><br>
-                    <div *ngIf="false">
-                      <sebm-google-map [latitude]="lat" [longitude]="lng">
-                        <sebm-google-map-marker [latitude]="lat" [longitude]="lng"></sebm-google-map-marker>
-                      </sebm-google-map>
-                    </div>
-                    <div class="row">
-                      <div class="col-sm-8"></div>
-                      <div class="col-sm-4">
-                        <div class="btn-group btn-group-justified">
-                          <a (click)="eliminarTurno(turno)" class="btn btn-danger">ELIMINAR</a>
-                          <a (click)="hideModal()" class="btn btn-default">CERRAR</a>
-                        </div>
-                      </div>
+        <div *ngIf="isModalShown" [config]="{ show: true }" bsModal
+             #autoShownModal="bs-modal"
+             class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title pull-left"><strong>Información</strong></h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <label>Para el dia <strong>{{turno.dia}}</strong> en el horario
+                  <strong>{{turno.hora}}</strong></label><br>
+                <label>Para la especialidad <strong>{{turno.especialidad.nombre}}</strong> atendido por </label><br>
+                <label>En el <strong>{{turno.centroSalud.nombre}}</strong></label><br>
+                <div *ngIf="false">
+                  <sebm-google-map [latitude]="lat" [longitude]="lng">
+                    <sebm-google-map-marker [latitude]="lat" [longitude]="lng"></sebm-google-map-marker>
+                  </sebm-google-map>
+                </div>
+                <div class="row">
+                  <div class="col-sm-8"></div>
+                  <div class="col-sm-4">
+                    <div class="btn-group btn-group-justified">
+                      <a (click)="eliminarTurno(turno)" class="btn btn-danger">ELIMINAR</a>
+                      <a (click)="hideModal()" class="btn btn-default">CERRAR</a>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-
           </div>
         </div>
+
       </div>
-      <div class="col-sm-2"></div>
     </div>
   </div>
+
+
 </div>
 
