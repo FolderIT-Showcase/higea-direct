@@ -19,6 +19,10 @@ import {ProfesionalResolveService} from './service/resolve/profesionales-resolve
 import {CoreComponent} from './core.component';
 import {AltaCentroSaludComponent} from '../admin/component/admin-centro-salud/alta-centro-salud-component';
 import {EspecialidadResolveService} from './service/resolve/especialidad-resolve.service';
+import {TurnosComponent} from '../admin/turnos/turnos.component';
+import {EspecialidadesComponent} from '../admin/especialidades/especialidades.component';
+import {CentrosSaludComponent} from '../admin/centros-salud/centros-salud.component';
+import {ProfesionalesComponent} from '../admin/profesionales/profesionales.component';
 
 const appRoutes: Routes = [
   {
@@ -59,6 +63,37 @@ const appRoutes: Routes = [
         component: AdminHomeComponent,
         children: [
           {
+            path: '',
+            redirectTo: 'turno',
+            pathMatch: 'full'
+          },
+          {
+            path: 'turno', component: TurnosComponent,
+            resolve: {
+              centrosSalud: CentrosSaludResolveService
+            }
+          },
+          {
+            path: 'especialidad', component: EspecialidadesComponent,
+            resolve: {
+              especialidades: EspecialidadResolveService,
+              profesionales: ProfesionalResolveService
+            }
+          },
+          {
+            path: 'centro-salud', component: CentrosSaludComponent,
+            resolve: {
+              centrosSalud: CentrosSaludResolveService,
+              especialidades: EspecialidadResolveService
+            }
+          },
+          {
+            path: 'profesional', component: ProfesionalesComponent,
+            resolve: {
+              profesionales: ProfesionalResolveService
+            }
+          },
+          {
             path: 'alta-turno', component: AltaTurnoComponent,
             resolve: {
               centrosSalud: CentrosSaludResolveService
@@ -76,6 +111,13 @@ const appRoutes: Routes = [
             component: AltaEspecialidadComponent,
             resolve: {
               profesionales: ProfesionalResolveService
+            }
+          },
+          {
+            path: 'alta-centro-salud',
+            component: AltaCentroSaludComponent,
+            resolve: {
+              especialidades: EspecialidadResolveService
             }
           },
         ]
@@ -127,8 +169,6 @@ const appRoutes: Routes = [
       especialidades: EspecialidadResolveService
     }
   },
-
-
   {
     path: 'admin-turno', component: AltaTurnoComponent,
     resolve: {

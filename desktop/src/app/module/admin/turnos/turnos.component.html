@@ -1,0 +1,169 @@
+<nav class="navbar navbar-default app-actionbar">
+  <div class="container-fluid">
+    <div class="navbar-right">
+      <button type="button" class="btn btn-success navbar-btn" (click)="staticModal.show()">
+        <span class="app-icon fa fa-plus"></span>
+        Agregar Turno
+      </button>
+    </div>
+  </div>
+</nav>
+<div class="list-group">
+  <a class="list-group-item">
+    <h4 class="list-group-item-heading">Turnos</h4>
+    <p class="list-group-item-text"> {{turnos.length}} Turnos Activos</p>
+  </a>
+  <div *ngIf="turnos[0]">
+
+    <div class="table-responsive">
+
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th>Día</th>
+          <th>Fecha</th>
+          <th>Hora</th>
+          <th>Centro de Salud</th>
+          <th>Especialidad</th>
+          <th>Profesional</th>
+          <th>Observaciones</th>
+          <th width="1em"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let turno of turnos">
+          <td>{{turno.dia}}</td>
+          <td>{{turno.fecha}}</td>
+          <td>{{turno.hora}}</td>
+          <td>{{centro.nombre}}</td>
+          <td>{{turno.especialidad.nombre}}</td>
+          <td>{{turno.profesional.nombre}}</td>
+          <td>{{turno.observaciones}}</td>
+          <td>
+            <a (click)="showModal(turno)" class="btn btn-success btn-block">
+              <span class="fa fa-ellipsis-h"></span>
+            </a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+
+      <div class="col-md-6">
+        <pagination [boundaryLinks]="true" (pageChanged)="pageChanged($event)" [totalItems]="totalItems"
+                    [(ngModel)]="currentPage" class="pagination-sm"
+                    previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="modal fade" bsModal #staticModal="bs-modal" [config]="{backdrop: 'static'}"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Nuevo Turno</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <form class="form" name="f" (ngSubmit)="f.form.valid && crear()" #f="ngForm" novalidate>
+
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !model.centro }">
+                <label class="control-label">Centro de Salud</label>
+                <div class="btn-group btn-block" dropdown>
+                  <button dropdownToggle type="button" class="minimal btn btn-block btn-default">
+                    {{ model.centro ? model.centro.nombre : 'Centro de Salud'}}
+                  </button>
+                  <ul *dropdownMenu class="dropdown-menu" role="menu">
+                    <li role="menuitem" *ngFor="let centro of centrosSalud">
+                      <a class="dropdown-item" (click)="handleCentroSaludClick(centro)">{{centro.nombre}}</a>
+                    </li>
+                  </ul>
+                </div>
+                <div *ngIf="f.submitted && !model.centro" class="help-block">Ingrese su Centro de Salud</div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !model.especialidad }">
+                <label class="control-label">Especialidad</label>
+                <div class="btn-group btn-block" dropdown>
+                  <button dropdownToggle type="button" class="minimal btn btn-block btn-default">
+                    {{ model.especialidad ? model.especialidad.nombre : 'Especialidad'}}
+                  </button>
+                  <ul *dropdownMenu class="dropdown-menu" role="menu">
+                    <li role="menuitem" *ngFor="let especialidad of especialidades">
+                      <a class="dropdown-item"
+                         (click)="handleEspecialidadClick(especialidad)">{{especialidad.nombre}}</a>
+                    </li>
+                  </ul>
+                </div>
+                <div *ngIf="f.submitted && !model.especialidad" class="help-block">Ingrese especialidad</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !model.profesional }">
+                <label class="control-label">Profesional</label>
+                <div class="btn-group btn-block" dropdown>
+                  <button dropdownToggle type="button" class="minimal btn btn-block btn-default">
+                    {{ model.profesional ? model.profesional.nombre : 'Profesional'}}
+                  </button>
+                  <ul *dropdownMenu class="dropdown-menu" role="menu">
+                    <li role="menuitem" *ngFor="let profesional of profesionales">
+                      <a class="dropdown-item" (click)="handleProfesionalClick(profesional)">{{profesional.nombre}}</a>
+                    </li>
+                  </ul>
+                </div>
+                <div *ngIf="f.submitted && !model.profesional" class="help-block">Ingrese profesional</div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="comment" class="control-label">Observaciones</label>
+                <textarea id="comment" name="comment" #comment="ngModel" [(ngModel)]="model.observaciones"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="hora" class="control-label">Hora</label>
+                <timepicker name="hora" #hora="ngModel" [(ngModel)]="model.hora"></timepicker>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !model.fechaDesde }">
+                <label for="date" class="control-label">Fecha</label>
+                <!--<input name="date" #date="ngModel" [(ngModel)]="model.fechaDesde" class="form-control" id="date" type="date">-->
+                <div style="display:inline-block; min-height:290px;">
+                  <datepicker name="date" #date="ngModel" [(ngModel)]="model.fechaDesde"></datepicker>
+                </div>
+                <div *ngIf="f.submitted && !model.fechaDesde" class="help-block">Ingrese Fecha</div>
+              </div>
+            </div>
+          </div>
+          <div class="row text-right">
+            <button type="submit" class="btn btn-primary">
+              <span class="app-icon fa fa-save"></span>
+              Crear
+            </button>
+            <a (click)="f.reset()" class="btn btn-default">
+              <span class="app-icon-dark fa fa-times-circle"></span>
+              Limpiar
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,10 +1,5 @@
-<div class="col-sm-12">
-  <div class="app-header text-left">
-    <a [routerLink]="['/admin']" class="btn btn-block btn-link btn-back">
-      <span class="fa fa-arrow-left"></span>
-      VOLVER
-    </a>
-  </div>
+<div class="container-fluid">
+  <br>
   <form class="form-horizontal" name="f" (ngSubmit)="f.form.valid && crear()" #f="ngForm" novalidate>
 
     <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !model.centro }">

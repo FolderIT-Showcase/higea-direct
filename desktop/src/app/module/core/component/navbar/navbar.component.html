@@ -1,6 +1,6 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
 
-  <div class="container">
+  <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand" href="#">Turnero Web</a>
     </div>
@@ -27,33 +27,18 @@
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
-      <ul class="nav navbar-nav navbar-right">
+      <ul class="nav navbar-nav navbar-right text-center">
 
         <ul class="nav navbar-nav">
           <li (click)="logout()">
-            <a><span class="app-icon fa fa-power-off" aria-hidden="true"></span>Desconectarse</a>
+            <a><span class="app-icon fa fa-power-off" aria-hidden="true"></span>Salir</a>
           </li>
         </ul>
-
-
         <ul class="nav navbar-nav">
           <li>
-            <div dropdown>
-              <a dropdownToggle>
-                Button dropdown <span class="caret"></span>
-              </a>
-              <ul *dropdownMenu class="dropdown-menu" role="menu">
-                <li role="menuitem"><a class="dropdown-item" href="#">Action</a></li>
-                <li role="menuitem"><a class="dropdown-item" href="#">Another action</a></li>
-                <li role="menuitem"><a class="dropdown-item" href="#">Something else here</a></li>
-                <li class="divider dropdown-divider"></li>
-                <li role="menuitem"><a class="dropdown-item" href="#">Separated link</a>
-                </li>
-              </ul>
-            </div>
+            <a><span class="app-icon fa fa-user" aria-hidden="true"></span>Perfil</a>
           </li>
         </ul>
-
 
       </ul>
     </div>

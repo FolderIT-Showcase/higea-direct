@@ -23,6 +23,7 @@
         "../node_modules/angular2-busy/build/style/busy.css",
         "assets/css/bootstrap.min.css",
         "styles/styles.scss",
+        "styles/sidebar.scss",
         "styles/card.scss"
       ],
       "scripts": [

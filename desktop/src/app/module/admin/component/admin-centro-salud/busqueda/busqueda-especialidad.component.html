@@ -27,7 +27,8 @@
         </tbody>
       </table>
       <div class="col-md-6">
-        <pagination [boundaryLinks]="true" (pageChanged)="pageChanged($event)" [totalItems]="totalItems" [(ngModel)]="currentPage" class="pagination-sm"
+        <pagination [boundaryLinks]="true" (pageChanged)="pageChanged($event)" [totalItems]="totalItems"
+                    [(ngModel)]="currentPage" class="pagination-sm"
                     previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
       </div>
     </div>

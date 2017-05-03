@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {StoreService} from '../../../core/service/store.service';
-import {TurnoService} from '../../../core/service/turno.service';
-import {AlertService} from '../../../core/service/alert.service';
-import {Profesional} from '../../../core/domain/profesional';
-import {Especialidad} from '../../../core/domain/especialidad';
-import {AdminService} from '../../../core/service/admin.service';
+import {Especialidad} from '../../core/domain/especialidad';
+import {StoreService} from '../../core/service/store.service';
+import {Profesional} from '../../core/domain/profesional';
+import {TurnoService} from '../../core/service/turno.service';
+import {AlertService} from '../../core/service/alert.service';
+import {AdminService} from '../../core/service/admin.service';
 
 class Data {
   especialidad: Especialidad;
@@ -13,14 +13,15 @@ class Data {
 }
 
 @Component({
-  selector: 'app-alta-especialidad',
-  templateUrl: './alta-especialidad.component.html',
-  styleUrls: ['./alta-especialidad.component.scss']
+  selector: 'app-especialidades',
+  templateUrl: './especialidades.component.html',
+  styleUrls: ['./especialidades.component.scss']
 })
-export class AltaEspecialidadComponent implements OnInit {
+export class EspecialidadesComponent implements OnInit {
 
+  especialidades: Especialidad[] = [];
   model: Data = new Data();
-  especialidades: Especialidad;
+  // especialidades: Especialidad;
   profesionales: Profesional[] = [];
   especialidadName: string;
 
@@ -30,10 +31,8 @@ export class AltaEspecialidadComponent implements OnInit {
               private adminService: AdminService) {
   }
 
-  ngOnInit(): void {
-
-    // this.profesionales = this.storeService.get('profesionales');
-
+  ngOnInit() {
+    this.especialidades = this.storeService.get('especialidades');
   }
 
   crear(): void {
@@ -52,4 +51,5 @@ export class AltaEspecialidadComponent implements OnInit {
       });
     ;
   }
+
 }

@@ -2,28 +2,30 @@ import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {CommonModule} from '@angular/common';
 import {TimepickerModule} from 'ngx-bootstrap/timepicker';
-import {BsDropdownModule, DatepickerModule} from 'ngx-bootstrap';
+import {BsDropdownModule, DatepickerModule, ModalModule} from 'ngx-bootstrap';
 
-import {AdminHomeComponent} from "./component/admin-home.component";
-import {AltaTurnoComponent} from "./component/admin-turno/alta-turno.component";
-import {BajaTurnoComponent} from "./component/admin-turno/baja-turno.component";
-import {AlertService} from "../core/service/alert.service";
-import {BusquedaTurnoComponent} from "./component/admin-turno/busqueda/busqueda-turno.component";
-import {ModalModule} from "ngx-bootstrap/index";
-import {AltaEspecialidadComponent} from "./component/admin-especialidad/alta-especialidad.component";
-import {Store} from "../core/service/store";
-import {AdminService} from "../core/service/admin.service";
-import {ProfesionalResolveService} from "../core/service/resolve/profesionales-resolve.service";
-import {ApiService} from "../core/service/api.service";
-import {LoadingService} from "../core/service/loading.service";
-import {BusquedaProfesionalComponent} from "./component/admin-especialidad/busqueda/busqueda-profesional.component";
-import { PaginationModule } from 'ngx-bootstrap/pagination';
-import {PagerService} from "../core/service/pager.service";
-import {AltaCentroSaludComponent} from "./component/admin-centro-salud/alta-centro-salud-component";
-import {BusquedaEspecialidadComponent} from "./component/admin-centro-salud/busqueda/busqueda-especialidad-component";
-import {CentrosSaludResolveService} from "../core/service/resolve/centros-salud-resolve.service";
-import {EspecialidadResolveService} from "../core/service/resolve/especialidad-resolve.service";
-
+import {AdminHomeComponent} from './component/admin-home.component';
+import {AltaTurnoComponent} from './component/admin-turno/alta-turno.component';
+import {BajaTurnoComponent} from './component/admin-turno/baja-turno.component';
+import {BusquedaTurnoComponent} from './component/admin-turno/busqueda/busqueda-turno.component';
+import {AltaEspecialidadComponent} from './component/admin-especialidad/alta-especialidad.component';
+import {Store} from '../core/service/store';
+import {AdminService} from '../core/service/admin.service';
+import {ProfesionalResolveService} from '../core/service/resolve/profesionales-resolve.service';
+import {ApiService} from '../core/service/api.service';
+import {LoadingService} from '../core/service/loading.service';
+import {BusquedaProfesionalComponent} from './component/admin-especialidad/busqueda/busqueda-profesional.component';
+import {PaginationModule} from 'ngx-bootstrap/pagination';
+import {PagerService} from '../core/service/pager.service';
+import {AltaCentroSaludComponent} from './component/admin-centro-salud/alta-centro-salud-component';
+import {BusquedaEspecialidadComponent} from './component/admin-centro-salud/busqueda/busqueda-especialidad-component';
+import {CentrosSaludResolveService} from '../core/service/resolve/centros-salud-resolve.service';
+import {EspecialidadResolveService} from '../core/service/resolve/especialidad-resolve.service';
+import {SidebarComponent} from '../core/component/sidebar/sidebar.component';
+import { TurnosComponent } from './turnos/turnos.component';
+import { EspecialidadesComponent } from './especialidades/especialidades.component';
+import { CentrosSaludComponent } from './centros-salud/centros-salud.component';
+import { ProfesionalesComponent } from './profesionales/profesionales.component';
 
 
 @NgModule({
@@ -37,7 +39,7 @@ import {EspecialidadResolveService} from "../core/service/resolve/especialidad-r
     ModalModule.forRoot()
   ],
 
-  declarations:[
+  declarations: [
     AdminHomeComponent,
     AltaTurnoComponent,
     BajaTurnoComponent,
@@ -45,7 +47,12 @@ import {EspecialidadResolveService} from "../core/service/resolve/especialidad-r
     AltaEspecialidadComponent,
     BusquedaProfesionalComponent,
     AltaCentroSaludComponent,
-    BusquedaEspecialidadComponent
+    BusquedaEspecialidadComponent,
+    SidebarComponent,
+    TurnosComponent,
+    EspecialidadesComponent,
+    CentrosSaludComponent,
+    ProfesionalesComponent
   ],
   providers: [
     Store,
@@ -56,7 +63,6 @@ import {EspecialidadResolveService} from "../core/service/resolve/especialidad-r
     EspecialidadResolveService,
     LoadingService,
     PagerService
-
   ]
 
 })

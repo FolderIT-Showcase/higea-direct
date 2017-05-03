@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {Persona} from '../../../core/domain/persona';
-import {CentroSalud} from '../../../core/domain/centro-salud';
-import {Especialidad} from '../../../core/domain/especialidad';
-import {Profesional} from '../../../core/domain/profesional';
-import {StoreService} from '../../../core/service/store.service';
-import {TurnoService} from '../../../core/service/turno.service';
-import {AlertService} from '../../../core/service/alert.service';
+import {Turno} from '../../core/domain/turno';
+import {Persona} from '../../core/domain/persona';
+import {CentroSalud} from '../../core/domain/centro-salud';
+import {Especialidad} from '../../core/domain/especialidad';
+import {Profesional} from '../../core/domain/profesional';
+import {AlertService} from '../../core/service/alert.service';
+import {TurnoService} from '../../core/service/turno.service';
+import {StoreService} from '../../core/service/store.service';
 
 class Data {
   persona: Persona;
@@ -18,11 +19,13 @@ class Data {
 }
 
 @Component({
-  selector: 'app-alta-turno',
-  templateUrl: './alta-turno.component.html'
+  selector: 'app-turnos',
+  templateUrl: './turnos.component.html',
+  styleUrls: ['./turnos.component.scss']
 })
-export class AltaTurnoComponent implements OnInit {
+export class TurnosComponent implements OnInit {
 
+  turnos: Turno[] = [];
   model: Data = new Data();
   observaciones: string;
   centrosSalud: CentroSalud[] = [];
@@ -30,16 +33,13 @@ export class AltaTurnoComponent implements OnInit {
   profesionales: Profesional[] = [];
   personas: Persona[] = [];
 
-
   constructor(private storeService: StoreService, private turnoService: TurnoService, private alertService: AlertService) {
   }
 
-  ngOnInit(): void {
-
+  ngOnInit() {
     this.centrosSalud = this.storeService.get('centrosSalud');
     this.model.fechaDesde = new Date();
     this.model.hora = new Date();
-
   }
 
   handlePersonaClick(persona: Persona) {

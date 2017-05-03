@@ -29,8 +29,9 @@
         </tbody>
       </table>
       <div class="col-md-6">
-        <pagination [boundaryLinks]="true" (pageChanged)="pageChanged($event)" [totalItems]="totalItems" [(ngModel)]="currentPage" class="pagination-sm"
-                  previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
+        <pagination [boundaryLinks]="true" (pageChanged)="pageChanged($event)" [totalItems]="totalItems"
+                    [(ngModel)]="currentPage" class="pagination-sm"
+                    previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
       </div>
     </div>
 
@@ -46,7 +47,8 @@
             </button>
           </div>
           <div class="modal-body">
-            <label>¿Querés asignar a <strong>{{profesional.apellido}}</strong><strong>{{profesional.nombre}}</strong> a la especialidad?</label><br>
+            <label>¿Querés asignar a <strong>{{profesional.apellido}}</strong><strong>{{profesional.nombre}}</strong> a
+              la especialidad?</label><br>
             <div class="row">
               <div class="col-sm-8"></div>
               <div class="col-sm-4">

@@ -1,75 +1,78 @@
-<form class="form-horizontal" name="f" (ngSubmit)="buscar()" #f="ngForm" novalidate>
+<div class="container-fluid">
+  <br>
+  <form class="form-horizontal" name="f" (ngSubmit)="buscar()" #f="ngForm" novalidate>
 
-  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !model.centro }">
-    <label class="col-sm-3 control-label">Centro de Salud</label>
-    <div class="col-sm-5">
-      <div class="btn-group btn-block" dropdown>
-        <button dropdownToggle type="button" class="minimal btn btn-block btn-default">
-          {{ model.centro ? model.centro.nombre : 'Centro de Salud'}}
-        </button>
-        <ul *dropdownMenu class="dropdown-menu" role="menu">
-          <li role="menuitem" *ngFor="let centro of centrosSalud">
-            <a class="dropdown-item" (click)="handleCentroSaludClick(centro)">{{centro.nombre}}</a>
-          </li>
-        </ul>
-      </div>
-      <div *ngIf="f.submitted && !model.centro" class="help-block">Ingrese su Centro de Salud</div>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label class="col-sm-3 control-label">Especialidad</label>
-    <div class="col-sm-5">
-      <div class="btn-group btn-block" dropdown>
-        <button dropdownToggle type="button" class="minimal btn btn-block btn-default">
-          {{ model.especialidad ? model.especialidad.nombre : 'Especialidad'}}
-        </button>
-        <ul *dropdownMenu class="dropdown-menu" role="menu">
-          <li role="menuitem" *ngFor="let especialidad of especialidades">
-            <a class="dropdown-item" (click)="handleEspecialidadClick(especialidad)">{{especialidad.nombre}}</a>
-          </li>
-        </ul>
+    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !model.centro }">
+      <label class="col-sm-3 control-label">Centro de Salud</label>
+      <div class="col-sm-5">
+        <div class="btn-group btn-block" dropdown>
+          <button dropdownToggle type="button" class="minimal btn btn-block btn-default">
+            {{ model.centro ? model.centro.nombre : 'Centro de Salud'}}
+          </button>
+          <ul *dropdownMenu class="dropdown-menu" role="menu">
+            <li role="menuitem" *ngFor="let centro of centrosSalud">
+              <a class="dropdown-item" (click)="handleCentroSaludClick(centro)">{{centro.nombre}}</a>
+            </li>
+          </ul>
+        </div>
+        <div *ngIf="f.submitted && !model.centro" class="help-block">Ingrese su Centro de Salud</div>
       </div>
     </div>
-  </div>
 
-  <div class="form-group">
-    <label class="col-sm-3 control-label">Profesional</label>
-    <div class="col-sm-5">
-      <div class="btn-group btn-block" dropdown>
-        <button dropdownToggle type="button" class="minimal btn btn-block btn-default">
-          {{ model.profesional ? model.profesional.nombre : 'Profesional'}}
-        </button>
-        <ul *dropdownMenu class="dropdown-menu" role="menu">
-          <li role="menuitem" *ngFor="let profesional of profesionales">
-            <a class="dropdown-item" (click)="handleProfesionalClick(profesional)">{{profesional.nombre}}</a>
-          </li>
-        </ul>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Especialidad</label>
+      <div class="col-sm-5">
+        <div class="btn-group btn-block" dropdown>
+          <button dropdownToggle type="button" class="minimal btn btn-block btn-default">
+            {{ model.especialidad ? model.especialidad.nombre : 'Especialidad'}}
+          </button>
+          <ul *dropdownMenu class="dropdown-menu" role="menu">
+            <li role="menuitem" *ngFor="let especialidad of especialidades">
+              <a class="dropdown-item" (click)="handleEspecialidadClick(especialidad)">{{especialidad.nombre}}</a>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="form-group">
-    <label class="col-sm-3 control-label">Fecha</label>
-    <div class="col-sm-5">
-      <input name="fecha" #fecha="ngModel" [(ngModel)]="model.fecha" class="form-control" id="date" type="date">
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Profesional</label>
+      <div class="col-sm-5">
+        <div class="btn-group btn-block" dropdown>
+          <button dropdownToggle type="button" class="minimal btn btn-block btn-default">
+            {{ model.profesional ? model.profesional.nombre : 'Profesional'}}
+          </button>
+          <ul *dropdownMenu class="dropdown-menu" role="menu">
+            <li role="menuitem" *ngFor="let profesional of profesionales">
+              <a class="dropdown-item" (click)="handleProfesionalClick(profesional)">{{profesional.nombre}}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
-  </div>
 
-  <div class="form-group">
-    <div class="col-sm-3">
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Fecha</label>
+      <div class="col-sm-5">
+        <input name="fecha" #fecha="ngModel" [(ngModel)]="model.fecha" class="form-control" id="date" type="date">
+      </div>
     </div>
-    <div class="col-sm-5">
-      <button (click)="buscar(); false" class="btn btn-primary">
-        <span class="app-icon fa fa-search"></span>
-        Buscar
-      </button>
-      <a (click)="f.reset()" class="btn btn-default">
-        <span class="app-icon-dark fa fa-times-circle"></span>
-        Limpiar Busqueda
-      </a>
-    </div>
-  </div>
 
-</form>
-<app-admin-busqueda></app-admin-busqueda>
+    <div class="form-group">
+      <div class="col-sm-3">
+      </div>
+      <div class="col-sm-5">
+        <button (click)="buscar(); false" class="btn btn-primary">
+          <span class="app-icon fa fa-search"></span>
+          Buscar
+        </button>
+        <a (click)="f.reset()" class="btn btn-default">
+          <span class="app-icon-dark fa fa-times-circle"></span>
+          Limpiar Busqueda
+        </a>
+      </div>
+    </div>
+
+  </form>
+  <app-admin-busqueda></app-admin-busqueda>
+</div>

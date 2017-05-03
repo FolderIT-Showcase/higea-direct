@@ -2,14 +2,12 @@
 
   <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !model.centro }">
     <label class="col-sm-3 control-label">Ingrese la especialidad a crear</label>
-      <div class="col-sm-5">
-            <input class="btn-group btn-block">
-
-            </input>
-
-        <div *ngIf="f.submitted && !model.centro" class="help-block">Ingrese su Centro de Salud</div>
-      </div>
+    <div class="col-sm-5">
+      <input class="btn-group btn-block"></input>
+      <div *ngIf="f.submitted && !model.centro" class="help-block">Ingrese su Centro de Salud</div>
     </div>
+  </div>
+
   </div>
   <div class="form-group">
     <div class="col-sm-3">
@@ -25,4 +23,4 @@
       </a>
     </div>
   </div>
-  </form>
+</form>

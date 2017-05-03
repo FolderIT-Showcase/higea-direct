@@ -1,0 +1,79 @@
+<nav class="navbar navbar-default app-actionbar">
+  <div class="container-fluid">
+    <div class="navbar-right">
+      <button type="button" class="btn btn-success navbar-btn" (click)="staticModal.show()">
+        <span class="app-icon fa fa-plus"></span>
+        Agregar centro
+      </button>
+    </div>
+  </div>
+</nav>
+<div class="list-group">
+  <a class="list-group-item">
+    <h4 class="list-group-item-heading">Centros de Salud</h4>
+    <p class="list-group-item-text"> {{centros.length}} Centros de Salud Activos</p>
+  </a>
+  <div *ngIf="centros[0]">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th>Nombre</th>
+          <th width="1em"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let centro of centros">
+          <td>{{centro.nombre}}</td>
+          <td>
+            <a (click)="showModal(especialidad)" class="btn btn-success btn-block">
+              <span class="fa fa-ellipsis-h"></span>
+            </a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <div class="col-md-6">
+        <pagination [boundaryLinks]="true" (pageChanged)="pageChanged($event)" [totalItems]="totalItems"
+                    [(ngModel)]="currentPage" class="pagination-sm"
+                    previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" bsModal #staticModal="bs-modal" [config]="{backdrop: 'static'}"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Nuevo Centro de Salud</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <form class="form-horizontal" name="f" (ngSubmit)="f.form.valid && crear()" #f="ngForm">
+          <div class="row">
+            <div class="col-sm-10">
+              <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !especialidadName.valid }">
+                <input type="text" class="form-control" name="centroSaludName" [(ngModel)]="model.centroSaludName"
+                       #centroSaludName="ngModel" required/>
+                <div *ngIf="f.submitted && !centroSaludName.valid" class="help-block">Centro salud obligatoria</div>
+              </div>
+            </div>
+            <div class="col-sm-2 text-center">
+              <button class="btn btn-primary">Guardar</button>
+            </div>
+          </div>
+        </form>
+
+        <div class="row">
+          <app-especialidad-busqueda></app-especialidad-busqueda>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

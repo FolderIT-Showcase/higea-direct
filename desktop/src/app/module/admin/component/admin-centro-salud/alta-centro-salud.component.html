@@ -1,36 +1,26 @@
-<div class="container">
-  <div class="row">
-    <div class="absolute-center align-top">
-
-      <div class="app-header">
-        <h2>Nuevo Centro de Salud</h2>
-        <p>Aca podes crear un Centro de Salud</p>
+<div class="container-fluid">
+  <div class="app-header">
+    <h2>Nuevo Centro de Salud</h2>
+    <p>Aca podes crear un Centro de Salud</p>
+  </div>
+  <div class="col-sm-12">
+    <form name="form" (ngSubmit)="f.form.valid && crear()" #f="ngForm" novalidate>
+      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !centroSaludName.valid }">
+        <label for="centroSaludName">Centro Salud</label>
+        <input type="text" class="form-control" name="centroSaludName" [(ngModel)]="model.centroSaludName"
+               #centroSaludName="ngModel" required/>
+        <div *ngIf="f.submitted && !centroSaludName.valid" class="help-block">Centro salud obligatoria</div>
       </div>
 
-      <div class="col-sm-2"></div>
-      <div class="col-sm-8">
-
-
-        <form name="form" (ngSubmit)="f.form.valid && crear()" #f="ngForm" novalidate>
-          <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !centroSaludName.valid }">
-            <label for="centroSaludName">Centro Salud</label>
-            <input type="text" class="form-control" name="centroSaludName" [(ngModel)]="model.centroSaludName" #centroSaludName="ngModel" required />
-            <div *ngIf="f.submitted && !centroSaludName.valid" class="help-block">Centro salud obligatoria</div>
-          </div>
-
-          <div class="form-group">
-            <button class="btn btn-primary">Guardar</button>
-          </div>
-        </form>
-
-        <!--Ciere del form-->
+      <div class="form-group">
+        <button class="btn btn-primary">Guardar</button>
       </div>
-      <div class="col-sm-2"></div>
-      <br>
-      <div class="col-sm-12">
-        <app-especialidad-busqueda></app-especialidad-busqueda>
-      </div>
-    </div>
+    </form>
+    <!--Ciere del form-->
+  </div>
+  <br>
+  <div class="col-sm-12">
+    <app-especialidad-busqueda></app-especialidad-busqueda>
   </div>
 </div>
 

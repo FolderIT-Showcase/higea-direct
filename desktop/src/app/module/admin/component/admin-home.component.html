@@ -1,8 +1,8 @@
-<div class="container">
-
-  <a  [routerLink]="['/admin-turno']" class="btn btn-block btn-link"> <span class="fa fa-anchor solo" data-scroll>Crear Turno</span></a>
-  <a  [routerLink]="['/baja-turno']" class="btn btn-block btn-link" data-scroll><span class="fa fa-anchor solo" data-scroll>Dar de Baja Turno</span>o</a>
-  <a  [routerLink]="['/alta-especialidad']" class="btn btn-block btn-link" data-scroll><span class="fa fa-anchor solo" data-scroll>Alta Especialidad</span></a>
-  <a  [routerLink]="['/alta-centro-salud']" class="btn btn-block btn-link" data-scroll><span class="fa fa-anchor solo" data-scroll>Alta Centro Salud</span></a>
-
+<div class="row">
+  <app-sidebar></app-sidebar>
+  <div class="container-fluid">
+    <div class="side-body">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
 </div>

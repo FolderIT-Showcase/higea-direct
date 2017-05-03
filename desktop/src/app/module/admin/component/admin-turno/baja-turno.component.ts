@@ -18,16 +18,10 @@ class Data {
 
 @Component({
   selector: 'app-baja-turno',
-  templateUrl: './baja-turno.component.html',
-  styleUrls: ['./baja-turno.component.scss']
+  templateUrl: './baja-turno.component.html'
 })
 
 export class BajaTurnoComponent implements OnInit {
-
-  constructor(private router: Router,
-              private alertService: AlertService,
-              private storeService: StoreService, private turnoService: TurnoService) {
-  }
 
   model: Data = new Data();
   centrosSalud: CentroSalud[] = [];
@@ -35,6 +29,10 @@ export class BajaTurnoComponent implements OnInit {
   profesionales: Profesional[] = [];
   personas: Persona[] = [];
 
+  constructor(private router: Router,
+              private alertService: AlertService,
+              private storeService: StoreService, private turnoService: TurnoService) {
+  }
 
   ngOnInit(): void {
     const personaUser = this.storeService.get('integrantes');
@@ -63,7 +61,7 @@ export class BajaTurnoComponent implements OnInit {
   }
 
   buscar() {
-    console.log("Entro a buscar");
+    console.log('Entro a buscar');
     this.turnoService.getTurnos(this.model.centro, this.model.especialidad, this.model.profesional, this.model.fecha)
       .catch((error) => {
         console.log(error);

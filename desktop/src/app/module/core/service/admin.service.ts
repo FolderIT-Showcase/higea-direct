@@ -1,15 +1,15 @@
 import {Injectable} from '@angular/core';
-import {ApiService} from "./api.service";
-import {StoreService} from "./store.service";
-import {Especialidad} from "../domain/especialidad";
-import {AlertService} from "./alert.service";
-import {CentroSalud} from "../domain/centro-salud";
+import {ApiService} from './api.service';
+import {StoreService} from './store.service';
+import {Especialidad} from '../domain/especialidad';
+import {AlertService} from './alert.service';
+import {CentroSalud} from '../domain/centro-salud';
 
 @Injectable()
 export class AdminService {
 
   constructor(private api: ApiService,
-              private storeService: StoreService,private alertService:AlertService) {
+              private storeService: StoreService, private alertService: AlertService) {
   }
 
   getProfesionales() {
@@ -21,9 +21,9 @@ export class AdminService {
       .first().toPromise();
   }
 
-  saveEspecialidad(especialidad:Especialidad){
+  saveEspecialidad(especialidad: Especialidad) {
     const path = 'especialidad';
-    return this.api.put(path,especialidad)
+    return this.api.put(path, especialidad)
       .do(data => {
         //this.storeService.update('profesionales', data);
       })
@@ -39,9 +39,9 @@ export class AdminService {
       .first().toPromise();
   }
 
-  saveCentroSalud(centroSalud:CentroSalud){
+  saveCentroSalud(centroSalud: CentroSalud) {
     const path = 'centroSalud';
-    return this.api.put(path,centroSalud)
+    return this.api.put(path, centroSalud)
       .do(data => {
         //this.storeService.update('profesionales', data);
       })

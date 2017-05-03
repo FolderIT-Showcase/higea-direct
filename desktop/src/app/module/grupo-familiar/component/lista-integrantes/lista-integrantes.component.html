@@ -29,7 +29,7 @@
           <th>Integrante</th>
           <th>Fecha de Nacimiento</th>
           <th>Tipo y Nro. de Documento</th>
-          <th>Acciones</th>
+          <th class="text-right">Acciones</th>
         </tr>
         </thead>
         <tbody>
@@ -37,7 +37,7 @@
           <td>{{ currentPersona.nombre }} {{ currentPersona.apellido }}</td>
           <td>{{ currentPersona.fechaNacimiento | date: 'dd/MM/yyyy' }}</td>
           <td>{{ labels.tipoDocumentos(currentPersona.documento.tipo) }} {{currentPersona.documento.numero}}</td>
-          <td>
+          <td class="text-right">
             <a (click)="showModal('view', currentPersona)" class="btn btn-default">
               <span><i class="fa fa-user"></i> Ver</span>
             </a>

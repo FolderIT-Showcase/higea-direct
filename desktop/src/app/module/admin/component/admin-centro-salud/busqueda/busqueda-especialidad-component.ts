@@ -5,18 +5,12 @@ import {ModalDirective} from 'ngx-bootstrap';
 import {Subscription} from 'rxjs/Subscription';
 
 
-
 import {Router} from '@angular/router';
-import {AlertService} from "../../../../core/service/alert.service";
-import {StoreService} from "../../../../core/service/store.service";
-import {TurnoService} from "../../../../core/service/turno.service";
-import {Store} from "../../../../core/service/store";
-import {CentroSalud} from "../../../../core/domain/centro-salud";
-import {Turno} from "../../../../core/domain/turno";
-import {Persona} from "../../../../core/domain/persona";
-import {Profesional} from "../../../../core/domain/profesional";
-import {PagerService} from "../../../../core/service/pager.service";
-import {Especialidad} from "../../../../core/domain/especialidad";
+import {AlertService} from '../../../../core/service/alert.service';
+import {StoreService} from '../../../../core/service/store.service';
+import {Store} from '../../../../core/service/store';
+import {PagerService} from '../../../../core/service/pager.service';
+import {Especialidad} from '../../../../core/domain/especialidad';
 
 @Component({
   selector: 'app-especialidad-busqueda',
@@ -40,7 +34,7 @@ export class BusquedaEspecialidadComponent implements OnInit, OnDestroy {
   public totalItems: number = 0;
   public currentPage: number = 1;
   public smallnumPages: number = 0;
-  public maxSize:number = 10;
+  public maxSize: number = 10;
   // pager object
   pager: any = {};
   // paged items
@@ -64,9 +58,9 @@ export class BusquedaEspecialidadComponent implements OnInit, OnDestroy {
 
     // get current page of items
     this.pagedItems = this.especialidades.slice(this.pager.startIndex, this.pager.endIndex + 1);
-    this.currentPage = page ;
-    console.log("paginas"+this.pager.totalPages);
-    this.totalItems = this.pager.totalPages*this.maxSize;
+    this.currentPage = page;
+    console.log("paginas" + this.pager.totalPages);
+    this.totalItems = this.pager.totalPages * this.maxSize;
   }
 
   public pageChanged(event: any): void {
@@ -92,16 +86,21 @@ export class BusquedaEspecialidadComponent implements OnInit, OnDestroy {
   }
 
   public asignar(especialidad: Especialidad) {
-    console.log("Element "+especialidad);
-    let element =  this.especialidadesSelected.find(x => x.id === especialidad.id);
-    console.log("Element "+element);
-    if(element){this.hideModal(); return};
+    console.log("Element " + especialidad);
+    let element = this.especialidadesSelected.find(x => x.id === especialidad.id);
+    console.log("Element " + element);
+    if (element) {
+      this.hideModal();
+      return
+    }
+    ;
     this.especialidadesSelected.push(especialidad);
-    this.storeService.update('especialidadesSeleccionadas',  this.especialidadesSelected);
+    this.storeService.update('especialidadesSeleccionadas', this.especialidadesSelected);
     this.hideModal();
     this.showInfoModal();
 
   }
+
   public showModal(especialidad: Especialidad) {
 
     this.especialidad = especialidad;
@@ -109,9 +108,10 @@ export class BusquedaEspecialidadComponent implements OnInit, OnDestroy {
     this.isModalShown = true;
   }
 
-  public clean(){
+  public clean() {
     this.especialidadesSelected = [];
   }
+
   public hideModal() {
     this.autoShownModal.hide();
   }

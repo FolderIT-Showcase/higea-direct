@@ -22,8 +22,9 @@ $medium-light-blue: #5bc0de;
 
 html,
 body {
-  font-size: 16px;
+  font-size: 15px;
   height: 100%;
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 
 .app {
@@ -180,4 +181,14 @@ select.minimal {
   margin: 0.3em;
   font-size: 1em;
   color: black;
+}
+
+.list-group-item-text {
+  color: #1a1a1a;
+}
+
+.app-actionbar {
+  border: none;
+  box-shadow: 0 0 0 rgba(0,0,0,0);
+  margin-bottom: 0;
 }
