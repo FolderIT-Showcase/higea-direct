@@ -1,10 +1,6 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ModalDirective} from 'ngx-bootstrap';
-
-
 import {Subscription} from 'rxjs/Subscription';
-
-
 import {Router} from '@angular/router';
 import {AlertService} from '../../../../core/service/alert.service';
 import {StoreService} from '../../../../core/service/store.service';
@@ -86,24 +82,20 @@ export class BusquedaProfesionalComponent implements OnInit, OnDestroy {
   }
 
   public asignar(profesional: Profesional) {
-    console.log('Entro ' + profesional);
     const element = this.profesionalesSelected.find(x => x.id === profesional.id);
     console.log('Element ' + element);
     if (element) {
       this.hideModal();
       return
     }
-    ;
     this.profesionalesSelected.push(profesional);
     this.storeService.update('profesionalesSeleccionados', this.profesionalesSelected);
+    profesional.seleccionado = true;
     this.hideModal();
-    this.showInfoModal();
-
   }
 
   public showModal(profesional: Profesional) {
     this.profesional = profesional;
-
     this.isModalShown = true;
   }
 

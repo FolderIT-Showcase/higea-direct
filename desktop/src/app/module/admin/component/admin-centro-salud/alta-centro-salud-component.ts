@@ -25,7 +25,10 @@ export class AltaCentroSaludComponent implements OnInit {
   profesionales: Profesional[] = [];
   centroSaludName: string;
 
-  constructor(private storeService: StoreService, private turnoService: TurnoService, private alertService: AlertService, private adminService: AdminService) {
+  constructor(private storeService: StoreService,
+              private turnoService: TurnoService,
+              private alertService: AlertService,
+              private adminService: AdminService) {
   }
 
   ngOnInit(): void {
@@ -36,25 +39,23 @@ export class AltaCentroSaludComponent implements OnInit {
 
   crear(): void {
     this.especialidades = this.storeService.get('especialidadesSeleccionadas');
-    console.log("Especialidad nombre: " + this.model.centroSaludName);
-    let centroSalud = new CentroSalud();
+    console.log('Especialidad nombre: ' + this.model.centroSaludName);
+    const centroSalud = new CentroSalud();
     centroSalud.nombre = this.model.centroSaludName.toUpperCase();
     centroSalud.especialidad = this.especialidades;
 
     this.adminService.saveCentroSalud(centroSalud).then(data => {
-      //this.clearForm();
       this.alertService.success('Se guardo exitosamente');
       this.clean();
     })
       .catch((error) => {
         console.log(error);
-        this.alertService.success('Error');
+        this.alertService.error('Error al querer guardar el Centro de Salud');
       });
-    ;
   }
 
   clean() {
-    this.model.centroSaludName = "";
+    this.model.centroSaludName = '';
     this.especialidades = [];
   }
 }

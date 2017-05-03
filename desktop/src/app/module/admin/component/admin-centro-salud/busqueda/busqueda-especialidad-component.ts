@@ -1,10 +1,6 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ModalDirective} from 'ngx-bootstrap';
-
-
 import {Subscription} from 'rxjs/Subscription';
-
-
 import {Router} from '@angular/router';
 import {AlertService} from '../../../../core/service/alert.service';
 import {StoreService} from '../../../../core/service/store.service';
@@ -31,10 +27,10 @@ export class BusquedaEspecialidadComponent implements OnInit, OnDestroy {
   public isModalShown = false;
   public isInfoModalShown = false;
 
-  public totalItems: number = 0;
-  public currentPage: number = 1;
-  public smallnumPages: number = 0;
-  public maxSize: number = 10;
+  public totalItems = 0;
+  public currentPage = 1;
+  public smallnumPages = 0;
+  public maxSize = 10;
   // pager object
   pager: any = {};
   // paged items
@@ -59,7 +55,7 @@ export class BusquedaEspecialidadComponent implements OnInit, OnDestroy {
     // get current page of items
     this.pagedItems = this.especialidades.slice(this.pager.startIndex, this.pager.endIndex + 1);
     this.currentPage = page;
-    console.log("paginas" + this.pager.totalPages);
+    console.log('paginas' + this.pager.totalPages);
     this.totalItems = this.pager.totalPages * this.maxSize;
   }
 
@@ -86,25 +82,23 @@ export class BusquedaEspecialidadComponent implements OnInit, OnDestroy {
   }
 
   public asignar(especialidad: Especialidad) {
-    console.log("Element " + especialidad);
-    let element = this.especialidadesSelected.find(x => x.id === especialidad.id);
-    console.log("Element " + element);
+
+    console.log('Element ' + especialidad);
+    const element = this.especialidadesSelected.find(x => x.id === especialidad.id);
+    console.log('Element ' + element);
     if (element) {
       this.hideModal();
       return
     }
-    ;
     this.especialidadesSelected.push(especialidad);
     this.storeService.update('especialidadesSeleccionadas', this.especialidadesSelected);
     this.hideModal();
-    this.showInfoModal();
+    especialidad.seleccionado = true;
 
   }
 
   public showModal(especialidad: Especialidad) {
-
     this.especialidad = especialidad;
-
     this.isModalShown = true;
   }
 

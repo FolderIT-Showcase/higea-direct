@@ -13,7 +13,6 @@ export class AdminHomeComponent implements OnInit {
   constructor(private router: Router,
               private alertService: AlertService) {
   }
-
   ngOnInit(): void {
 
   }
