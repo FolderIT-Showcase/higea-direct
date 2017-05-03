@@ -71,7 +71,7 @@ export class PersonaService {
             personas.push(x);
           });
         }
-
+        localStorage.setItem('currentUser', JSON.stringify(userPersona.userAsociado));
         this.storeService.update('integrantes', personas);
       })
       .first().toPromise();

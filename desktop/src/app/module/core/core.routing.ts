@@ -6,7 +6,7 @@ import {RegisterSocialComponent} from '../auth/component/register-social/registe
 import {TurnoComponent} from '../turno/turno.component';
 import {GrupoFamiliarComponent} from '../grupo-familiar/grupo-familiar.component';
 import {UserActiveComponent} from '../auth/component/user-activate/user.active.component';
-import {AuthGuard} from './guard/auth.guard';
+import {AuthGuard} from './service/guard/auth.guard';
 import {PaisesResolveService} from './service/resolve/paises-resolve.service';
 import {CentrosSaludResolveService} from './service/resolve/centros-salud-resolve.service';
 import {IntegrantesResolveService} from './service/resolve/integrantes-resolve.service';
@@ -23,6 +23,7 @@ import {TurnosComponent} from '../admin/turnos/turnos.component';
 import {EspecialidadesComponent} from '../admin/especialidades/especialidades.component';
 import {CentrosSaludComponent} from '../admin/centros-salud/centros-salud.component';
 import {ProfesionalesComponent} from '../admin/profesionales/profesionales.component';
+import {AdminGuard} from './service/guard/admin.guard';
 
 const appRoutes: Routes = [
   {
@@ -37,7 +38,10 @@ const appRoutes: Routes = [
       },
       {
         path: 'home',
-        component: HomeComponent
+        component: HomeComponent,
+        resolve: {
+          integrantes: IntegrantesResolveService
+        }
       },
       {
         path: 'nuevo-turno',
@@ -61,6 +65,7 @@ const appRoutes: Routes = [
       {
         path: 'admin',
         component: AdminHomeComponent,
+        canActivate: [AdminGuard],
         children: [
           {
             path: '',

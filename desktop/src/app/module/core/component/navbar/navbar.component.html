@@ -19,7 +19,7 @@
         <a [routerLink]="['/grupo-familiar']">Grupo Familiar</a>
       </li>
     </ul>
-    <ul class="nav navbar-nav">
+    <ul class="nav navbar-nav" *ngIf="isAuth">
       <li>
         <a [routerLink]="['/admin']">Administrar turnos</a>
       </li>

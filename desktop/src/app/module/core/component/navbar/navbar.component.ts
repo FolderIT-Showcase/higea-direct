@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AppAuthService} from '../../../auth/auth.service';
 import {AlertService} from '../../service/alert.service';
 
@@ -7,10 +7,15 @@ import {AlertService} from '../../service/alert.service';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
+
+  isAuth = false;
 
   constructor(private auth: AppAuthService, private alert: AlertService) {
+  }
 
+  ngOnInit(): void {
+    this.isAuth = AppAuthService.isAdmin();
   }
 
   logout() {

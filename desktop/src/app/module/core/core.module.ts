@@ -12,7 +12,7 @@ import {AppAuthService} from '../auth/auth.service';
 import {ApiService} from './service/api.service';
 import {PersonaService} from './service/persona.service';
 import {AlertService} from './service/alert.service';
-import {AuthGuard} from './guard/auth.guard';
+import {AuthGuard} from './service/guard/auth.guard';
 import {AlertComponent} from './component/alert/alert.component';
 import {NavbarComponent} from './component/navbar/navbar.component';
 import {CentrosSaludResolveService} from './service/resolve/centros-salud-resolve.service';
@@ -23,6 +23,7 @@ import {LoadingService} from './service/loading.service';
 import {LoadingComponent} from './component/loading/loading.component';
 import {ModalModule} from 'ngx-bootstrap/modal';
 import {CoreComponent} from './core.component';
+import {AdminGuard} from './service/guard/admin.guard';
 
 @NgModule({
   imports: [
@@ -47,6 +48,7 @@ import {CoreComponent} from './core.component';
     PaisesResolveService,
     MetadataService,
     AuthGuard,
+    AdminGuard,
     AlertService,
     PersonaService,
     ApiService,
