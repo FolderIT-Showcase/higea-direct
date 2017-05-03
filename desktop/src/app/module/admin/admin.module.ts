@@ -22,10 +22,10 @@ import {BusquedaEspecialidadComponent} from './component/admin-centro-salud/busq
 import {CentrosSaludResolveService} from '../core/service/resolve/centros-salud-resolve.service';
 import {EspecialidadResolveService} from '../core/service/resolve/especialidad-resolve.service';
 import {SidebarComponent} from '../core/component/sidebar/sidebar.component';
-import { TurnosComponent } from './turnos/turnos.component';
-import { EspecialidadesComponent } from './especialidades/especialidades.component';
-import { CentrosSaludComponent } from './centros-salud/centros-salud.component';
-import { ProfesionalesComponent } from './profesionales/profesionales.component';
+import {TurnosComponent} from './turnos/turnos.component';
+import {EspecialidadesComponent} from './especialidades/especialidades.component';
+import {CentrosSaludComponent} from './centros-salud/centros-salud.component';
+import {ProfesionalesComponent} from './profesionales/profesionales.component';
 
 
 @NgModule({

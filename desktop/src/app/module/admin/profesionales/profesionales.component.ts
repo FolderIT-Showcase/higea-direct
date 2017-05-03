@@ -10,6 +10,7 @@ import {StoreService} from '../../core/service/store.service';
 export class ProfesionalesComponent implements OnInit {
 
   profesionales: Profesional[] = [];
+  model: any;
 
   constructor(private storeService: StoreService) {
   }
@@ -18,4 +19,9 @@ export class ProfesionalesComponent implements OnInit {
     this.profesionales = this.storeService.get('profesionales');
   }
 
+  crear() {
+
+  }
+
 }
+

@@ -60,7 +60,7 @@
           <label>Tipo de Documento</label>
           <div class="btn-group btn-block" dropdown>
             <button dropdownToggle type="button" class="minimal btn btn-block btn-default">
-              {{ model.tipoDocumento ? model.tipoDocumento : 'Tipo de Documento'}}
+              {{ model.tipoDocumento ? model.tipoDocumento : 'Tipo de Documento'}} <span class="caret"></span>
             </button>
             <ul *dropdownMenu class="dropdown-menu" role="menu">
               <li role="menuitem" *ngFor="let tipoDocumento of tipoDocumentos">
@@ -91,7 +91,7 @@
           <label>País de origen</label>
           <div class="btn-group btn-block" dropdown>
             <button dropdownToggle type="button" class="minimal btn btn-block btn-default">
-              {{ model.pais ? model.pais : 'País de origen'}}
+              {{ model.pais ? model.pais : 'País de origen'}} <span class="caret"></span>
             </button>
             <ul *dropdownMenu class="dropdown-menu" role="menu">
               <li role="menuitem" *ngFor="let pais of paises">
@@ -107,7 +107,7 @@
           <label>Género</label>
           <div class="btn-group btn-block" dropdown>
             <button dropdownToggle type="button" class="minimal btn btn-block btn-default">
-              {{ model.genero ? model.genero : 'Género'}}
+              {{ model.genero ? model.genero : 'Género'}} <span class="caret"></span>
             </button>
             <ul *dropdownMenu class="dropdown-menu" role="menu">
               <li role="menuitem" *ngFor="let genero of generos">

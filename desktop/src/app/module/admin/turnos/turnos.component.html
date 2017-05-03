@@ -79,7 +79,7 @@
                 <label class="control-label">Centro de Salud</label>
                 <div class="btn-group btn-block" dropdown>
                   <button dropdownToggle type="button" class="minimal btn btn-block btn-default">
-                    {{ model.centro ? model.centro.nombre : 'Centro de Salud'}}
+                    {{ model.centro ? model.centro.nombre : 'Centro de Salud'}} <span class="caret"></span>
                   </button>
                   <ul *dropdownMenu class="dropdown-menu" role="menu">
                     <li role="menuitem" *ngFor="let centro of centrosSalud">
@@ -95,7 +95,7 @@
                 <label class="control-label">Especialidad</label>
                 <div class="btn-group btn-block" dropdown>
                   <button dropdownToggle type="button" class="minimal btn btn-block btn-default">
-                    {{ model.especialidad ? model.especialidad.nombre : 'Especialidad'}}
+                    {{ model.especialidad ? model.especialidad.nombre : 'Especialidad'}} <span class="caret"></span>
                   </button>
                   <ul *dropdownMenu class="dropdown-menu" role="menu">
                     <li role="menuitem" *ngFor="let especialidad of especialidades">
@@ -115,7 +115,7 @@
                 <label class="control-label">Profesional</label>
                 <div class="btn-group btn-block" dropdown>
                   <button dropdownToggle type="button" class="minimal btn btn-block btn-default">
-                    {{ model.profesional ? model.profesional.nombre : 'Profesional'}}
+                    {{ model.profesional ? model.profesional.nombre : 'Profesional'}} <span class="caret"></span>
                   </button>
                   <ul *dropdownMenu class="dropdown-menu" role="menu">
                     <li role="menuitem" *ngFor="let profesional of profesionales">

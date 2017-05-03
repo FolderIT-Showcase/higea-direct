@@ -15,14 +15,14 @@
   height: 100%;
   border-right: 1px solid $gray-3;
 
-  .sidebar-item{
+  .sidebar-item {
     .active {
       color: white !important;
       background-color: $gray-3;
     }
   }
 
-  .navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus {
+  .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
     color: $green;
     background-color: $gray-2;
   }
@@ -31,7 +31,7 @@
 
 .side-menu .navbar {
   border: none;
-  box-shadow: 0 0 0 rgba(0,0,0,0);
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
 }
 
 .side-menu .navbar-header {
@@ -313,7 +313,7 @@
   }
 }
 
-.side-menu-container{
+.side-menu-container {
   padding-left: 1em;
   padding-top: 1em;
 }

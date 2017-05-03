@@ -57,8 +57,8 @@
         <form class="form-horizontal" name="f" (ngSubmit)="f.form.valid && crear()" #f="ngForm">
           <div class="row">
             <div class="col-sm-10">
-              <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !especialidadName.valid }">
-                <input type="text" class="form-control" name="centroSaludName" [(ngModel)]="model.centroSaludName"
+              <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !centroSaludName.valid }">
+                <input id="centroSaludName" type="text" class="form-control" name="centroSaludName" [(ngModel)]="model.centroSaludName"
                        #centroSaludName="ngModel" required/>
                 <div *ngIf="f.submitted && !centroSaludName.valid" class="help-block">Centro salud obligatoria</div>
               </div>
