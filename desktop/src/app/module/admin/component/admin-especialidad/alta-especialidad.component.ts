@@ -40,10 +40,10 @@ export class AltaEspecialidadComponent implements OnInit {
     this.profesionales  = this.storeService.get('profesionalesSeleccionados');
     console.log("Especialidad nombre: "+this.model.especialidadName);
     let especialidad = new Especialidad();
-    especialidad.nombre = this.model.especialidadName;
+    especialidad.nombre = this.model.especialidadName.toUpperCase();
     especialidad.profesional = this.profesionales;
     console.log("Especialidad: "+JSON.stringify(especialidad));
-    this.adminService.saveProfesionales(especialidad).then(data => {
+    this.adminService.saveEspecialidad(especialidad).then(data => {
         //this.clearForm();
         this.alertService.success('Se guardo exitosamente');
       })

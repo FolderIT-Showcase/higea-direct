@@ -51,10 +51,12 @@ public class MetadataService {
 
     public List<CentroSalud> findAllCentroSalud() {return centroSaludRepository.findAllByOrderByNombreAsc();}
 
-    public Iterable<Especialidad> findAllEspecialidad() {return especialidadRepository.findAllByOrderByNombreAsc();}
+    public List<Especialidad> findAllEspecialidad() {return especialidadRepository.findAllByOrderByNombreAsc();}
 
     public Especialidad saveEspecialidad(Especialidad especialidad) {return especialidadRepository.save(especialidad);}
 
     public List<Profesional> findAllProfesional() {return profesionalRepository.findAllByOrderByApellidoAsc();}
+
+    public CentroSalud saveCentroSalud(CentroSalud centroSalud) {return centroSaludRepository.save(centroSalud);}
 
 }

@@ -19,6 +19,10 @@ import {LoadingService} from "../core/service/loading.service";
 import {BusquedaProfesionalComponent} from "./component/admin-especialidad/busqueda/busqueda-profesional.component";
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import {PagerService} from "../core/service/pager.service";
+import {AltaCentroSaludComponent} from "./component/admin-centro-salud/alta-centro-salud-component";
+import {BusquedaEspecialidadComponent} from "./component/admin-centro-salud/busqueda/busqueda-especialidad-component";
+import {CentrosSaludResolveService} from "../core/service/resolve/centros-salud-resolve.service";
+import {EspecialidadResolveService} from "../core/service/resolve/especialidad-resolve.service";
 
 
 
@@ -39,13 +43,17 @@ import {PagerService} from "../core/service/pager.service";
     BajaTurnoComponent,
     BusquedaTurnoComponent,
     AltaEspecialidadComponent,
-    BusquedaProfesionalComponent
+    BusquedaProfesionalComponent,
+    AltaCentroSaludComponent,
+    BusquedaEspecialidadComponent
   ],
   providers: [
     Store,
     AdminService,
     ApiService,
     ProfesionalResolveService,
+    CentrosSaludResolveService,
+    EspecialidadResolveService,
     LoadingService,
     PagerService
 

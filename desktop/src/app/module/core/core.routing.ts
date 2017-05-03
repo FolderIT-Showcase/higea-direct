@@ -19,6 +19,8 @@ import {AltaTurnoComponent} from "../admin/component/admin-turno/alta-turno.comp
 import {BajaTurnoComponent} from "../admin/component/admin-turno/baja-turno.component";
 import {AltaEspecialidadComponent} from "../admin/component/admin-especialidad/alta-especialidad.component";
 import {ProfesionalResolveService} from "./service/resolve/profesionales-resolve.service";
+import {AltaCentroSaludComponent} from "../admin/component/admin-centro-salud/alta-centro-salud-component";
+import {EspecialidadResolveService} from "./service/resolve/especialidad-resolve.service";
 
 
 
@@ -92,6 +94,13 @@ const appRoutes: Routes = [
     component: AltaEspecialidadComponent,
     resolve: {
       profesionales: ProfesionalResolveService
+    }
+  },
+  {
+    path: 'alta-centro-salud',
+    component: AltaCentroSaludComponent,
+    resolve: {
+      especialidades: EspecialidadResolveService
     }
   },
 

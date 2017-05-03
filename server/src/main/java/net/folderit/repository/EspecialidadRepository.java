@@ -5,10 +5,12 @@ import net.folderit.domain.Especialidad;
 import org.bouncycastle.util.Iterable;
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.List;
+
 /**
  * Created by gheng on 25/4/2017.
  */
 public interface EspecialidadRepository extends CrudRepository<Especialidad, Long> {
 
-    Iterable<Especialidad> findAllByOrderByNombreAsc();
+    List<Especialidad> findAllByOrderByNombreAsc();
 }
