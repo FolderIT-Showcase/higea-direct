@@ -71,6 +71,8 @@ export class PersonaService {
             personas.push(x);
           });
         }
+        const mUser: User = JSON.parse(localStorage.getItem('currentUser'));
+        userPersona.userAsociado.token = mUser.token;
         localStorage.setItem('currentUser', JSON.stringify(userPersona.userAsociado));
         this.storeService.update('integrantes', personas);
       })

@@ -5,23 +5,23 @@
       <a class="navbar-brand" href="#">Turnero Web</a>
     </div>
     <ul class="nav navbar-nav">
-      <li>
-        <a [routerLink]="['/nuevo-turno']">Sacar Turno</a>
+      <li class='sidebar-item'>
+        <a routerLinkActive="active" [routerLink]="['/nuevo-turno']">Sacar Turno</a>
       </li>
     </ul>
     <ul class="nav navbar-nav">
-      <li>
-        <a [routerLink]="['/mis-turnos']">Mis Turnos</a>
+      <li class='sidebar-item'>
+        <a routerLinkActive="active" [routerLink]="['/mis-turnos']">Mis Turnos</a>
       </li>
     </ul>
     <ul class="nav navbar-nav">
-      <li>
-        <a [routerLink]="['/grupo-familiar']">Grupo Familiar</a>
+      <li class='sidebar-item'>
+        <a routerLinkActive="active" [routerLink]="['/grupo-familiar']">Grupo Familiar</a>
       </li>
     </ul>
     <ul class="nav navbar-nav" *ngIf="isAuth">
-      <li>
-        <a [routerLink]="['/admin']">Administrar turnos</a>
+      <li class='sidebar-item'>
+        <a routerLinkActive="active" [routerLink]="['/admin']">Administrar turnos</a>
       </li>
     </ul>
 
@@ -35,7 +35,7 @@
           </li>
         </ul>
         <ul class="nav navbar-nav">
-          <li>
+          <li class='sidebar-item'>
             <a><span class="app-icon fa fa-user" aria-hidden="true"></span>Perfil</a>
           </li>
         </ul>
