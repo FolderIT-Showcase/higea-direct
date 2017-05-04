@@ -17,7 +17,8 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let profesional of pagedItems"  [ngStyle]="{'background-color': profesional.seleccionado? '#67c18c' : '','color': profesional.seleccionado? 'white' : ''}" >
+        <tr *ngFor="let profesional of pagedItems"
+            [ngStyle]="{'background-color': profesional.seleccionado? '#67c18c' : '','color': profesional.seleccionado? 'white' : ''}">
           <td>{{profesional.apellido}}</td>
           <td>{{profesional.nombre }}</td>
           <td>

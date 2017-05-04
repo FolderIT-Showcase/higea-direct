@@ -68,7 +68,7 @@ export class TurnoService {
   }
 
   saveTurno(centro: CentroSalud, especialidad: Especialidad, profesional: Profesional, fecha: Date, hora: Date, obs: string) {
-    const path = 'turno'; // TODO: a ser definido
+    const path = 'turno';
 
     const turno = new Turno();
     turno.fecha = fecha;

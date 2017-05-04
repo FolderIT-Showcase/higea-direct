@@ -10,6 +10,7 @@ import {Persona} from '../../../core/domain/persona';
 import {Documento} from '../../../core/domain/documento';
 import {StoreService} from '../../../core/service/store.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {LoadingService} from '../../../core/service/loading.service';
 
 class Data {
   nombre = '';
@@ -40,6 +41,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   captcha: string = null;
 
   constructor(private fb: FormBuilder,
+              private loadingService: LoadingService,
               private router: Router,
               private personaService: PersonaService,
               private alertService: AlertService,
@@ -119,14 +121,17 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   savePersona(persona: Persona) {
+    this.loadingService.start();
     this.personaService.create(persona)
       .then(() => {
         this.router.navigate(['/login'])
           .then(() => {
+            this.loadingService.finish();
             this.alertService.success('Registro Exitoso');
           });
       })
       .catch(error => {
+        this.loadingService.finish();
         this.alertService.error('Hubo un error inesperado, vuelva a intentarlo más tarde');
       });
   }

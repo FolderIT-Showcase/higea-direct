@@ -16,7 +16,8 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let especialidad of pagedItems" [ngStyle]="{'background-color': especialidad.seleccionado? '#67c18c' : '','color': especialidad.seleccionado? 'white' : ''}">
+        <tr *ngFor="let especialidad of pagedItems"
+            [ngStyle]="{'background-color': especialidad.seleccionado? '#67c18c' : '','color': especialidad.seleccionado? 'white' : ''}">
           <td>{{especialidad.nombre }}</td>
           <td>
             <a (click)="showModal(especialidad)" class="btn btn-success btn-block">

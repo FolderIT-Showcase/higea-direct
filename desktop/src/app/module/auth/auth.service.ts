@@ -9,6 +9,24 @@ import {AlertService} from '../core/service/alert.service';
 
 @Injectable()
 export class AppAuthService {
+
+  static getRole(): string {
+    const user: User = JSON.parse(localStorage.getItem('currentUser'));
+    if (!user || !user.roles) {
+      return 'ROLE_USER';
+    }
+    const role = user.roles[0].authority;
+    if (role) {
+      return role;
+    }
+    return 'ROLE_USER'
+  }
+
+  static isAdmin() {
+    const role: string = AppAuthService.getRole();
+    return role === 'ROLE_ADMIN';
+  }
+
   constructor(private api: ApiService,
               private storeService: StoreService,
               private router: Router,
@@ -60,6 +78,7 @@ export class AppAuthService {
     const path = 'users/external?externalId=' + id + '&type=' + type;
     return this.api.get(path).first().toPromise();
   }
+
 
   normalLogin(user: User, type: string = '') {
     const path = 'login';

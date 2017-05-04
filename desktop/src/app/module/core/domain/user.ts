@@ -1,4 +1,7 @@
-import {Roles} from "./roles";
+
+
+import {Roles} from './roles';
+
 export class User {
   id?: number;
   externalId?: string;
@@ -8,5 +11,6 @@ export class User {
   token: string;
   email: string;
   type: string;
-  roles:Roles[];
+  roles: Roles[];
+
 }

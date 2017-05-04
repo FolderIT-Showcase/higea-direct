@@ -9,6 +9,7 @@ import {User} from '../../../core/domain/user';
 import {Persona} from '../../../core/domain/persona';
 import {Documento} from '../../../core/domain/documento';
 import {StoreService} from '../../../core/service/store.service';
+import {LoadingService} from '../../../core/service/loading.service';
 
 class Datos {
   nombre = '';
@@ -35,6 +36,7 @@ export class RegisterSocialComponent implements OnInit {
   captcha: string = null;
 
   constructor(private router: Router,
+              private loadingService: LoadingService,
               private alertService: AlertService,
               private personaService: PersonaService,
               private storeService: StoreService) {
@@ -77,39 +79,42 @@ export class RegisterSocialComponent implements OnInit {
     persona.userAsociado = user;
 
     if (persona.documento.tipo === TipoDocumentoEnum.dni) {
-      const dto = {
-        documento: persona.documento.numero.toString(),
+
+      const doc = {
+        documento: persona.documento.numero,
         nombre: persona.nombre,
         apellido: persona.apellido,
         genero: persona.genero.slice(0, 1)
       };
 
-      this.personaService.validateDni(dto)
-        .then(data => {
-          // this.save(persona);
+      this.personaService.validateDni(doc)
+        .then(() => {
+          this.savePersona(persona);
         })
         .catch(error => {
-          this.alertService.error('Los datos de la persona no son válidos');
+          this.alertService.error('Sus datos no son válidos, por favor revíselos.');
           console.error(error);
         });
 
       return;
-    } else {
-      // this.save(persona);
     }
 
-
+    this.savePersona(persona);
   }
 
-  private save(persona: Persona): void {
+  savePersona(persona: Persona) {
+    this.loadingService.start();
     this.personaService.create(persona)
-      .then(data => {
-        // this.router.navigate(['/login']);
-        this.alertService.success('Registro Exitoso');
+      .then(() => {
+        this.router.navigate(['/login'])
+          .then(() => {
+            this.loadingService.finish();
+            this.alertService.success('Registro Exitoso');
+          });
       })
       .catch(error => {
-        this.alertService.error(error);
-        this.loading = false;
+        this.loadingService.finish();
+        this.alertService.error('Hubo un error inesperado, vuelva a intentarlo más tarde');
       });
   }
 

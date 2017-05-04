@@ -33,7 +33,7 @@ export class CentrosSaludComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.centros = this.storeService.get('centrosSalud')
+    this.centros = this.storeService.get('centrosSalud');
   }
 
   crear(): void {

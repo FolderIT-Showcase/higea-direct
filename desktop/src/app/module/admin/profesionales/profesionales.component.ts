@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit,ViewChild} from '@angular/core';
 import {Profesional} from '../../core/domain/profesional';
 import {StoreService} from '../../core/service/store.service';
 import {AlertService} from "../../core/service/alert.service";
@@ -7,6 +7,7 @@ import {Store} from "../../core/service/store";
 import {PagerService} from "../../core/service/pager.service";
 import {Router} from '@angular/router';
 import {Subscription} from "rxjs/Subscription";
+import {ModalDirective} from "ngx-bootstrap/index";
 
 
 class Data {
@@ -20,6 +21,7 @@ class Data {
 })
 export class ProfesionalesComponent implements OnInit {
 
+  @ViewChild('autoShownModal') public autoShownModal: ModalDirective;
   model: Data = new Data();
   especialidadName: string;
   especialidadSurname: string;
@@ -57,7 +59,7 @@ export class ProfesionalesComponent implements OnInit {
       })
       .catch((error) => {
         console.log(error);
-        this.alertService.error('Error al querer guardar la Especialidad');
+        this.alertService.error('Error al querer guardar el Profesional');
       });
 
   }
@@ -66,7 +68,7 @@ export class ProfesionalesComponent implements OnInit {
 
   }
 
-  ///dsfdsfasdf
+
 
   public setPage(page: number): void {
     if (page < 1 || page > this.pager.totalPages) {
@@ -101,5 +103,19 @@ export class ProfesionalesComponent implements OnInit {
 
   }
 
+  public hideModal() {
+    this.autoShownModal.hide();
+  }
+
+  public deleteProfesional(profesional: Profesional) {
+    const profesionales:Profesional[] = this.storeService.get('profesionales');
+    for (const x of profesionales) {
+      if (x.id === profesional.id) {
+        this.storeService.findAndDelete('profesionales', x.id);
+        break;
+      }
+    }
+  }
 
 }
+
