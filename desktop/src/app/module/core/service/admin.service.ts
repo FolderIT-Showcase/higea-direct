@@ -5,6 +5,7 @@ import {Especialidad} from '../domain/especialidad';
 import {AlertService} from './alert.service';
 import {CentroSalud} from '../domain/centro-salud';
 import {Profesional} from '../domain/profesional';
+import {Turno} from "../domain/turno";
 
 @Injectable()
 export class AdminService {
@@ -49,6 +50,16 @@ export class AdminService {
       .first().toPromise();
   }
 
+
+  updateCentroSalud(centroSalud: CentroSalud) {
+    const path = 'centroSalud';
+    return this.api.put(path, centroSalud)
+      .do(data => {
+        // this.storeService.update('profesionales', data);
+      })
+      .first().toPromise();
+  }
+
   saveProfesional(profesional: Profesional) {
     const path = 'profesional';
     return this.api.put(path, profesional)
@@ -61,6 +72,42 @@ export class AdminService {
   updateProfesional(profesional: Profesional) {
     const path = 'profesional';
     return this.api.put(path, profesional)
+      .do(data => {
+        // this.storeService.update('profesionales', data);
+      })
+      .first().toPromise();
+  }
+
+  deleteProfesional(profesional: Profesional) {
+    const path = 'profesional';
+    return this.api.delete(path+'?id='+profesional.id)
+      .do(data => {
+        // this.storeService.update('profesionales', data);
+      })
+      .first().toPromise();
+  }
+
+  deleteCentroSalud(centro: CentroSalud) {
+    const path = 'centroSalud';
+    return this.api.delete(path+'?id='+centro.id)
+      .do(data => {
+        // this.storeService.update('profesionales', data);
+      })
+      .first().toPromise();
+  }
+
+  getTurnos() {
+    const path = 'turno';
+    return this.api.get(path)
+      .do(data => {
+        this.storeService.update('turnos', data);
+      })
+      .first().toPromise();
+  }
+
+  deleteTurno(turno: Turno) {
+    const path = 'turno';
+    return this.api.delete(path+'?id='+turno.id+"&desactivate=true")
       .do(data => {
         // this.storeService.update('profesionales', data);
       })

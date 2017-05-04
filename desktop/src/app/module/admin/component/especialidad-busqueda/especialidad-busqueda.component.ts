@@ -91,7 +91,7 @@ export class EspecialidadBusquedaComponent implements OnInit, OnDestroy {
     }
     this.especialidadesSelected.push(especialidad);
     this.storeService.update('especialidadesSeleccionadas', this.especialidadesSelected);
-    this.hideModal();
+
     especialidad.seleccionado = true;
 
   }

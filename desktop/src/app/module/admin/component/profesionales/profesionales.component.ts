@@ -99,6 +99,7 @@ export class ProfesionalesComponent implements OnInit {
     const profesionales: Profesional[] = this.storeService.get('profesionales');
     for (const x of profesionales) {
       if (x.id === this.profesional.id) {
+        this.delete(x);
         this.storeService.findAndDelete('profesionales', x.id);
         break;
       }
@@ -161,6 +162,8 @@ export class ProfesionalesComponent implements OnInit {
       });
   }
 
+
+
   submitUpdateForm(value: Data) {
     console.log(value);
     if (value.nombre) {
@@ -179,6 +182,16 @@ export class ProfesionalesComponent implements OnInit {
       .catch((error) => {
         console.log(error);
         this.alertService.error('Error al querer guardar el Profesional');
+      });
+  }
+
+  delete(profesional: Profesional) {
+    this.adminService.deleteProfesional(profesional).then(data => {
+        this.alertService.success('Se borro exitosamente');
+      })
+      .catch((error) => {
+        console.log("Error"+ error);
+        this.alertService.error(error.body);
       });
   }
 

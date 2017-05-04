@@ -23,6 +23,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {EspecialidadBusquedaComponent} from './component/especialidad-busqueda/especialidad-busqueda.component';
 import {ProfesionalBusquedaComponent} from './component/profesional-busqueda/profesional-busqueda.component';
 import {TurnoBusquedaComponent} from './component/turno-busqueda/turno-busqueda.component';
+import {TurnoResolveService} from "../core/service/resolve/turno-resolve.service";
 
 @NgModule({
   imports: [
@@ -57,7 +58,8 @@ import {TurnoBusquedaComponent} from './component/turno-busqueda/turno-busqueda.
     CentrosSaludResolveService,
     EspecialidadResolveService,
     LoadingService,
-    PagerService
+    PagerService,
+    TurnoResolveService
   ]
 
 })

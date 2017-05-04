@@ -20,6 +20,7 @@ import {EspecialidadesComponent} from '../admin/component/especialidades/especia
 import {CentrosSaludComponent} from '../admin/component/centros-salud/centros-salud.component';
 import {ProfesionalesComponent} from '../admin/component/profesionales/profesionales.component';
 import {AdminGuard} from './service/guard/admin.guard';
+import {TurnoResolveService} from "./service/resolve/turno-resolve.service";
 
 const appRoutes: Routes = [
   {
@@ -71,7 +72,8 @@ const appRoutes: Routes = [
           {
             path: 'turno', component: TurnosComponent,
             resolve: {
-              centrosSalud: CentrosSaludResolveService
+              centrosSalud: CentrosSaludResolveService,
+              turnos: TurnoResolveService
             }
           },
           {

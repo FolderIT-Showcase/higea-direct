@@ -1,5 +1,6 @@
 package net.folderit.service;
 
+import net.folderit.domain.Persona;
 import net.folderit.domain.Turno;
 import net.folderit.dto.FilterDto;
 import net.folderit.repository.PersonaRepository;
@@ -49,4 +50,5 @@ public class TurnoService {
     public Turno findById(Long id) {
         return turnoRepository.findOne(id);
     }
+    public Iterable<Turno> findAll(){return  turnoRepository.findAll();};
 }

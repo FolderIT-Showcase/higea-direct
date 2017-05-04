@@ -20,7 +20,7 @@
             [ngStyle]="{'background-color': especialidad.seleccionado? '#67c18c' : '','color': especialidad.seleccionado? 'white' : ''}">
           <td>{{especialidad.nombre }}</td>
           <td>
-            <a (click)="showModal(especialidad)" class="btn btn-success btn-block">
+            <a (click)="asignar(especialidad)" class="btn btn-success btn-block">
               <span class="fa  fa-arrow-circle-right"></span>
             </a>
           </td>
@@ -35,52 +35,8 @@
     </div>
 
 
-    <div *ngIf="isModalShown" [config]="{ show: true }" (onHidden)="onHidden()" bsModal #autoShownModal="bs-modal"
-         class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title pull-left"><strong>Confirmación</strong></h4>
-            <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <label>¿Querés asignar a <strong>{{especialidad.nombre}}</strong> al centro de salud?</label><br>
-            <div class="row">
-              <div class="col-sm-8"></div>
-              <div class="col-sm-4">
-                <div class="btn-group btn-group-justified">
-                  <a (click)="asignar(especialidad)" class="btn btn-primary">SI</a>
-                  <a (click)="hideModal()" class="btn btn-default">NO</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <div *ngIf="isInfoModalShown" [config]="{ show: true }" (onHidden)="onHidden()" bsModal #infoModal="bs-modal"
-         class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title pull-left"><strong>Confirmación</strong></h4>
-            <button type="button" class="close pull-right" aria-label="Close" (click)="hideInfoModal()">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <label>Se agrego la especialidad</label><br>
 
-            <div class="text-right">
-              <button (click)="hideInfoModal()" class="btn btn-default">CERRAR</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
   </div>
 </div>

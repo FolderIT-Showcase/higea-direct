@@ -31,18 +31,21 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let turno of turnos">
+        <tr *ngFor="let turno of pagedItems">
           <td>{{turno.dia}}</td>
-          <td>{{turno.fecha}}</td>
-          <td>{{turno.hora}}</td>
-          <td>{{centro.nombre}}</td>
+          <td>{{turno.fecha | date: 'dd/MM/yyyy'}}</td>
+          <td>{{turno.hora | date: 'HH:mm'}}</td>
+          <td>{{turno.centroSalud.nombre}}</td>
           <td>{{turno.especialidad.nombre}}</td>
           <td>{{turno.profesional.nombre}}</td>
           <td>{{turno.observaciones}}</td>
-          <td>
-            <a (click)="showModal(turno)" class="btn btn-success btn-block">
-              <span class="fa fa-ellipsis-h"></span>
-            </a>
+          <td class="text-right">
+            <div class="btn-group">
+              <a (click)="showDeleteModal(turno)" class="btn btn-danger btn-md">
+                <span class="fa  fa-times"></span>
+              </a>
+
+            </div>
           </td>
         </tr>
         </tbody>
@@ -167,3 +170,17 @@
     </div>
   </div>
 </div>
+
+
+<!-- MODAL de BAJA-->
+<app-modal [title]="'Confirmación'" (outModal)="handleDeleteModal($event)">
+  <label>¿Querés dar de baja a este Turno?</label>
+  <br>
+  <!--<label><strong>{{turno.nombre}}</strong>
+  </label>-->
+  <div class="text-right">
+    <button type="button" class="btn btn-danger" (click)="deleteTurno()">
+      ELIMINAR
+    </button>
+  </div>
+</app-modal>

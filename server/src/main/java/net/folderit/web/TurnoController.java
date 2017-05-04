@@ -38,6 +38,12 @@ public class TurnoController {
         return new ResponseEntity<>((List<Turno>) turnos, HttpStatus.OK);
     }
 
+    @GetMapping("/turno")
+    public ResponseEntity<Collection<Turno>> getAll() {
+        Iterable<Turno> turnos = turnoService.findAll();
+        return new ResponseEntity<>((List<Turno>) turnos, HttpStatus.OK);
+    }
+
     @PutMapping("/turno")
     public ResponseEntity<Turno> saveTurno(@RequestBody Turno turno) {
         Turno result = turnoService.saveTurno(turno);

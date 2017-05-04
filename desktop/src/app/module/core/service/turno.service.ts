@@ -71,6 +71,7 @@ export class TurnoService {
     const path = 'turno';
 
     const turno = new Turno();
+    turno.dia = fecha;
     turno.fecha = fecha;
     turno.hora = hora;
     turno.centroSalud = centro;

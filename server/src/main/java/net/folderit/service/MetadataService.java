@@ -61,4 +61,8 @@ public class MetadataService {
 
     public Profesional saveProfesional(Profesional profesional){return  profesionalRepository.save(profesional);}
 
+    public void deleteProfesional(Long id){profesionalRepository.delete(id);}
+
+    public void deleteCentroSalud(Long id){centroSaludRepository.delete(id);}
+
 }
