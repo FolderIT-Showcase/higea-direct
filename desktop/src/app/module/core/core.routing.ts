@@ -12,17 +12,13 @@ import {CentrosSaludResolveService} from './service/resolve/centros-salud-resolv
 import {IntegrantesResolveService} from './service/resolve/integrantes-resolve.service';
 import {ModificarTurnoComponent} from '../turno/component/modificar-turno/modificar-turno.component';
 import {AdminHomeComponent} from '../admin/component/admin-home.component';
-import {AltaTurnoComponent} from '../admin/component/admin-turno/alta-turno.component';
-import {BajaTurnoComponent} from '../admin/component/admin-turno/baja-turno.component';
-import {AltaEspecialidadComponent} from '../admin/component/admin-especialidad/alta-especialidad.component';
 import {ProfesionalResolveService} from './service/resolve/profesionales-resolve.service';
 import {CoreComponent} from './core.component';
-import {AltaCentroSaludComponent} from '../admin/component/admin-centro-salud/alta-centro-salud-component';
 import {EspecialidadResolveService} from './service/resolve/especialidad-resolve.service';
-import {TurnosComponent} from '../admin/turnos/turnos.component';
-import {EspecialidadesComponent} from '../admin/especialidades/especialidades.component';
-import {CentrosSaludComponent} from '../admin/centros-salud/centros-salud.component';
-import {ProfesionalesComponent} from '../admin/profesionales/profesionales.component';
+import {TurnosComponent} from '../admin/component/turnos/turnos.component';
+import {EspecialidadesComponent} from '../admin/component/especialidades/especialidades.component';
+import {CentrosSaludComponent} from '../admin/component/centros-salud/centros-salud.component';
+import {ProfesionalesComponent} from '../admin/component/profesionales/profesionales.component';
 import {AdminGuard} from './service/guard/admin.guard';
 
 const appRoutes: Routes = [
@@ -97,34 +93,7 @@ const appRoutes: Routes = [
             resolve: {
               profesionales: ProfesionalResolveService
             }
-          },
-          {
-            path: 'alta-turno', component: AltaTurnoComponent,
-            resolve: {
-              centrosSalud: CentrosSaludResolveService
-            }
-          },
-          {
-            path: 'baja-turno',
-            component: BajaTurnoComponent,
-            resolve: {
-              centrosSalud: CentrosSaludResolveService
-            }
-          },
-          {
-            path: 'alta-especialidad',
-            component: AltaEspecialidadComponent,
-            resolve: {
-              profesionales: ProfesionalResolveService
-            }
-          },
-          {
-            path: 'alta-centro-salud',
-            component: AltaCentroSaludComponent,
-            resolve: {
-              especialidades: EspecialidadResolveService
-            }
-          },
+          }
         ]
       }]
   },
@@ -152,33 +121,6 @@ const appRoutes: Routes = [
   {
     path: 'regitrationConfirm',
     component: UserActiveComponent
-  },
-  {
-    path: 'baja-turno',
-    component: BajaTurnoComponent,
-    resolve: {
-      centrosSalud: CentrosSaludResolveService
-    }
-  },
-  {
-    path: 'alta-especialidad',
-    component: AltaEspecialidadComponent,
-    resolve: {
-      profesionales: ProfesionalResolveService
-    }
-  },
-  {
-    path: 'alta-centro-salud',
-    component: AltaCentroSaludComponent,
-    resolve: {
-      especialidades: EspecialidadResolveService
-    }
-  },
-  {
-    path: 'admin-turno', component: AltaTurnoComponent,
-    resolve: {
-      centrosSalud: CentrosSaludResolveService
-    }
   },
 
   // otherwise redirect to home

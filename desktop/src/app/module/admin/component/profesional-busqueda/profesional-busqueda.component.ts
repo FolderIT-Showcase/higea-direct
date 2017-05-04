@@ -2,27 +2,26 @@ import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ModalDirective} from 'ngx-bootstrap';
 import {Subscription} from 'rxjs/Subscription';
 import {Router} from '@angular/router';
-import {AlertService} from '../../../../core/service/alert.service';
-import {StoreService} from '../../../../core/service/store.service';
-import {Store} from '../../../../core/service/store';
-import {PagerService} from '../../../../core/service/pager.service';
-import {Especialidad} from '../../../../core/domain/especialidad';
+import {AlertService} from '../../../core/service/alert.service';
+import {StoreService} from '../../../core/service/store.service';
+import {Store} from '../../../core/service/store';
+import {Profesional} from '../../../core/domain/profesional';
+import {PagerService} from '../../../core/service/pager.service';
 
 @Component({
-  selector: 'app-especialidad-busqueda',
-  templateUrl: './busqueda-especialidad.component.html',
-  styleUrls: ['./busqueda-especialidad.component.scss']
+  selector: 'app-profesional-busqueda',
+  templateUrl: './profesional-busqueda.component.html'
 })
 
-export class BusquedaEspecialidadComponent implements OnInit, OnDestroy {
+export class ProfesionalBusquedaComponent implements OnInit, OnDestroy {
 
   @ViewChild('autoShownModal') public autoShownModal: ModalDirective;
   @ViewChild('infoModal') public infoModal: ModalDirective;
 
 
-  especialidades: Especialidad[] = [];
-  especialidadesSelected: Especialidad[] = [];
-  especialidad: Especialidad = new Especialidad();
+  profesionales: Profesional[] = [];
+  profesionalesSelected: Profesional[] = [];
+  profesional: Profesional = new Profesional();
   subs: Subscription[] = [];
   public isModalShown = false;
   public isInfoModalShown = false;
@@ -50,10 +49,10 @@ export class BusquedaEspecialidadComponent implements OnInit, OnDestroy {
     }
 
     // get pager object from service
-    this.pager = this.pagerService.getPager(this.especialidades.length, page);
+    this.pager = this.pagerService.getPager(this.profesionales.length, page);
 
     // get current page of items
-    this.pagedItems = this.especialidades.slice(this.pager.startIndex, this.pager.endIndex + 1);
+    this.pagedItems = this.profesionales.slice(this.pager.startIndex, this.pager.endIndex + 1);
     this.currentPage = page;
     console.log('paginas' + this.pager.totalPages);
     this.totalItems = this.pager.totalPages * this.maxSize;
@@ -66,9 +65,9 @@ export class BusquedaEspecialidadComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     this.subs.push(
-      this.store.changes.pluck('especialidades').subscribe(
+      this.store.changes.pluck('profesionales').subscribe(
         (data: any) => {
-          this.especialidades = data;
+          this.profesionales = data;
         }
       ));
 
@@ -81,30 +80,24 @@ export class BusquedaEspecialidadComponent implements OnInit, OnDestroy {
     this.subs.forEach(x => x.unsubscribe());
   }
 
-  public asignar(especialidad: Especialidad) {
-
-    console.log('Element ' + especialidad);
-    const element = this.especialidadesSelected.find(x => x.id === especialidad.id);
+  public asignar(profesional: Profesional) {
+    const element = this.profesionalesSelected.find(x => x.id === profesional.id);
     console.log('Element ' + element);
     if (element) {
       this.hideModal();
       return
     }
-    this.especialidadesSelected.push(especialidad);
-    this.storeService.update('especialidadesSeleccionadas', this.especialidadesSelected);
+    this.profesionalesSelected.push(profesional);
+    this.storeService.update('profesionalesSeleccionados', this.profesionalesSelected);
+    profesional.seleccionado = true;
     this.hideModal();
-    especialidad.seleccionado = true;
-
   }
 
-  public showModal(especialidad: Especialidad) {
-    this.especialidad = especialidad;
+  public showModal(profesional: Profesional) {
+    this.profesional = profesional;
     this.isModalShown = true;
   }
 
-  public clean() {
-    this.especialidadesSelected = [];
-  }
 
   public hideModal() {
     this.autoShownModal.hide();

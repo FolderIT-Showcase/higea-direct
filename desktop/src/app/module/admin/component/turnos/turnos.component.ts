@@ -1,49 +1,50 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {AlertService} from '../../../core/service/alert.service';
 import {Persona} from '../../../core/domain/persona';
 import {CentroSalud} from '../../../core/domain/centro-salud';
 import {Especialidad} from '../../../core/domain/especialidad';
 import {Profesional} from '../../../core/domain/profesional';
+import {Turno} from '../../../core/domain/turno';
 import {StoreService} from '../../../core/service/store.service';
 import {TurnoService} from '../../../core/service/turno.service';
+import {AlertService} from '../../../core/service/alert.service';
+
 
 class Data {
   persona: Persona;
   centro: CentroSalud;
   especialidad: Especialidad;
   profesional: Profesional;
-  fecha: Date = new Date();
+  fechaDesde: Date = new Date();
+  hora: Date = new Date();
+  observaciones: string;
 }
 
 @Component({
-  selector: 'app-baja-turno',
-  templateUrl: './baja-turno.component.html'
+  selector: 'app-turnos',
+  templateUrl: './turnos.component.html',
+  styleUrls: ['./turnos.component.scss']
 })
+export class TurnosComponent implements OnInit {
 
-export class BajaTurnoComponent implements OnInit {
-
+  turnos: Turno[] = [];
   model: Data = new Data();
+  observaciones: string;
   centrosSalud: CentroSalud[] = [];
   especialidades: Especialidad[] = [];
   profesionales: Profesional[] = [];
   personas: Persona[] = [];
 
-  constructor(private router: Router,
-              private alertService: AlertService,
-              private storeService: StoreService, private turnoService: TurnoService) {
+  constructor(private storeService: StoreService, private turnoService: TurnoService, private alertService: AlertService) {
   }
 
-  ngOnInit(): void {
-    const personaUser = this.storeService.get('integrantes');
-    this.personas = this.storeService.get('integrantes');
+  ngOnInit() {
     this.centrosSalud = this.storeService.get('centrosSalud');
-    this.model.fecha = new Date();
+    this.model.fechaDesde = new Date();
+    this.model.hora = new Date();
   }
 
   handlePersonaClick(persona: Persona) {
     this.model.persona = persona;
-    this.storeService.update('persona', persona);
   }
 
   handleCentroSaludClick(centroSalud: CentroSalud) {
@@ -60,12 +61,18 @@ export class BajaTurnoComponent implements OnInit {
     this.model.profesional = profesional;
   }
 
-  buscar() {
-    console.log('Entro a buscar');
-    this.turnoService.getTurnos(this.model.centro, this.model.especialidad, this.model.profesional, this.model.fecha)
+  crear() {
+
+    this.turnoService.saveTurno(this.model.centro, this.model.especialidad, this.model.profesional,
+      this.model.fechaDesde, this.model.hora, this.model.observaciones)
+      .then(data => {
+        this.alertService.success('Registro Exitoso');
+      })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
+        this.alertService.error('Error al guardar el turno');
       });
+
   }
 
   clearForm() {
@@ -73,4 +80,5 @@ export class BajaTurnoComponent implements OnInit {
     this.storeService.update('CentroSalud', null);
     this.storeService.update('turnos', []);
   }
+
 }

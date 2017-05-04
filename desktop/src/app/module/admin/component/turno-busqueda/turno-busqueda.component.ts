@@ -2,21 +2,20 @@ import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ModalDirective} from 'ngx-bootstrap';
 import {Subscription} from 'rxjs/Subscription';
 import {Router} from '@angular/router';
-import {AlertService} from '../../../../core/service/alert.service';
-import {StoreService} from '../../../../core/service/store.service';
-import {TurnoService} from '../../../../core/service/turno.service';
-import {Store} from '../../../../core/service/store';
-import {CentroSalud} from '../../../../core/domain/centro-salud';
-import {Turno} from '../../../../core/domain/turno';
-import {Persona} from '../../../../core/domain/persona';
+import {AlertService} from '../../../core/service/alert.service';
+import {StoreService} from '../../../core/service/store.service';
+import {TurnoService} from '../../../core/service/turno.service';
+import {Store} from '../../../core/service/store';
+import {CentroSalud} from '../../../core/domain/centro-salud';
+import {Turno} from '../../../core/domain/turno';
+import {Persona} from '../../../core/domain/persona';
 
 @Component({
-  selector: 'app-admin-busqueda',
-  templateUrl: './busqueda-turno.component.html',
-  styleUrls: ['./busqueda-turno.component.scss']
+  selector: 'app-turno-busqueda',
+  templateUrl: './turno-busqueda.component.html'
 })
 
-export class BusquedaTurnoComponent implements OnInit, OnDestroy {
+export class TurnoBusquedaComponent implements OnInit, OnDestroy {
 
   @ViewChild('autoShownModal') public autoShownModal: ModalDirective;
   @ViewChild('infoModal') public infoModal: ModalDirective;

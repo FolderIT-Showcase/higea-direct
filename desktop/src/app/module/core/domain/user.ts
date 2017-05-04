@@ -1,5 +1,3 @@
-
-
 import {Roles} from './roles';
 
 export class User {

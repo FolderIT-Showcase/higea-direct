@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {CentroSalud} from '../../core/domain/centro-salud';
-import {StoreService} from '../../core/service/store.service';
-import {Profesional} from '../../core/domain/profesional';
-import {Especialidad} from '../../core/domain/especialidad';
-import {TurnoService} from '../../core/service/turno.service';
-import {AlertService} from '../../core/service/alert.service';
-import {AdminService} from '../../core/service/admin.service';
+import {CentroSalud} from '../../../core/domain/centro-salud';
+import {StoreService} from '../../../core/service/store.service';
+import {Profesional} from '../../../core/domain/profesional';
+import {Especialidad} from '../../../core/domain/especialidad';
+import {TurnoService} from '../../../core/service/turno.service';
+import {AlertService} from '../../../core/service/alert.service';
+import {AdminService} from '../../../core/service/admin.service';
 
 class Data {
   especialidad: Especialidad;

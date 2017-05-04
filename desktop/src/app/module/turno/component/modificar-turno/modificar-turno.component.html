@@ -76,6 +76,13 @@
           </table>
         </div>
 
+        <!--        <app-modal [title]="'Información'"
+                           [actionButtonLabel]="'ELIMINAR'"
+                           (outModal)="handleModal($event)"
+                           (acceptEvent)="handleEvent($event)"
+                           [template]="templateSaveModal()">
+                </app-modal>-->
+
         <div *ngIf="isModalShown" [config]="{ show: true }" bsModal
              #autoShownModal="bs-modal"
              class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
@@ -88,6 +95,7 @@
                 </button>
               </div>
               <div class="modal-body">
+
                 <label>Para el dia <strong>{{turno.dia}}</strong> en el horario
                   <strong>{{turno.hora}}</strong></label><br>
                 <label>Para la especialidad <strong>{{turno.especialidad.nombre}}</strong> atendido por </label><br>
@@ -106,6 +114,7 @@
                     </div>
                   </div>
                 </div>
+
               </div>
             </div>
           </div>

@@ -23,6 +23,8 @@ export class ModificarTurnoComponent implements OnInit {
   public isModalShown = false;
   turno: Turno = new Turno();
 
+  modal: ModalDirective;
+
   constructor(private storeService: StoreService,
               private turnoService: TurnoService,
               private alertService: AlertService) {
@@ -45,7 +47,7 @@ export class ModificarTurnoComponent implements OnInit {
 
   public showModal(turno: Turno) {
     this.turno = turno;
-    this.isModalShown = true;
+    this.modal.show();
   }
 
   public eliminarTurno(turno: Turno) {
@@ -57,6 +59,18 @@ export class ModificarTurnoComponent implements OnInit {
       .catch(error => {
         console.error(error);
       });
+  }
+
+  handleModal(event) {
+    this.modal = event;
+  }
+
+  handleEvent(event) {
+
+  }
+
+  modalTemplate() {
+    return `    `;
   }
 
 }

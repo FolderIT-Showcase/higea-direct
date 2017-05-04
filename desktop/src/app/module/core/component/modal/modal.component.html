@@ -11,24 +11,7 @@
         </button>
       </div>
       <div class="modal-body">
-
-        <div *ngIf="!template">
-          {{message}}
-        </div>
-
-        <!--<div [innerHTML]="template"></div>-->
-        <div #dataContainer></div>
-
-        <div class="row">
-          <div class="text-right">
-            <button *ngIf="type === 'question'" class="btn btn-primary" (click)="emitAcceptEvent()">
-              {{actionButtonLabel}}
-            </button>
-            <button class="btn btn-default" (click)="staticModal.hide()">
-              CANCELAR
-            </button>
-          </div>
-        </div>
+        <ng-content></ng-content>
       </div>
     </div>
   </div>

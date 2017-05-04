@@ -4,7 +4,7 @@ import {StoreService} from './store.service';
 import {Especialidad} from '../domain/especialidad';
 import {AlertService} from './alert.service';
 import {CentroSalud} from '../domain/centro-salud';
-import {Profesional} from "../domain/profesional";
+import {Profesional} from '../domain/profesional';
 
 @Injectable()
 export class AdminService {
@@ -44,7 +44,7 @@ export class AdminService {
     const path = 'centroSalud';
     return this.api.put(path, centroSalud)
       .do(data => {
-        //this.storeService.update('profesionales', data);
+        // this.storeService.update('profesionales', data);
       })
       .first().toPromise();
   }
@@ -53,7 +53,16 @@ export class AdminService {
     const path = 'profesional';
     return this.api.put(path, profesional)
       .do(data => {
-        //this.storeService.update('profesionales', data);
+        // this.storeService.update('profesionales', data);
+      })
+      .first().toPromise();
+  }
+
+  updateProfesional(profesional: Profesional) {
+    const path = 'profesional';
+    return this.api.put(path, profesional)
+      .do(data => {
+        // this.storeService.update('profesionales', data);
       })
       .first().toPromise();
   }

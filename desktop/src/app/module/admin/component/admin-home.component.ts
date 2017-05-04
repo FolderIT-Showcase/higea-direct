@@ -1,20 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {AlertService} from '../../core/service/alert.service';
-import {Router} from '@angular/router';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-admin-home',
-  templateUrl: './admin-home.component.html',
-  styleUrls: ['./admin-home.component.scss']
+  templateUrl: './admin-home.component.html'
 })
 
-export class AdminHomeComponent implements OnInit {
-
-  constructor(private router: Router,
-              private alertService: AlertService) {
-  }
-
-  ngOnInit(): void {
-
-  }
+export class AdminHomeComponent {
 }

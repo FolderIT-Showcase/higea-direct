@@ -1,18 +1,19 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Profesional} from '../../core/domain/profesional';
-import {StoreService} from '../../core/service/store.service';
-import {AlertService} from '../../core/service/alert.service';
-import {AdminService} from '../../core/service/admin.service';
-import {Store} from '../../core/service/store';
-import {PagerService} from '../../core/service/pager.service';
+import {Profesional} from '../../../core/domain/profesional';
+import {StoreService} from '../../../core/service/store.service';
+import {AlertService} from '../../../core/service/alert.service';
+import {AdminService} from '../../../core/service/admin.service';
+import {Store} from '../../../core/service/store';
+import {PagerService} from '../../../core/service/pager.service';
 import {Router} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
 import {ModalDirective} from 'ngx-bootstrap';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 
 class Data {
-  especialidadName: string;
-  especialidadSurname: string;
+  nombre: string;
+  apellido: string;
 }
 @Component({
   selector: 'app-profesionales',
@@ -40,37 +41,26 @@ export class ProfesionalesComponent implements OnInit {
   pagedItems: any[];
   subs: Subscription[] = [];
   deleteModal: ModalDirective;
+  updateModal: ModalDirective;
   saveModal: ModalDirective;
-  saveSubmitted = false;
   profesional: Profesional = new Profesional();
 
-  constructor(private store: Store,
+  form: FormGroup;
+
+  constructor(private fb: FormBuilder,
+              private store: Store,
               private storeService: StoreService,
               private alertService: AlertService,
               private router: Router,
               private  pagerService: PagerService,
               private adminService: AdminService) {
-  }
 
-  crear(): void {
-
-    const profesional = new Profesional();
-    profesional.nombre = this.model.especialidadName.toUpperCase();
-    profesional.apellido = this.model.especialidadSurname.toUpperCase();
-    this.adminService.saveProfesional(profesional).then(data => {
-      this.alertService.success('Se guardo exitosamente');
-    })
-      .catch((error) => {
-        console.log(error);
-        this.alertService.error('Error al querer guardar el Profesional');
-      });
+    this.form = fb.group({
+      'nombre': [null, Validators.required],
+      'apellido': [null, Validators.required]
+    });
 
   }
-
-  clearForm() {
-
-  }
-
 
   public setPage(page: number): void {
     if (page < 1 || page > this.pager.totalPages) {
@@ -128,6 +118,10 @@ export class ProfesionalesComponent implements OnInit {
     this.saveModal = event;
   }
 
+  handleUpdateModal(event) {
+    this.updateModal = event;
+  }
+
   handleDeleteModal(event) {
     this.deleteModal = event;
   }
@@ -136,42 +130,59 @@ export class ProfesionalesComponent implements OnInit {
     this.deleteProfesional();
   }
 
+  showDeleteModal(profesional: Profesional) {
+    this.deleteModal.show();
+    this.profesional = profesional;
+  }
+
+  showUpdateModal(profesional) {
+    this.updateModal.show();
+    this.profesional = profesional;
+    this.model.apellido = profesional.apellido;
+    this.model.nombre = profesional.nombre;
+  }
+
   handleSaveEvent(event) {
-    
+    console.log(this.model.nombre);
   }
 
-  templateDeleteModal() {
-    return `
-      <label>¿Querés dar de baja a este profesional?</label>
-      <br>
-      <label>
-        <strong> ${this.profesional.nombre}</strong>
-        <strong> ${this.profesional.apellido} </strong>
-      </label>
-    `;
+  submitSaveForm(value: Data) {
+    console.log(value);
+    const prof: Profesional = new Profesional();
+    prof.nombre = value.nombre;
+    prof.apellido = value.apellido;
+    this.save(prof);
   }
 
-  templateSaveModal() {
-    return `
-          <form class="form-horizontal" name="f" (ngSubmit)="f.form.valid" #f="ngForm">
-          <div class="row">
-            <div class="col-sm-10">
-              <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !especialidadName.valid }">
-                <label for="especialidadName" class="control-label">Nombre</label>
-                <input id="especialidadName" type="text" class="form-control" name="especialidadName"
-                       [(ngModel)]="model.especialidadName" #especialidadName="ngModel" required/>
-                <div *ngIf="!especialidadName.valid" class="help-block">Nombre obligatorio</div>
-              </div>
-              <label for="especialidadSurname" class="control-label">Apellido</label>
-              <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !especialidadSurname.valid }">
-                <input id="especialidadSurname" type="text" class="form-control" name="especialidadSurname"
-                       [(ngModel)]="model.especialidadSurname" #especialidadName="ngModel" required/>
-                <div *ngIf="!especialidadSurname.valid" class="help-block">Apellido obligatorio</div>
-              </div>
-            </div>
-          </div>
-        </form>
-    `;
+  save(profesional: Profesional) {
+    this.adminService.saveProfesional(profesional).then(data => {
+      this.alertService.success('Se guardo exitosamente');
+    })
+      .catch((error) => {
+        console.log(error);
+        this.alertService.error('Error al querer guardar el Profesional');
+      });
+  }
+
+  submitUpdateForm(value: Data) {
+    console.log(value);
+    if (value.nombre) {
+      this.profesional.nombre = value.nombre;
+    }
+    if (value.apellido) {
+      this.profesional.apellido = value.apellido;
+    }
+    this.update(this.profesional);
+  }
+
+  update(profesional: Profesional) {
+    this.adminService.updateProfesional(profesional).then(data => {
+      this.alertService.success('Se guardo exitosamente');
+    })
+      .catch((error) => {
+        console.log(error);
+        this.alertService.error('Error al querer guardar el Profesional');
+      });
   }
 
 }

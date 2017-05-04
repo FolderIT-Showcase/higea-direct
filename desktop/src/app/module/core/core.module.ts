@@ -24,7 +24,7 @@ import {LoadingComponent} from './component/loading/loading.component';
 import {ModalModule} from 'ngx-bootstrap/modal';
 import {CoreComponent} from './core.component';
 import {AdminGuard} from './service/guard/admin.guard';
-import { ModalComponent } from './component/modal/modal.component';
+import {ModalComponent} from './component/modal/modal.component';
 
 @NgModule({
   imports: [

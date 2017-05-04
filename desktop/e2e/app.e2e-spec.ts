@@ -1,4 +1,4 @@
-import { LoginPage } from './app.po';
+import {LoginPage} from './app.po';
 
 describe('login App', () => {
   let page: LoginPage;
