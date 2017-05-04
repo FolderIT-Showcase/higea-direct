@@ -37,17 +37,17 @@ export class EspecialidadesComponent implements OnInit {
 
   crear(): void {
     this.profesionales = this.storeService.get('profesionalesSeleccionados');
-    console.log('Especialidad nombre: ' + this.model.especialidadName);
+
     const especialidad = new Especialidad();
     especialidad.nombre = this.model.especialidadName.toUpperCase();
     especialidad.profesional = this.profesionales;
-    console.log('Especialidad: ' + JSON.stringify(especialidad));
+
     this.adminService.saveEspecialidad(especialidad).then(data => {
       this.alertService.success('Se guardo exitosamente');
     })
       .catch((error) => {
         console.log(error);
-        this.alertService.success('Error');
+        this.alertService.error('Error al guardar la especialidad');
       });
     ;
   }

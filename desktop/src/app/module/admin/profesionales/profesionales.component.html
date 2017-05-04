@@ -8,40 +8,55 @@
     </div>
   </div>
 </nav>
-<div class="list-group">
-  <a class="list-group-item">
-    <h4 class="list-group-item-heading">Profesionales</h4>
-    <p class="list-group-item-text"> {{profesionales.length}} Profesionales Activos</p>
-  </a>
+<!--TABLA-->
+<div class="row">
   <div *ngIf="profesionales[0]">
-    <div class="table-responsive">
-      <table class="table table-striped">
-        <thead>
-        <tr>
-          <th>Nombre</th>
-          <th width="1em"></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let profesional of profesionales">
-          <td>{{profesional.nombre}}</td>
-          <td>
-            <a (click)="showModal(profesional)" class="btn btn-success btn-block">
-              <span class="fa fa-ellipsis-h"></span>
-            </a>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-      <div class="col-md-6">
-        <pagination [boundaryLinks]="true" (pageChanged)="pageChanged($event)" [totalItems]="totalItems"
-                    [(ngModel)]="currentPage" class="pagination-sm"
-                    previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
+    <h4>
+      Seleccione un profesional
+    </h4>
+    <div class="list-group">
+      <a class="list-group-item active">
+        <h4 class="list-group-item-heading">Profesionales</h4>
+        <p class="list-group-item-text"> {{profesionales.length}} Profesionales Activos</p>
+      </a>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Apellido</th>
+            <th>Nombre</th>
+            <th width="1em"></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let profesional of pagedItems"  [ngStyle]="{'background-color': profesional.seleccionado? '#67c18c' : '','color': profesional.seleccionado? 'white' : ''}" >
+            <td>{{profesional.apellido}}</td>
+            <td>{{profesional.nombre }}</td>
+            <td>
+              <a (click)="showModal(profesional)" class="btn btn-danger btn-md">
+                <span class="fa  fa-times-rectangle"></span>
+              </a>
+            </td>
+            <td>
+              <a (click)="showModal(profesional)" class="btn btn-success btn-md">
+                <span class="fa  fa-pencil-square"></span>
+              </a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <div class="col-md-6">
+          <pagination [boundaryLinks]="true" (pageChanged)="pageChanged($event)" [totalItems]="totalItems"
+                      [(ngModel)]="currentPage" class="pagination-sm"
+                      previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
+        </div>
       </div>
+
     </div>
   </div>
 </div>
 
+<!--MODAL-->
 <div class="modal fade" bsModal #staticModal="bs-modal" [config]="{backdrop: 'static'}"
      tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
@@ -56,23 +71,26 @@
 
         <form class="form-horizontal" name="f" (ngSubmit)="f.form.valid && crear()" #f="ngForm">
           <div class="row">
-            <div class="col-sm-10">
-              <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !especialidadName.valid }">
-                <input id="especialidadName" type="text" class="form-control" name="username"
-                       [(ngModel)]="model.especialidadName" #especialidadName="ngModel" required/>
-                <div *ngIf="f.submitted && !especialidadName.valid" class="help-block">Especialidad obligatoria</div>
-              </div>
+          <div class="col-sm-10">
+            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !especialidadName.valid }">
+              <label for="especialidadName" class="control-label">Nombre</label>
+              <input id="especialidadName" type="text" class="form-control" name="especialidadName"
+                     [(ngModel)]="model.especialidadName" #especialidadName="ngModel" required/>
+              <div *ngIf="f.submitted && !especialidadName.valid" class="help-block">Nombre obligatorio</div>
             </div>
-            <div class="col-sm-2 text-center">
-              <button class="btn btn-primary">Guardar</button>
+            <label for="especialidadSurname" class="control-label">Apellido</label>
+            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !especialidadSurname.valid }">
+              <input id="especialidadSurname" type="text" class="form-control" name="especialidadSurname"
+                     [(ngModel)]="model.especialidadSurname" #especialidadName="ngModel" required/>
+              <div *ngIf="f.submitted && !especialidadSurname.valid" class="help-block">Apellido obligatorio</div>
             </div>
           </div>
+            <div class="col-sm-2 text-center">
+                <button class="btn btn-primary">Guardar</button>
+            </div>
+
+           </div>
         </form>
-
-        <div class="row">
-          <app-profesional-busqueda></app-profesional-busqueda>
-        </div>
-
       </div>
     </div>
   </div>
