@@ -26,17 +26,21 @@ import {TurnosComponent} from './turnos/turnos.component';
 import {EspecialidadesComponent} from './especialidades/especialidades.component';
 import {CentrosSaludComponent} from './centros-salud/centros-salud.component';
 import {ProfesionalesComponent} from './profesionales/profesionales.component';
-
+import {ModalComponent} from '../core/component/modal/modal.component';
+import {CoreModule} from '../core/core.module';
+import { PopoverModule } from 'ngx-bootstrap';
 
 @NgModule({
   imports: [
     RouterModule,
     CommonModule,
+    CoreModule,
     TimepickerModule.forRoot(),
     BsDropdownModule.forRoot(),
     DatepickerModule.forRoot(),
     PaginationModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    PopoverModule.forRoot()
   ],
 
   declarations: [

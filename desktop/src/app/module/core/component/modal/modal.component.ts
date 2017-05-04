@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {ModalDirective} from 'ngx-bootstrap';
 
 @Component({
@@ -15,30 +15,36 @@ export class ModalComponent implements OnInit {
   @Input() title = 'Modal estático.';
   @Input() message = '';
   @Input() type = 'question'; // info, question
-  @Input() acceptCallback: Function = null;
   @Input() template = '';
+  @Input() actionButtonLabel = 'ACEPTAR';
+
+  @Input() dataHtml = '';
+  @ViewChild('dataContainer') dataContainer: ElementRef;
 
   @Output() outModal = new EventEmitter<ModalDirective>();
-
-
-  constructor() {
-  }
+  @Output() acceptEvent = new EventEmitter();
 
   ngOnInit() {
 
     this.outModal.emit(this.modal);
+    this.loadData(this.template);
 
     switch (this.type) {
       case 'question':
-        if (!this.acceptCallback) {
-          this.acceptCallback = this.modal.hide;
-        }
-
         break;
       case 'info':
         break;
     }
 
+  }
+
+  loadData(data) {
+    this.dataContainer.nativeElement.innerHTML = data;
+  }
+
+  emitAcceptEvent() {
+    this.acceptEvent.emit(1);
+    this.modal.hide();
   }
 
 }
