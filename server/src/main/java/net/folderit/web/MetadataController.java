@@ -57,8 +57,14 @@ public class MetadataController {
         return new ResponseEntity<>((Especialidad) metadataService.saveEspecialidad(especialidad), HttpStatus.OK);
     }
 
+
     @PutMapping("/centroSalud")
     public ResponseEntity<CentroSalud> guardarCentroSalud(@RequestBody CentroSalud centroSalud) {
         return new ResponseEntity<>((CentroSalud) metadataService.saveCentroSalud(centroSalud), HttpStatus.OK);
+    }
+
+    @PutMapping("/profesional")
+    public ResponseEntity<Profesional> guardarProfesional(@RequestBody Profesional profesional) {
+        return new ResponseEntity<>((Profesional) metadataService.saveProfesional(profesional), HttpStatus.OK);
     }
 }

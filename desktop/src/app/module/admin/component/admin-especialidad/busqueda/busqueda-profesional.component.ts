@@ -42,7 +42,7 @@ export class BusquedaProfesionalComponent implements OnInit, OnDestroy {
               private alertService: AlertService,
               private router: Router,
               private  pagerService: PagerService) {
-  }
+}
 
   public setPage(page: number): void {
     if (page < 1 || page > this.pager.totalPages) {

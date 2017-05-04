@@ -59,4 +59,6 @@ public class MetadataService {
 
     public CentroSalud saveCentroSalud(CentroSalud centroSalud) {return centroSaludRepository.save(centroSalud);}
 
+    public Profesional saveProfesional(Profesional profesional){return  profesionalRepository.save(profesional);}
+
 }

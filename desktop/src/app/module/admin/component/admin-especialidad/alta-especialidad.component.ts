@@ -24,6 +24,7 @@ export class AltaEspecialidadComponent implements OnInit {
   profesionales: Profesional[] = [];
   especialidadName: string;
 
+
   constructor(private storeService: StoreService,
               private turnoService: TurnoService,
               private alertService: AlertService,

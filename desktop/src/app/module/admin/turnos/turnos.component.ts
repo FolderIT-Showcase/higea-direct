@@ -69,7 +69,7 @@ export class TurnosComponent implements OnInit {
       })
       .catch((error) => {
         console.error(error);
-        this.alertService.success('Error');
+        this.alertService.error('Error al guardar el turno');
       });
 
   }
