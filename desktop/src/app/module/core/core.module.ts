@@ -24,6 +24,7 @@ import {LoadingComponent} from './component/loading/loading.component';
 import {ModalModule} from 'ngx-bootstrap/modal';
 import {CoreComponent} from './core.component';
 import {AdminGuard} from './service/guard/admin.guard';
+import { ModalComponent } from './component/modal/modal.component';
 
 @NgModule({
   imports: [
@@ -35,13 +36,14 @@ import {AdminGuard} from './service/guard/admin.guard';
     ModalModule.forRoot(),
     routing
   ],
-  exports: [BrowserModule, AlertComponent, BsDropdownModule, LoadingComponent],
+  exports: [BrowserModule, AlertComponent, BsDropdownModule, LoadingComponent, ModalComponent],
   declarations: [
     AlertComponent,
     HomeComponent,
     NavbarComponent,
     LoadingComponent,
-    CoreComponent
+    CoreComponent,
+    ModalComponent
   ],
   providers: [
     Store,

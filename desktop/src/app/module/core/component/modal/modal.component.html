@@ -1,0 +1,36 @@
+<button type="button" class="btn btn-primary" (click)="staticModal.show()">Static modal</button>
+
+<div class="modal fade" bsModal #staticModal="bs-modal" [config]="{backdrop: backdrop}"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog" [ngClass]="{'modal-sm': small, 'modal-lg': !small }">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">
+          {{title}}
+        </h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <div *ngIf="!template">
+          {{message}}
+        </div>
+
+        <span [innerHTML]="template"></span>
+
+        <div class="row">
+          <div class="text-right">
+            <button *ngIf="type === 'question'" class="btn btn-primary" (click)="acceptCallback()">
+              ACEPTAR
+            </button>
+            <button class="btn btn-default" (click)="staticModal.hide()">
+              CANCELAR
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
