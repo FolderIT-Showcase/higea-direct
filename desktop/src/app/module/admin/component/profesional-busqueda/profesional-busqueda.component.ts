@@ -68,6 +68,7 @@ export class ProfesionalBusquedaComponent implements OnInit, OnDestroy {
       this.store.changes.pluck('profesionales').subscribe(
         (data: any) => {
           this.profesionales = data;
+          this.pagedItems = this.profesionales.slice(this.pager.startIndex, this.pager.endIndex + 1);
         }
       ));
 

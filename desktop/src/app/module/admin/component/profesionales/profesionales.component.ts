@@ -38,8 +38,6 @@ export class ProfesionalesComponent implements OnInit {
   deleteModal: ModalDirective;
   updateModal: ModalDirective;
   saveModal: ModalDirective;
-
-
   form: FormGroup;
 
   constructor(private fb: FormBuilder,

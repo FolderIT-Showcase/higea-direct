@@ -18,7 +18,6 @@ export class EspecialidadBusquedaComponent implements OnInit, OnDestroy {
   @ViewChild('autoShownModal') public autoShownModal: ModalDirective;
   @ViewChild('infoModal') public infoModal: ModalDirective;
 
-
   especialidades: Especialidad[] = [];
   especialidadesSelected: Especialidad[] = [];
   especialidad: Especialidad = new Especialidad();
@@ -38,8 +37,6 @@ export class EspecialidadBusquedaComponent implements OnInit, OnDestroy {
 
   constructor(private store: Store,
               private storeService: StoreService,
-              private alertService: AlertService,
-              private router: Router,
               private  pagerService: PagerService) {
   }
 
@@ -68,6 +65,7 @@ export class EspecialidadBusquedaComponent implements OnInit, OnDestroy {
       this.store.changes.pluck('especialidades').subscribe(
         (data: any) => {
           this.especialidades = data;
+          this.pagedItems = this.especialidades.slice(this.pager.startIndex, this.pager.endIndex + 1);
         }
       ));
 
