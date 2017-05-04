@@ -7,6 +7,8 @@ import {Subscription} from 'rxjs/Subscription';
 import {TurnoService} from '../../../core/service/turno.service';
 import {StoreService} from '../../../core/service/store.service';
 import {Persona} from '../../../core/domain/persona';
+import {Especialidad} from '../../../core/domain/especialidad';
+import {Profesional} from '../../../core/domain/profesional';
 
 @Component({
   selector: 'app-busqueda',
@@ -23,14 +25,23 @@ export class ResultadoComponent implements OnInit, OnDestroy {
   turno: Turno = new Turno();
   subs: Subscription[] = [];
   persona: Persona;
-  public isModalShown = false;
-  public isInfoModalShown = false;
+
   lat = -31.623357;
   lng = -60.704956;
+  emptyResponse = undefined;
+
+  turnoModal: ModalDirective;
+  successModal: ModalDirective;
 
   constructor(private store: Store,
               private turnoService: TurnoService,
               private storeService: StoreService) {
+    this.turno.especialidad = new Especialidad;
+    this.turno.especialidad.nombre = '';
+    this.turno.centroSalud = new CentroSalud;
+    this.turno.centroSalud.nombre = '';
+    this.turno.profesional = new Profesional();
+    this.turno.profesional.nombre = '';
   }
 
   ngOnInit(): void {
@@ -42,6 +53,11 @@ export class ResultadoComponent implements OnInit, OnDestroy {
     this.subs.push(
       this.store.changes.pluck('turnos').subscribe(
         (data: any) => {
+          if (!data) {
+            this.emptyResponse = true;
+            return;
+          }
+          this.emptyResponse = false;
           this.turnos = data;
         }
       ));
@@ -51,13 +67,15 @@ export class ResultadoComponent implements OnInit, OnDestroy {
     this.subs.forEach(x => x.unsubscribe());
   }
 
-  public showModal(turno: Turno) {
+  public showTurnoModal(turno: Turno) {
     this.turno = turno;
-    this.isModalShown = true;
+    this.turnoModal.show();
     this.persona = this.storeService.get('persona');
   }
 
   public reservarTurno(turno: Turno) {
+
+    this.turnoModal.hide();
 
     if (!this.persona.turno) {
       this.persona.turno = [];
@@ -67,28 +85,19 @@ export class ResultadoComponent implements OnInit, OnDestroy {
     this.persona.turno.push(turno);
     this.turnoService.reservarTurno(this.persona)
       .then(() => {
-        // this.router.navigate(['/nuevo-turno'])
-        this.showInfoModal();
+        this.successModal.show();
       })
       .catch(error => {
         console.error(error);
       });
   }
 
-  public hideModal() {
-    this.autoShownModal.hide();
+  handleTurnoModal(event) {
+    this.turnoModal = event;
   }
 
-  public showInfoModal() {
-    this.hideModal();
-    this.isInfoModalShown = true;
+  handleSuccessModal(event) {
+    this.successModal = event;
   }
 
-  public hideInfoModal() {
-    this.infoModal.hide();
-  }
-
-  public onHidden() {
-    this.isModalShown = false;
-  }
 }

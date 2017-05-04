@@ -1,10 +1,12 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Turno} from '../../../core/domain/turno';
 import {Persona} from '../../../core/domain/persona';
 import {StoreService} from '../../../core/service/store.service';
 import {ModalDirective} from 'ngx-bootstrap';
 import {TurnoService} from '../../../core/service/turno.service';
 import {AlertService} from '../../../core/service/alert.service';
+import {Especialidad} from '../../../core/domain/especialidad';
+import {CentroSalud} from '../../../core/domain/centro-salud';
 
 class Data {
   persona: Persona;
@@ -16,7 +18,7 @@ class Data {
   styleUrls: ['./modificar-turno.component.scss']
 })
 export class ModificarTurnoComponent implements OnInit {
-  @ViewChild('autoShownModal') public autoShownModal: ModalDirective;
+
   turnos: Turno[] = [];
   personas: Persona[] = [];
   model: Data = new Data();
@@ -28,6 +30,10 @@ export class ModificarTurnoComponent implements OnInit {
   constructor(private storeService: StoreService,
               private turnoService: TurnoService,
               private alertService: AlertService) {
+    this.turno.especialidad = new Especialidad;
+    this.turno.especialidad.nombre = '';
+    this.turno.centroSalud = new CentroSalud;
+    this.turno.centroSalud.nombre = '';
   }
 
   ngOnInit() {
@@ -41,19 +47,15 @@ export class ModificarTurnoComponent implements OnInit {
     this.turnos = persona.turno;
   }
 
-  public hideModal() {
-    this.autoShownModal.hide();
-  }
-
   public showModal(turno: Turno) {
     this.turno = turno;
+    console.log(turno);
     this.modal.show();
   }
 
   public eliminarTurno(turno: Turno) {
     this.turnoService.cancelarTurno(turno)
       .then(() => {
-        this.hideModal();
         this.alertService.success('Turno cancelado exitosamente');
       })
       .catch(error => {
@@ -65,12 +67,8 @@ export class ModificarTurnoComponent implements OnInit {
     this.modal = event;
   }
 
-  handleEvent(event) {
-
-  }
-
-  modalTemplate() {
-    return `    `;
+  hideModal() {
+    this.modal.hide();
   }
 
 }

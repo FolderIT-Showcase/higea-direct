@@ -16,8 +16,7 @@ class Data {
 
 @Component({
   selector: 'app-nuevo-turno',
-  templateUrl: './nuevo-turno.component.html',
-  styleUrls: ['./nuevo-turno.component.scss']
+  templateUrl: './nuevo-turno.component.html'
 })
 export class NuevoTurnoComponent implements OnInit {
 

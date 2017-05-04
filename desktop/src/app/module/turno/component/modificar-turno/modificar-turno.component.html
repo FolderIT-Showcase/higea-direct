@@ -6,7 +6,6 @@
   </div>
 
   <form>
-
     <div class="row">
       <div class="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3">
         <div class="form-group">
@@ -25,14 +24,11 @@
         </div>
       </div>
     </div>
-
-
     <div class="has-error" *ngIf="!turnos[0]">
       <label><strong>No sacaste ningun turno</strong> </label>
       <div class="col-sm-4"><a [routerLink]="['/nuevo-turno']" class="btn btn-block btn-primary">SACAR UN TURNO</a>
       </div>
     </div>
-
   </form>
 
   <div *ngIf="turnos[0]" class="col-sm-12">
@@ -75,55 +71,27 @@
             </tbody>
           </table>
         </div>
-
-        <!--        <app-modal [title]="'Información'"
-                           [actionButtonLabel]="'ELIMINAR'"
-                           (outModal)="handleModal($event)"
-                           (acceptEvent)="handleEvent($event)"
-                           [template]="templateSaveModal()">
-                </app-modal>-->
-
-        <div *ngIf="isModalShown" [config]="{ show: true }" bsModal
-             #autoShownModal="bs-modal"
-             class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-          <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h4 class="modal-title pull-left"><strong>Información</strong></h4>
-                <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-
-                <label>Para el dia <strong>{{turno.dia}}</strong> en el horario
-                  <strong>{{turno.hora}}</strong></label><br>
-                <label>Para la especialidad <strong>{{turno.especialidad.nombre}}</strong> atendido por </label><br>
-                <label>En el <strong>{{turno.centroSalud.nombre}}</strong></label><br>
-                <div *ngIf="false">
-                  <sebm-google-map [latitude]="lat" [longitude]="lng">
-                    <sebm-google-map-marker [latitude]="lat" [longitude]="lng"></sebm-google-map-marker>
-                  </sebm-google-map>
-                </div>
-                <div class="row">
-                  <div class="col-sm-8"></div>
-                  <div class="col-sm-4">
-                    <div class="btn-group btn-group-justified">
-                      <a (click)="eliminarTurno(turno)" class="btn btn-danger">ELIMINAR</a>
-                      <a (click)="hideModal()" class="btn btn-default">CERRAR</a>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </div>
-        </div>
-
       </div>
     </div>
   </div>
-
-
 </div>
 
+<app-modal [title]="'Información'" (outModal)="handleModal($event)">
+  <label>Para el dia <strong>{{turno.dia}}</strong> en el horario <strong>{{turno.hora}}</strong></label><br>
+  <label>Para la especialidad <strong>{{turno.especialidad.nombre}}</strong> atendido por </label><br>
+  <label>En el centro de salud<strong>{{turno.centroSalud.nombre}}</strong></label><br>
+  <div *ngIf="false">
+    <sebm-google-map [latitude]="lat" [longitude]="lng">
+      <sebm-google-map-marker [latitude]="lat" [longitude]="lng"></sebm-google-map-marker>
+    </sebm-google-map>
+  </div>
+  <div class="row">
+    <div class="col-sm-8"></div>
+    <div class="col-sm-4">
+      <div class="btn-group btn-group-justified">
+        <a (click)="eliminarTurno(turno)" class="btn btn-danger">ELIMINAR</a>
+        <a (click)="hideModal()" class="btn btn-default">CERRAR</a>
+      </div>
+    </div>
+  </div>
+</app-modal>
