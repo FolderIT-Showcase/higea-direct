@@ -10,40 +10,35 @@ import {Subscription} from 'rxjs/Subscription';
 import {ModalDirective} from 'ngx-bootstrap';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
-
 class Data {
   nombre: string;
   apellido: string;
 }
 @Component({
   selector: 'app-profesionales',
-  templateUrl: './profesionales.component.html',
-  styleUrls: ['./profesionales.component.scss']
+  templateUrl: './profesionales.component.html'
 })
 export class ProfesionalesComponent implements OnInit {
 
   @ViewChild('autoShownModal') public autoShownModal: ModalDirective;
   model: Data = new Data();
-  especialidadName: string;
-  especialidadSurname: string;
   profesionales: Profesional[] = [];
+  profesional: Profesional = new Profesional();
 
-  public isModalShown = false;
-  public isInfoModalShown = false;
-
-  public totalItems = 0;
-  public currentPage = 1;
-  public smallnumPages = 0;
-  public maxSize = 10;
+  totalItems = 0;
+  currentPage = 1;
+  smallnumPages = 0;
+  maxSize = 10;
   // pager object
   pager: any = {};
   // paged items
   pagedItems: any[];
   subs: Subscription[] = [];
+
   deleteModal: ModalDirective;
   updateModal: ModalDirective;
   saveModal: ModalDirective;
-  profesional: Profesional = new Profesional();
+
 
   form: FormGroup;
 
@@ -87,6 +82,7 @@ export class ProfesionalesComponent implements OnInit {
       this.store.changes.pluck('profesionales').subscribe(
         (data: any) => {
           this.profesionales = data;
+          this.pagedItems = this.profesionales.slice(this.pager.startIndex, this.pager.endIndex + 1);
         }
       ));
 
@@ -107,6 +103,7 @@ export class ProfesionalesComponent implements OnInit {
         break;
       }
     }
+    this.deleteModal.hide();
   }
 
   showModal(profesional: Profesional) {
