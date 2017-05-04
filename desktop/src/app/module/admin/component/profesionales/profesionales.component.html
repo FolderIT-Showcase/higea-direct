@@ -76,13 +76,17 @@
              [ngClass]="{'has-error':!form.controls['apellido'].valid && form.controls['apellido'].touched}">
           <label>Apellido</label>
           <input class="form-control" type="text" placeholder="Perez" [formControl]="form.controls['apellido']">
-          <div *ngIf="form.controls['apellido'].hasError('required') && form.controls['apellido'].touched"
+          <small *ngIf="form.controls['apellido'].hasError('required') && form.controls['apellido'].touched"
                class="help-block">Debes incluir tu apellido.
-          </div>
+          </small>
         </div>
       </div>
     </div>
+
     <button type="submit" class="btn btn-primary btn-block" [disabled]="!form.valid">Guardar</button>
+
+    <button type="submit" class="btn btn-primary btn-block" [disabled]="!form.valid">GUARDAR</button>
+
   </form>
 </app-modal>
 
@@ -97,9 +101,6 @@
           <label>Nombre:</label>
           <input [(ngModel)]="model.nombre" class="form-control" type="text" placeholder="Jose"
                  [formControl]="form.controls['nombre']">
-          <div *ngIf="form.controls['nombre'].hasError('required') && form.controls['nombre'].touched"
-               class="help-block">Debes incluir tu nombre.
-          </div>
         </div>
       </div>
       <div class="col-sm-6">
@@ -114,7 +115,13 @@
         </div>
       </div>
     </div>
-    <button type="submit" class="btn btn-primary btn-block" [disabled]="!form.valid">Guardar</button>
+
+   
+
+    <div class="text-right">
+      <button type="submit" class="btn btn-primary" [disabled]="!form.valid">ACTUALIZAR</button>
+    </div>
+
   </form>
 </app-modal>
 
@@ -126,8 +133,6 @@
     <strong> {{profesional.apellido}}</strong>
   </label>
   <div class="text-right">
-    <button type="button" class="btn btn-danger" (click)="deleteProfesional()">
-      ELIMINAR
-    </button>
+    <button type="button" class="btn btn-danger" (click)="deleteProfesional()">ELIMINAR</button>
   </div>
 </app-modal>
