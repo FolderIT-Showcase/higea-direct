@@ -23,7 +23,7 @@
         </thead>
         <tbody>
         <tr *ngFor="let turno of turnos">
-          <td>{{turno.dia}}</td>
+          <td>{{turno.dia| date: 'EEEE'}}</td>
           <td>{{turno.fecha }}</td>
           <td>{{turno.hora | date: 'HH:mm'}}</td>
           <td>{{centro.nombre}}</td>

@@ -28,7 +28,7 @@ export class CentrosSaludComponent implements OnInit {
   model: Data = new Data();
   especialidades: Especialidad[] = [];
   profesionales: Profesional[] = [];
-  centroSaludName: string;
+
 
   totalItems = 0;
   currentPage = 1;
@@ -88,26 +88,28 @@ export class CentrosSaludComponent implements OnInit {
     this.setPage(1);
   }
 
-  crear(): void {
+  crear(value:Data): void {
     this.especialidades = this.storeService.get('especialidadesSeleccionadas');
-    console.log('Especialidad nombre: ' + this.model.centroSaludName);
+    console.log('Especialidad nombre: ' + value.centroSaludName);
     const centroSalud = new CentroSalud();
-    centroSalud.nombre = this.model.centroSaludName.toUpperCase();
+    centroSalud.nombre = value.centroSaludName.toUpperCase();
     centroSalud.especialidad = this.especialidades;
 
     this.adminService.saveCentroSalud(centroSalud).then(data => {
       this.alertService.success('Se guardo exitosamente');
-      this.clean();
+        this.saveModal.hide();
+
     })
       .catch((error) => {
         console.log(error);
         this.alertService.success('Error');
+        this.saveModal.hide();
       });
     ;
   }
 
   clean() {
-    this.model.centroSaludName = '';
+    //this.centroSaludName = '';
     this.especialidades = [];
   }
 
@@ -163,8 +165,8 @@ export class CentrosSaludComponent implements OnInit {
     this.updateModal = event;
   }
 
-  submitSaveForm(value) {
-  
+  submitSaveForm(value:Data) {
+    this.crear(value);
   }
 
   submitUpdateForm(value: Data) {
@@ -179,6 +181,7 @@ export class CentrosSaludComponent implements OnInit {
   update(centroSalud: CentroSalud) {
     this.adminService.updateCentroSalud(centroSalud).then(data => {
       this.alertService.success('Se guardo exitosamente');
+        this.updateModal.hide();
     })
       .catch((error) => {
         console.log(error);

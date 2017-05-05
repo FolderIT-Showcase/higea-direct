@@ -81,7 +81,7 @@
         <div class="form-group"
              [ngClass]="{'has-error':!form.controls['centroSaludName'].valid && form.controls['centroSaludName'].touched}">
           <label>Nombre:</label>
-          <input [(ngModel)]="model.centroSaludName" class="form-control" type="text" placeholder="Hospital"
+          <input [(ngModel)]="centroSaludName" class="form-control" type="text" placeholder="Hospital"
                  [formControl]="form.controls['centroSaludName']">
           <div *ngIf="form.controls['centroSaludName'].hasError('required') && form.controls['centroSaludName'].touched"
                class="help-block">Debes incluir el nombre.
