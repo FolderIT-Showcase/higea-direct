@@ -32,7 +32,7 @@
         </thead>
         <tbody>
         <tr *ngFor="let turno of pagedItems">
-          <td>{{turno.dia}}</td>
+          <td>{{turno.dia | date: 'EEEE'}}</td>
           <td>{{turno.fecha | date: 'dd/MM/yyyy'}}</td>
           <td>{{turno.hora | date: 'HH:mm'}}</td>
           <td>{{turno.centroSalud.nombre}}</td>
