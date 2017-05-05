@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {TipoDocumentoEnum, TipoDocumentoLabel, TipoDocumentos} from '../../../core/domain/enums/tipo-documento';
+import {TipoDocumentos} from '../../../core/domain/enums/tipo-documento';
 import {Generos} from '../../../core/domain/enums/genero';
 import {Pais} from '../../../core/domain/pais';
 import {Router} from '@angular/router';
@@ -63,7 +63,7 @@ export class RegisterSocialComponent implements OnInit {
     // }
 
     if (this.model.pais.toLowerCase() !== 'argentina') {
-      this.model.tipoDocumento = TipoDocumentoLabel.documentoExtranjero;
+      this.model.tipoDocumento = "Documento Extranjero";
     }
 
     this.loading = true;
@@ -78,7 +78,7 @@ export class RegisterSocialComponent implements OnInit {
     user.email = this.model.email;
     persona.userAsociado = user;
 
-    if (persona.documento.tipo === TipoDocumentoEnum.dni) {
+    if (persona.documento.tipo === "dni") {
 
       const doc = {
         documento: persona.documento.numero,

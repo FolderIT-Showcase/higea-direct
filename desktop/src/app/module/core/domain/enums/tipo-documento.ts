@@ -4,7 +4,7 @@ export class TipoDocumentos {
     'label': 'DNI'
   }, {
     'id': 'pasaporte',
-    'label': 'Pasaporte'
+    'label': 'PAS'
   }, {
     'id': 'cedulaIdentidad',
     'label': 'CI'

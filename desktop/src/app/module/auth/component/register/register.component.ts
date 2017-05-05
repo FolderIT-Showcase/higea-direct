@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {PersonaService} from '../../../core/service/persona.service';
 import {AlertService} from '../../../core/service/alert.service';
-import {TipoDocumentoEnum, TipoDocumentos} from '../../../core/domain/enums/tipo-documento';
+import {TipoDocumentos} from '../../../core/domain/enums/tipo-documento';
 import {Generos} from '../../../core/domain/enums/genero';
 import {Pais} from '../../../core/domain/pais';
 import {User} from '../../../core/domain/user';
@@ -96,7 +96,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     persona.nombre = this.model.nombre;
     persona.apellido = this.model.apellido;
 
-    if (persona.documento.tipo === TipoDocumentoEnum.dni) {
+    if (persona.documento.tipo === "dni") {
 
       const doc = {
         documento: persona.documento.numero,
