@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {TipoDocumentoEnum, TipoDocumentoLabel, TipoDocumentos} from '../../../core/domain/enums/tipo-documento';
+import {TipoDocumentos} from '../../../core/domain/enums/tipo-documento';
 import {Generos} from '../../../core/domain/enums/genero';
 import {Pais} from '../../../core/domain/pais';
 import {Router} from '@angular/router';
@@ -12,50 +12,50 @@ import {StoreService} from '../../../core/service/store.service';
 import {LoadingService} from '../../../core/service/loading.service';
 
 class Datos {
-  nombre = '';
-  apellido = '';
-  pais: string;
-  tipoDocumento: string;
-  numeroDocumento: number;
-  genero: string;
-  email: string;
+    nombre = '';
+apellido = '';
+pais: string;
+tipoDocumento: string;
+numeroDocumento: number;
+genero: string;
+email: string;
 }
 
 @Component({
-  selector: 'app-register-social',
-  templateUrl: './register-social.component.html',
-  styleUrls: ['./register-social.component.scss']
+    selector: 'app-register-social',
+    templateUrl: './register-social.component.html',
+    styleUrls: ['./register-social.component.scss']
 })
 export class RegisterSocialComponent implements OnInit {
 
-  model: Datos = new Datos;
-  paises: Pais[] = [];
-  tipoDocumentos: string[] = TipoDocumentos.build();
-  generos: string[] = Generos.build();
-  loading = false;
-  captcha: string = null;
+    model: Datos = new Datos;
+    paises: Pais[] = [];
+    tipoDocumentos: string[] = TipoDocumentos.build();
+    generos: string[] = Generos.build();
+    loading = false;
+captcha: string = null;
 
-  constructor(private router: Router,
-              private loadingService: LoadingService,
-              private alertService: AlertService,
-              private personaService: PersonaService,
-              private storeService: StoreService) {
+constructor(private router: Router,
+            private loadingService: LoadingService,
+            private alertService: AlertService,
+            private personaService: PersonaService,
+            private storeService: StoreService) {
 
     const user: User = JSON.parse(localStorage.getItem('socialUser'));
     if (user) {
-      this.model.email = user.email;
+        this.model.email = user.email;
     }
 
-  }
+}
 
-  ngOnInit(): void {
+ngOnInit(): void {
     this.paises = this.storeService.get('paises');
     this.model.tipoDocumento = this.tipoDocumentos[0];
     this.model.genero = this.generos[0];
     this.model.pais = this.paises[11].nombre;
-  }
+}
 
-  public register(): void {
+public register(): void {
 
     // if (!this.captcha) {
     //   this.alertService.error('Por Favor complete todos los datos');
@@ -63,7 +63,7 @@ export class RegisterSocialComponent implements OnInit {
     // }
 
     if (this.model.pais.toLowerCase() !== 'argentina') {
-      this.model.tipoDocumento = TipoDocumentoLabel.documentoExtranjero;
+        this.model.tipoDocumento = "Documento Extranjero";
     }
 
     this.loading = true;
@@ -77,60 +77,61 @@ export class RegisterSocialComponent implements OnInit {
     persona.documento.numero = this.model.numeroDocumento;
     user.email = this.model.email;
     persona.userAsociado = user;
+    persona.domicilio = {};
 
-    if (persona.documento.tipo === TipoDocumentoEnum.dni) {
+    if (persona.documento.tipo === "dni") {
 
-      const doc = {
-        documento: persona.documento.numero,
-        nombre: persona.nombre,
-        apellido: persona.apellido,
-        genero: persona.genero.slice(0, 1)
-      };
+        const doc = {
+            documento: persona.documento.numero,
+            nombre: persona.nombre,
+            apellido: persona.apellido,
+            genero: persona.genero.slice(0, 1)
+        };
 
-      this.personaService.validateDni(doc)
-        .then(() => {
-          this.savePersona(persona);
+        this.personaService.validateDni(doc)
+            .then(() => {
+            this.savePersona(persona);
         })
-        .catch(error => {
-          this.alertService.error('Sus datos no son válidos, por favor revíselos.');
-          console.error(error);
+            .catch(error => {
+            this.alertService.error('Sus datos no son válidos, por favor revíselos.');
+            console.error(error);
         });
 
-      return;
+        return;
     }
 
     this.savePersona(persona);
-  }
+}
 
-  savePersona(persona: Persona) {
+savePersona(persona: Persona) {
     this.loadingService.start();
     this.personaService.create(persona)
-      .then(() => {
+        .then(() => {
         this.router.navigate(['/login'])
-          .then(() => {
+            .then(() => {
             this.loadingService.finish();
             this.alertService.success('Registro Exitoso');
-          });
-      })
-      .catch(error => {
+        });
+    })
+        .catch(error => {
         this.loadingService.finish();
         this.alertService.error('Hubo un error inesperado, vuelva a intentarlo más tarde');
-      });
-  }
+    });
+}
 
-  handleCountriesClick(pais: Pais) {
+handleCountriesClick(pais: Pais) {
     this.model.pais = pais.nombre;
-  }
+}
 
-  handleTipoDocumentoClick(tipoDocumento: string) {
+handleTipoDocumentoClick(tipoDocumento: string) {
     this.model.tipoDocumento = tipoDocumento;
-  }
+}
 
-  handleGeneroClick(genero: string) {
+handleGeneroClick(genero: string) {
     this.model.genero = genero;
-  }
+}
 
-  handleCorrectCaptcha(event) {
-  }
+handleCorrectCaptcha(event) {
+}
 
 }

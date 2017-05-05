@@ -5,7 +5,7 @@ import {Especialidad} from '../domain/especialidad';
 import {AlertService} from './alert.service';
 import {CentroSalud} from '../domain/centro-salud';
 import {Profesional} from '../domain/profesional';
-import {Turno} from "../domain/turno";
+import {Turno} from '../domain/turno';
 
 @Injectable()
 export class AdminService {
@@ -27,7 +27,7 @@ export class AdminService {
     const path = 'especialidad';
     return this.api.put(path, especialidad)
       .do(data => {
-        //this.storeService.update('profesionales', data);
+        // this.storeService.update('profesionales', data);
       })
       .first().toPromise();
   }
@@ -45,7 +45,7 @@ export class AdminService {
     const path = 'centroSalud';
     return this.api.put(path, centroSalud)
       .do(data => {
-        // this.storeService.update('profesionales', data);
+        this.storeService.add('centrosSalud', centroSalud);
       })
       .first().toPromise();
   }
@@ -55,7 +55,7 @@ export class AdminService {
     const path = 'centroSalud';
     return this.api.put(path, centroSalud)
       .do(data => {
-        // this.storeService.update('profesionales', data);
+        this.storeService.findAndSet('centrosSalud', centroSalud.id, centroSalud);
       })
       .first().toPromise();
   }
@@ -80,7 +80,7 @@ export class AdminService {
 
   deleteProfesional(profesional: Profesional) {
     const path = 'profesional';
-    return this.api.delete(path+'?id='+profesional.id)
+    return this.api.delete(path + '?id=' + profesional.id)
       .do(data => {
         // this.storeService.update('profesionales', data);
       })
@@ -89,7 +89,7 @@ export class AdminService {
 
   deleteCentroSalud(centro: CentroSalud) {
     const path = 'centroSalud';
-    return this.api.delete(path+'?id='+centro.id)
+    return this.api.delete(path + '?id=' + centro.id)
       .do(data => {
         // this.storeService.update('profesionales', data);
       })
@@ -107,7 +107,7 @@ export class AdminService {
 
   deleteTurno(turno: Turno) {
     const path = 'turno';
-    return this.api.delete(path+'?id='+turno.id+"&desactivate=true")
+    return this.api.delete(path + '?id=' + turno.id + "&desactivate=true")
       .do(data => {
         // this.storeService.update('profesionales', data);
       })

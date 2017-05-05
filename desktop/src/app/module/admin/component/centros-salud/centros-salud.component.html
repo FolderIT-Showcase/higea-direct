@@ -48,24 +48,29 @@
 </div>
 
 
-
 <!--MODAL ALTA-->
 <app-modal [title]="'Nuevo Centro de Salud'" (outModal)="handleSaveModal($event)">
 
   <form [formGroup]="form" (ngSubmit)="submitSaveForm(form.value)">
     <div class="row">
-      <div class="col-sm-6">
+      <div class="col-sm-10">
         <div class="form-group"
              [ngClass]="{'has-error':!form.controls['centroSaludName'].valid && form.controls['centroSaludName'].touched}">
           <label>Nombre:</label>
-          <input class="form-control" type="text" placeholder="Hospital" [formControl]="form.controls['centroSaludName']">
+          <input class="form-control" type="text" placeholder="Hospital"
+                 [formControl]="form.controls['centroSaludName']">
           <div *ngIf="form.controls['centroSaludName'].hasError('required') && form.controls['centroSaludName'].touched"
                class="help-block">Debes incluir el nombre.
           </div>
         </div>
       </div>
+      <div class="col-sm-2">
+        <div class="text-center">
+          <label></label>
+          <button type="submit" class="btn btn-primary btn-block" [disabled]="!form.valid">Guardar</button>
+        </div>
+      </div>
     </div>
-    <button type="submit" class="btn btn-primary btn-block" [disabled]="!form.valid">Guardar</button>
   </form>
   <div class="row">
     <app-especialidad-busqueda></app-especialidad-busqueda>
@@ -77,19 +82,24 @@
 
   <form [formGroup]="form" (ngSubmit)="submitUpdateForm(form.value)">
     <div class="row">
-      <div class="col-sm-6">
+      <div class="col-sm-10">
         <div class="form-group"
              [ngClass]="{'has-error':!form.controls['centroSaludName'].valid && form.controls['centroSaludName'].touched}">
           <label>Nombre:</label>
-          <input [(ngModel)]="centroSaludName" class="form-control" type="text" placeholder="Hospital"
+          <input [(ngModel)]="model.centroSaludName" class="form-control" type="text" placeholder="Hospital"
                  [formControl]="form.controls['centroSaludName']">
           <div *ngIf="form.controls['centroSaludName'].hasError('required') && form.controls['centroSaludName'].touched"
                class="help-block">Debes incluir el nombre.
           </div>
         </div>
       </div>
+      <div class="col-sm-2">
+        <div class="text-center">
+          <label></label>
+          <button type="submit" class="btn btn-primary btn-block" [disabled]="!form.valid">Guardar</button>
+        </div>
+      </div>
     </div>
-    <button type="submit" class="btn btn-primary btn-block" [disabled]="!form.valid">Guardar</button>
   </form>
   <div class="row">
     <app-especialidad-busqueda></app-especialidad-busqueda>
