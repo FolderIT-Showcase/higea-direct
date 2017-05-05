@@ -1,6 +1,5 @@
-import {TipoContacto} from './enums/tipo-contacto';
 export class Contacto {
-  id: number;
-  tipoContacto: TipoContacto;
+  id?: number;
+  tipoContacto: string;
   dato: string;
 }

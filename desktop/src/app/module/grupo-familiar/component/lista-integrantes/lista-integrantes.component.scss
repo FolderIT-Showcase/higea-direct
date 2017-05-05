@@ -15,3 +15,9 @@
   background-color: rgba(0, 0, 0, 0.1);
   border-radius: 20px;
 }
+
+.table td.fit, 
+.table th.fit {
+    white-space: nowrap;
+    width: 1%;
+}
