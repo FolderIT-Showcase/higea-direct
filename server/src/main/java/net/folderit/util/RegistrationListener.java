@@ -10,6 +10,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.util.UUID;
 
 /**
@@ -39,6 +40,7 @@ public class RegistrationListener implements
         this.confirmRegistration(event);
     }
 
+    @Transactional
     private void confirmRegistration(OnRegistrationCompleteEvent event) {
         User user = event.getUser();
         String token = UUID.randomUUID().toString();

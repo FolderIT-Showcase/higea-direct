@@ -66,6 +66,7 @@ public class UserService {
         userRepository.save(user);
     }
 
+    @Transactional
     public void createVerificationToken(User user, String token) {
         VerificationToken myToken = new VerificationToken(null,token, user,null);
         myToken.calculateExpiryDate(myToken.EXPIRATION);

@@ -105,11 +105,14 @@ export class RegisterComponent implements OnInit, OnDestroy {
         genero: persona.genero.slice(0, 1)
       };
 
+      this.loadingService.start();
       this.personaService.validateDni(doc)
         .then(() => {
+          this.loadingService.finish();
           this.savePersona(persona);
         })
         .catch(error => {
+          this.loadingService.finish();
           this.alertService.error('Sus datos no son válidos, por favor revíselos.');
           console.error(error);
         });
@@ -127,7 +130,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this.router.navigate(['/login'])
           .then(() => {
             this.loadingService.finish();
-            this.alertService.success('Registro Exitoso');
+            this.alertService.success('Registro Exitoso, chequee su cuenta de email para activar el usuario');
           });
       })
       .catch(error => {
