@@ -6,11 +6,12 @@ import {DatepickerModule} from 'ngx-bootstrap/datepicker';
 import {PopoverModule} from 'ngx-bootstrap/popover';
 import {ResultadoComponent} from './component/resultado/resultado.component';
 import {TurnoComponent} from './turno.component';
-import {ModalModule} from 'ngx-bootstrap/modal';
 import {AgmCoreModule} from 'angular2-google-maps/core';
 import {RouterModule} from '@angular/router';
 import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 import {ModificarTurnoComponent} from './component/modificar-turno/modificar-turno.component';
+import {CoreModule} from '../core/core.module';
+import {ModalModule} from 'ngx-bootstrap';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import {ModificarTurnoComponent} from './component/modificar-turno/modificar-tur
     CommonModule,
     RouterModule,
     FormsModule,
+    CoreModule,
     DatepickerModule,
     BsDropdownModule.forRoot(),
     PopoverModule.forRoot(),

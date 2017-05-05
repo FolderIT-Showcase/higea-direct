@@ -1,8 +1,6 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ModalDirective} from 'ngx-bootstrap';
 import {Subscription} from 'rxjs/Subscription';
-import {Router} from '@angular/router';
-import {AlertService} from '../../../core/service/alert.service';
 import {StoreService} from '../../../core/service/store.service';
 import {Store} from '../../../core/service/store';
 import {PagerService} from '../../../core/service/pager.service';

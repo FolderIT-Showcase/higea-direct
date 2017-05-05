@@ -9,6 +9,7 @@ import {Router} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
 import {ModalDirective} from 'ngx-bootstrap';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Especialidad} from '../../../core/domain/especialidad';
 
 class Data {
   nombre: string;
@@ -24,7 +25,7 @@ export class ProfesionalesComponent implements OnInit {
   model: Data = new Data();
   profesionales: Profesional[] = [];
   profesional: Profesional = new Profesional();
-
+  especialidades: Especialidad[] = [];
   totalItems = 0;
   currentPage = 1;
   smallnumPages = 0;

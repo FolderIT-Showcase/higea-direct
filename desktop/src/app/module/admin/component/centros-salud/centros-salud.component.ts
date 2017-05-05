@@ -6,14 +6,14 @@ import {Especialidad} from '../../../core/domain/especialidad';
 import {TurnoService} from '../../../core/service/turno.service';
 import {AlertService} from '../../../core/service/alert.service';
 import {AdminService} from '../../../core/service/admin.service';
-import {ModalDirective} from "ngx-bootstrap/index";
+import {ModalDirective} from 'ngx-bootstrap/index';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs/Subscription';
 import {Store} from '../../../core/service/store';
-import {PagerService} from "../../../core/service/pager.service";
+import {PagerService} from '../../../core/service/pager.service';
 
 class Data {
-    centroSaludName: string;
+  centroSaludName: string;
 }
 
 @Component({
@@ -23,7 +23,7 @@ class Data {
 })
 export class CentrosSaludComponent implements OnInit {
 
-  centro: CentroSalud =  new CentroSalud();
+  centro: CentroSalud = new CentroSalud();
   centros: CentroSalud[] = [];
   model: Data = new Data();
   especialidades: Especialidad[] = [];
@@ -122,7 +122,7 @@ export class CentrosSaludComponent implements OnInit {
     this.centro = centro;
   }
 
-  showUpdateModal(centro:CentroSalud) {
+  showUpdateModal(centro: CentroSalud) {
     this.updateModal.show();
     this.centro = centro;
     this.model.centroSaludName = centro.nombre;
@@ -147,10 +147,10 @@ export class CentrosSaludComponent implements OnInit {
 
   delete(centro: CentroSalud) {
     this.adminService.deleteCentroSalud(centro).then(data => {
-        this.alertService.success('Se borro exitosamente');
-      })
+      this.alertService.success('Se borro exitosamente');
+    })
       .catch((error) => {
-        console.log("Error"+ error);
+        console.log("Error" + error);
         this.alertService.error(error.body);
       });
   }
@@ -161,6 +161,10 @@ export class CentrosSaludComponent implements OnInit {
 
   handleUpdateModal(event) {
     this.updateModal = event;
+  }
+
+  submitSaveForm(value) {
+  
   }
 
   submitUpdateForm(value: Data) {
@@ -174,8 +178,8 @@ export class CentrosSaludComponent implements OnInit {
 
   update(centroSalud: CentroSalud) {
     this.adminService.updateCentroSalud(centroSalud).then(data => {
-        this.alertService.success('Se guardo exitosamente');
-      })
+      this.alertService.success('Se guardo exitosamente');
+    })
       .catch((error) => {
         console.log(error);
         this.alertService.error('Error al querer guardar el Centro de Salud');
