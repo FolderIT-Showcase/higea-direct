@@ -1,12 +1,12 @@
-import {Pais} from './pais';
+import {Localidad} from './localidad';
 export class Domicilio {
   id?: number;
-  pais?: Pais;
+  localidad?: Localidad;
   calle?: string;
-  altura?: number;
+  piso?: number;
   departamento?: string;
 
   constructor() {
-    this.pais = new Pais();
+    this.localidad = new Localidad();
   }
 }

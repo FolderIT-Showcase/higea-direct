@@ -1,10 +1,10 @@
-import {Partido} from './partido';
+import {Pais} from './pais';
 export class Provincia {
   id?: number;
   nombre: string;
-  partido?: Partido;
+  pais?: Pais;
 
   constructor() {
-    this.partido = new Partido();
+    this.pais = new Pais();
   }
 }
