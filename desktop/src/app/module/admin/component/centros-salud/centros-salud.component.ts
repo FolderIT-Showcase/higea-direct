@@ -6,7 +6,7 @@ import {Especialidad} from '../../../core/domain/especialidad';
 import {TurnoService} from '../../../core/service/turno.service';
 import {AlertService} from '../../../core/service/alert.service';
 import {AdminService} from '../../../core/service/admin.service';
-import {ModalDirective} from 'ngx-bootstrap/index';
+import {ModalDirective} from 'ngx-bootstrap';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs/Subscription';
 import {Store} from '../../../core/service/store';
@@ -18,8 +18,7 @@ class Data {
 
 @Component({
   selector: 'app-centros-salud',
-  templateUrl: './centros-salud.component.html',
-  styleUrls: ['./centros-salud.component.scss']
+  templateUrl: './centros-salud.component.html'
 })
 export class CentrosSaludComponent implements OnInit {
 
@@ -88,7 +87,7 @@ export class CentrosSaludComponent implements OnInit {
     this.setPage(1);
   }
 
-  crear(value:Data): void {
+  crear(value: Data) {
     this.especialidades = this.storeService.get('especialidadesSeleccionadas');
     console.log('Especialidad nombre: ' + value.centroSaludName);
     const centroSalud = new CentroSalud();
@@ -97,19 +96,18 @@ export class CentrosSaludComponent implements OnInit {
 
     this.adminService.saveCentroSalud(centroSalud).then(data => {
       this.alertService.success('Se guardo exitosamente');
-        this.saveModal.hide();
+      this.saveModal.hide();
 
     })
       .catch((error) => {
         console.log(error);
-        this.alertService.success('Error');
+        this.alertService.error('Error inesperado');
         this.saveModal.hide();
       });
-    ;
+
   }
 
   clean() {
-    //this.centroSaludName = '';
     this.especialidades = [];
   }
 
@@ -128,7 +126,7 @@ export class CentrosSaludComponent implements OnInit {
     this.updateModal.show();
     this.centro = centro;
     this.model.centroSaludName = centro.nombre;
-
+    this.storeService.update('centroSalud', centro);
   }
 
   handleDeleteModal(event) {
@@ -165,7 +163,7 @@ export class CentrosSaludComponent implements OnInit {
     this.updateModal = event;
   }
 
-  submitSaveForm(value:Data) {
+  submitSaveForm(value: Data) {
     this.crear(value);
   }
 
@@ -181,7 +179,7 @@ export class CentrosSaludComponent implements OnInit {
   update(centroSalud: CentroSalud) {
     this.adminService.updateCentroSalud(centroSalud).then(data => {
       this.alertService.success('Se guardo exitosamente');
-        this.updateModal.hide();
+      this.updateModal.hide();
     })
       .catch((error) => {
         console.log(error);

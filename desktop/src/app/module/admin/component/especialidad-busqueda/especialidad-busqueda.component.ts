@@ -5,6 +5,7 @@ import {StoreService} from '../../../core/service/store.service';
 import {Store} from '../../../core/service/store';
 import {PagerService} from '../../../core/service/pager.service';
 import {Especialidad} from '../../../core/domain/especialidad';
+import {CentroSalud} from '../../../core/domain/centro-salud';
 
 @Component({
   selector: 'app-especialidad-busqueda',
@@ -31,7 +32,7 @@ export class EspecialidadBusquedaComponent implements OnInit, OnDestroy {
   pager: any = {};
   // paged items
   pagedItems: any[];
-
+  centro: CentroSalud;
 
   constructor(private store: Store,
               private storeService: StoreService,
@@ -58,7 +59,7 @@ export class EspecialidadBusquedaComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-
+    this.centro = this.storeService.get('centroSalud');
     this.subs.push(
       this.store.changes.pluck('especialidades').subscribe(
         (data: any) => {
@@ -73,20 +74,28 @@ export class EspecialidadBusquedaComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.especialidades = null;
     this.subs.forEach(x => x.unsubscribe());
   }
 
   public asignar(especialidad: Especialidad) {
 
-    console.log('Element ' + especialidad);
-    const element = this.especialidadesSelected.find(x => x.id === especialidad.id);
-    console.log('Element ' + element);
+    if (!this.centro) {
+      this.centro = new CentroSalud();
+    }
+
+    if (!this.centro.especialidad) {
+      this.centro.especialidad = [];
+    }
+
+    const element = this.centro.especialidad.find(x => x.id === especialidad.id);
+
     if (element) {
       this.hideModal();
       return
     }
-    this.especialidadesSelected.push(especialidad);
-    this.storeService.update('especialidadesSeleccionadas', this.especialidadesSelected);
+    this.centro.especialidad.push(especialidad);
+    this.storeService.update('especialidadesSeleccionadas', this.centro.especialidad);
 
     especialidad.seleccionado = true;
 
@@ -116,4 +125,17 @@ export class EspecialidadBusquedaComponent implements OnInit, OnDestroy {
   public onHidden() {
     this.isModalShown = false;
   }
+
+  isSelected(especialidad: Especialidad) {
+    if (!(this.centro && this.centro.especialidad)) {
+      return false;
+    }
+    for (const x of this.centro.especialidad) {
+      if (x.id === especialidad.id) {
+        return true;
+      }
+    }
+    return false;
+  }
+
 }
