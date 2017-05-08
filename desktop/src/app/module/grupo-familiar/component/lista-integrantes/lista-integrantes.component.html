@@ -215,7 +215,7 @@
                                     <select type="text" class="form-control" name="pais" [(ngModel)]="formData.domicilio.localidad.provincia.pais.nombre"
                                             #pais="ngModel" (change)="rebuildLists(formData)" required>
                                         <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
-                                        <option [ngValue]="pais" *ngFor="let pais of lists.paises">{{pais}}</option>
+                                        <option [ngValue]="pais" *ngFor="let pais of lists.paises">{{pais.nombre}}</option>
                                     </select>
                                     <div *ngIf="f.submitted && !pais.valid" class="help-block">Seleccione el País</div>
                                 </div>
@@ -227,7 +227,7 @@
                                             [(ngModel)]="formData.domicilio.localidad.provincia.nombre" #provincia="ngModel"
                                             [disabled]="!formData.domicilio.localidad.provincia.pais.nombre" (change)="rebuildLists(formData)" required>
                                         <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
-                                        <option [ngValue]="provincia" *ngFor="let provincia of lists.provincias">{{provincia}}</option>
+                                        <option [ngValue]="provincia" *ngFor="let provincia of lists.provincias">{{provincia.nombre}}</option>
                                     </select>
                                     <div *ngIf="f.submitted && !provincia.valid" class="help-block">Seleccione la Provincia</div>
                                 </div>

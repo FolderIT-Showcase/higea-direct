@@ -21,6 +21,7 @@ import {CentrosSaludComponent} from '../admin/component/centros-salud/centros-sa
 import {ProfesionalesComponent} from '../admin/component/profesionales/profesionales.component';
 import {AdminGuard} from './service/guard/admin.guard';
 import {TurnoResolveService} from "./service/resolve/turno-resolve.service";
+import {ProvinciaResolveService} from "./service/resolve/provincia-resolve.service";
 
 const appRoutes: Routes = [
   {
@@ -57,7 +58,11 @@ const appRoutes: Routes = [
       },
       {
         path: 'grupo-familiar',
-        component: GrupoFamiliarComponent
+        component: GrupoFamiliarComponent,
+        resolve: {
+          paises: PaisesResolveService,
+          provincias: ProvinciaResolveService
+        }
       },
       {
         path: 'admin',

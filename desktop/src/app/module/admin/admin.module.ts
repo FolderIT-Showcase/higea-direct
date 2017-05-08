@@ -24,6 +24,7 @@ import {EspecialidadBusquedaComponent} from './component/especialidad-busqueda/e
 import {ProfesionalBusquedaComponent} from './component/profesional-busqueda/profesional-busqueda.component';
 import {TurnoBusquedaComponent} from './component/turno-busqueda/turno-busqueda.component';
 import {TurnoResolveService} from "../core/service/resolve/turno-resolve.service";
+import {ProvinciaResolveService} from "../core/service/resolve/provincia-resolve.service";
 
 @NgModule({
   imports: [
@@ -59,7 +60,8 @@ import {TurnoResolveService} from "../core/service/resolve/turno-resolve.service
     EspecialidadResolveService,
     LoadingService,
     PagerService,
-    TurnoResolveService
+    TurnoResolveService,
+    ProvinciaResolveService
   ]
 
 })

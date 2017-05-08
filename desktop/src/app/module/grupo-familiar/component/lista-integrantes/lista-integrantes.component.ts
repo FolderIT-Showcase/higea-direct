@@ -9,6 +9,8 @@ import {Paises} from '../../../core/domain/enums/paises';
 import {TipoContactos} from '../../../core/domain/enums/tipo-contacto';
 import {ApiService} from '../../../core/service/api.service';
 import _ from 'lodash';
+import {MetadataService} from "../../../core/service/metadata.service";
+import {StoreService} from "../../../core/service/store.service";
 
 @Component({
     selector: 'app-lista-integrantes',
@@ -25,14 +27,14 @@ export class ListaIntegrantesComponent {
      public isModalShown = false;
      public currentPersona = new Persona();
      public modalAction = 'none';
-     public formData = {};
+     public formData:any = {};
      public selectUndefined: any;
      public lists = {
          'generos': Generos.export(),
          'tipoDocumentos': TipoDocumentos.export(),
          'estadosCiviles': EstadosCiviles.export(),
          'tipoContactos': TipoContactos.export(),
-         'paises': Paises.build(),
+         'paises': [],
          'provincias': [],
          'localidades': []
      };
@@ -50,7 +52,10 @@ export class ListaIntegrantesComponent {
      public integrantes: Persona[] = [];
 
      public rebuildLists(integrante) {
-         this.lists.provincias = [];
+
+      if(this.formData && this.formData.domicilio && this.formData.domicilio.localidad && this.formData.domicilio.localidad.provincia  && this.formData.domicilio.localidad.provincia.pais)
+       this.lists.provincias = this.lists.provincias.filter(x=>x.pais.id===this.formData.domicilio.localidad.provincia.pais.id);
+        /* this.lists.provincias = [];
          this.lists.localidades = [];
          const paises = Paises.export();
          let provincias = [];
@@ -101,7 +106,7 @@ export class ListaIntegrantesComponent {
                      integrante.domicilio.localidad.nombre = this.selectUndefined;
                  }
              }
-         }
+         }*/
      }
 
      public showModal(action, integrante) {
@@ -126,6 +131,14 @@ export class ListaIntegrantesComponent {
 
      public onHidden(action) {
          this.isModalShown = false;
+     }
+
+     initListas(){
+
+       this.lists.provincias= this.storeHelper.get('provincias');
+       this.lists.paises =  this.storeHelper.get("paises");
+       console.log("Provincias: "+ this.lists.provincias );
+
      }
 
      public confirmModal(action, integrante) {
@@ -171,10 +184,12 @@ export class ListaIntegrantesComponent {
          }
      }
 
+
+
      constructor(private alertService: AlertService,
-                 private api: ApiService) {
+                 private api: ApiService,private metadataService:MetadataService,private storeHelper: StoreService) {
          // Popular listas
-         this.lists.paises = Paises.build();
+        this.initListas();
          const path = 'persona/email?email=' + this.currentUser.email;
          this.busy = this.api.get(path).first().toPromise()
              .then((res) => {
