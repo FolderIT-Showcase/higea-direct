@@ -155,7 +155,6 @@ export class ProfesionalesComponent implements OnInit {
   save(profesional: Profesional) {
     this.adminService.saveProfesional(profesional).then(data => {
       this.alertService.success('Se guardo exitosamente');
-      //this.actualizarProfesionales();
       this.saveModal.hide();
     })
       .catch((error) => {
@@ -167,7 +166,7 @@ export class ProfesionalesComponent implements OnInit {
 
   actualizarProfesionales() {
     this.adminService.getProfesionales().then(data => {
-      this.storeService.update('profesionales',data);
+      this.storeService.update('profesionales', data);
     })
       .catch((error) => {
         console.log(error);
@@ -191,7 +190,6 @@ export class ProfesionalesComponent implements OnInit {
   update(profesional: Profesional) {
     this.adminService.updateProfesional(profesional).then(data => {
       this.alertService.success('Se guardo exitosamente');
-      //this.actualizarProfesionales();
       this.updateModal.hide();
     })
       .catch((error) => {
@@ -203,15 +201,15 @@ export class ProfesionalesComponent implements OnInit {
 
   delete(profesional: Profesional) {
     this.adminService.deleteProfesional(profesional).then(data => {
-        this.alertService.success('Se borro exitosamente');
-      })
+      this.alertService.success('Se borro exitosamente');
+    })
       .catch((error) => {
-        console.log("Error"+ error);
+        console.log('Error' + error);
         this.alertService.error(error.body);
       });
   }
 
-  clean(){
+  clean() {
     this.form.reset();
   }
 

@@ -1,11 +1,11 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {ModalDirective} from 'ngx-bootstrap';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs/Subscription';
 import {StoreService} from '../../../core/service/store.service';
 import {Store} from '../../../core/service/store';
 import {PagerService} from '../../../core/service/pager.service';
 import {Especialidad} from '../../../core/domain/especialidad';
 import {CentroSalud} from '../../../core/domain/centro-salud';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-especialidad-busqueda',
@@ -13,9 +13,6 @@ import {CentroSalud} from '../../../core/domain/centro-salud';
 })
 
 export class EspecialidadBusquedaComponent implements OnInit, OnDestroy {
-
-  @ViewChild('autoShownModal') public autoShownModal: ModalDirective;
-  @ViewChild('infoModal') public infoModal: ModalDirective;
 
   especialidades: Especialidad[] = [];
   especialidadesSelected: Especialidad[] = [];
@@ -31,12 +28,31 @@ export class EspecialidadBusquedaComponent implements OnInit, OnDestroy {
   // pager object
   pager: any = {};
   // paged items
-  pagedItems: any[];
+  pagedItems: Especialidad[];
   centro: CentroSalud;
 
   constructor(private store: Store,
               private storeService: StoreService,
               private  pagerService: PagerService) {
+  }
+
+  ngOnInit(): void {
+    this.especialidades = this.storeService.get('especialidades');
+
+    this.subs.push(
+      this.store.changes.pluck('centroSalud').subscribe(
+        (data: any) => {
+          this.centro = data;
+          this.especialidades.forEach(x => {
+            x.seleccionado = false;
+          });
+          this.updatedSelected();
+          this.pagedItems = this.especialidades.slice(this.pager.startIndex, this.pager.endIndex + 1);
+        }
+      ));
+
+
+    this.setPage(1);
   }
 
   public setPage(page: number): void {
@@ -50,7 +66,6 @@ export class EspecialidadBusquedaComponent implements OnInit, OnDestroy {
     // get current page of items
     this.pagedItems = this.especialidades.slice(this.pager.startIndex, this.pager.endIndex + 1);
     this.currentPage = page;
-    console.log('paginas' + this.pager.totalPages);
     this.totalItems = this.pager.totalPages * this.maxSize;
   }
 
@@ -58,27 +73,13 @@ export class EspecialidadBusquedaComponent implements OnInit, OnDestroy {
     this.setPage(event.page);
   }
 
-  ngOnInit(): void {
-    this.centro = this.storeService.get('centroSalud');
-    this.subs.push(
-      this.store.changes.pluck('especialidades').subscribe(
-        (data: any) => {
-          this.especialidades = data;
-          this.pagedItems = this.especialidades.slice(this.pager.startIndex, this.pager.endIndex + 1);
-        }
-      ));
-
-    // initialize to page 1
-    this.setPage(1);
-
-  }
-
-  ngOnDestroy(): void {
+  ngOnDestroy() {
     this.especialidades = null;
+    this.centro = null;
     this.subs.forEach(x => x.unsubscribe());
   }
 
-  public asignar(especialidad: Especialidad) {
+  public toggleEspecialidad(especialidad: Especialidad) {
 
     if (!this.centro) {
       this.centro = new CentroSalud();
@@ -91,14 +92,15 @@ export class EspecialidadBusquedaComponent implements OnInit, OnDestroy {
     const element = this.centro.especialidad.find(x => x.id === especialidad.id);
 
     if (element) {
-      this.hideModal();
+      this.centro.especialidad = this.centro.especialidad.filter(x => x.id !== especialidad.id);
+      this.storeService.update('especialidadesSeleccionadas', this.centro.especialidad);
+      especialidad.seleccionado = false;
       return
     }
+
     this.centro.especialidad.push(especialidad);
     this.storeService.update('especialidadesSeleccionadas', this.centro.especialidad);
-
     especialidad.seleccionado = true;
-
   }
 
   public showModal(especialidad: Especialidad) {
@@ -110,32 +112,27 @@ export class EspecialidadBusquedaComponent implements OnInit, OnDestroy {
     this.especialidadesSelected = [];
   }
 
-  public hideModal() {
-    this.autoShownModal.hide();
-  }
-
   public showInfoModal() {
     this.isInfoModalShown = true;
-  }
-
-  public hideInfoModal() {
-    this.infoModal.hide();
   }
 
   public onHidden() {
     this.isModalShown = false;
   }
 
-  isSelected(especialidad: Especialidad) {
-    if (!(this.centro && this.centro.especialidad)) {
-      return false;
+  updatedSelected() {
+    if (!this.centro || !this.centro.especialidad || !this.especialidades) {
+      return;
     }
-    for (const x of this.centro.especialidad) {
-      if (x.id === especialidad.id) {
-        return true;
-      }
-    }
-    return false;
+
+    this.especialidades.forEach(x => {
+      this.centro.especialidad.forEach(y => {
+        if (x.id === y.id) {
+          x.seleccionado = true;
+        }
+      })
+    });
+
   }
 
 }

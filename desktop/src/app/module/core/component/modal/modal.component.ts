@@ -12,9 +12,8 @@ export class ModalComponent implements OnInit {
 
   @Input() backdrop = 'static';
   @Input() small = false;
-  @Input() title = 'Modal estático.';
+  @Input() title = '';
   @Output() outModal = new EventEmitter<ModalDirective>();
-
 
   ngOnInit() {
     this.outModal.emit(this.modal);

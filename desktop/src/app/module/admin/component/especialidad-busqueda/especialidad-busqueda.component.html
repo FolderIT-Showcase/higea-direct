@@ -17,10 +17,10 @@
         </thead>
         <tbody>
         <tr *ngFor="let especialidad of pagedItems"
-            [ngStyle]="{'background-color': isSelected(especialidad) ? '#67c18c' : '','color': isSelected(especialidad) ? 'white' : ''}">
+            [ngStyle]="{'background-color': especialidad.seleccionado ? '#67c18c' : '','color': especialidad.seleccionado ? 'white' : ''}">
           <td>{{especialidad.nombre }}</td>
           <td>
-            <a (click)="asignar(especialidad)" class="btn btn-success btn-block">
+            <a (click)="toggleEspecialidad(especialidad)" class="btn btn-success btn-block">
               <span class="fa fa-arrow-right"></span>
             </a>
           </td>
