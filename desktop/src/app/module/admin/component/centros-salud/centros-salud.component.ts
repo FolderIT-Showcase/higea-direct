@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit} from '@angular/core';
 import {CentroSalud} from '../../../core/domain/centro-salud';
 import {StoreService} from '../../../core/service/store.service';
 import {Profesional} from '../../../core/domain/profesional';
@@ -11,6 +11,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs/Subscription';
 import {Store} from '../../../core/service/store';
 import {PagerService} from '../../../core/service/pager.service';
+import {Subject} from 'rxjs/Subject';
 
 class Data {
   centroSaludName: string;
@@ -27,7 +28,6 @@ export class CentrosSaludComponent implements OnInit {
   model: Data = new Data();
   especialidades: Especialidad[] = [];
   profesionales: Profesional[] = [];
-
 
   totalItems = 0;
   currentPage = 1;
@@ -58,6 +58,18 @@ export class CentrosSaludComponent implements OnInit {
     });
   }
 
+  ngOnInit() {
+    this.subs.push(
+      this.store.changes.pluck('centrosSalud').subscribe(
+        (data: any) => {
+          this.centros = data;
+          this.pagedItems = this.centros.slice(this.pager.startIndex, this.pager.endIndex + 1);
+        }
+      ));
+
+    // initialize to page 1
+    this.setPage(1);
+  }
 
   public setPage(page: number): void {
     if (page < 1 || page > this.pager.totalPages) {
@@ -74,48 +86,40 @@ export class CentrosSaludComponent implements OnInit {
     this.totalItems = this.pager.totalPages * this.maxSize;
   }
 
-  ngOnInit() {
-    this.subs.push(
-      this.store.changes.pluck('centrosSalud').subscribe(
-        (data: any) => {
-          this.centros = data;
-          this.pagedItems = this.centros.slice(this.pager.startIndex, this.pager.endIndex + 1);
-        }
-      ));
-
-    // initialize to page 1
-    this.setPage(1);
-  }
-
   crear(value: Data) {
     this.especialidades = this.storeService.get('especialidadesSeleccionadas');
-    console.log('Especialidad nombre: ' + value.centroSaludName);
-    const centroSalud = new CentroSalud();
-    centroSalud.nombre = value.centroSaludName.toUpperCase();
-    centroSalud.especialidad = this.especialidades;
 
-    this.adminService.saveCentroSalud(centroSalud).then(data => {
+    this.centro.nombre = value.centroSaludName.toUpperCase();
+    this.centro.especialidad = this.especialidades;
+
+    this.adminService.saveCentroSalud(this.centro).then(data => {
       this.alertService.success('Se guardo exitosamente');
       this.saveModal.hide();
-
     })
       .catch((error) => {
         console.log(error);
         this.alertService.error('Error inesperado');
         this.saveModal.hide();
       });
-
   }
 
   clean() {
-    this.especialidades = [];
+    this.form = this.fb.group({
+      'centroSaludName': [null, Validators.required],
+    });
+    this.model = new Data();
   }
-
 
   handleSaveModal(event) {
     this.saveModal = event;
   }
 
+  showSaveModal() {
+    this.clean();
+    this.centro = new CentroSalud();
+    this.saveModal.show();
+    this.storeService.update('centroSalud', this.centro);
+  }
 
   showDeleteModal(centro: CentroSalud) {
     this.deleteModal.show();
@@ -150,7 +154,7 @@ export class CentrosSaludComponent implements OnInit {
       this.alertService.success('Se borro exitosamente');
     })
       .catch((error) => {
-        console.log("Error" + error);
+        console.log('Error' + error);
         this.alertService.error(error.body);
       });
   }
@@ -165,6 +169,7 @@ export class CentrosSaludComponent implements OnInit {
 
   submitSaveForm(value: Data) {
     this.crear(value);
+    this.clean();
   }
 
   submitUpdateForm(value: Data) {
@@ -174,6 +179,7 @@ export class CentrosSaludComponent implements OnInit {
     }
 
     this.update(this.centro);
+    this.clean();
   }
 
   update(centroSalud: CentroSalud) {

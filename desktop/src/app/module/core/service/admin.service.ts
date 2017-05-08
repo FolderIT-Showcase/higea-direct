@@ -125,7 +125,7 @@ export class AdminService {
 
   deleteTurno(turno: Turno) {
     const path = 'turno';
-    return this.api.delete(path + '?id=' + turno.id + "&desactivate=true")
+    return this.api.delete(path + '?id=' + turno.id + '&desactivate=true')
       .do(data => {
         // this.storeService.update('profesionales', data);
       })
