@@ -8,7 +8,7 @@ const state: AppState = {
   paises: [],
   provincias: [],
   localidades: [],
-  personas: [],
+  integrantes: [],
   persona: null,
   loginType: null,
   centroSalud: null,

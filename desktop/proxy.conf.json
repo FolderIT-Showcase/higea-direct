@@ -1,6 +1,6 @@
 {
   "/api": {
-    "target": "https://localhost:8080",
+    "target": "https://turnero.folderit.net/api",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug",

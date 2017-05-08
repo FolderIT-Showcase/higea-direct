@@ -23,7 +23,6 @@ import {AdminGuard} from './service/guard/admin.guard';
 import {TurnoResolveService} from './service/resolve/turno-resolve.service';
 import {ProvinciaResolveService} from './service/resolve/provincia-resolve.service';
 
-
 const appRoutes: Routes = [
   {
     path: '',
@@ -54,7 +53,7 @@ const appRoutes: Routes = [
         path: 'mis-turnos',
         component: ModificarTurnoComponent,
         resolve: {
-          integrantes: IntegrantesResolveService
+          integrantes: IntegrantesResolveService,
         }
       },
       {
@@ -62,7 +61,8 @@ const appRoutes: Routes = [
         component: GrupoFamiliarComponent,
         resolve: {
           paises: PaisesResolveService,
-          provincias: ProvinciaResolveService
+          provincias: ProvinciaResolveService,
+          integrantes: IntegrantesResolveService
         }
       },
       {

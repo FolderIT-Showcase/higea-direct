@@ -11,6 +11,7 @@ import {Documento} from '../../../core/domain/documento';
 import {StoreService} from '../../../core/service/store.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {LoadingService} from '../../../core/service/loading.service';
+import {Domicilio} from '../../../core/domain/domicilio';
 
 class Data {
   nombre = '';
@@ -95,9 +96,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
     persona.documento.numero = this.model.numeroDocumento;
     persona.nombre = this.model.nombre;
     persona.apellido = this.model.apellido;
-    persona.domicilio = {};
+    persona.domicilio = new Domicilio();
 
-    if (persona.documento.tipo === "dni") {
+    if (persona.documento.tipo === 'dni') {
 
       const doc = {
         documento: persona.documento.numero,
