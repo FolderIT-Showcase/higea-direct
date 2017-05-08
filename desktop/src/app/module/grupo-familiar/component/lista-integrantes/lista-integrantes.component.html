@@ -1,298 +1,303 @@
 <div class="row"
      [ngBusy]="{busy: busy, message: 'Por favor espere...', wrapperClass: 'ng-busy ng-busy-custom',minDuration: 200}">
-    <div class="col-sm-12">
-        <div class="col-sm-3">
-            <h3>Administrar</h3>
-        </div>
-        <div class="col-sm-6">
-            <div class="input-group h3" *ngIf="false">
-                <input name="data[search]" class="form-control" id="search" type="text" placeholder="Buscar Integrantes">
-                <span class="input-group-btn">
+  <div class="col-sm-12">
+    <div class="col-sm-3">
+      <h3>Administrar</h3>
+    </div>
+    <div class="col-sm-6">
+      <div class="input-group h3" *ngIf="false">
+        <input name="data[search]" class="form-control" id="search" type="text" placeholder="Buscar Integrantes">
+        <span class="input-group-btn">
                     <button class="btn btn-primary" type="submit">
                         <span class="fa fa-search"></span>
                     </button>
                 </span>
-            </div>
-        </div>
-        <div class="col-sm-3">
-            <a (click)="showModal('add', {})" class="btn btn-primary pull-right h3">
-                <span><i class="fa fa-user fa-fw"></i> Agregar Integrante</span>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <a (click)="showModal('add', {})" class="btn btn-primary pull-right h3">
+        <span><i class="fa fa-user fa-fw"></i> Agregar Integrante</span>
+      </a>
+    </div>
+  </div>
+  <hr/>
+  <div class="col-sm-12">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th>Integrante</th>
+          <th>Fecha de Nacimiento</th>
+          <th>Tipo y Nro. de Documento</th>
+          <th style="width:240px;">Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngIf="currentPersona.id">
+          <td>{{ currentPersona.nombre }} {{ currentPersona.apellido }}</td>
+          <td>{{ currentPersona.fechaNacimiento | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ label('tipoDocumentos', currentPersona.documento.tipo) }} {{currentPersona.documento.numero}}</td>
+          <td>
+            <a (click)="showModal('view', currentPersona)" class="btn btn-default">
+              <span><i class="fa fa-user"></i> Ver</span>
             </a>
-        </div>
+          </td>
+        </tr>
+        <tr *ngFor="let integrante of currentPersona.integrantes">
+          <td>{{ integrante.nombre }} {{ integrante.apellido }}</td>
+          <td>{{ integrante.fechaNacimiento | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ label('tipoDocumentos', integrante.documento.tipo) }} {{integrante.documento.numero}}</td>
+          <td>
+            <a (click)="showModal('edit', integrante)" class="btn btn-default">
+              <span><i class="fa fa-pencil"></i> Editar</span>
+            </a>
+            <a (click)="showModal('delete', integrante)" class="btn btn-danger">
+              <span><i class="fa fa-trash"></i> Borrar</span>
+            </a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
     </div>
-    <hr/>
-    <div class="col-sm-12">
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Integrante</th>
-                        <th>Fecha de Nacimiento</th>
-                        <th>Tipo y Nro. de Documento</th>
-                        <th style="width:240px;">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngIf="currentPersona.id">
-                        <td>{{ currentPersona.nombre }} {{ currentPersona.apellido }}</td>
-                        <td>{{ currentPersona.fechaNacimiento | date: 'dd/MM/yyyy' }}</td>
-                        <td>{{ label('tipoDocumentos', currentPersona.documento.tipo) }} {{currentPersona.documento.numero}}</td>
-                        <td>
-                            <a (click)="showModal('view', currentPersona)" class="btn btn-default">
-                                <span><i class="fa fa-user"></i> Ver</span>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr *ngFor="let integrante of currentPersona.integrantes">
-                        <td>{{ integrante.nombre }} {{ integrante.apellido }}</td>
-                        <td>{{ integrante.fechaNacimiento | date: 'dd/MM/yyyy' }}</td>
-                        <td>{{ label('tipoDocumentos', integrante.documento.tipo) }} {{integrante.documento.numero}}</td>
-                        <td>
-                            <a (click)="showModal('edit', integrante)" class="btn btn-default">
-                                <span><i class="fa fa-pencil"></i> Editar</span>
-                            </a>
-                            <a (click)="showModal('delete', integrante)" class="btn btn-danger">
-                                <span><i class="fa fa-trash"></i> Borrar</span>
-                            </a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+  </div>
 </div>
 
 <div *ngIf="isModalShown && modalAction == 'delete'" [config]="{ show: true, ignoreBackdropClick: true }"
      (onHidden)="onHidden()" bsModal #autoShownModal="bs-modal"
      class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title pull-left"><strong>Confirmación</strong></h4>
-                <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>¿Está seguro que desea eliminar el integrante seleccionado?</p>
-            </div>
-            <div class="modal-footer">
-                <a (click)="confirmModal(modalAction, formData)" type="submit" class="btn btn-danger">SI</a>
-                <a (click)="hideModal()" class="btn btn-default">NO</a>
-            </div>
-        </div>
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left"><strong>Confirmación</strong></h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>¿Está seguro que desea eliminar el integrante seleccionado?</p>
+      </div>
+      <div class="modal-footer">
+        <a (click)="confirmModal(modalAction, formData)" type="submit" class="btn btn-danger">SI</a>
+        <a (click)="hideModal()" class="btn btn-default">NO</a>
+      </div>
     </div>
+  </div>
 </div>
 
 <div *ngIf="isModalShown && ['add','edit','view'].indexOf(modalAction) >= 0"
      [config]="{ show: true, ignoreBackdropClick: true }" (onHidden)="onHidden()" bsModal #autoShownModal="bs-modal"
      class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title pull-left"><strong>Datos del Integrante</strong></h4>
-                <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left"><strong>Datos del Integrante</strong></h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
+          <fieldset [disabled]="modalAction === 'view'">
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group required" [ngClass]="{ 'has-error': f.submitted && !nombre.valid }">
+                  <label for="nombre" class="control-label">Nombres</label>
+                  <input type="text" class="form-control" name="nombre" placeholder="Ej: Luis Augusto"
+                         [(ngModel)]="formData.nombre" #nombres="ngModel"
+                         required/>
+                  <div *ngIf="f.submitted && !nombre.valid" class="help-block">Ingrese los Nombres</div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group required" [ngClass]="{ 'has-error': f.submitted && !apellido.valid }">
+                  <label for="apellido" class="control-label">Apellidos</label>
+                  <input type="text" class="form-control" name="apellido" placeholder="Ej: Bonsembiante Perez"
+                         [(ngModel)]="formData.apellido" #apellidos="ngModel"
+                         required/>
+                  <div *ngIf="f.submitted && !apellido.valid" class="help-block">Ingrese los Apellidos</div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group required" [ngClass]="{ 'has-error': f.submitted && !genero.valid }">
+                  <label for="genero" class="control-label">Género</label>
+                  <select type="text" class="form-control" name="genero" [(ngModel)]="formData.genero" #genero="ngModel"
+                          required>
+                    <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
+                    <option [value]="genero.id" *ngFor="let genero of lists.generos">{{genero.label}}</option>
+                  </select>
+                  <div *ngIf="f.submitted && !genero.valid" class="help-block">Seleccione el Género</div>
+                </div>
+              </div>
             </div>
-            <div class="modal-body">
-                <form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
-                    <fieldset [disabled]="modalAction === 'view'">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <div class="form-group required" [ngClass]="{ 'has-error': f.submitted && !nombre.valid }">
-                                    <label for="nombre" class="control-label">Nombres</label>
-                                    <input type="text" class="form-control" name="nombre" placeholder="Ej: Luis Augusto"
-                                           [(ngModel)]="formData.nombre" #nombres="ngModel"
-                                           required/>
-                                    <div *ngIf="f.submitted && !nombre.valid" class="help-block">Ingrese los Nombres</div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-group required" [ngClass]="{ 'has-error': f.submitted && !apellido.valid }">
-                                    <label for="apellido" class="control-label">Apellidos</label>
-                                    <input type="text" class="form-control" name="apellido" placeholder="Ej: Bonsembiante Perez"
-                                           [(ngModel)]="formData.apellido" #apellidos="ngModel"
-                                           required/>
-                                    <div *ngIf="f.submitted && !apellido.valid" class="help-block">Ingrese los Apellidos</div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-group required" [ngClass]="{ 'has-error': f.submitted && !genero.valid }">
-                                    <label for="genero" class="control-label">Género</label>
-                                    <select type="text" class="form-control" name="genero" [(ngModel)]="formData.genero" #genero="ngModel"
-                                            required>
-                                        <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
-                                        <option [value]="genero.id" *ngFor="let genero of lists.generos">{{genero.label}}</option>
-                                    </select>
-                                    <div *ngIf="f.submitted && !genero.valid" class="help-block">Seleccione el Género</div>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <div class="form-group required" [ngClass]="{ 'has-error': f.submitted && !tipoDocumento.valid }">
-                                    <label for="tipoDocumentos" class="control-label">Tipo de Documento</label>
-                                    <select type="text" class="form-control" name="tipoDocumentos" [(ngModel)]="formData.documento.tipo"
-                                            #tipoDocumentos="ngModel"
-                                            required>
-                                        <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
-                                        <option [value]="tipoDocumento.id" *ngFor="let tipoDocumento of lists.tipoDocumentos">
-                                            {{tipoDocumento.label}}
-                                        </option>
-                                    </select>
-                                    <div *ngIf="f.submitted && !tipoDocumento.valid" class="help-block">Seleccione el Tipo de Documento
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-group required" [ngClass]="{ 'has-error': f.submitted && !documentoNumero.valid }">
-                                    <label for="documentoNumero" class="control-label">Número de Documento</label>
-                                    <input type="text" class="form-control" name="documentoNumero" placeholder="Número de Documento"
-                                           [(ngModel)]="formData.documento.numero" #documentoNumero="ngModel"
-                                           required/>
-                                    <div *ngIf="f.submitted && !documentoNumero.valid" class="help-block">Ingrese el Número de Documento
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-group required" [ngClass]="{ 'has-error': f.submitted && !fechaNacimiento.valid }">
-                                    <label for="fechaNacimiento" class="control-label">Fecha de Nacimiento</label>
-                                    <input type="date" class="form-control" name="fechaNacimiento"
-                                           [ngModel]="formData.fechaNacimiento | date:'yyyy-MM-dd'"
-                                           (ngModelChange)="formData.fechaNacimiento = $event" required/>
-                                    <div *ngIf="f.submitted && !fechaNacimiento.valid" class="help-block">Ingrese la Fecha de Nacimiento
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group required" [ngClass]="{ 'has-error': f.submitted && !tipoDocumento.valid }">
+                  <label for="tipoDocumentos" class="control-label">Tipo de Documento</label>
+                  <select type="text" class="form-control" name="tipoDocumentos" [(ngModel)]="formData.documento.tipo"
+                          #tipoDocumentos="ngModel"
+                          required>
+                    <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
+                    <option [value]="tipoDocumento.id" *ngFor="let tipoDocumento of lists.tipoDocumentos">
+                      {{tipoDocumento.label}}
+                    </option>
+                  </select>
+                  <div *ngIf="f.submitted && !tipoDocumento.valid" class="help-block">Seleccione el Tipo de Documento
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group required" [ngClass]="{ 'has-error': f.submitted && !documentoNumero.valid }">
+                  <label for="documentoNumero" class="control-label">Número de Documento</label>
+                  <input type="text" class="form-control" name="documentoNumero" placeholder="Número de Documento"
+                         [(ngModel)]="formData.documento.numero" #documentoNumero="ngModel"
+                         required/>
+                  <div *ngIf="f.submitted && !documentoNumero.valid" class="help-block">Ingrese el Número de Documento
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group required" [ngClass]="{ 'has-error': f.submitted && !fechaNacimiento.valid }">
+                  <label for="fechaNacimiento" class="control-label">Fecha de Nacimiento</label>
+                  <input type="date" class="form-control" name="fechaNacimiento"
+                         [ngModel]="formData.fechaNacimiento | date:'yyyy-MM-dd'"
+                         (ngModelChange)="formData.fechaNacimiento = $event" required/>
+                  <div *ngIf="f.submitted && !fechaNacimiento.valid" class="help-block">Ingrese la Fecha de Nacimiento
+                  </div>
+                </div>
+              </div>
+            </div>
 
-                        <div class="row">
-                            <div class="col-sm-8">
-                                <div class="col-sm-12" style="padding-left:0px;">
-                                    <label for="contacto" class="control-label">Contacto</label>
-                                </div>
-                                <div class="col-sm-3" style="padding-left:0px;">
-                                    <div class="form-group required" [ngClass]="{ 'has-error': f.submitted && !contactoTipo.valid }">
-                                        <select type="text" class="form-control" name="contactoTipo" [(ngModel)]="formData.contacto[0].tipoContacto" #contactoTipo="ngModel"
-                                                required>
-                                            <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
-                                            <option [value]="tc.id" *ngFor="let tc of lists.tipoContactos">{{tc.label}}</option>
-                                        </select>
-                                        <div *ngIf="f.submitted && !contactoTipo.valid" class="help-block">Seleccione un Tipo de Contacto</div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-9" style="padding-left:0px;padding-right:0px;">
-                                    <div class="form-group required" [ngClass]="{ 'has-error': f.submitted && !contactoDato.valid }">
-                                        <input type="text" class="form-control" name="contactoDato" placeholder="Ingresar teléfono, celular, email, etc."
-                                               [(ngModel)]="formData.contacto[0].dato" #contactoDato="ngModel"
-                                               required/>
-                                        <div *ngIf="f.submitted && !contactoDato.valid" class="help-block">Ingrese el Contacto</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-group required" [ngClass]="{ 'has-error': f.submitted && !estadoCivil.valid }">
-                                    <label for="estadoCivil" class="control-label">Estado Civil</label>
-                                    <select type="text" class="form-control" name="estadoCivil" [(ngModel)]="formData.estadoCivil"
-                                            #estadoCivil="ngModel"
-                                            required>
-                                        <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
-                                        <option [ngValue]="estadoCivil.id" *ngFor="let estadoCivil of lists.estadosCiviles">
-                                            {{estadoCivil.label}}
-                                        </option>
-                                    </select>
-                                    <div *ngIf="f.submitted && !estadoCivil.valid" class="help-block">Seleccione el Estado Civil</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <div class="form-group required" [ngClass]="{ 'has-error': f.submitted && !pais.valid }">
-                                    <label for="pais" class="control-label">País</label>
-                                    <select type="text" class="form-control" name="pais" [(ngModel)]="formData.domicilio.localidad.provincia.pais.nombre"
-                                            #pais="ngModel" (change)="rebuildLists(formData)" required>
-                                        <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
-                                        <option [ngValue]="pais" *ngFor="let pais of lists.paises">{{pais}}</option>
-                                    </select>
-                                    <div *ngIf="f.submitted && !pais.valid" class="help-block">Seleccione el País</div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-group required" [ngClass]="{ 'has-error': f.submitted && !provincia.valid }">
-                                    <label for="provincia" class="control-label">Provincia</label>
-                                    <select type="text" class="form-control" name="provincia"
-                                            [(ngModel)]="formData.domicilio.localidad.provincia.nombre" #provincia="ngModel"
-                                            [disabled]="!formData.domicilio.localidad.provincia.pais.nombre" (change)="rebuildLists(formData)" required>
-                                        <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
-                                        <option [ngValue]="provincia" *ngFor="let provincia of lists.provincias">{{provincia}}</option>
-                                    </select>
-                                    <div *ngIf="f.submitted && !provincia.valid" class="help-block">Seleccione la Provincia</div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-group required" [ngClass]="{ 'has-error': f.submitted && !localidad.valid }">
-                                    <label for="localidad" class="control-label">Localidad</label>
-                                    <select type="text" class="form-control" name="localidad"
-                                            [(ngModel)]="formData.domicilio.localidad.nombre" #localidad="ngModel"
-                                            [disabled]="!formData.domicilio.localidad.provincia.nombre"
-                                            (change)="rebuildLists(formData)" required>
-                                        <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
-                                        <option [ngValue]="localidad" *ngFor="let localidad of lists.localidades">{{localidad}}</option>
-                                    </select>
-                                    <div *ngIf="f.submitted && !localidad.valid" class="help-block">Seleccione la Localidad</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !calle.valid }">
-                                    <label for="calle" class="control-label">Dirección | Calle</label>
-                                    <input type="text" class="form-control" name="calle" placeholder="Ingresar Calle"
-                                           [(ngModel)]="formData.domicilio.calle" #calle="ngModel"/>
-                                    <div *ngIf="f.submitted && !calle.valid" class="help-block">Ingrese la Calle</div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !piso.valid }">
-                                    <label for="piso" class="control-label">Dirección | Piso</label>
-                                    <input type="text" class="form-control" name="piso" placeholder="Ingresar Piso"
-                                           [(ngModel)]="formData.domicilio.piso" #piso="ngModel"/>
-                                    <div *ngIf="f.submitted && !piso.valid" class="help-block">Ingrese el Piso</div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !departamento.valid }">
-                                    <label for="departamento" class="control-label">Dirección | Dpto.</label>
-                                    <input type="text" class="form-control" name="departamento" placeholder="Ingresar Departamento"
-                                           [(ngModel)]="formData.domicilio.departamento" #departamento="ngModel"/>
-                                    <div *ngIf="f.submitted && !departamento.valid" class="help-block">Ingrese el Departamento</div>
-                                </div>
-                            </div>
-                        </div>
-                    </fieldset>
-                </form>
-
-                <div class="row">
-                    <div class="col-sm-12">
-                        <p class="text-danger">* Campos Requeridos</p>
+            <div class="row">
+              <div class="col-sm-8">
+                <div class="col-sm-12" style="padding-left:0px;">
+                  <label for="contacto" class="control-label">Contacto</label>
+                </div>
+                <div class="col-sm-3" style="padding-left:0px;">
+                  <div class="form-group required" [ngClass]="{ 'has-error': f.submitted && !contactoTipo.valid }">
+                    <select type="text" class="form-control" name="contactoTipo"
+                            [(ngModel)]="formData.contacto[0].tipoContacto" #contactoTipo="ngModel"
+                            required>
+                      <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
+                      <option [value]="tc.id" *ngFor="let tc of lists.tipoContactos">{{tc.label}}</option>
+                    </select>
+                    <div *ngIf="f.submitted && !contactoTipo.valid" class="help-block">Seleccione un Tipo de Contacto
                     </div>
+                  </div>
                 </div>
+                <div class="col-sm-9" style="padding-left:0px;padding-right:0px;">
+                  <div class="form-group required" [ngClass]="{ 'has-error': f.submitted && !contactoDato.valid }">
+                    <input type="text" class="form-control" name="contactoDato"
+                           placeholder="Ingresar teléfono, celular, email, etc."
+                           [(ngModel)]="formData.contacto[0].dato" #contactoDato="ngModel"
+                           required/>
+                    <div *ngIf="f.submitted && !contactoDato.valid" class="help-block">Ingrese el Contacto</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group required" [ngClass]="{ 'has-error': f.submitted && !estadoCivil.valid }">
+                  <label for="estadoCivil" class="control-label">Estado Civil</label>
+                  <select type="text" class="form-control" name="estadoCivil" [(ngModel)]="formData.estadoCivil"
+                          #estadoCivil="ngModel"
+                          required>
+                    <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
+                    <option [ngValue]="estadoCivil.id" *ngFor="let estadoCivil of lists.estadosCiviles">
+                      {{estadoCivil.label}}
+                    </option>
+                  </select>
+                  <div *ngIf="f.submitted && !estadoCivil.valid" class="help-block">Seleccione el Estado Civil</div>
+                </div>
+              </div>
             </div>
-            <div class="modal-footer">
-                <div *ngIf="['add','edit'].indexOf(modalAction) >= 0">
-                    <button (click)="confirmModal(modalAction, formData)" type="submit" [disabled]="!f.form.valid"
-                            class="btn btn-primary">Aceptar
-                    </button>
-                    <a (click)="hideModal()" class="btn btn-default">Cancelar</a>
+
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group required" [ngClass]="{ 'has-error': f.submitted && !pais.valid }">
+                  <label for="pais" class="control-label">País</label>
+                  <select type="text" class="form-control" name="pais"
+                          [(ngModel)]="formData.domicilio.localidad.provincia.pais.nombre"
+                          #pais="ngModel" (change)="rebuildLists(formData)" required>
+                    <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
+                    <option [ngValue]="pais" *ngFor="let pais of lists.paises">{{pais}}</option>
+                  </select>
+                  <div *ngIf="f.submitted && !pais.valid" class="help-block">Seleccione el País</div>
                 </div>
-                <div *ngIf="['view'].indexOf(modalAction) >= 0">
-                    <a (click)="hideModal()" class="btn btn-default">Cerrar</a>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group required" [ngClass]="{ 'has-error': f.submitted && !provincia.valid }">
+                  <label for="provincia" class="control-label">Provincia</label>
+                  <select type="text" class="form-control" name="provincia"
+                          [(ngModel)]="formData.domicilio.localidad.provincia.nombre" #provincia="ngModel"
+                          [disabled]="!formData.domicilio.localidad.provincia.pais.nombre"
+                          (change)="rebuildLists(formData)" required>
+                    <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
+                    <option [ngValue]="provincia" *ngFor="let provincia of lists.provincias">{{provincia}}</option>
+                  </select>
+                  <div *ngIf="f.submitted && !provincia.valid" class="help-block">Seleccione la Provincia</div>
                 </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group required" [ngClass]="{ 'has-error': f.submitted && !localidad.valid }">
+                  <label for="localidad" class="control-label">Localidad</label>
+                  <select type="text" class="form-control" name="localidad"
+                          [(ngModel)]="formData.domicilio.localidad.nombre" #localidad="ngModel"
+                          [disabled]="!formData.domicilio.localidad.provincia.nombre"
+                          (change)="rebuildLists(formData)" required>
+                    <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
+                    <option [ngValue]="localidad" *ngFor="let localidad of lists.localidades">{{localidad}}</option>
+                  </select>
+                  <div *ngIf="f.submitted && !localidad.valid" class="help-block">Seleccione la Localidad</div>
+                </div>
+              </div>
             </div>
+
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !calle.valid }">
+                  <label for="calle" class="control-label">Dirección | Calle</label>
+                  <input type="text" class="form-control" name="calle" placeholder="Ingresar Calle"
+                         [(ngModel)]="formData.domicilio.calle" #calle="ngModel"/>
+                  <div *ngIf="f.submitted && !calle.valid" class="help-block">Ingrese la Calle</div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !piso.valid }">
+                  <label for="piso" class="control-label">Dirección | Piso</label>
+                  <input type="text" class="form-control" name="piso" placeholder="Ingresar Piso"
+                         [(ngModel)]="formData.domicilio.piso" #piso="ngModel"/>
+                  <div *ngIf="f.submitted && !piso.valid" class="help-block">Ingrese el Piso</div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !departamento.valid }">
+                  <label for="departamento" class="control-label">Dirección | Dpto.</label>
+                  <input type="text" class="form-control" name="departamento" placeholder="Ingresar Departamento"
+                         [(ngModel)]="formData.domicilio.departamento" #departamento="ngModel"/>
+                  <div *ngIf="f.submitted && !departamento.valid" class="help-block">Ingrese el Departamento</div>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+
+        <div class="row">
+          <div class="col-sm-12">
+            <p class="text-danger">* Campos Requeridos</p>
+          </div>
         </div>
+      </div>
+      <div class="modal-footer">
+        <div *ngIf="['add','edit'].indexOf(modalAction) >= 0">
+          <button (click)="confirmModal(modalAction, formData)" type="submit" [disabled]="!f.form.valid"
+                  class="btn btn-primary">Aceptar
+          </button>
+          <a (click)="hideModal()" class="btn btn-default">Cancelar</a>
+        </div>
+        <div *ngIf="['view'].indexOf(modalAction) >= 0">
+          <a (click)="hideModal()" class="btn btn-default">Cerrar</a>
+        </div>
+      </div>
     </div>
+  </div>
 </div>

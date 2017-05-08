@@ -33,7 +33,7 @@ export class NuevoTurnoComponent implements OnInit {
     const personaUser = this.storeService.get('integrantes');
     this.personas = this.storeService.get('integrantes');
     this.centrosSalud = this.storeService.get('centrosSalud');
-    this.model.fecha =  new Date(Date.now());
+    this.model.fecha = new Date(Date.now());
     this.model.persona = this.personas[0];
     this.storeService.update('persona', this.model.persona);
   }

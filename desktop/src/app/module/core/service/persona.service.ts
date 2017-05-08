@@ -8,58 +8,58 @@ import {User} from '../domain/user';
 @Injectable()
 export class PersonaService {
 
-    public static convertTipoDocumento(tipo: string): string {
-        const tipoRtn = TipoDocumentos.export().find(x => x.label == tipo);
-        if (tipoRtn) {
-            return tipoRtn.id;
-        } else {
-            return tipo;
+  public static convertTipoDocumento(tipo: string): string {
+    const tipoRtn = TipoDocumentos.export().find(x => x.label == tipo);
+    if (tipoRtn) {
+      return tipoRtn.id;
+    } else {
+      return tipo;
+    }
+  }
+
+  constructor(private api: ApiService, private storeService: StoreService) {
+  }
+
+  create(persona: Persona) {
+    return this.api.post('users/registration', persona, false).first().toPromise();
+  }
+
+  validateDni(dto: any) {
+    const path = 'persona/afip' +
+      '?documento=' + dto.documento +
+      '&nombre=' + dto.nombre +
+      '&apellido=' + dto.apellido +
+      '&genero=' + dto.genero;
+
+    return this.api.get(path, false).first().toPromise();
+  }
+
+  getIntegrantes() {
+    const user: User = JSON.parse(localStorage.getItem('currentUser'));
+
+    if (!user.email) {
+      return;
+    }
+
+    const path = 'persona/email?email=' + user.email;
+    return this.api.get(path)
+      .do((data: Persona) => {
+        const userPersona: Persona = data;
+        userPersona.integrantes = null;
+        const personas: Persona[] = [];
+        personas.push(userPersona);
+        if (data.integrantes) {
+          data.integrantes.forEach(x => {
+            personas.push(x);
+          });
         }
-    }
-
-    constructor(private api: ApiService, private storeService: StoreService) {
-    }
-
-    create(persona: Persona) {
-        return this.api.post('users/registration', persona, false).first().toPromise();
-    }
-
-    validateDni(dto: any) {
-        const path = 'persona/afip' +
-              '?documento=' + dto.documento +
-              '&nombre=' + dto.nombre +
-              '&apellido=' + dto.apellido +
-              '&genero=' + dto.genero;
-
-        return this.api.get(path, false).first().toPromise();
-    }
-
-    getIntegrantes() {
-        const user: User = JSON.parse(localStorage.getItem('currentUser'));
-
-        if (!user.email) {
-            return;
-        }
-
-        const path = 'persona/email?email=' + user.email;
-        return this.api.get(path)
-            .do((data: Persona) => {
-            const userPersona: Persona = data;
-            userPersona.integrantes = null;
-            const personas: Persona[] = [];
-            personas.push(userPersona);
-            if (data.integrantes) {
-                data.integrantes.forEach(x => {
-                    personas.push(x);
-                });
-            }
-            const mUser: User = JSON.parse(localStorage.getItem('currentUser'));
-            userPersona.userAsociado.token = mUser.token;
-            localStorage.setItem('currentUser', JSON.stringify(userPersona.userAsociado));
-            this.storeService.update('integrantes', personas);
-        })
-            .first().toPromise();
-    }
+        const mUser: User = JSON.parse(localStorage.getItem('currentUser'));
+        userPersona.userAsociado.token = mUser.token;
+        localStorage.setItem('currentUser', JSON.stringify(userPersona.userAsociado));
+        this.storeService.update('integrantes', personas);
+      })
+      .first().toPromise();
+  }
 
 
 }

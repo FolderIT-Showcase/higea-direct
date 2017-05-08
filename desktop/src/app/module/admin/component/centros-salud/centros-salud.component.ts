@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CentroSalud} from '../../../core/domain/centro-salud';
 import {StoreService} from '../../../core/service/store.service';
 import {Profesional} from '../../../core/domain/profesional';
@@ -11,7 +11,6 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs/Subscription';
 import {Store} from '../../../core/service/store';
 import {PagerService} from '../../../core/service/pager.service';
-import {Subject} from 'rxjs/Subject';
 
 class Data {
   centroSaludName: string;
@@ -94,13 +93,12 @@ export class CentrosSaludComponent implements OnInit {
 
     this.adminService.saveCentroSalud(this.centro).then(data => {
       this.alertService.success('Se guardo exitosamente');
-      this.saveModal.hide();
     })
       .catch((error) => {
         console.log(error);
         this.alertService.error('Error inesperado');
-        this.saveModal.hide();
       });
+    this.saveModal.hide();
   }
 
   clean() {
@@ -173,11 +171,9 @@ export class CentrosSaludComponent implements OnInit {
   }
 
   submitUpdateForm(value: Data) {
-    console.log(value);
     if (value.centroSaludName) {
       this.centro.nombre = value.centroSaludName;
     }
-
     this.update(this.centro);
     this.clean();
   }
@@ -185,12 +181,12 @@ export class CentrosSaludComponent implements OnInit {
   update(centroSalud: CentroSalud) {
     this.adminService.updateCentroSalud(centroSalud).then(data => {
       this.alertService.success('Se guardo exitosamente');
-      this.updateModal.hide();
     })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
         this.alertService.error('Error al querer guardar el Centro de Salud');
       });
+    this.updateModal.hide();
   }
 
 }

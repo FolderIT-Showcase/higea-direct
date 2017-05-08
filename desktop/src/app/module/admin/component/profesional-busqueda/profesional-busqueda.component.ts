@@ -1,12 +1,10 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {ModalDirective} from 'ngx-bootstrap';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs/Subscription';
-import {Router} from '@angular/router';
-import {AlertService} from '../../../core/service/alert.service';
 import {StoreService} from '../../../core/service/store.service';
 import {Store} from '../../../core/service/store';
 import {Profesional} from '../../../core/domain/profesional';
 import {PagerService} from '../../../core/service/pager.service';
+import {Especialidad} from '../../../core/domain/especialidad';
 
 @Component({
   selector: 'app-profesional-busqueda',
@@ -15,16 +13,10 @@ import {PagerService} from '../../../core/service/pager.service';
 
 export class ProfesionalBusquedaComponent implements OnInit, OnDestroy {
 
-  @ViewChild('autoShownModal') public autoShownModal: ModalDirective;
-  @ViewChild('infoModal') public infoModal: ModalDirective;
-
-
   profesionales: Profesional[] = [];
-  profesionalesSelected: Profesional[] = [];
+  especialidad: Especialidad;
   profesional: Profesional = new Profesional();
   subs: Subscription[] = [];
-  public isModalShown = false;
-  public isInfoModalShown = false;
 
   public totalItems = 0;
   public currentPage = 1;
@@ -38,9 +30,7 @@ export class ProfesionalBusquedaComponent implements OnInit, OnDestroy {
 
   constructor(private store: Store,
               private storeService: StoreService,
-              private alertService: AlertService,
-              private router: Router,
-              private  pagerService: PagerService) {
+              private pagerService: PagerService) {
   }
 
   public setPage(page: number): void {
@@ -62,57 +52,62 @@ export class ProfesionalBusquedaComponent implements OnInit, OnDestroy {
     this.setPage(event.page);
   }
 
-  ngOnInit(): void {
-
+  ngOnInit() {
+    this.profesionales = this.storeService.get('profesionales');
     this.subs.push(
-      this.store.changes.pluck('profesionales').subscribe(
+      this.store.changes.pluck('especialidad').subscribe(
         (data: any) => {
-          this.profesionales = data;
+          this.especialidad = data;
+          this.profesionales.forEach(x => {
+            x.seleccionado = false;
+          });
+          this.updatedSelected();
           this.pagedItems = this.profesionales.slice(this.pager.startIndex, this.pager.endIndex + 1);
-        }
-      ));
+        }));
 
     // initialize to page 1
     this.setPage(1);
-
   }
 
-  ngOnDestroy(): void {
+  ngOnDestroy() {
     this.subs.forEach(x => x.unsubscribe());
   }
 
-  public asignar(profesional: Profesional) {
-    const element = this.profesionalesSelected.find(x => x.id === profesional.id);
-    console.log('Element ' + element);
+  public toggleProfesional(profesional: Profesional) {
+
+    if (!this.especialidad) {
+      this.especialidad = new Especialidad();
+    }
+
+    if (!this.especialidad.profesional) {
+      this.especialidad.profesional = [];
+    }
+
+    const element = this.especialidad.profesional.find(x => x.id === profesional.id);
+
     if (element) {
-     // this.hideModal();
+      this.especialidad.profesional = this.especialidad.profesional.filter(x => x.id !== profesional.id);
+      this.storeService.update('profesionalesSeleccionados', this.especialidad.profesional);
+      profesional.seleccionado = false;
       return;
     }
-    this.profesionalesSelected.push(profesional);
-    this.storeService.update('profesionalesSeleccionados', this.profesionalesSelected);
+    this.especialidad.profesional.push(profesional);
+    this.storeService.update('profesionalesSeleccionados', this.especialidad.profesional);
     profesional.seleccionado = true;
-    //this.hideModal();
   }
 
-  /*public showModal(profesional: Profesional) {
-    this.profesional = profesional;
-    this.isModalShown = true;
-  }*/
+  updatedSelected() {
+    if (!this.especialidad || !this.especialidad.profesional || !this.profesionales) {
+      return;
+    }
 
+    this.profesionales.forEach(x => {
+      this.especialidad.profesional.forEach(y => {
+        if (x.id === y.id) {
+          x.seleccionado = true;
+        }
+      })
+    });
 
-  public hideModal() {
-    this.autoShownModal.hide();
-  }
-
-  public showInfoModal() {
-    this.isInfoModalShown = true;
-  }
-
-  public hideInfoModal() {
-    this.infoModal.hide();
-  }
-
-  public onHidden() {
-    this.isModalShown = false;
   }
 }

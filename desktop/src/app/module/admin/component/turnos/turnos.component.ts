@@ -7,12 +7,11 @@ import {Turno} from '../../../core/domain/turno';
 import {StoreService} from '../../../core/service/store.service';
 import {TurnoService} from '../../../core/service/turno.service';
 import {AlertService} from '../../../core/service/alert.service';
-import {ModalDirective} from "ngx-bootstrap/index";
-import {AdminService} from "../../../core/service/admin.service";
-import {Subscription} from "rxjs/Subscription";
-import {PagerService} from "../../../core/service/pager.service";
-import {Store} from "../../../core/service/store";
-
+import {ModalDirective} from 'ngx-bootstrap';
+import {AdminService} from '../../../core/service/admin.service';
+import {Subscription} from 'rxjs/Subscription';
+import {PagerService} from '../../../core/service/pager.service';
+import {Store} from '../../../core/service/store';
 
 class Data {
   persona: Persona;
@@ -38,7 +37,7 @@ export class TurnosComponent implements OnInit {
   especialidades: Especialidad[] = [];
   profesionales: Profesional[] = [];
   personas: Persona[] = [];
-  turno:Turno;
+  turno: Turno;
 
   deleteModal: ModalDirective;
 
@@ -52,13 +51,16 @@ export class TurnosComponent implements OnInit {
   pagedItems: any[];
   subs: Subscription[] = [];
 
-  constructor(private storeService: StoreService, private turnoService: TurnoService, private alertService: AlertService, private adminService: AdminService,private store: Store,
+  constructor(private storeService: StoreService,
+              private alertService: AlertService,
+              private adminService: AdminService,
+              private store: Store,
               private  pagerService: PagerService) {
   }
 
   ngOnInit() {
     this.centrosSalud = this.storeService.get('centrosSalud');
-    this.turnos =  this.storeService.get('turnos');
+    this.turnos = this.storeService.get('turnos');
     this.model.fechaDesde = new Date();
     this.model.hora = new Date();
 
@@ -66,7 +68,6 @@ export class TurnosComponent implements OnInit {
       this.store.changes.pluck('turnos').subscribe(
         (data: any) => {
           this.turnos = data;
-          console.log("Data "+data);
           this.pagedItems = this.turnos.slice(this.pager.startIndex, this.pager.endIndex + 1);
         }
       ));
@@ -95,7 +96,7 @@ export class TurnosComponent implements OnInit {
 
   crear() {
 
-    this.turnoService.saveTurno(this.model.centro, this.model.especialidad, this.model.profesional,
+    this.adminService.saveTurno(this.model.centro, this.model.especialidad, this.model.profesional,
       this.model.fechaDesde, this.model.hora, this.model.observaciones)
       .then(data => {
         this.alertService.success('Registro Exitoso');
@@ -136,10 +137,10 @@ export class TurnosComponent implements OnInit {
 
   delete(turno: Turno) {
     this.adminService.deleteTurno(turno).then(data => {
-        this.alertService.success('Se borro exitosamente');
-      })
+      this.alertService.success('Se borro exitosamente');
+    })
       .catch((error) => {
-        console.log("Error"+ error);
+        console.error(error);
         this.alertService.error(error.body);
       });
   }

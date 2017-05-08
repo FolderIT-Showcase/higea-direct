@@ -1,11 +1,10 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs/Subscription';
 import {StoreService} from '../../../core/service/store.service';
 import {Store} from '../../../core/service/store';
 import {PagerService} from '../../../core/service/pager.service';
 import {Especialidad} from '../../../core/domain/especialidad';
 import {CentroSalud} from '../../../core/domain/centro-salud';
-import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-especialidad-busqueda',

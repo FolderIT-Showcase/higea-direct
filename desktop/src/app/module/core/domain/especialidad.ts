@@ -3,5 +3,5 @@ export class Especialidad {
   id: number;
   profesional: Profesional[];
   nombre: string;
-  seleccionado: boolean = false;
+  seleccionado = false;
 }

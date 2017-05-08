@@ -25,6 +25,15 @@ export class TurnoService {
       .first().toPromise();
   }
 
+  getAllTurnos() {
+    const path = 'turno';
+    return this.api.get(path)
+      .do(data => {
+        this.storeService.update('turnos', data);
+      })
+      .first().toPromise();
+  }
+
   getTurnos(centro: CentroSalud, especialidad: Especialidad, profesional: Profesional, fecha: Date) {
 
     const path = 'turno';
@@ -60,30 +69,6 @@ export class TurnoService {
   reservarTurno(persona: Persona) {
     const path = 'persona';
     return this.api.post(path, persona).first().toPromise();
-  }
-
-  borrarTurno(turno: Turno, desactivate: boolean) {
-    const path = 'turno' + '?id=' + turno.id + '&' + 'desactivate=' + desactivate;
-    return this.api.delete(path).first().toPromise();
-  }
-
-  saveTurno(centro: CentroSalud, especialidad: Especialidad, profesional: Profesional, fecha: Date, hora: Date, obs: string) {
-    const path = 'turno';
-
-    const turno = new Turno();
-    turno.dia = fecha;
-    turno.fecha = fecha;
-    turno.hora = hora;
-    turno.centroSalud = centro;
-    turno.especialidad = especialidad;
-    turno.profesional = profesional;
-    turno.observaciones = obs;
-    return this.api.put(path, turno)
-      .do(data => {
-        this.storeService.update('CentroSalud', centro);
-        this.storeService.update('turnos', data);
-      })
-      .first().toPromise();
   }
 
   cancelarTurno(turno) {

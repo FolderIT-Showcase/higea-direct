@@ -7,9 +7,8 @@ import {AdminService} from '../../../core/service/admin.service';
 import {ModalDirective} from 'ngx-bootstrap';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {PagerService} from '../../../core/service/pager.service';
-import {Subscription} from 'rxjs';
+import {Subscription} from 'rxjs/Subscription';
 import {Store} from '../../../core/service/store';
-import {forEach} from "@angular/router/src/utils/collection";
 
 class Data {
   especialidadLabel: string;
@@ -88,46 +87,38 @@ export class EspecialidadesComponent implements OnInit {
   }
 
   submitSaveForm() {
+    this.save();
+  }
+
+  save() {
     this.profesionales = this.storeService.get('profesionalesSeleccionados');
-
-    const especialidad = new Especialidad();
-    especialidad.nombre = this.model.especialidadLabel.toUpperCase();
-    especialidad.profesional = this.profesionales;
-
-    this.adminService.saveEspecialidad(especialidad).then(data => {
-      this.alertService.success('Se guardo exitosamente');
-      this.saveModal.hide();
-    })
+    this.especialidad.nombre = this.model.especialidadLabel.toUpperCase();
+    this.especialidad.profesional = this.profesionales;
+    this.adminService.saveEspecialidad(this.especialidad)
+      .then(data => {
+        this.alertService.success('Se guardo exitosamente');
+      })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
         this.alertService.error('Error al guardar la especialidad');
-        this.saveModal.hide();
       });
+    this.saveModal.hide();
     this.clean();
   }
 
-  showSaveModal(especialidad: Especialidad) {
+  showSaveModal() {
     this.clean();
+    this.especialidad = new Especialidad();
     this.saveModal.show();
-    this.especialidad = especialidad;
+    this.storeService.update('especialidad', this.especialidad);
   }
 
   showUpdateModal(especialidad: Especialidad) {
     this.especialidad = especialidad;
-    this.updateModal.show();
     this.model.especialidadLabel = especialidad.nombre;
-
+    this.storeService.update('especialidad', especialidad);
+    this.updateModal.show();
   }
-
-  /*pintarSeleccionados(especialidad: Especialidad){
-    this.profesionales = this.storeService.get('profesionalesSeleccionados');
-    for(var i = 1; i <= especialidad.profesional.length; i++){
-      let item = especialidad.profesional[i];
-      if(item.id===especialidad.profesional.)
-    }
-
-  }*/
-
 
   showDeleteModal(especialidad: Especialidad) {
     this.especialidad = especialidad;
@@ -163,39 +154,38 @@ export class EspecialidadesComponent implements OnInit {
       this.alertService.success('Se borro exitosamente');
     })
       .catch((error) => {
-        console.log("Error"+ error);
+        console.log('Error' + error);
         this.alertService.error(error.body);
       });
   }
 
   submitUpdateForm(value: Data) {
-    console.log(value);
     if (value.especialidad) {
       this.especialidad.nombre = value.especialidadLabel;
     }
-
     this.update(this.especialidad);
-
   }
 
   update(especialidad: Especialidad) {
-    this.adminService.updateEspecialidad(especialidad).then(data => {
-      this.alertService.success('Se guardo exitosamente');
-      this.updateModal.hide();
-    })
+    this.adminService.updateEspecialidad(especialidad)
+      .then(data => {
+        this.alertService.success('Se guardo exitosamente');
+      })
       .catch((error) => {
-        console.log(error);
-        this.updateModal.hide();
+        console.error(error);
         this.alertService.error('Error al querer guardar el Profesional');
       });
-
+    this.updateModal.hide();
     this.clean();
   }
 
-  clean(){
-    this.form.reset();
+  clean() {
+    this.form = this.fb.group({
+      'especialidadLabel': [null, Validators.required]
+    });
+    this.especialidad = new Especialidad();
+    this.model = new Data();
   }
-
 
 
 }

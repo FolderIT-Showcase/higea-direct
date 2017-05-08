@@ -59,8 +59,9 @@
           <label>Nombre:</label>
           <input [(ngModel)]="model.centroSaludName" class="form-control" type="text" placeholder="Hospital"
                  [formControl]="form.controls['centroSaludName']">
-          <small *ngIf="form.controls['centroSaludName'].hasError('required') && form.controls['centroSaludName'].touched"
-               class="help-block">Debes incluir el nombre.
+          <small
+            *ngIf="form.controls['centroSaludName'].hasError('required') && form.controls['centroSaludName'].touched"
+            class="help-block">Debes incluir el nombre.
           </small>
         </div>
       </div>
@@ -88,8 +89,9 @@
           <label>Nombre:</label>
           <input [(ngModel)]="model.centroSaludName" class="form-control" type="text" placeholder="Hospital"
                  [formControl]="form.controls['centroSaludName']">
-          <small *ngIf="form.controls['centroSaludName'].hasError('required') && form.controls['centroSaludName'].touched"
-               class="help-block">Debes incluir el nombre.
+          <small
+            *ngIf="form.controls['centroSaludName'].hasError('required') && form.controls['centroSaludName'].touched"
+            class="help-block">Debes incluir el nombre.
           </small>
         </div>
       </div>

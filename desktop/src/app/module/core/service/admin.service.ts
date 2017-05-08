@@ -14,18 +14,40 @@ export class AdminService {
               private storeService: StoreService, private alertService: AlertService) {
   }
 
-  getProfesionales() {
-    const path = 'profesional';
-    return this.api.get(path)
+  // turnos
+
+  deleteTurno(turno: Turno) {
+    const path = 'turno';
+    return this.api.delete(path + '?id=' + turno.id + '&desactivate=true')
       .do(data => {
-        this.storeService.update('profesionales', data);
+        // this.storeService.update('profesionales', data);
       })
       .first().toPromise();
   }
 
+  saveTurno(centro: CentroSalud, especialidad: Especialidad, profesional: Profesional, fecha: Date, hora: Date, obs: string) {
+    const path = 'turno';
+    const turno = new Turno();
+    turno.dia = fecha;
+    turno.fecha = fecha;
+    turno.hora = hora;
+    turno.centroSalud = centro;
+    turno.especialidad = especialidad;
+    turno.profesional = profesional;
+    turno.observaciones = obs;
+    return this.api.put(path, turno)
+      .do(data => {
+        this.storeService.update('CentroSalud', centro);
+        this.storeService.update('turnos', data);
+      })
+      .first().toPromise();
+  }
+
+  // especialidad
+
   saveEspecialidad(especialidad: Especialidad) {
     const path = 'especialidad';
-    return this.api.put(path, especialidad)
+    return this.api.post(path, especialidad)
       .do(data => {
         this.storeService.add('especialidades', especialidad);
       })
@@ -41,9 +63,28 @@ export class AdminService {
       .first().toPromise();
   }
 
+  deleteEspecialidad(especialidad: Especialidad) {
+    const path = 'especialidad' + '?id=' + especialidad.id;
+    return this.api.delete(path)
+      .do(data => {
+      })
+      .first().toPromise();
+  }
+
+  updateEspecialidad(especialidad: Especialidad) {
+    const path = 'especialidad';
+    return this.api.put(path, especialidad)
+      .do(data => {
+        this.storeService.add('especialidades', especialidad);
+      })
+      .first().toPromise();
+  }
+
+  // centros de salud
+
   saveCentroSalud(centroSalud: CentroSalud) {
     const path = 'centroSalud';
-    return this.api.put(path, centroSalud)
+    return this.api.post(path, centroSalud)
       .do(data => {
         this.storeService.add('centrosSalud', centroSalud);
       })
@@ -60,18 +101,29 @@ export class AdminService {
       .first().toPromise();
   }
 
-  deleteEspecialidad(especialidad: Especialidad) {
-    const path = 'especialidad';
-    return this.api.delete(path + '?id=' + especialidad.id)
+  deleteCentroSalud(centro: CentroSalud) {
+    const path = 'centroSalud';
+    return this.api.delete(path + '?id=' + centro.id)
       .do(data => {
         // this.storeService.update('profesionales', data);
       })
       .first().toPromise();
   }
 
+  // profesionales
+
+  getProfesionales() {
+    const path = 'profesional';
+    return this.api.get(path)
+      .do(data => {
+        this.storeService.update('profesionales', data);
+      })
+      .first().toPromise();
+  }
+
   saveProfesional(profesional: Profesional) {
     const path = 'profesional';
-    return this.api.put(path, profesional)
+    return this.api.post(path, profesional)
       .do(data => {
         this.storeService.add('profesionales', profesional);
       })
@@ -87,45 +139,9 @@ export class AdminService {
       .first().toPromise();
   }
 
-  updateEspecialidad(especialidad: Especialidad) {
-    const path = 'especialidad';
-    return this.api.put(path, especialidad)
-      .do(data => {
-        this.storeService.add('especialidades', especialidad);
-      })
-      .first().toPromise();
-  }
-
   deleteProfesional(profesional: Profesional) {
     const path = 'profesional';
     return this.api.delete(path + '?id=' + profesional.id)
-      .do(data => {
-        // this.storeService.update('profesionales', data);
-      })
-      .first().toPromise();
-  }
-
-  deleteCentroSalud(centro: CentroSalud) {
-    const path = 'centroSalud';
-    return this.api.delete(path + '?id=' + centro.id)
-      .do(data => {
-        // this.storeService.update('profesionales', data);
-      })
-      .first().toPromise();
-  }
-
-  getTurnos() {
-    const path = 'turno';
-    return this.api.get(path)
-      .do(data => {
-        this.storeService.update('turnos', data);
-      })
-      .first().toPromise();
-  }
-
-  deleteTurno(turno: Turno) {
-    const path = 'turno';
-    return this.api.delete(path + '?id=' + turno.id + '&desactivate=true')
       .do(data => {
         // this.storeService.update('profesionales', data);
       })
