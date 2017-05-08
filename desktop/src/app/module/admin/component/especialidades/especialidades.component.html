@@ -55,7 +55,7 @@
         <div class="form-group"
              [ngClass]="{'has-error':!form.controls['especialidadLabel'].valid && form.controls['especialidadLabel'].touched}">
           <label>Especialidad:</label>
-          <input [(ngModel)]="model.especialidadLabel" class="form-control" type="text" placeholder="Jose"
+          <input [(ngModel)]="model.especialidadLabel" class="form-control" type="text" placeholder="Especialidad"
                  [formControl]="form.controls['especialidadLabel']">
           <small
             *ngIf="form.controls['especialidadLabel'].hasError('required') && form.controls['especialidadLabel'].touched"
@@ -85,14 +85,14 @@
         <div class="form-group"
              [ngClass]="{'has-error':!form.controls['especialidadLabel'].valid && form.controls['especialidadLabel'].touched}">
           <label>Especialidad:</label>
-          <input [(ngModel)]="model.especialidadLabel" class="form-control" type="text" placeholder="Jose"
+          <input [(ngModel)]="model.especialidadLabel" class="form-control" type="text" placeholder="Especialidad"
                  [formControl]="form.controls['especialidadLabel']">
         </div>
       </div>
       <div class="col-sm-2">
         <label></label>
         <div class="text-center">
-          <button type="submit" class="btn btn-primary" [disabled]="!form.valid">GUARDAR</button>
+          <button type="submit" class="btn btn-primary" [disabled]="!form.valid">ACTUALIZAR</button>
         </div>
       </div>
     </form>

@@ -14,7 +14,7 @@
   <div class="list-group">
     <a class="list-group-item active">
       <h4 class="list-group-item-heading">{{centro.nombre}}</h4>
-      <p class="list-group-item-text"> {{turnos.length}} turnos disponibles a partir del {{turnos[0].fecha}}</p>
+      <p class="list-group-item-text"> {{turnos.length}} turnos disponibles a partir del {{turnos[0].fecha | date: 'dd/MM/yyyy'}}</p>
     </a>
     <div class="table-responsive">
       <table class="table table-striped">
@@ -32,8 +32,8 @@
         </thead>
         <tbody>
         <tr *ngFor="let turno of turnos">
-          <td>{{turno.dia}}</td>
-          <td>{{turno.fecha | date: 'DD/MM/YYYY'}}</td>
+          <td>{{turno.dia | date: 'EEEE'}}</td>
+          <td>{{turno.fecha | date: 'dd/MM/yyyy'}}</td>
           <td>{{turno.hora | date: 'HH:mm'}}</td>
           <td>{{centro.nombre}}</td>
           <td>{{turno.especialidad.nombre}}</td>
@@ -53,7 +53,7 @@
 
 <app-modal [title]="'Confirmación'" (outModal)="handleTurnoModal($event)">
   <label>¿Querés tomar este turno?</label><br>
-  <label>Para el dia <strong>{{turno.dia}}</strong> en el horario <strong>{{turno.hora| date:'HH:mm'}}}</strong></label><br>
+  <label>Para el dia <strong>{{turno.dia | date: 'dd/MM/yyyy'}}</strong> en el horario <strong>{{turno.hora| date:'HH:mm'}}</strong></label><br>
   <label>Para la especialidad <strong>{{turno.especialidad.nombre}}</strong> atendido por <strong>{{turno.profesional.nombre}}</strong></label><br>
   <label>En el <strong>{{turno.centroSalud.nombre}}</strong></label><br>
   <div *ngIf="false">

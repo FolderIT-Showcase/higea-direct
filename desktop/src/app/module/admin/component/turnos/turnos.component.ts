@@ -66,6 +66,7 @@ export class TurnosComponent implements OnInit {
       this.store.changes.pluck('turnos').subscribe(
         (data: any) => {
           this.turnos = data;
+          console.log("Data "+data);
           this.pagedItems = this.turnos.slice(this.pager.startIndex, this.pager.endIndex + 1);
         }
       ));

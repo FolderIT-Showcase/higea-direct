@@ -85,19 +85,19 @@ export class ProfesionalBusquedaComponent implements OnInit, OnDestroy {
     const element = this.profesionalesSelected.find(x => x.id === profesional.id);
     console.log('Element ' + element);
     if (element) {
-      this.hideModal();
-      return
+     // this.hideModal();
+      return;
     }
     this.profesionalesSelected.push(profesional);
     this.storeService.update('profesionalesSeleccionados', this.profesionalesSelected);
     profesional.seleccionado = true;
-    this.hideModal();
+    //this.hideModal();
   }
 
-  public showModal(profesional: Profesional) {
+  /*public showModal(profesional: Profesional) {
     this.profesional = profesional;
     this.isModalShown = true;
-  }
+  }*/
 
 
   public hideModal() {

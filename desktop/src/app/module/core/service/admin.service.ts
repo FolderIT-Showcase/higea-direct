@@ -27,7 +27,7 @@ export class AdminService {
     const path = 'especialidad';
     return this.api.put(path, especialidad)
       .do(data => {
-        // this.storeService.update('profesionales', data);
+        this.storeService.add('especialidades', especialidad);
       })
       .first().toPromise();
   }
@@ -60,6 +60,15 @@ export class AdminService {
       .first().toPromise();
   }
 
+  deleteEspecialidad(especialidad: Especialidad) {
+    const path = 'especialidad';
+    return this.api.delete(path + '?id=' + especialidad.id)
+      .do(data => {
+        // this.storeService.update('profesionales', data);
+      })
+      .first().toPromise();
+  }
+
   saveProfesional(profesional: Profesional) {
     const path = 'profesional';
     return this.api.put(path, profesional)
@@ -74,6 +83,15 @@ export class AdminService {
     return this.api.put(path, profesional)
       .do(data => {
         this.storeService.add('profesionales', profesional);
+      })
+      .first().toPromise();
+  }
+
+  updateEspecialidad(especialidad: Especialidad) {
+    const path = 'especialidad';
+    return this.api.put(path, especialidad)
+      .do(data => {
+        this.storeService.add('especialidades', especialidad);
       })
       .first().toPromise();
   }

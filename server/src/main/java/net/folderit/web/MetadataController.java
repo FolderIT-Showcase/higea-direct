@@ -100,4 +100,19 @@ public class MetadataController {
 
         return new ResponseEntity(HttpStatus.OK);
     }
+
+    @DeleteMapping("/especialidad")
+    public ResponseEntity deleteEspecialidad(@RequestParam String id) {
+        try{
+            metadataService.deleteEspecialidad(Long.valueOf(id));
+        }catch (DataIntegrityViolationException exception){
+
+            TurneroException.getInstance().getMessage(TurneroException.MESSAGE_PROFESIONALES_ASOCIADA,null);
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(TurneroException.getInstance());
+
+        }
+
+        return new ResponseEntity(HttpStatus.OK);
+    }
 }

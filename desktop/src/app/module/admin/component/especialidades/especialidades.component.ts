@@ -9,6 +9,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {PagerService} from '../../../core/service/pager.service';
 import {Subscription} from 'rxjs';
 import {Store} from '../../../core/service/store';
+import {forEach} from "@angular/router/src/utils/collection";
 
 class Data {
   especialidadLabel: string;
@@ -95,14 +96,18 @@ export class EspecialidadesComponent implements OnInit {
 
     this.adminService.saveEspecialidad(especialidad).then(data => {
       this.alertService.success('Se guardo exitosamente');
+      this.saveModal.hide();
     })
       .catch((error) => {
         console.log(error);
         this.alertService.error('Error al guardar la especialidad');
+        this.saveModal.hide();
       });
+    this.clean();
   }
 
   showSaveModal(especialidad: Especialidad) {
+    this.clean();
     this.saveModal.show();
     this.especialidad = especialidad;
   }
@@ -111,7 +116,18 @@ export class EspecialidadesComponent implements OnInit {
     this.especialidad = especialidad;
     this.updateModal.show();
     this.model.especialidadLabel = especialidad.nombre;
+
   }
+
+  /*pintarSeleccionados(especialidad: Especialidad){
+    this.profesionales = this.storeService.get('profesionalesSeleccionados');
+    for(var i = 1; i <= especialidad.profesional.length; i++){
+      let item = especialidad.profesional[i];
+      if(item.id===especialidad.profesional.)
+    }
+
+  }*/
+
 
   showDeleteModal(especialidad: Especialidad) {
     this.especialidad = especialidad;
@@ -134,12 +150,52 @@ export class EspecialidadesComponent implements OnInit {
     const especialidades: Especialidad[] = this.storeService.get('especialidades');
     for (const x of especialidades) {
       if (x.id === this.especialidad.id) {
+        this.delete(x);
         this.storeService.findAndDelete('especialidades', x.id);
         break;
       }
     }
     this.deleteModal.hide();
   }
+
+  delete(especialidad: Especialidad) {
+    this.adminService.deleteEspecialidad(especialidad).then(data => {
+      this.alertService.success('Se borro exitosamente');
+    })
+      .catch((error) => {
+        console.log("Error"+ error);
+        this.alertService.error(error.body);
+      });
+  }
+
+  submitUpdateForm(value: Data) {
+    console.log(value);
+    if (value.especialidad) {
+      this.especialidad.nombre = value.especialidadLabel;
+    }
+
+    this.update(this.especialidad);
+
+  }
+
+  update(especialidad: Especialidad) {
+    this.adminService.updateEspecialidad(especialidad).then(data => {
+      this.alertService.success('Se guardo exitosamente');
+      this.updateModal.hide();
+    })
+      .catch((error) => {
+        console.log(error);
+        this.updateModal.hide();
+        this.alertService.error('Error al querer guardar el Profesional');
+      });
+
+    this.clean();
+  }
+
+  clean(){
+    this.form.reset();
+  }
+
 
 
 }

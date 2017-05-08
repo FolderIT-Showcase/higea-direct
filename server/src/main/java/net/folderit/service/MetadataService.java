@@ -65,4 +65,6 @@ public class MetadataService {
 
     public void deleteCentroSalud(Long id){centroSaludRepository.delete(id);}
 
+    public void deleteEspecialidad(Long id){especialidadRepository.delete(id);}
+
 }
