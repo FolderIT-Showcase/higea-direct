@@ -64,7 +64,7 @@ export class AdminService {
     const path = 'profesional';
     return this.api.put(path, profesional)
       .do(data => {
-        // this.storeService.update('profesionales', data);
+        this.storeService.add('profesionales', profesional);
       })
       .first().toPromise();
   }
@@ -73,7 +73,7 @@ export class AdminService {
     const path = 'profesional';
     return this.api.put(path, profesional)
       .do(data => {
-        // this.storeService.update('profesionales', data);
+        this.storeService.add('profesionales', profesional);
       })
       .first().toPromise();
   }

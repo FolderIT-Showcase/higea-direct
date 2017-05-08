@@ -149,19 +149,32 @@ export class ProfesionalesComponent implements OnInit {
     prof.nombre = value.nombre;
     prof.apellido = value.apellido;
     this.save(prof);
+    this.clean();
   }
 
   save(profesional: Profesional) {
     this.adminService.saveProfesional(profesional).then(data => {
       this.alertService.success('Se guardo exitosamente');
+      //this.actualizarProfesionales();
+      this.saveModal.hide();
     })
       .catch((error) => {
         console.log(error);
         this.alertService.error('Error al querer guardar el Profesional');
+        this.saveModal.hide();
       });
   }
 
-
+  actualizarProfesionales() {
+    this.adminService.getProfesionales().then(data => {
+      this.storeService.update('profesionales',data);
+    })
+      .catch((error) => {
+        console.log(error);
+        this.alertService.error('Error al querer guardar el Profesional');
+        this.saveModal.hide();
+      });
+  }
 
   submitUpdateForm(value: Data) {
     console.log(value);
@@ -172,14 +185,18 @@ export class ProfesionalesComponent implements OnInit {
       this.profesional.apellido = value.apellido;
     }
     this.update(this.profesional);
+    this.clean();
   }
 
   update(profesional: Profesional) {
     this.adminService.updateProfesional(profesional).then(data => {
       this.alertService.success('Se guardo exitosamente');
+      //this.actualizarProfesionales();
+      this.updateModal.hide();
     })
       .catch((error) => {
         console.log(error);
+        this.updateModal.hide();
         this.alertService.error('Error al querer guardar el Profesional');
       });
   }
@@ -193,6 +210,11 @@ export class ProfesionalesComponent implements OnInit {
         this.alertService.error(error.body);
       });
   }
+
+  clean(){
+    this.form.reset();
+  }
+
 
 }
 
