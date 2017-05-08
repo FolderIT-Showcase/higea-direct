@@ -5,10 +5,11 @@ import {Persona} from '../../../core/domain/persona';
 import {EstadosCiviles} from '../../../core/domain/enums/estado-civil';
 import {Generos} from '../../../core/domain/enums/genero';
 import {TipoDocumentos} from '../../../core/domain/enums/tipo-documento';
-import {Paises} from '../../../core/domain/enums/paises';
 import {TipoContactos} from '../../../core/domain/enums/tipo-contacto';
 import {ApiService} from '../../../core/service/api.service';
 import _ from 'lodash';
+import {MetadataService} from '../../../core/service/metadata.service';
+import {StoreService} from '../../../core/service/store.service';
 
 @Component({
   selector: 'app-lista-integrantes',
@@ -25,85 +26,126 @@ export class ListaIntegrantesComponent {
   public isModalShown = false;
   public currentPersona = new Persona();
   public modalAction = 'none';
-  public formData = {};
+  public formData: any = {};
   public selectUndefined: any;
+  public integrantes: Persona[] = [];
   public lists = {
     'generos': Generos.export(),
     'tipoDocumentos': TipoDocumentos.export(),
     'estadosCiviles': EstadosCiviles.export(),
     'tipoContactos': TipoContactos.export(),
-    'paises': Paises.build(),
+    'paises': [],
     'provincias': [],
     'localidades': []
   };
 
+  constructor(private alertService: AlertService,
+              private api: ApiService,
+              private metadataService: MetadataService,
+              private storeHelper: StoreService) {
+    // Popular listas
+    this.initListas();
+    const path = 'persona/email?email=' + this.currentUser.email;
+    this.busy = this.api.get(path).first().toPromise()
+      .then((res) => {
+        if (res) {
+          this.currentPersona = _.merge(new Persona(), res);
+          console.log(res);
+          this.currentPersona.integrantes = [];
+          _.forEach(res.integrantes, (e) => {
+            const i = _.merge(new Persona(), e);
+            this.currentPersona.integrantes.push(i);
+          });
+        }
+      }, (error) => {
+        this.alertService.error('Error de conexión a la API');
+      });
+
+    // Reordenar las listas para permitir una edición rápida
+    for (const list in this.lists) {
+      if (!this.lists.hasOwnProperty(list)) {
+        continue;
+      }
+      if (Array.isArray(this.lists[list])) {
+        this.lists[list].sort();
+      }
+    }
+  }
+
   public label(list, id) {
     if (!id) {
-      return "";
+      return '';
     }
-    var e = this.lists[list].find(x => x.id == id);
+    const e = this.lists[list].find(x => x.id === id);
     if (e) {
       return e.label;
     } else {
-      return "";
+      return '';
     }
   };
 
-  public integrantes: Persona[] = [];
-
   public rebuildLists(integrante) {
-    this.lists.provincias = [];
-    this.lists.localidades = [];
-    const paises = Paises.export();
-    let provincias = [];
-    let localidades = [];
 
-    if (!integrante || !integrante.domicilio) {
-      return;
+    if (this.formData &&
+      this.formData.domicilio &&
+      this.formData.domicilio.localidad &&
+      this.formData.domicilio.localidad.provincia &&
+      this.formData.domicilio.localidad.provincia.pais) {
+      this.lists.provincias = this.lists.provincias.filter(x => x.pais.id === this.formData.domicilio.localidad.provincia.pais.id);
     }
 
-    const domicilio = integrante.domicilio;
+    /* this.lists.provincias = [];
+     this.lists.localidades = [];
+     const paises = Paises.export();
+     let provincias = [];
+     let localidades = [];
 
-    // Busqueda de provincias
-    if (domicilio.localidad && domicilio.localidad.provincia && domicilio.localidad.provincia.pais) {
-      const pais = domicilio.localidad.provincia.pais.nombre;
-      if (pais) {
-        const tmp = paises.find(x => x.nombre == pais);
-        if (tmp) {
-          provincias = tmp.provincias;
-          this.lists.provincias = provincias.map((e) => {
-            return e.nombre;
-          });
-          this.lists.provincias.sort();
-        }
+     if(!integrante || !integrante.domicilio) {
+     return;
+     }
 
-        const provincia = domicilio.localidad.provincia.nombre;
-        if (!provincias.find(x => x.nombre == provincia)) {
-          integrante.domicilio.localidad.provincia.nombre = this.selectUndefined;
-          integrante.domicilio.localidad.nombre = this.selectUndefined;
-        }
-      }
-    }
+     const domicilio = integrante.domicilio;
 
-    // Busqueda de localidades
-    if (domicilio.localidad && domicilio.localidad.provincia) {
-      const provincia = domicilio.localidad.provincia.nombre;
-      if (provincia) {
-        const tmp = provincias.find(x => x.nombre == provincia);
-        if (tmp) {
-          localidades = tmp.localidades;
-          this.lists.localidades = localidades.map((e) => {
-            return e.nombre;
-          });
-          this.lists.localidades.sort();
-        }
+     // Busqueda de provincias
+     if(domicilio.localidad && domicilio.localidad.provincia && domicilio.localidad.provincia.pais) {
+     const pais = domicilio.localidad.provincia.pais.nombre;
+     if (pais) {
+     const tmp = paises.find(x => x.nombre == pais);
+     if (tmp) {
+     provincias = tmp.provincias;
+     this.lists.provincias = provincias.map((e) => {
+     return e.nombre;
+     });
+     this.lists.provincias.sort();
+     }
 
-        const localidad = domicilio.localidad.nombre;
-        if (!localidades.find(x => x.nombre == localidad)) {
-          integrante.domicilio.localidad.nombre = this.selectUndefined;
-        }
-      }
-    }
+     const provincia = domicilio.localidad.provincia.nombre;
+     if(!provincias.find(x => x.nombre == provincia)) {
+     integrante.domicilio.localidad.provincia.nombre = this.selectUndefined;
+     integrante.domicilio.localidad.nombre = this.selectUndefined;
+     }
+     }
+     }
+
+     // Busqueda de localidades
+     if(domicilio.localidad && domicilio.localidad.provincia) {
+     const provincia =  domicilio.localidad.provincia.nombre;
+     if(provincia) {
+     const tmp = provincias.find(x => x.nombre == provincia);
+     if(tmp) {
+     localidades = tmp.localidades;
+     this.lists.localidades = localidades.map((e) => {
+     return e.nombre;
+     });
+     this.lists.localidades.sort();
+     }
+
+     const localidad = domicilio.localidad.nombre;
+     if(!localidades.find(x => x.nombre == localidad)) {
+     integrante.domicilio.localidad.nombre = this.selectUndefined;
+     }
+     }
+     }*/
   }
 
   public showModal(action, integrante) {
@@ -128,6 +170,14 @@ export class ListaIntegrantesComponent {
 
   public onHidden(action) {
     this.isModalShown = false;
+  }
+
+  initListas() {
+
+    this.lists.provincias = this.storeHelper.get('provincias');
+    this.lists.paises = this.storeHelper.get('paises');
+    console.log('Provincias: ' + this.lists.provincias);
+
   }
 
   public confirmModal(action, integrante) {
@@ -173,34 +223,5 @@ export class ListaIntegrantesComponent {
     }
   }
 
-  constructor(private alertService: AlertService,
-              private api: ApiService) {
-    // Popular listas
-    this.lists.paises = Paises.build();
-    const path = 'persona/email?email=' + this.currentUser.email;
-    this.busy = this.api.get(path).first().toPromise()
-      .then((res) => {
-        if (res) {
-          this.currentPersona = _.merge(new Persona(), res);
-          console.log(res);
-          this.currentPersona.integrantes = [];
-          _.forEach(res.integrantes, (e) => {
-            const i = _.merge(new Persona(), e);
-            this.currentPersona.integrantes.push(i);
-          });
-        }
-      }, (error) => {
-        this.alertService.error('Error de conexión a la API');
-      });
 
-    // Reordenar las listas para permitir una edición rápida
-    for (const list in this.lists) {
-      if (!this.lists.hasOwnProperty(list)) {
-        continue;
-      }
-      if (Array.isArray(this.lists[list])) {
-        this.lists[list].sort();
-      }
-    }
-  }
 }

@@ -55,8 +55,12 @@ public class MetadataController {
         return new ResponseEntity<>((Collection<Profesional>) metadataService.findAllProfesional(), HttpStatus.OK);
     }
 
-    @PutMapping("/especialidad")
+    @PostMapping("/especialidad")
     public ResponseEntity<Especialidad> guardarEspecialidad(@RequestBody Especialidad especialidad) {
+        return new ResponseEntity<>((Especialidad) metadataService.saveEspecialidad(especialidad), HttpStatus.OK);
+    }
+    @PutMapping("/especialidad")
+    public ResponseEntity<Especialidad> actualizarEspecialidad(@RequestBody Especialidad especialidad) {
         return new ResponseEntity<>((Especialidad) metadataService.saveEspecialidad(especialidad), HttpStatus.OK);
     }
 

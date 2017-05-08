@@ -1,14 +1,12 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ModalDirective} from 'ngx-bootstrap';
 import {Subscription} from 'rxjs/Subscription';
-import {Router} from '@angular/router';
-import {AlertService} from '../../../core/service/alert.service';
 import {StoreService} from '../../../core/service/store.service';
-import {TurnoService} from '../../../core/service/turno.service';
 import {Store} from '../../../core/service/store';
 import {CentroSalud} from '../../../core/domain/centro-salud';
 import {Turno} from '../../../core/domain/turno';
 import {Persona} from '../../../core/domain/persona';
+import {AdminService} from '../../../core/service/admin.service';
 
 @Component({
   selector: 'app-turno-busqueda',
@@ -31,10 +29,8 @@ export class TurnoBusquedaComponent implements OnInit, OnDestroy {
   lng = -60.704956;
 
   constructor(private store: Store,
-              private turnoService: TurnoService,
-              private storeService: StoreService,
-              private alertService: AlertService,
-              private router: Router) {
+              private adminService: AdminService,
+              private storeService: StoreService,) {
   }
 
   ngOnInit(): void {
@@ -72,7 +68,7 @@ export class TurnoBusquedaComponent implements OnInit, OnDestroy {
     }
 
     console.log('id turno ' + turno.id);
-    this.turnoService.borrarTurno(turno, true)
+    this.adminService.deleteTurno(turno)
       .then(() => {
         // this.router.navigate(['/nuevo-turno'])
 //        this.infoModal.show();
