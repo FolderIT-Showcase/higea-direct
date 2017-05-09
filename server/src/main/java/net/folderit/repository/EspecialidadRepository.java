@@ -2,7 +2,6 @@ package net.folderit.repository;
 
 import net.folderit.domain.CentroSalud;
 import net.folderit.domain.Especialidad;
-import org.bouncycastle.util.Iterable;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

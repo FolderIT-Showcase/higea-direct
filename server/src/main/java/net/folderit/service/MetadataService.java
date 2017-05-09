@@ -29,7 +29,7 @@ public class MetadataService {
     @Autowired
     public MetadataService(PaisRepository paisRepository,
                            ProvinciaRepository provinciaRepository,
-                           LocalidadRepository localidadRepositor,
+                           LocalidadRepository localidadRepository,
                            CentroSaludRepository centroSaludRepository,
                            EspecialidadRepository especialidadRepository,
                            ProfesionalRepository profesionalRepository
