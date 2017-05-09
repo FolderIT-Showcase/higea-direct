@@ -62,5 +62,10 @@ export class PersonaService {
       .first().toPromise();
   }
 
+  updatePersonaUser(persona: Persona) {
+    const path = 'persona';
+    return this.api.post(path, persona).first().toPromise();
+  }
+
 
 }

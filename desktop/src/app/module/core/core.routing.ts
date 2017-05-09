@@ -22,6 +22,7 @@ import {ProfesionalesComponent} from '../admin/component/profesionales/profesion
 import {AdminGuard} from './service/guard/admin.guard';
 import {TurnoResolveService} from './service/resolve/turno-resolve.service';
 import {ProvinciaResolveService} from './service/resolve/provincia-resolve.service';
+import {LocalidadesResolveService} from './service/resolve/localidad-resolve.service';
 
 const appRoutes: Routes = [
   {
@@ -62,6 +63,7 @@ const appRoutes: Routes = [
         resolve: {
           paises: PaisesResolveService,
           provincias: ProvinciaResolveService,
+          localidades: LocalidadesResolveService,
           integrantes: IntegrantesResolveService
         }
       },

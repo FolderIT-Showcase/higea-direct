@@ -26,8 +26,8 @@ export class MetadataService {
       .first().toPromise();
   }
 
-  getLocalidades(provincia) {
-    const path = 'localidad/' + provincia;
+  getLocalidades() {
+    const path = 'localidad';
     return this.api.get(path)
       .do((response) => {
         this.storeHelper.update('localidades', response);
