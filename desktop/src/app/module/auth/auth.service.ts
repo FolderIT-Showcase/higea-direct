@@ -76,20 +76,13 @@ export class AppAuthService {
 
   public getUser(type: string, id: string) {
     const path = 'users/external?externalId=' + id + '&type=' + type;
-    return this.api.get(path).first().toPromise();
+    return this.api.get(path);
   }
 
 
   normalLogin(user: User, type: string = '') {
     const path = 'login';
     return this.api.loginPost(path, user)
-      .map((response: Response) => {
-        user.token = response.headers.get('authorization').slice(7);
-        if (user && user.token) {
-          // store user details and jwt token in local storage to keep user logged in between page refreshes
-          localStorage.setItem('currentUser', JSON.stringify(user));
-        }
-      }).first().toPromise()
       .then(() => {
         this.router.navigate(['/']);
       });
