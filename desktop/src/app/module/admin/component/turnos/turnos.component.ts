@@ -143,8 +143,8 @@ export class TurnosComponent implements OnInit {
     const turnos: Turno[] = this.storeService.get('turnos');
     for (const x of turnos) {
       if (x.id === this.turno.id) {
-        console.log("turno: " + x.id);
-        console.log("this.turno.id: " + this.turno.id);
+        console.log('turno: ' + x.id);
+        console.log('this.turno.id: ' + this.turno.id);
         this.delete(x);
         this.storeService.findAndDelete('turnos', x.id);
         break;

@@ -3,6 +3,7 @@ import {Documento} from './documento';
 import {Domicilio} from './domicilio';
 import {Turno} from './turno';
 import {Contacto} from './contacto';
+
 export class Persona {
   id?: number;
   apellido?: string;
@@ -16,11 +17,5 @@ export class Persona {
   domicilio?: Domicilio;
   contacto?: Contacto[] = [];
   turno?: Turno[] = [];
-
-  constructor() {
-    this.documento = new Documento();
-    this.domicilio = new Domicilio();
-    this.contacto.push(new Contacto('telefono', ''));
-  }
 
 }
