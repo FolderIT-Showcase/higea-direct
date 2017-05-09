@@ -65,13 +65,23 @@ public class MetadataController {
     }
 
 
-    @PutMapping("/centroSalud")
+    @PostMapping("/centroSalud")
     public ResponseEntity<CentroSalud> guardarCentroSalud(@RequestBody CentroSalud centroSalud) {
         return new ResponseEntity<>((CentroSalud) metadataService.saveCentroSalud(centroSalud), HttpStatus.OK);
     }
 
-    @PutMapping("/profesional")
+    @PutMapping("/centroSalud")
+    public ResponseEntity<CentroSalud> actualizarCentroSalud(@RequestBody CentroSalud centroSalud) {
+        return new ResponseEntity<>((CentroSalud) metadataService.saveCentroSalud(centroSalud), HttpStatus.OK);
+    }
+
+    @PostMapping("/profesional")
     public ResponseEntity<Profesional> guardarProfesional(@RequestBody Profesional profesional) {
+        return new ResponseEntity<>((Profesional) metadataService.saveProfesional(profesional), HttpStatus.OK);
+    }
+
+    @PutMapping("/profesional")
+    public ResponseEntity<Profesional> actualizarProfesional(@RequestBody Profesional profesional) {
         return new ResponseEntity<>((Profesional) metadataService.saveProfesional(profesional), HttpStatus.OK);
     }
 

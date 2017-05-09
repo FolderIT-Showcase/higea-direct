@@ -58,7 +58,7 @@ export class TurnoBusquedaComponent implements OnInit, OnDestroy {
     console.log(this.persona);
   }
 
-  public deleteTurno(turno: Turno) {
+  public deleteTurno() {
     const turnos: Turno[] = this.storeService.get('turnos');
     for (const x of turnos) {
       if (x.id === this.turno.id) {
@@ -67,13 +67,11 @@ export class TurnoBusquedaComponent implements OnInit, OnDestroy {
       }
     }
 
-    console.log('id turno ' + turno.id);
-    this.adminService.deleteTurno(turno)
+    console.log('id turno ' + this.turno.id);
+    this.adminService.deleteTurno(this.turno)
       .then(() => {
-        // this.router.navigate(['/nuevo-turno'])
-//        this.infoModal.show();
+
         this.hideModal();
-        this.showInfoModal();
       })
       .catch(error => {
         console.error(error);

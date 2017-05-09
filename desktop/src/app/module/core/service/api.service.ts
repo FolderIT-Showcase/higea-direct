@@ -89,7 +89,8 @@ export class ApiService {
     return this.http
       .put(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
       .map(ApiService.checkForError)
-      .catch(err => Observable.throw(err));
+      .catch(err => Observable.throw(err))
+      .map(ApiService.getJson);
   }
 
   public patch(path: string, body, isAuthNecessary: boolean = true): Observable<any> {

@@ -6,6 +6,7 @@ import net.folderit.dto.FilterDto;
 import net.folderit.repository.PersonaRepository;
 import net.folderit.repository.TurnoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
@@ -50,5 +51,8 @@ public class TurnoService {
     public Turno findById(Long id) {
         return turnoRepository.findOne(id);
     }
-    public Iterable<Turno> findAll(){return  turnoRepository.findAll();};
+
+
+
+    public Iterable<Turno> findAll(){return  turnoRepository.findAllFilter();};
 }
