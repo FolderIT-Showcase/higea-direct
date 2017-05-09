@@ -205,7 +205,7 @@ export class ProfesionalesComponent implements OnInit {
     })
       .catch((error) => {
         console.log('Error' + error);
-        this.alertService.error(error.body);
+        //this.alertService.error(error.body);
       });
   }
 

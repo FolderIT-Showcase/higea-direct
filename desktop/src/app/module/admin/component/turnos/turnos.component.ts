@@ -68,7 +68,7 @@ export class TurnosComponent implements OnInit {
       'profesional': [null, Validators.required],
       'fechaDesde': [null, Validators.required],
       'hora':  [null, Validators.required],
-      'observaciones': [null, Validators.required],
+      'observaciones': [null, Validators.required]
 
       });
   }

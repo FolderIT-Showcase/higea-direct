@@ -32,11 +32,17 @@ export class ApiService {
   }
 
   checkForError(response: Response): Response | Observable<any> {
+
+    const exception: AppException = response.json();
+
+    console.log("Exception: "+ exception);
+
+
     if (response.status >= 200 && response.status < 300) {
       return response;
     }
 
-    const exception: AppException = response.json();
+
 
     if (exception.error) {
       this.alertService.error(exception.error)

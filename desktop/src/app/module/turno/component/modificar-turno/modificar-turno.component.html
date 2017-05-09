@@ -54,9 +54,9 @@
             </thead>
             <tbody>
             <tr *ngFor="let turno of turnos">
-              <td>{{turno.dia}}</td>
-              <td>{{turno.fecha}}</td>
-              <td>{{turno.hora}}</td>
+              <td>{{turno.dia | date: 'EEEE'}}</td>
+              <td>{{turno.fecha | date: 'dd/MM/yyyy'}}</td>
+              <td>{{turno.hora | date: 'HH:mm'}}</td>
               <td>{{turno.centroSalud.nombre}}</td>
               <td>{{turno.especialidad.nombre}}</td>
               <td>{{turno.profesional.nombre}}</td>
