@@ -9,9 +9,9 @@
              [ngClass]="{'has-error':!complexForm.controls['nombre'].valid && complexForm.controls['nombre'].touched}">
           <label>Nombre:</label>
           <input class="form-control" type="text" placeholder="Jose" [formControl]="complexForm.controls['nombre']">
-          <div *ngIf="complexForm.controls['nombre'].hasError('required') && complexForm.controls['nombre'].touched"
+          <small *ngIf="complexForm.controls['nombre'].hasError('required') && complexForm.controls['nombre'].touched"
                class="help-block">Debes incluir tu nombre.
-          </div>
+          </small>
         </div>
       </div>
       <div class="col-sm-6">
@@ -19,9 +19,9 @@
              [ngClass]="{'has-error':!complexForm.controls['apellido'].valid && complexForm.controls['apellido'].touched}">
           <label>Apellido</label>
           <input class="form-control" type="text" placeholder="Perez" [formControl]="complexForm.controls['apellido']">
-          <div *ngIf="complexForm.controls['apellido'].hasError('required') && complexForm.controls['apellido'].touched"
+          <small *ngIf="complexForm.controls['apellido'].hasError('required') && complexForm.controls['apellido'].touched"
                class="help-block">Debes incluir tu apellido.
-          </div>
+          </small>
         </div>
       </div>
     </div>
@@ -34,10 +34,10 @@
           <label>Contraseña</label>
           <input class="form-control" type="password" placeholder="una contraseña larga"
                  [formControl]="complexForm.controls['password1']">
-          <div
+          <small
             *ngIf="complexForm.controls['password1'].hasError('required') && complexForm.controls['password1'].touched"
             class="help-block">Debes incluir una contraseña.
-          </div>
+          </small>
         </div>
       </div>
       <div class="col-sm-6">
@@ -46,10 +46,10 @@
           <label>Repita su contraseña</label>
           <input class="form-control" type="password" placeholder="la misma contraseña larga"
                  [formControl]="complexForm.controls['password2']">
-          <div
+          <small
             *ngIf="complexForm.controls['password2'].hasError('required') && complexForm.controls['password2'].touched"
             class="help-block">Debes repetir la misma contraseña anterior.
-          </div>
+          </small>
         </div>
       </div>
     </div>

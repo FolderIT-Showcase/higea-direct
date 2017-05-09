@@ -10,7 +10,7 @@ export class AppState {
   paises: Pais[];
   provincias: Provincia[];
   localidades: Localidad[];
-  personas: Persona[];
+  integrantes: Persona[];
   persona: Persona;
   loginType: string;
   centroSalud: CentroSalud;

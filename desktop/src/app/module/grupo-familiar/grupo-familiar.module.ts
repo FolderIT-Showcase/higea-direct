@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {DatepickerModule} from 'ngx-bootstrap/datepicker';
 import {PopoverModule} from 'ngx-bootstrap/popover';
 import {GrupoFamiliarComponent} from './grupo-familiar.component';
@@ -10,13 +10,16 @@ import {AgmCoreModule} from 'angular2-google-maps/core';
 import {RouterModule} from '@angular/router';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {BusyModule} from 'angular2-busy';
+import {CoreModule} from '../core/core.module';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
     FormsModule,
+    ReactiveFormsModule,
     DatepickerModule,
+    CoreModule,
     PopoverModule.forRoot(),
     ModalModule.forRoot(),
     AgmCoreModule.forRoot({

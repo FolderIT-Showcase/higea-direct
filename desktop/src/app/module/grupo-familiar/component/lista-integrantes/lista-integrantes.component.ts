@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ModalDirective} from 'ngx-bootstrap';
 import {AlertService} from '../../../core/service/alert.service';
 import {Persona} from '../../../core/domain/persona';
@@ -8,20 +8,19 @@ import {TipoDocumentos} from '../../../core/domain/enums/tipo-documento';
 import {TipoContactos} from '../../../core/domain/enums/tipo-contacto';
 import {ApiService} from '../../../core/service/api.service';
 import _ from 'lodash';
-import {MetadataService} from '../../../core/service/metadata.service';
 import {StoreService} from '../../../core/service/store.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {MetadataService} from '../../../core/service/metadata.service';
 
 @Component({
   selector: 'app-lista-integrantes',
   templateUrl: './lista-integrantes.component.html',
   styleUrls: ['./lista-integrantes.component.scss']
 })
-export class ListaIntegrantesComponent {
-  @ViewChild('autoShownModal') public autoShownModal: ModalDirective;
+export class ListaIntegrantesComponent implements OnInit {
 
-  private integranteSelected = null;
+  private integranteSelected: Persona = new Persona();
   private currentUser = JSON.parse(localStorage.getItem('currentUser'));
-
   public busy: Promise<any>;
   public isModalShown = false;
   public currentPersona = new Persona();
@@ -39,27 +38,45 @@ export class ListaIntegrantesComponent {
     'localidades': []
   };
 
-  constructor(private alertService: AlertService,
-              private api: ApiService,
+  mForm: FormGroup;
+
+  modalConfirmacion: ModalDirective;
+  modalForm: ModalDirective;
+
+  constructor(private fb: FormBuilder,
               private metadataService: MetadataService,
+              private alertService: AlertService,
+              private api: ApiService,
               private storeHelper: StoreService) {
+
+    this.mForm = fb.group({
+      'nombre': [null, Validators.required],
+      'apellido': [null, Validators.required],
+      'genero': [null, Validators.required],
+      'tipoDocumento': [null, Validators.required],
+      'numeroDocumento': [null, Validators.required],
+      'fechaNacimiento': [null, Validators.required],
+      'tipoContacto': [null, Validators.required],
+      'numeroContacto': [null, Validators.required],
+      'estadoCivil': [null, Validators.required],
+      'pais': [null, Validators.required],
+      'provincia': [null, Validators.required],
+      'localidad': [null, Validators.required],
+      'calle': [null, Validators.required],
+      'piso': [null, Validators.required],
+      'departamento': [null, Validators.required]
+    });
+
+  }
+
+  ngOnInit(): void {
+
     // Popular listas
-    this.initListas();
-    const path = 'persona/email?email=' + this.currentUser.email;
-    this.busy = this.api.get(path).first().toPromise()
-      .then((res) => {
-        if (res) {
-          this.currentPersona = _.merge(new Persona(), res);
-          console.log(res);
-          this.currentPersona.integrantes = [];
-          _.forEach(res.integrantes, (e) => {
-            const i = _.merge(new Persona(), e);
-            this.currentPersona.integrantes.push(i);
-          });
-        }
-      }, (error) => {
-        this.alertService.error('Error de conexión a la API');
-      });
+    this.lists.provincias = this.storeHelper.get('provincias');
+    this.lists.paises = this.storeHelper.get('paises');
+
+    this.integrantes = this.storeHelper.get('integrantes');
+    this.currentPersona = this.storeHelper.get('persona');
 
     // Reordenar las listas para permitir una edición rápida
     for (const list in this.lists) {
@@ -84,104 +101,79 @@ export class ListaIntegrantesComponent {
     }
   };
 
-  public rebuildLists(integrante) {
+  public rebuildLists(form) {
 
-    if (this.formData &&
-      this.formData.domicilio &&
-      this.formData.domicilio.localidad &&
-      this.formData.domicilio.localidad.provincia &&
-      this.formData.domicilio.localidad.provincia.pais) {
+    if (form.pais) {
       this.lists.provincias = this.lists.provincias.filter(x => x.pais.id === this.formData.domicilio.localidad.provincia.pais.id);
     }
 
-    /* this.lists.provincias = [];
-     this.lists.localidades = [];
-     const paises = Paises.export();
-     let provincias = [];
-     let localidades = [];
+    this.lists.provincias = [];
+    this.lists.localidades = [];
 
-     if(!integrante || !integrante.domicilio) {
-     return;
-     }
+    if (!form || !form.domicilio) {
+      return;
+    }
 
-     const domicilio = integrante.domicilio;
+    const domicilio = form.domicilio;
 
-     // Busqueda de provincias
-     if(domicilio.localidad && domicilio.localidad.provincia && domicilio.localidad.provincia.pais) {
-     const pais = domicilio.localidad.provincia.pais.nombre;
-     if (pais) {
-     const tmp = paises.find(x => x.nombre == pais);
-     if (tmp) {
-     provincias = tmp.provincias;
-     this.lists.provincias = provincias.map((e) => {
-     return e.nombre;
-     });
-     this.lists.provincias.sort();
-     }
+    // Busqueda de provincias
 
-     const provincia = domicilio.localidad.provincia.nombre;
-     if(!provincias.find(x => x.nombre == provincia)) {
-     integrante.domicilio.localidad.provincia.nombre = this.selectUndefined;
-     integrante.domicilio.localidad.nombre = this.selectUndefined;
-     }
-     }
-     }
+    if (form.pais) {
+      this.lists.provincias = this.lists.provincias.filter(x => x.id === form.pais.id);
+    }
 
-     // Busqueda de localidades
-     if(domicilio.localidad && domicilio.localidad.provincia) {
-     const provincia =  domicilio.localidad.provincia.nombre;
-     if(provincia) {
-     const tmp = provincias.find(x => x.nombre == provincia);
-     if(tmp) {
-     localidades = tmp.localidades;
-     this.lists.localidades = localidades.map((e) => {
-     return e.nombre;
-     });
-     this.lists.localidades.sort();
-     }
-
-     const localidad = domicilio.localidad.nombre;
-     if(!localidades.find(x => x.nombre == localidad)) {
-     integrante.domicilio.localidad.nombre = this.selectUndefined;
-     }
-     }
-     }*/
+    // Busqueda de localidades
+    if (form.provincia) {
+      this.metadataService.getLocalidades(form.provincia)
+        .then(data => {
+          this.lists.localidades = data;
+        })
+        .catch(error => {
+          console.error(error);
+          this.alertService.error('TODO')
+        });
+    }
   }
 
-  public showModal(action, integrante) {
-    this.isModalShown = true;
+  public showModal(action, integrante: Persona) {
+    this.modalForm.show();
     this.modalAction = action;
     this.integranteSelected = integrante;
 
     this.rebuildLists(integrante);
 
     if (['edit', 'view', 'delete'].indexOf(action) >= 0) {
-      this.formData = _.merge({}, this.integranteSelected);
+      console.log(integrante);
+      this.mForm.setValue({
+        'nombre': integrante.nombre || '',
+        'apellido': integrante.apellido || '',
+        'genero': integrante.genero || '',
+        'tipoDocumento': integrante.documento.tipo || '',
+        'numeroDocumento': integrante.documento.numero || '',
+        'fechaNacimiento': integrante.fechaNacimiento || Date().toLocaleString(),
+        'tipoContacto': integrante.contacto[0].tipoContacto || '',
+        'numeroContacto': integrante.contacto[0].dato || '',
+        'estadoCivil': integrante.estadoCivil || '',
+        'pais': integrante.domicilio.localidad.provincia.pais.nombre || '',
+        'provincia': integrante.domicilio.localidad.provincia.nombre || '',
+        'localidad': integrante.domicilio.localidad.nombre || '',
+        'calle': integrante.domicilio.calle || '',
+        'piso': integrante.domicilio.piso || '',
+        'departamento': integrante.domicilio.departamento || ''
+      });
+      return;
     }
 
-    if (['add'].indexOf(action) >= 0) {
-      this.formData = _.merge({}, new Persona());
-    }
-  }
+    this.mForm.reset();
 
-  public hideModal(action) {
-    this.autoShownModal.hide();
   }
 
   public onHidden(action) {
     this.isModalShown = false;
   }
 
-  initListas() {
-
-    this.lists.provincias = this.storeHelper.get('provincias');
-    this.lists.paises = this.storeHelper.get('paises');
-    console.log('Provincias: ' + this.lists.provincias);
-
-  }
-
   public confirmModal(action, integrante) {
-    this.autoShownModal.hide();
+
     if (action === 'delete') {
       const prevPersona = _.merge({}, this.currentPersona);
       const i = _.findIndex(this.currentPersona.integrantes, integrante);
@@ -223,5 +215,24 @@ export class ListaIntegrantesComponent {
     }
   }
 
+  handleModalConfirmacion(event) {
+    this.modalConfirmacion = event;
+  }
+
+  hideModalConfirmacion() {
+    this.modalConfirmacion.hide();
+  }
+
+  handleModalForm(event) {
+    this.modalForm = event;
+  }
+
+  hideModalForm() {
+    this.modalForm.hide();
+  }
+
+  onDateChange(event) {
+    console.log(event)
+  }
 
 }

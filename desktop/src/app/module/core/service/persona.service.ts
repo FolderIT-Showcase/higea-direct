@@ -9,7 +9,7 @@ import {User} from '../domain/user';
 export class PersonaService {
 
   public static convertTipoDocumento(tipo: string): string {
-    const tipoRtn = TipoDocumentos.export().find(x => x.label == tipo);
+    const tipoRtn = TipoDocumentos.export().find(x => x.label === tipo);
     if (tipoRtn) {
       return tipoRtn.id;
     } else {
@@ -57,6 +57,7 @@ export class PersonaService {
         userPersona.userAsociado.token = mUser.token;
         localStorage.setItem('currentUser', JSON.stringify(userPersona.userAsociado));
         this.storeService.update('integrantes', personas);
+        this.storeService.update('persona', userPersona);
       })
       .first().toPromise();
   }
