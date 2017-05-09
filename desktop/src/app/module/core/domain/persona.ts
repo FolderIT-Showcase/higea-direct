@@ -10,32 +10,17 @@ export class Persona {
   genero?: string;
   nombre?: string;
   userAsociado?: User;
-  integrantes?: Persona[];
+  integrantes?: Persona[] = [];
   documento?: Documento;
   estadoCivil?: string;
   domicilio?: Domicilio;
-  contacto?: Contacto[];
-  turno?: Turno[];
+  contacto?: Contacto[] = [];
+  turno?: Turno[] = [];
 
   constructor() {
-    this.documento = {
-      'tipo': undefined,
-      'numero': undefined
-    };
-    this.domicilio = {
-      'localidad': {
-        'nombre': undefined,
-        'provincia': {
-          'nombre': undefined,
-          'pais': {
-            'nombre': undefined
-          }
-        }
-      }
-    };
-    this.contacto = [{
-      'tipoContacto': 'telefono',
-      'dato': undefined
-    }];
+    this.documento = new Documento();
+    this.domicilio = new Domicilio();
+    this.contacto.push(new Contacto('telefono', ''));
   }
+
 }

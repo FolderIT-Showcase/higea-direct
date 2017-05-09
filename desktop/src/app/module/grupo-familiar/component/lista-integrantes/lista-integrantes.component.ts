@@ -6,11 +6,11 @@ import {EstadosCiviles} from '../../../core/domain/enums/estado-civil';
 import {Generos} from '../../../core/domain/enums/genero';
 import {TipoDocumentos} from '../../../core/domain/enums/tipo-documento';
 import {TipoContactos} from '../../../core/domain/enums/tipo-contacto';
-import {ApiService} from '../../../core/service/api.service';
 import _ from 'lodash';
 import {StoreService} from '../../../core/service/store.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MetadataService} from '../../../core/service/metadata.service';
+import {PersonaService} from '../../../core/service/persona.service';
 
 @Component({
   selector: 'app-lista-integrantes',
@@ -22,7 +22,6 @@ export class ListaIntegrantesComponent implements OnInit {
   private integranteSelected: Persona = new Persona();
   private currentUser = JSON.parse(localStorage.getItem('currentUser'));
   public busy: Promise<any>;
-  public isModalShown = false;
   public currentPersona = new Persona();
   public modalAction = 'none';
   public formData: any = {};
@@ -44,9 +43,9 @@ export class ListaIntegrantesComponent implements OnInit {
   modalForm: ModalDirective;
 
   constructor(private fb: FormBuilder,
+              private personaService: PersonaService,
               private metadataService: MetadataService,
               private alertService: AlertService,
-              private api: ApiService,
               private storeHelper: StoreService) {
 
     this.mForm = fb.group({
@@ -104,7 +103,7 @@ export class ListaIntegrantesComponent implements OnInit {
   public rebuildLists(form) {
 
     if (form.pais) {
-      this.lists.provincias = this.lists.provincias.filter(x => x.pais.id === this.formData.domicilio.localidad.provincia.pais.id);
+      this.lists.provincias = this.lists.provincias.filter(x => x.pais.id === form.pais.id);
     }
 
     this.lists.provincias = [];
@@ -124,14 +123,7 @@ export class ListaIntegrantesComponent implements OnInit {
 
     // Busqueda de localidades
     if (form.provincia) {
-      this.metadataService.getLocalidades(form.provincia)
-        .then(data => {
-          this.lists.localidades = data;
-        })
-        .catch(error => {
-          console.error(error);
-          this.alertService.error('TODO')
-        });
+
     }
   }
 
@@ -144,6 +136,27 @@ export class ListaIntegrantesComponent implements OnInit {
 
     if (['edit', 'view', 'delete'].indexOf(action) >= 0) {
       console.log(integrante);
+
+      const tipoContacto = integrante.contacto[0] ? integrante.contacto[0].tipoContacto : '';
+      const dato = integrante.contacto[0] ? integrante.contacto[0].dato : '';
+      const localidad = integrante.domicilio.localidad ? integrante.domicilio.localidad.nombre : '';
+      const provincia = () => {
+        if (integrante.domicilio.localidad && integrante.domicilio.localidad.provincia) {
+          return integrante.domicilio.localidad.provincia.nombre;
+        }
+        return '';
+      };
+      const pais = () => {
+        if (integrante.domicilio.localidad && integrante.domicilio.localidad.provincia &&
+          integrante.domicilio.localidad.provincia.pais) {
+          return integrante.domicilio.localidad.provincia.pais.nombre;
+        }
+        return '';
+      };
+      const calle = (integrante.domicilio && integrante.domicilio.calle) ? integrante.domicilio.calle : '';
+      const piso = (integrante.domicilio && integrante.domicilio.piso) ? integrante.domicilio.piso : '';
+      const departamento = (integrante.domicilio && integrante.domicilio.departamento)  ? integrante.domicilio.departamento : '';
+
       this.mForm.setValue({
         'nombre': integrante.nombre || '',
         'apellido': integrante.apellido || '',
@@ -151,15 +164,15 @@ export class ListaIntegrantesComponent implements OnInit {
         'tipoDocumento': integrante.documento.tipo || '',
         'numeroDocumento': integrante.documento.numero || '',
         'fechaNacimiento': integrante.fechaNacimiento || Date().toLocaleString(),
-        'tipoContacto': integrante.contacto[0].tipoContacto || '',
-        'numeroContacto': integrante.contacto[0].dato || '',
+        'tipoContacto': tipoContacto,
+        'numeroContacto': dato,
         'estadoCivil': integrante.estadoCivil || '',
-        'pais': integrante.domicilio.localidad.provincia.pais.nombre || '',
-        'provincia': integrante.domicilio.localidad.provincia.nombre || '',
-        'localidad': integrante.domicilio.localidad.nombre || '',
-        'calle': integrante.domicilio.calle || '',
-        'piso': integrante.domicilio.piso || '',
-        'departamento': integrante.domicilio.departamento || ''
+        'pais': pais,
+        'provincia': provincia,
+        'localidad': localidad,
+        'calle': calle,
+        'piso': piso,
+        'departamento': departamento
       });
       return;
     }
@@ -168,51 +181,60 @@ export class ListaIntegrantesComponent implements OnInit {
 
   }
 
-  public onHidden(action) {
-    this.isModalShown = false;
-  }
-
   public confirmModal(action, integrante) {
 
-    if (action === 'delete') {
-      const prevPersona = _.merge({}, this.currentPersona);
-      const i = _.findIndex(this.currentPersona.integrantes, integrante);
-      if (i >= 0) {
-        this.currentPersona.integrantes.splice(i, 1);
-      }
-      const path = 'persona';
-      this.busy = this.api.post(path, this.currentPersona).first().toPromise().then((res) => {
-        this.alertService.success('Integrante removido correctamente.');
-      }, (error) => {
-        this.currentPersona = _.merge({}, prevPersona);
-        this.alertService.error('Ocurrió un error al intentar remover al integrante..');
-      });
+    const prevPersona = _.merge({}, this.currentPersona);
+
+    switch (action) {
+
+      case 'delete':
+        const i = _.findIndex(this.currentPersona.integrantes, integrante);
+        if (i >= 0) {
+          this.currentPersona.integrantes.splice(i, 1);
+        }
+
+        this.busy = this.personaService.updatePersonaUser(this.currentPersona)
+          .then((res) => {
+            this.alertService.success('Integrante removido correctamente.');
+          })
+          .catch((error) => {
+            this.currentPersona = _.merge({}, prevPersona);
+            console.error(error);
+            this.alertService.error('Ocurrió un error al intentar remover al integrante..');
+          });
+
+        break;
+
+      case 'add':
+        this.currentPersona.integrantes.push(integrante);
+
+        this.busy = this.personaService.updatePersonaUser(this.currentPersona)
+          .then((res) => {
+            this.alertService.success('Integrante agregado correctamente.');
+          })
+          .catch((error) => {
+            this.currentPersona = _.merge({}, prevPersona);
+            this.alertService.error('Ocurrió un error al intentar agregar al integrante..');
+          });
+        break;
+
+      case 'edit':
+        _.merge(this.integranteSelected, this.mForm);
+
+        this.busy = this.personaService.updatePersonaUser(this.currentPersona)
+          .then((res) => {
+            this.alertService.success('Integrante editado correctamente.');
+          })
+          .catch((error) => {
+            this.currentPersona = _.merge({}, prevPersona);
+            this.alertService.error('Ocurrió un error al intentar editar al integrante..');
+          });
+        break;
+
+      default:
+        return;
     }
 
-    if (action === 'add') {
-      const prevPersona = _.merge({}, this.currentPersona);
-      this.currentPersona.integrantes.push(integrante);
-      const path = 'persona';
-      this.busy = this.api.post(path, this.currentPersona).first().toPromise().then((res) => {
-        this.alertService.success('Integrante agregado correctamente.');
-      }, (error) => {
-        this.currentPersona = _.merge({}, prevPersona);
-        this.alertService.error('Ocurrió un error al intentar agregar al integrante..');
-      });
-    }
-
-    if (action === 'edit') {
-      const prevPersona = _.merge({}, this.currentPersona);
-      _.merge(this.integranteSelected, this.formData);
-      const path = 'persona';
-      console.log(this.currentPersona);
-      this.busy = this.api.post(path, this.currentPersona).first().toPromise().then((res) => {
-        this.alertService.success('Integrante editado correctamente.');
-      }, (error) => {
-        this.currentPersona = _.merge({}, prevPersona);
-        this.alertService.error('Ocurrió un error al intentar editar al integrante..');
-      });
-    }
   }
 
   handleModalConfirmacion(event) {

@@ -160,9 +160,8 @@ export class EspecialidadesComponent implements OnInit {
       });
   }
 
-  submitUpdateForm(value: Data) {
+  submitUpdateForm() {
     this.especialidad.nombre = this.model.especialidadLabel.toUpperCase();
-
     this.update(this.especialidad);
   }
 
