@@ -38,7 +38,8 @@ export class AdminService {
     return this.api.put(path, turno)
       .do(data => {
         this.storeService.update('CentroSalud', centro);
-        this.storeService.update('turnos', data);
+
+        this.storeService.add('turnos', data);
       })
       .first().toPromise();
   }
@@ -75,7 +76,7 @@ export class AdminService {
     const path = 'especialidad';
     return this.api.put(path, especialidad)
       .do(data => {
-        this.storeService.add('especialidades', especialidad);
+        this.storeService.findAndSet('centrosSalud', especialidad.id, especialidad);
       })
       .first().toPromise();
   }
@@ -138,6 +139,7 @@ export class AdminService {
       })
       .first().toPromise();
   }
+
 
   deleteProfesional(profesional: Profesional) {
     const path = 'profesional';

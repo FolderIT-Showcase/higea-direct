@@ -60,7 +60,8 @@ export class EspecialidadesComponent implements OnInit {
       this.store.changes.pluck('especialidades').subscribe(
         (data: any) => {
           this.especialidades = data;
-          this.pagedItems = this.especialidades.slice(this.pager.startIndex, this.pager.endIndex + 1);
+          console.log(data);
+          //this.pagedItems = this.especialidades.slice(this.pager.startIndex, this.pager.endIndex + 1);
         }
       ));
 
@@ -160,20 +161,20 @@ export class EspecialidadesComponent implements OnInit {
   }
 
   submitUpdateForm(value: Data) {
-    if (value.especialidad) {
-      this.especialidad.nombre = value.especialidadLabel;
-    }
+    this.especialidad.nombre = this.model.especialidadLabel.toUpperCase();
+
     this.update(this.especialidad);
   }
 
   update(especialidad: Especialidad) {
+
     this.adminService.updateEspecialidad(especialidad)
       .then(data => {
-        this.alertService.success('Se guardo exitosamente');
+        this.alertService.success('Se actualizo exitosamente');
       })
       .catch((error) => {
         console.error(error);
-        this.alertService.error('Error al querer guardar el Profesional');
+        this.alertService.error('Error al querer actualizar la especialidad');
       });
     this.updateModal.hide();
     this.clean();

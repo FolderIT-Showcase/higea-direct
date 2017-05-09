@@ -39,5 +39,7 @@ public interface TurnoRepository extends CrudRepository<Turno, Long> {
             " t.profesional=?4 and t.enabled=true and t.tomado=false order by t.fecha DESC")
     List<Turno> finAllByFechaAndCentroAndProfesional(String fecha,CentroSalud centro, Profesional profesional);
 
+    @Query("select t as turno from Turno t where t.enabled=true  order by t.fecha DESC")
+    List<Turno> findAllFilter();
 
 }

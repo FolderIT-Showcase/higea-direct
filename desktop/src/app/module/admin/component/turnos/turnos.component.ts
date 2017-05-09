@@ -12,9 +12,10 @@ import {AdminService} from '../../../core/service/admin.service';
 import {Subscription} from 'rxjs/Subscription';
 import {PagerService} from '../../../core/service/pager.service';
 import {Store} from '../../../core/service/store';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 class Data {
-  persona: Persona;
+
   centro: CentroSalud;
   especialidad: Especialidad;
   profesional: Profesional;
@@ -40,6 +41,7 @@ export class TurnosComponent implements OnInit {
   turno: Turno;
 
   deleteModal: ModalDirective;
+  saveModal: ModalDirective;
 
   totalItems = 0;
   currentPage = 1;
@@ -50,12 +52,25 @@ export class TurnosComponent implements OnInit {
   // paged items
   pagedItems: any[];
   subs: Subscription[] = [];
+  form: FormGroup;
 
   constructor(private storeService: StoreService,
               private alertService: AlertService,
               private adminService: AdminService,
               private store: Store,
-              private  pagerService: PagerService) {
+              private  pagerService: PagerService,
+              private fb: FormBuilder) {
+
+    this.form = fb.group({
+
+      'centro': [null, Validators.required],
+      'especialidad': [null, Validators.required],
+      'profesional': [null, Validators.required],
+      'fechaDesde': [null, Validators.required],
+      'hora':  [null, Validators.required],
+      'observaciones': [null, Validators.required],
+
+      });
   }
 
   ngOnInit() {
@@ -68,7 +83,7 @@ export class TurnosComponent implements OnInit {
       this.store.changes.pluck('turnos').subscribe(
         (data: any) => {
           this.turnos = data;
-          this.pagedItems = this.turnos.slice(this.pager.startIndex, this.pager.endIndex + 1);
+          this.setPage(this.pager.currentPage);
         }
       ));
 
@@ -76,9 +91,9 @@ export class TurnosComponent implements OnInit {
     this.setPage(1);
   }
 
-  handlePersonaClick(persona: Persona) {
+  /*handlePersonaClick(persona: Persona) {
     this.model.persona = persona;
-  }
+  }*/
 
   handleCentroSaludClick(centroSalud: CentroSalud) {
     this.model.centro = centroSalud;
@@ -94,17 +109,21 @@ export class TurnosComponent implements OnInit {
     this.model.profesional = profesional;
   }
 
-  crear() {
+  crear(value: Data) {
 
     this.adminService.saveTurno(this.model.centro, this.model.especialidad, this.model.profesional,
-      this.model.fechaDesde, this.model.hora, this.model.observaciones)
+      value.fechaDesde, value.hora, value.observaciones)
       .then(data => {
         this.alertService.success('Registro Exitoso');
+        this.setPage(this.pager.currentPage);
       })
       .catch((error) => {
         console.error(error);
         this.alertService.error('Error al guardar el turno');
+        this.setPage(this.pager.currentPage);
       });
+
+
 
   }
 
@@ -124,9 +143,11 @@ export class TurnosComponent implements OnInit {
   }
 
   public deleteTurno() {
-    const turnos = this.storeService.get('turnos');
+    const turnos: Turno[] = this.storeService.get('turnos');
     for (const x of turnos) {
       if (x.id === this.turno.id) {
+        console.log("turno: "+x.id);
+        console.log("this.turno.id: "+this.turno.id);
         this.delete(x);
         this.storeService.findAndDelete('turnos', x.id);
         break;
@@ -143,6 +164,8 @@ export class TurnosComponent implements OnInit {
         console.error(error);
         this.alertService.error(error.body);
       });
+
+    this.setPage(this.pager.currentPage);
   }
 
   public setPage(page: number): void {
@@ -158,6 +181,25 @@ export class TurnosComponent implements OnInit {
     this.currentPage = page;
     console.log('paginas' + this.pager.totalPages);
     this.totalItems = this.pager.totalPages * this.maxSize;
+  }
+
+  handleSaveModal(event) {
+    this.saveModal = event;
+  }
+
+  submitSaveForm(value: Data) {
+    this.save(value);
+  }
+
+  save(value: Data) {
+    console.log("DATA: "+ value);
+    this.crear(value);
+    this.saveModal.hide();
+    this.clean();
+  }
+
+  clean() {
+    this.form.reset();
   }
 
 }
