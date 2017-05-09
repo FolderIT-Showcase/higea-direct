@@ -4,7 +4,8 @@ export class Provincia {
   nombre: string;
   pais?: Pais;
 
-  constructor() {
+  constructor(mNombre = '') {
     this.pais = new Pais();
+    this.nombre = mNombre;
   }
 }

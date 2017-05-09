@@ -5,6 +5,8 @@ import 'rxjs/add/operator/map';
 import {Observable} from 'rxjs/Rx';
 import {User} from '../domain/user';
 import {Router} from '@angular/router';
+import {AlertService} from './alert.service';
+import {AppException} from '../domain/AppException';
 
 @Injectable()
 export class ApiService {
@@ -23,17 +25,29 @@ export class ApiService {
     return response.json();
   }
 
-  static checkForError(response: Response): Response | Observable<any> {
+  constructor(private http: Http,
+              private router: Router,
+              private alertService: AlertService) {
+
+  }
+
+  checkForError(response: Response): Response | Observable<any> {
     if (response.status >= 200 && response.status < 300) {
       return response;
     }
-    const error = new Error(response.statusText);
-    error['response'] = response;
-    throw error;
-  }
 
-  constructor(private http: Http, private router: Router) {
+    const exception: AppException = response.json();
 
+    if (exception.error) {
+      this.alertService.error(exception.error)
+    } else {
+      const error = new Error(response.statusText);
+      error['response'] = response;
+      console.error(error);
+      const dummyException = new AppException();
+      this.alertService.error(dummyException.error);
+      throw error;
+    }
   }
 
   useJwt() {
@@ -64,7 +78,7 @@ export class ApiService {
     }
 
     return this.http.get(`${this.baseURL}${path}`, {headers: this.headers})
-      .map(ApiService.checkForError)
+      .map(this.checkForError)
       .catch(err => Observable.throw(err))
       .map(ApiService.getJson);
   }
@@ -76,7 +90,7 @@ export class ApiService {
     }
     return this.http
       .post(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
-      .map(ApiService.checkForError)
+      .map(this.checkForError)
       .catch(err => Observable.throw(err))
       .map(ApiService.getJson);
   }
@@ -88,7 +102,7 @@ export class ApiService {
     }
     return this.http
       .put(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
-      .map(ApiService.checkForError)
+      .map(this.checkForError)
       .catch(err => Observable.throw(err))
       .map(ApiService.getJson);
   }
@@ -100,7 +114,7 @@ export class ApiService {
     }
     return this.http
       .patch(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
-      .map(ApiService.checkForError)
+      .map(this.checkForError)
       .catch(err => Observable.throw(err));
   }
 
@@ -110,14 +124,14 @@ export class ApiService {
       this.checkLogged();
     }
     return this.http.delete(`${this.baseURL}${path}`, {headers: this.headers})
-      .map(ApiService.checkForError)
+      .map(this.checkForError)
       .catch(err => Observable.throw(err));
   }
 
   public loginPost(path: string, body): Observable<any> {
     return this.http
       .post(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
-      .map(ApiService.checkForError)
+      .map(this.checkForError)
       .catch(err => Observable.throw(err));
   }
 

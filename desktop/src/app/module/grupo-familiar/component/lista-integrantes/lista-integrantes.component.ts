@@ -6,11 +6,13 @@ import {EstadosCiviles} from '../../../core/domain/enums/estado-civil';
 import {Generos} from '../../../core/domain/enums/genero';
 import {TipoDocumentos} from '../../../core/domain/enums/tipo-documento';
 import {TipoContactos} from '../../../core/domain/enums/tipo-contacto';
-import _ from 'lodash';
+import * as _ from 'lodash';
 import {StoreService} from '../../../core/service/store.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MetadataService} from '../../../core/service/metadata.service';
 import {PersonaService} from '../../../core/service/persona.service';
+import {Localidad} from '../../../core/domain/localidad';
+import {Provincia} from '../../../core/domain/provincia';
 
 @Component({
   selector: 'app-lista-integrantes',
@@ -36,6 +38,9 @@ export class ListaIntegrantesComponent implements OnInit {
     'provincias': [],
     'localidades': []
   };
+
+  localidades: Localidad[] = [];
+  provincias: Provincia[] = [];
 
   mForm: FormGroup;
 
@@ -71,7 +76,7 @@ export class ListaIntegrantesComponent implements OnInit {
   ngOnInit(): void {
 
     // Popular listas
-    this.lists.provincias = this.storeHelper.get('provincias');
+    this.provincias = this.storeHelper.get('provincias');
     this.lists.paises = this.storeHelper.get('paises');
 
     this.integrantes = this.storeHelper.get('integrantes');
@@ -101,29 +106,23 @@ export class ListaIntegrantesComponent implements OnInit {
   };
 
   public rebuildLists(form) {
-
-    if (form.pais) {
-      this.lists.provincias = this.lists.provincias.filter(x => x.pais.id === form.pais.id);
-    }
-
     this.lists.provincias = [];
     this.lists.localidades = [];
-
-    if (!form || !form.domicilio) {
+    console.log(form);
+    if (!form.pais) {
       return;
     }
 
-    const domicilio = form.domicilio;
-
     // Busqueda de provincias
-
-    if (form.pais) {
-      this.lists.provincias = this.lists.provincias.filter(x => x.id === form.pais.id);
+    if (form.pais.nombre.toUpperCase() === 'ARGENTINA') {
+      this.lists.provincias = this.provincias
+    } else {
+      this.lists.provincias.push(new Provincia(' --- OTRA --- '));
     }
 
     // Busqueda de localidades
     if (form.provincia) {
-
+      this.lists.localidades = this.localidades.filter(x => x.provincia.id === form.provincia.id);
     }
   }
 
@@ -155,7 +154,7 @@ export class ListaIntegrantesComponent implements OnInit {
       };
       const calle = (integrante.domicilio && integrante.domicilio.calle) ? integrante.domicilio.calle : '';
       const piso = (integrante.domicilio && integrante.domicilio.piso) ? integrante.domicilio.piso : '';
-      const departamento = (integrante.domicilio && integrante.domicilio.departamento)  ? integrante.domicilio.departamento : '';
+      const departamento = (integrante.domicilio && integrante.domicilio.departamento) ? integrante.domicilio.departamento : '';
 
       this.mForm.setValue({
         'nombre': integrante.nombre || '',

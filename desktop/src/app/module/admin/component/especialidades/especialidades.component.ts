@@ -61,7 +61,8 @@ export class EspecialidadesComponent implements OnInit {
         (data: any) => {
           this.especialidades = data;
           console.log(data);
-          //this.pagedItems = this.especialidades.slice(this.pager.startIndex, this.pager.endIndex + 1);
+          // this.pagedItems = this.especialidades.slice(this.pager.startIndex, this.pager.endIndex + 1);
+          this.setPage(this.pager.currentPage);
         }
       ));
 
