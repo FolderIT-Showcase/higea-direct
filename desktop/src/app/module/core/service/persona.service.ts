@@ -67,5 +67,9 @@ export class PersonaService {
     return this.api.post(path, persona).first().toPromise();
   }
 
+  activateUser(token) {
+    const path = 'api/users/regitrationConfirm?token=' + token;
+    return this.api.get(path).first().toPromise();
+  }
 
 }
