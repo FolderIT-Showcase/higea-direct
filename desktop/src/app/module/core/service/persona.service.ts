@@ -21,7 +21,7 @@ export class PersonaService {
   }
 
   create(persona: Persona) {
-    return this.api.post('users/registration', persona, false).first().toPromise();
+    return this.api.post('users/registration', persona, false);
   }
 
   validateDni(dto: any) {
@@ -31,7 +31,7 @@ export class PersonaService {
       '&apellido=' + dto.apellido +
       '&genero=' + dto.genero;
 
-    return this.api.get(path, false).first().toPromise();
+    return this.api.get(path, false);
   }
 
   getIntegrantes() {
@@ -43,7 +43,7 @@ export class PersonaService {
 
     const path = 'persona/email?email=' + user.email;
     return this.api.get(path)
-      .do((data: Persona) => {
+      .then((data: Persona) => {
         const userPersona: Persona = data;
         userPersona.integrantes = null;
         const personas: Persona[] = [];
@@ -58,18 +58,17 @@ export class PersonaService {
         localStorage.setItem('currentUser', JSON.stringify(userPersona.userAsociado));
         this.storeService.update('integrantes', personas);
         this.storeService.update('persona', userPersona);
-      })
-      .first().toPromise();
+      });
   }
 
   updatePersonaUser(persona: Persona) {
     const path = 'persona';
-    return this.api.post(path, persona).first().toPromise();
+    return this.api.post(path, persona);
   }
 
   activateUser(token) {
     const path = 'api/users/regitrationConfirm?token=' + token;
-    return this.api.get(path).first().toPromise();
+    return this.api.get(path);
   }
 
 }

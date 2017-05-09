@@ -19,19 +19,17 @@ export class TurnoService {
   getCentrosDeSalud() {
     const path = 'centroSalud';
     return this.api.get(path)
-      .do(data => {
+      .then(data => {
         this.storeService.update('centrosSalud', data);
-      })
-      .first().toPromise();
+      });
   }
 
   getAllTurnos() {
     const path = 'turno';
     return this.api.get(path)
-      .do(data => {
+      .then(data => {
         this.storeService.update('turnos', data);
-      })
-      .first().toPromise();
+      });
   }
 
   getTurnos(centro: CentroSalud, especialidad: Especialidad, profesional: Profesional, fecha: Date) {
@@ -59,21 +57,20 @@ export class TurnoService {
     filtro.fecha = fecha;
 
     return this.api.post(path, filtro)
-      .do(data => {
+      .then(data => {
         this.storeService.update('CentroSalud', centro);
         this.storeService.update('turnos', data);
-      })
-      .first().toPromise();
+      });
   }
 
   reservarTurno(persona: Persona) {
     const path = 'persona';
-    return this.api.post(path, persona).first().toPromise();
+    return this.api.post(path, persona);
   }
 
   cancelarTurno(turno) {
     const path = 'turno?id=' + turno.id + '&desactivate=false';
-    return this.api.delete(path).first().toPromise();
+    return this.api.delete(path);
   }
 
 }

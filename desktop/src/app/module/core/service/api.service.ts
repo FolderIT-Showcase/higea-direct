@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {Headers, Http, Response} from '@angular/http';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
-import {Observable} from 'rxjs/Rx';
 import {User} from '../domain/user';
 import {Router} from '@angular/router';
 import {AlertService} from './alert.service';
@@ -31,39 +30,35 @@ export class ApiService {
 
   }
 
-  checkForError(response: Response): Response | Observable<any> {
+  checkForError(response: Response): Response | any {
     if (response.status >= 200 && response.status < 300) {
       return response;
     }
-
-    const exception: AppException = response.json();
-
-    if (exception.error) {
-      this.alertService.error(exception.error)
-    } else {
-      const error = new Error(response.statusText);
-      error['response'] = response;
-      console.error(error);
-      const dummyException = new AppException();
-      this.alertService.error(dummyException.error);
-      throw error;
-    }
   }
 
-  useJwt() {
+  catchException(exception: AppException) {
+    let mException = exception;
+    console.log(mException);
+    if (mException.error) {
+    } else {
+      mException = new AppException();
+    }
+    this.alertService.error(mException.error);
+    throw new Error(mException.error);
+  }
+
+  isAuthNecessary(isAuthNecessary: boolean) {
+    if (!isAuthNecessary) {
+      return;
+    }
+    // use jwt
     if (!this.headers.get('authorization')) {
       const user: User = JSON.parse(localStorage.getItem('currentUser'));
       if (user && user.token) {
         this.headers.append('authorization', user.token);
       }
     }
-  }
-
-  removeJwt() {
-    this.headers.delete('authorization');
-  }
-
-  checkLogged() {
+    // check if logged
     if (!this.headers.get('authorization')) {
       localStorage.removeItem('currentUser');
       this.router.navigate(['/login']);
@@ -71,68 +66,63 @@ export class ApiService {
     }
   }
 
-  get(path: string, isAuthNecessary: boolean = true): Observable<any> {
-    if (isAuthNecessary) {
-      this.useJwt();
-      this.checkLogged();
-    }
-
-    return this.http.get(`${this.baseURL}${path}`, {headers: this.headers})
-      .map(this.checkForError)
-      .catch(err => Observable.throw(err))
-      .map(ApiService.getJson);
+  removeJwt() {
+    this.headers.delete('authorization');
   }
 
-  public post(path: string, body, isAuthNecessary: boolean = true): Observable<any> {
-    if (isAuthNecessary) {
-      this.useJwt();
-      this.checkLogged();
-    }
+  get(path: string, isAuthNecessary: boolean = true): Promise<any> {
+    this.isAuthNecessary(isAuthNecessary);
+    return this.http.get(`${this.baseURL}${path}`, {headers: this.headers})
+      .map(this.checkForError)
+      .map(ApiService.getJson)
+      .first().toPromise().catch(error => this.catchException(error.json()));
+  }
+
+  public post(path: string, body, isAuthNecessary: boolean = true): Promise<any> {
+    this.isAuthNecessary(isAuthNecessary);
     return this.http
       .post(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
       .map(this.checkForError)
-      .catch(err => Observable.throw(err))
-      .map(ApiService.getJson);
+      .map(ApiService.getJson)
+      .first().toPromise().catch(error => this.catchException(error.json()));
   }
 
-  public put(path: string, body, isAuthNecessary: boolean = true): Observable<any> {
-    if (isAuthNecessary) {
-      this.useJwt();
-      this.checkLogged();
-    }
+  public put(path: string, body, isAuthNecessary: boolean = true): Promise<any> {
+    this.isAuthNecessary(isAuthNecessary);
     return this.http
       .put(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
       .map(this.checkForError)
-      .catch(err => Observable.throw(err))
-      .map(ApiService.getJson);
+      .map(ApiService.getJson)
+      .first().toPromise().catch(error => this.catchException(error.json()));
   }
 
-  public patch(path: string, body, isAuthNecessary: boolean = true): Observable<any> {
-    if (isAuthNecessary) {
-      this.useJwt();
-      this.checkLogged();
-    }
+  public patch(path: string, body, isAuthNecessary: boolean = true): Promise<any> {
+    this.isAuthNecessary(isAuthNecessary);
     return this.http
       .patch(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
       .map(this.checkForError)
-      .catch(err => Observable.throw(err));
+      .first().toPromise().catch(error => this.catchException(error.json()));
   }
 
-  public delete(path, isAuthNecessary: boolean = true): Observable<any> {
-    if (isAuthNecessary) {
-      this.useJwt();
-      this.checkLogged();
-    }
+  public delete(path, isAuthNecessary: boolean = true): Promise<any> {
+    this.isAuthNecessary(isAuthNecessary);
     return this.http.delete(`${this.baseURL}${path}`, {headers: this.headers})
       .map(this.checkForError)
-      .catch(err => Observable.throw(err));
+      .first().toPromise().catch(error => this.catchException(error.json()));
   }
 
-  public loginPost(path: string, body): Observable<any> {
+  public loginPost(path: string, body): Promise<any> {
     return this.http
       .post(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
       .map(this.checkForError)
-      .catch(err => Observable.throw(err));
+      .map((response: Response) => {
+        body.token = response.headers.get('authorization').slice(7);
+        if (body && body.token) {
+          // store user details and jwt token in local storage to keep user logged in between page refreshes
+          localStorage.setItem('currentUser', JSON.stringify(body));
+        }
+      })
+      .first().toPromise();
   }
 
 }

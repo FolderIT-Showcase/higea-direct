@@ -81,7 +81,7 @@ export class ProfesionalesComponent implements OnInit {
       this.store.changes.pluck('profesionales').subscribe(
         (data: any) => {
           this.profesionales = data;
-         // this.setPage(this.pager.currentPage);
+          // this.setPage(this.pager.currentPage);
         }
       ));
 
@@ -200,13 +200,10 @@ export class ProfesionalesComponent implements OnInit {
   }
 
   delete(profesional: Profesional) {
-    this.adminService.deleteProfesional(profesional).then(data => {
-      this.alertService.success('Se borro exitosamente');
-    })
-      .catch((error) => {
-        console.log('Error' + error);
-        this.alertService.error(error.body);
-      });
+    this.adminService.deleteProfesional(profesional)
+      .then(data => {
+        this.alertService.success('Se borro exitosamente');
+      })
   }
 
   clean() {
