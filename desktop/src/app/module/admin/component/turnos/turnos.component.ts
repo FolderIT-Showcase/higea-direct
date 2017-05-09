@@ -5,14 +5,13 @@ import {Especialidad} from '../../../core/domain/especialidad';
 import {Profesional} from '../../../core/domain/profesional';
 import {Turno} from '../../../core/domain/turno';
 import {StoreService} from '../../../core/service/store.service';
-import {TurnoService} from '../../../core/service/turno.service';
 import {AlertService} from '../../../core/service/alert.service';
 import {ModalDirective} from 'ngx-bootstrap';
 import {AdminService} from '../../../core/service/admin.service';
 import {Subscription} from 'rxjs/Subscription';
 import {PagerService} from '../../../core/service/pager.service';
 import {Store} from '../../../core/service/store';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 class Data {
 
@@ -26,8 +25,7 @@ class Data {
 
 @Component({
   selector: 'app-turnos',
-  templateUrl: './turnos.component.html',
-  styleUrls: ['./turnos.component.scss']
+  templateUrl: './turnos.component.html'
 })
 export class TurnosComponent implements OnInit {
 
@@ -42,6 +40,7 @@ export class TurnosComponent implements OnInit {
 
   deleteModal: ModalDirective;
   saveModal: ModalDirective;
+  public selectUndefined: any;
 
   totalItems = 0;
   currentPage = 1;
@@ -62,15 +61,13 @@ export class TurnosComponent implements OnInit {
               private fb: FormBuilder) {
 
     this.form = fb.group({
-
       'centro': [null, Validators.required],
       'especialidad': [null, Validators.required],
       'profesional': [null, Validators.required],
-      'fechaDesde': [null, Validators.required],
-      'hora':  [null, Validators.required],
+      'fechaDesde': [null],
+      'hora': [null],
       'observaciones': [null, Validators.required]
-
-      });
+    });
   }
 
   ngOnInit() {
@@ -92,10 +89,11 @@ export class TurnosComponent implements OnInit {
   }
 
   /*handlePersonaClick(persona: Persona) {
-    this.model.persona = persona;
-  }*/
+   this.model.persona = persona;
+   }*/
 
   handleCentroSaludClick(centroSalud: CentroSalud) {
+    console.log(centroSalud);
     this.model.centro = centroSalud;
     this.especialidades = centroSalud.especialidad;
   }
@@ -124,7 +122,6 @@ export class TurnosComponent implements OnInit {
       });
 
 
-
   }
 
   clearForm() {
@@ -146,8 +143,8 @@ export class TurnosComponent implements OnInit {
     const turnos: Turno[] = this.storeService.get('turnos');
     for (const x of turnos) {
       if (x.id === this.turno.id) {
-        console.log("turno: "+x.id);
-        console.log("this.turno.id: "+this.turno.id);
+        console.log("turno: " + x.id);
+        console.log("this.turno.id: " + this.turno.id);
         this.delete(x);
         this.storeService.findAndDelete('turnos', x.id);
         break;
@@ -187,12 +184,16 @@ export class TurnosComponent implements OnInit {
     this.saveModal = event;
   }
 
-  submitSaveForm(value: Data) {
+  submitSaveForm(value) {
+    console.log(value);
     this.save(value);
   }
 
   save(value: Data) {
-    console.log("DATA: "+ value);
+
+    value.hora = this.model.hora;
+    value.fechaDesde = this.model.fechaDesde;
+
     this.crear(value);
     this.saveModal.hide();
     this.clean();

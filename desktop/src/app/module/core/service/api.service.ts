@@ -10,9 +10,7 @@ import {AppException} from '../domain/AppException';
 @Injectable()
 export class ApiService {
 
-  private baseURL = 'api/';  // https://localhost:8080/
-
-  // private baseURL = 'https://localhost:8080/';  // https://localhost:8080/
+  private baseURL = 'api/';
   private headers = new Headers({
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',

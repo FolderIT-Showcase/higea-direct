@@ -67,73 +67,36 @@
   <form [formGroup]="form" (ngSubmit)="submitSaveForm(form.value)">
     <div class="row">
       <div class="col-sm-6">
-        <div class="form-group" required [ngClass]="{'has-error':!form.controls['centro'].valid && form.controls['centro'].touched}"
-             ><!---->
-          <label>Centro de Salud</label>
-          <div class="btn-group btn-block" dropdown>
-            <button dropdownToggle type="button" class="minimal btn btn-block btn-default">
-              {{ model.centro ? model.centro.nombre : 'Centro de Salud'}} <span class="caret"></span>
-            </button>
-            <ul *dropdownMenu class="dropdown-menu" role="menu">
-              <li role="menuitem" *ngFor="let centro of centrosSalud">
-                <a class="dropdown-item" (click)="handleCentroSaludClick(centro)">{{centro.nombre}}</a>
-              </li>
-            </ul>
-          </div>
-          <small *ngIf="form.controls['centro'].hasError('required') && form.controls['centro'].touched"
-               class="help-block">Debes incluir el centro de Salud.
-          </small>
-        </div>
-      </div><!--end centro dropdown-->
-      <div class="col-sm-6"><!--especialidad-->
-        <div class="form-group" required [ngClass]="{'has-error':!form.controls['especialidad'].valid && form.controls['especialidad'].touched}"><!---->
-          <label class="control-label">Especialidad</label>
-          <div class="btn-group btn-block" dropdown>
-            <button dropdownToggle type="button" class="minimal btn btn-block btn-default">
-              {{ model.especialidad ? model.especialidad.nombre : 'Especialidad'}} <span class="caret"></span>
-            </button>
-            <ul *dropdownMenu class="dropdown-menu" role="menu">
-              <li role="menuitem" *ngFor="let especialidad of especialidades">
-                <a class="dropdown-item"
-                   (click)="handleEspecialidadClick(especialidad)">{{especialidad.nombre}}</a>
-              </li>
-            </ul>
-          </div>
-          <small *ngIf="form.controls['especialidad'].hasError('required') && form.controls['especialidad'].touched"
-               class="help-block">Debes incluir la especialidad.
-          </small>
-        </div>
-      </div><!--end Especialidad dropdown-->
-    </div><!--row end-->
+        <div class="form-group"
+             [ngClass]="{'has-error' : !form.controls['centro'].valid && form.controls['centro'].touched}" >
+          <label class="control-label required">Centro de Salud</label>
 
-    <div class="row"><!--nuevo row-->
-      <div class="col-sm-6">
-        <div class="form-group" required [ngClass]="{'has-error':!form.controls['profesional'].valid && form.controls['profesional'].touched}"><!---->
-          <label class="control-label">Profesional</label>
-          <div class="btn-group btn-block" dropdown>
-            <button dropdownToggle type="button" class="minimal btn btn-block btn-default">
-              {{ model.profesional ? model.profesional.nombre : 'Profesional'}} <span class="caret"></span>
-            </button>
-            <ul *dropdownMenu class="dropdown-menu" role="menu">
-              <li role="menuitem" *ngFor="let profesional of profesionales">
-                <a class="dropdown-item" (click)="handleProfesionalClick(profesional)">{{profesional.nombre}}</a>
-              </li>
-            </ul>
-          </div>
-          <small *ngIf="form.controls['profesional'].hasError('required') && form.controls['profesional'].touched"
-               class="help-block">Debes incluir un profesional.
+          <select type="text" class="form-control" [formControl]="form.controls['centro']"
+                  (change)="handleCentroSaludClick(form.value.centro)">
+            <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
+            <option [ngValue]="centro" *ngFor="let centro of centrosSalud">{{centro.nombre}}</option>
+          </select>
+
+          <small *ngIf="form.controls['centro'].hasError('required') && form.controls['centro'].touched"
+                 class="help-block">Debes incluir el centro de Salud.
           </small>
         </div>
       </div>
-
       <div class="col-sm-6">
-        <div class="form-group" required [ngClass]="{'has-error':!form.controls['observaciones'].valid && form.controls['observaciones'].touched}">
-          <label for="comment" class="control-label">Observaciones</label>
-          <textarea [(ngModel)]="model.observaciones"  class="form-control" type="text"
-                    placeholder="Observaciones"
-                    [formControl]="form.controls['observaciones']"  ></textarea>
-          <small *ngIf="form.controls['observaciones'].hasError('required') && form.controls['observaciones'].touched"
-               class="help-block">Debes incluir una observacion.
+        <div class="form-group"
+             [ngClass]="{'has-error':!form.controls['especialidad'].valid && form.controls['especialidad'].touched}">
+
+          <label class="control-label required">Especialidad</label>
+
+          <select type="text" class="form-control" [formControl]="form.controls['especialidad']"
+                  (change)="handleEspecialidadClick(form.value.especialidad)">
+            <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
+            <option [ngValue]="especialidad" *ngFor="let especialidad of especialidades">{{especialidad.nombre}}</option>
+          </select>
+
+
+          <small *ngIf="form.controls['especialidad'].hasError('required') && form.controls['especialidad'].touched"
+                 class="help-block">Debes incluir la especialidad.
           </small>
         </div>
       </div>
@@ -141,31 +104,59 @@
 
     <div class="row">
       <div class="col-sm-6">
-        <div class="form-group" required [ngClass]="{'has-error':!form.controls['hora'].valid && form.controls['hora'].touched}"><!---->
-          <label for="hora" class="control-label">Hora</label>
-          <timepicker [(ngModel)]="model.hora" class="form-control" [formControl]="form.controls['hora']" ></timepicker>
-        </div>
-        <small *ngIf="form.controls['hora'].hasError('required') && form.controls['hora'].touched"
-             class="help-block">Ingrese hora.
-        </small>
-      </div>
-      <div class="col-sm-6">
-        <div class="form-group" required [ngClass]="{'has-error':!form.controls['fechaDesde'].valid && form.controls['fechaDesde'].touched}"><!---->
-          <label for="fechaDesde" class="control-label">Fecha</label>
-          <div style="display:inline-block; min-height:290px;">
-            <datepicker [(ngModel)]="model.fechaDesde"  class="form-control" [formControl]="form.controls['fechaDesde']" ></datepicker>
-          </div>
-          <small *ngIf="form.controls['fechaDesde'].hasError('required') && form.controls['fechaDesde'].touched"
-               class="help-block">Debes incluir una fecha.
+        <div class="form-group"
+             [ngClass]="{'has-error':!form.controls['profesional'].valid && form.controls['profesional'].touched}">
+
+          <label class="control-label required">Profesional</label>
+
+          <select type="text" class="form-control" [formControl]="form.controls['profesional']"
+                  (change)="handleProfesionalClick(form.value.profesional)">
+            <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
+            <option [ngValue]="profesional" *ngFor="let profesional of profesionales">{{profesional.nombre}}</option>
+          </select>
+
+          <small *ngIf="form.controls['profesional'].hasError('required') && form.controls['profesional'].touched"
+                 class="help-block">Debes incluir un profesional.
           </small>
         </div>
       </div>
-    </div><!--Fin row-->
-    <button  type="submit" class="btn btn-primary btn-block"  [disabled]="!form.valid">GUARDAR</button>
-   <!-- <a (click)="clean()" class="btn btn-default">
-      <span class="app-icon-dark fa fa-times-circle"></span>
-      Limpiar
-    </a>-->
+
+      <div class="col-sm-6">
+        <div class="form-group"
+             [ngClass]="{'has-error':!form.controls['observaciones'].valid && form.controls['observaciones'].touched}">
+          <label class="control-label">Observaciones</label>
+          <textarea [(ngModel)]="model.observaciones" class="form-control" type="text"
+                    placeholder="Observaciones"
+                    [formControl]="form.controls['observaciones']"></textarea>
+          <small *ngIf="form.controls['observaciones'].hasError('required') && form.controls['observaciones'].touched"
+                 class="help-block">Debes incluir una observacion.
+          </small>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label class="control-label">Hora</label>
+          <timepicker [(ngModel)]="model.hora" [ngModelOptions]="{standalone: true}" class="form-control"></timepicker>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label class="control-label">Fecha</label>
+          <div style="display:inline-block; min-height:290px;">
+            <datepicker [(ngModel)]="model.fechaDesde" [ngModelOptions]="{standalone: true}" class="form-control"></datepicker>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-block" [disabled]="!form.valid">GUARDAR</button>
+    <!-- <a (click)="clean()" class="btn btn-default">
+       <span class="app-icon-dark fa fa-times-circle"></span>
+       Limpiar
+     </a>-->
   </form>
 </app-modal>
 

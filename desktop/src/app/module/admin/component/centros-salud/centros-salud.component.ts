@@ -93,11 +93,7 @@ export class CentrosSaludComponent implements OnInit {
 
     this.adminService.saveCentroSalud(this.centro).then(data => {
       this.alertService.success('Se guardo exitosamente');
-    })
-      .catch((error) => {
-        console.log(error);
-        this.alertService.error('Error inesperado');
-      });
+    });
     this.saveModal.hide();
   }
 
