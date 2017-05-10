@@ -255,8 +255,8 @@ export class ListaIntegrantesComponent implements OnInit {
         }
         this.currentPersona.integrantes.push(integranteNuevo);
 
-        console.log(integranteNuevo);
-        console.log(this.currentPersona);
+        console.log("Integrante: " +integranteNuevo);
+        console.log("Persona: " + this.currentPersona);
 
 
         this.busy = this.personaService.updatePersonaUser(this.currentPersona)

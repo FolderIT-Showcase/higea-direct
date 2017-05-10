@@ -59,8 +59,8 @@
               <td>{{turno.observaciones}}</td>
               <td>
 
-                <a (click)="showModal(turno)" class="btn btn-primary btn-block">
-                  <span class="fa fa-ellipsis-h"></span>
+                <a (click)="showModal(turno)" class="btn btn-danger btn-md">
+                  <span class="fa fa-times"></span>
                 </a>
 
               </td>
@@ -74,7 +74,7 @@
 </div>
 
 <app-modal [title]="'Información'" (outModal)="handleModal($event)">
-  <label>Para el dia <strong>{{turno.dia}}</strong> en el horario <strong>{{turno.hora}}</strong></label><br>
+  <label>Para el dia <strong>{{turno.dia  | date: 'dd/MM/yyyy'}}</strong> en el horario <strong>{{turno.hora  | date: 'HH:mm'}}</strong></label><br>
   <label>Para la especialidad <strong>{{turno.especialidad.nombre}}</strong> atendido por <strong *ngIf="turno.profesional">{{turno.profesional.nombre}} </strong><strong *ngIf="turno.profesional">{{turno.profesional.apellido}}</strong></label><br>
   <label>En el centro de salud <strong>{{turno.centroSalud.nombre}}</strong></label><br>
   <div *ngIf="false">

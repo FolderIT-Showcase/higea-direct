@@ -5,7 +5,7 @@ export class Localidad {
   provincia?: Provincia;
 
   constructor(mNombre = '') {
-    this.nombre = mNombre;
+    //this.nombre = mNombre;
     this.provincia = new Provincia();
   }
 }

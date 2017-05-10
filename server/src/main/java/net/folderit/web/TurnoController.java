@@ -79,7 +79,12 @@ public class TurnoController {
            if(turnoDelete==null){turnoDelete = turnoService.findById(id);}
             turnoDelete.setEnabled(Boolean.FALSE);
             this.turnoService.saveTurno(turnoDelete);
+        }else{
+            if(turnoDelete==null){turnoDelete = turnoService.findById(id);}
+            turnoDelete.setTomado(Boolean.FALSE);
+            this.turnoService.saveTurno(turnoDelete);
         }
+
         return new ResponseEntity<>((Persona) result, HttpStatus.OK);
     }
 
