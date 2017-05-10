@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CentroSalud} from '../../../core/domain/centro-salud';
 import {Especialidad} from '../../../core/domain/especialidad';
 import {Profesional} from '../../../core/domain/profesional';
@@ -18,7 +18,7 @@ class Data {
   selector: 'app-nuevo-turno',
   templateUrl: './nuevo-turno.component.html'
 })
-export class NuevoTurnoComponent implements OnInit {
+export class NuevoTurnoComponent implements OnInit,OnDestroy {
 
   model: Data = new Data();
   centrosSalud: CentroSalud[] = [];
@@ -36,6 +36,9 @@ export class NuevoTurnoComponent implements OnInit {
     this.model.fecha = new Date(Date.now());
     this.model.persona = this.personas[0];
     this.storeService.update('persona', this.model.persona);
+  }
+
+  ngOnDestroy(){
   }
 
   handlePersonaClick(persona: Persona) {

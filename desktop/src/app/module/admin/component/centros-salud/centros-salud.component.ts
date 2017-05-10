@@ -87,6 +87,11 @@ export class CentrosSaludComponent implements OnInit {
 
   crear(value: Data) {
     this.especialidades = this.storeService.get('especialidadesSeleccionadas');
+    if(!this.especialidades ||
+      this.especialidades.length==0){
+      this.alertService.error('Debe seleccionar las especialidades asociadas al centro de salud');
+      return;
+    }
 
     this.centro.nombre = value.centroSaludName.toUpperCase();
     this.centro.especialidad = this.especialidades;
@@ -169,6 +174,12 @@ export class CentrosSaludComponent implements OnInit {
   submitUpdateForm(value: Data) {
     if (value.centroSaludName) {
       this.centro.nombre = value.centroSaludName;
+    }
+    let especialidades = this.storeService.get('especialidadesSeleccionadas');
+    if(!especialidades ||
+       especialidades.length==0){
+      this.alertService.error('Debe seleccionar las especialidades asociadas al centro de salud');
+      return;
     }
     this.update(this.centro);
     this.clean();
