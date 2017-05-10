@@ -13,7 +13,6 @@
 
           <select type="text" class="form-control" [formControl]="form.controls['persona']"
                   (change)="handlePersonaClick(form.value.persona)">
-            <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
             <option [ngValue]="persona" *ngFor="let persona of personas">{{labelPersona(persona)}}</option>
           </select>
 
