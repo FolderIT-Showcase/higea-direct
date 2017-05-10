@@ -22,7 +22,6 @@ export class ModificarTurnoComponent implements OnInit {
   turnos: Turno[] = [];
   personas: Persona[] = [];
   model: Data = new Data();
-  public isModalShown = false;
   turno: Turno = new Turno();
 
   modal: ModalDirective;

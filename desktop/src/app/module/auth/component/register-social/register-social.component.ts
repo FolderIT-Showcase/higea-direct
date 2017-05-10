@@ -23,8 +23,7 @@ class Datos {
 
 @Component({
   selector: 'app-register-social',
-  templateUrl: './register-social.component.html',
-  styleUrls: ['./register-social.component.scss']
+  templateUrl: './register-social.component.html'
 })
 export class RegisterSocialComponent implements OnInit {
 
