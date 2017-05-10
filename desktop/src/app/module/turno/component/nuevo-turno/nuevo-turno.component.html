@@ -1,39 +1,38 @@
 <div class="container-fluid">
   <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2">
-    <form name="f" #f="ngForm" novalidate>
+    <form [formGroup]="form" (ngSubmit)="submitForm(form.value)">
 
       <div class="row">
         <div class="col-sm-6">
-          <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !model.persona }">
+          <div class="form-group"
+               [ngClass]="{'has-error':!form.controls['persona'].valid && form.controls['persona'].touched}">
             <label>Nuevo Turno para</label>
-            <div class="btn-group btn-block" dropdown>
-              <button dropdownToggle type="button" class="minimal btn btn-block btn-default">
-                {{ model.persona ? (model.persona.nombre +' '+ model.persona.apellido) : 'Nuevo Turno para'}} <span
-                class="caret"></span>
-              </button>
-              <ul *dropdownMenu class="dropdown-menu" role="menu">
-                <li role="menuitem" *ngFor="let persona of personas">
-                  <a class="dropdown-item" (click)="handlePersonaClick(persona)">{{labelPersona()}}</a>
-                </li>
-              </ul>
-            </div>
-            <div *ngIf="f.submitted && !model.persona" class="help-block">Ingrese para quien es el turno</div>
+
+            <select type="text" class="form-control" [formControl]="form.controls['persona']"
+                    (change)="handlePersonaClick(form.value.persona)">
+              <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
+              <option [ngValue]="persona" *ngFor="let persona of personas">{{labelPersona(persona)}}</option>
+            </select>
+
+            <small *ngIf="form.controls['persona'].hasError('required') && form.controls['persona'].touched"
+                   class="help-block">Ingrese para quien es el turno
+            </small>
           </div>
         </div>
         <div class="col-sm-6">
-          <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !model.centro }">
+          <div class="form-group"
+               [ngClass]="{'has-error':!form.controls['persona'].valid && form.controls['persona'].touched}">
             <label>Centro de Salud</label>
-            <div class="btn-group btn-block" dropdown>
-              <button dropdownToggle type="button" class="minimal btn btn-block btn-default">
-                {{ model.centro ? model.centro.nombre : 'Centro de Salud'}} <span class="caret"></span>
-              </button>
-              <ul *dropdownMenu class="dropdown-menu" role="menu">
-                <li role="menuitem" *ngFor="let centro of centrosSalud">
-                  <a class="dropdown-item" (click)="handleCentroSaludClick(centro)">{{centro.nombre}}</a>
-                </li>
-              </ul>
-            </div>
-            <div *ngIf="f.submitted && !model.centro" class="help-block">Ingrese su Centro de Salud</div>
+
+            <select type="text" class="form-control" [formControl]="form.controls['centro']"
+                    (change)="handleCentroSaludClick(form.value.centro)">
+              <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
+              <option [ngValue]="centro" *ngFor="let centro of centrosSalud">{{centro.nombre || ''}}</option>
+            </select>
+
+            <small *ngIf="form.controls['centro'].hasError('required') && form.controls['centro'].touched"
+                   class="help-block">Ingrese su Centro de Salud
+            </small>
           </div>
         </div>
       </div>
@@ -42,31 +41,26 @@
         <div class="col-sm-6">
           <div class="form-group">
             <label>Especialidad</label>
-            <div class="btn-group btn-block" dropdown>
-              <button dropdownToggle type="button" class="minimal btn btn-block btn-default">
-                {{ model.especialidad ? model.especialidad.nombre : 'Especialidad'}} <span class="caret"></span>
-              </button>
-              <ul *dropdownMenu class="dropdown-menu" role="menu">
-                <li role="menuitem" *ngFor="let especialidad of especialidades">
-                  <a class="dropdown-item" (click)="handleEspecialidadClick(especialidad)">{{especialidad.nombre}}</a>
-                </li>
-              </ul>
-            </div>
+
+            <select type="text" class="form-control" [formControl]="form.controls['especialidad']"
+                    (change)="handleEspecialidadClick(form.value.especialidad)">
+              <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
+              <option [ngValue]="especialidad" *ngFor="let especialidad of especialidades">{{especialidad.nombre}}
+              </option>
+            </select>
+
           </div>
         </div>
         <div class="col-sm-6">
           <div class="form-group">
             <label>Profesional</label>
-            <div class="btn-group btn-block" dropdown>
-              <button dropdownToggle type="button" class="minimal btn btn-block btn-default">
-                {{ model.profesional ? model.profesional.nombre : 'Profesional'}} <span class="caret"></span>
-              </button>
-              <ul *dropdownMenu class="dropdown-menu" role="menu">
-                <li role="menuitem" *ngFor="let profesional of profesionales">
-                  <a class="dropdown-item" (click)="handleProfesionalClick(profesional)">{{profesional.nombre}}</a>
-                </li>
-              </ul>
-            </div>
+
+            <select type="text" class="form-control" [formControl]="form.controls['profesional']"
+                    (change)="handleProfesionalClick(form.value.profesional)">
+              <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
+              <option [ngValue]="profesional" *ngFor="let profesional of profesionales">{{profesional.nombre}}</option>
+            </select>
+
           </div>
         </div>
       </div>
@@ -74,20 +68,21 @@
       <div class="row">
         <div class="col-sm-6">
           <div class="form-group">
-            <label>Fecha</label>
-            <input name="fecha" #fecha="ngModel" [(ngModel)]="model.fecha" class="form-control" id="date" type="date">
+            <label class="control-label">Fecha</label>
+            <input name="fecha" #fecha="ngModel" [(ngModel)]="fechaDesde" [ngModelOptions]="{standalone: true}"
+                   class="form-control" id="date" type="date">
           </div>
         </div>
         <div class="col-sm-3">
           <label></label>
-          <button (click)="buscar(); false" class="btn btn-primary btn-block">
+          <button type="submit" [disabled]="!form.valid" class="btn btn-primary btn-block">
             <span class="app-icon fa fa-search"></span>
             Buscar
           </button>
         </div>
         <div class="col-sm-3">
           <label></label>
-          <button type="reset" (click)="f.form.reset()" class="btn btn-default btn-block">
+          <button (click)="form.reset()" class="btn btn-default btn-block">
             <span class="app-icon-dark fa fa-times-circle"></span>
             Limpiar
           </button>

@@ -55,7 +55,6 @@ export class TurnoBusquedaComponent implements OnInit, OnDestroy {
     this.turno = turno;
     this.isModalShown = true;
     this.persona = this.storeService.get('persona');
-    console.log(this.persona);
   }
 
   public deleteTurno() {
@@ -67,14 +66,9 @@ export class TurnoBusquedaComponent implements OnInit, OnDestroy {
       }
     }
 
-    console.log('id turno ' + this.turno.id);
     this.adminService.deleteTurno(this.turno)
       .then(() => {
-
         this.hideModal();
-      })
-      .catch(error => {
-        console.error(error);
       });
   }
 

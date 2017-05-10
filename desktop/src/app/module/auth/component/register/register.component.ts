@@ -11,7 +11,6 @@ import {Documento} from '../../../core/domain/documento';
 import {StoreService} from '../../../core/service/store.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {LoadingService} from '../../../core/service/loading.service';
-import {Domicilio} from '../../../core/domain/domicilio';
 
 class Data {
   nombre = '';
@@ -27,8 +26,7 @@ class Data {
 
 @Component({
   selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  templateUrl: './register.component.html'
 })
 export class RegisterComponent implements OnInit, OnDestroy {
 
@@ -52,25 +50,14 @@ export class RegisterComponent implements OnInit, OnDestroy {
       'nombre': [null, Validators.required],
       'apellido': [null, Validators.required],
       'numeroDocumento': [null, Validators.required],
+      'tipoDocumento': [null, Validators.required],
+      'pais': [null, Validators.required],
+      'genero': [null, Validators.required],
       'password1': [null, Validators.required],
       'password2': [null, Validators.required],
       'email': [null, Validators.required],
     });
 
-    this.complexForm.valueChanges.subscribe((form: any) => {
-      }
-    );
-
-  }
-
-  submitForm(value: any) {
-    this.model.nombre = value.nombre;
-    this.model.apellido = value.apellido;
-    this.model.numeroDocumento = value.numeroDocumento;
-    this.model.password1 = value.password1;
-    this.model.password2 = value.password2;
-    this.model.email = value.email;
-    this.register();
   }
 
   ngOnInit(): void {
@@ -84,19 +71,26 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.captcha = null;
   }
 
-  public register() {
+  buildPersonaUser(data) {
     const user: User = new User();
-    user.password = this.model.password1;
-    user.email = this.model.email;
+    user.password = data.password1;
+    user.email = data.email;
+
     const persona: Persona = new Persona();
     persona.userAsociado = user;
-    persona.genero = this.model.genero.toUpperCase();
+    persona.genero = data.genero.toUpperCase();
     persona.documento = new Documento();
-    persona.documento.tipo = PersonaService.convertTipoDocumento(this.model.tipoDocumento);
-    persona.documento.numero = this.model.numeroDocumento;
-    persona.nombre = this.model.nombre;
-    persona.apellido = this.model.apellido;
-    persona.domicilio = new Domicilio();
+    persona.documento.tipo = PersonaService.convertTipoDocumento(data.tipoDocumento);
+    persona.documento.numero = data.numeroDocumento;
+    persona.nombre = data.nombre;
+    persona.apellido = data.apellido;
+
+    return persona;
+  }
+
+  submitForm(data: any) {
+
+    const persona: Persona = this.buildPersonaUser(data);
 
     if (persona.documento.tipo === 'dni') {
 
@@ -113,16 +107,15 @@ export class RegisterComponent implements OnInit, OnDestroy {
           this.loadingService.finish();
           this.savePersona(persona);
         })
-        .catch(error => {
+        .catch(() => {
           this.loadingService.finish();
-          this.alertService.error('Sus datos no son válidos, por favor revíselos.');
-          console.error(error);
         });
 
       return;
     }
 
     this.savePersona(persona);
+
   }
 
   savePersona(persona: Persona) {
@@ -135,22 +128,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
             this.alertService.success('Registro Exitoso, chequee su cuenta de email para activar el usuario');
           });
       })
-      .catch(error => {
+      .catch(() => {
         this.loadingService.finish();
-        this.alertService.error('Hubo un error inesperado, vuelva a intentarlo más tarde');
       });
-  }
-
-  handleCountriesClick(pais: Pais) {
-    this.model.pais = pais.nombre;
-  }
-
-  handleTipoDocumentoClick(tipoDocumento: string) {
-    this.model.tipoDocumento = tipoDocumento;
-  }
-
-  handleGeneroClick(genero: string) {
-    this.model.genero = genero;
   }
 
   handleCorrectCaptcha(event) {

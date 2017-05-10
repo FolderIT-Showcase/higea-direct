@@ -9,10 +9,15 @@ import {TipoContactos} from '../../../core/domain/enums/tipo-contacto';
 import * as _ from 'lodash';
 import {StoreService} from '../../../core/service/store.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {MetadataService} from '../../../core/service/metadata.service';
 import {PersonaService} from '../../../core/service/persona.service';
 import {Localidad} from '../../../core/domain/localidad';
 import {Provincia} from '../../../core/domain/provincia';
+import {Documento} from '../../../core/domain/documento';
+import {Contacto} from '../../../core/domain/contacto';
+import {Domicilio} from '../../../core/domain/domicilio';
+import {Pais} from '../../../core/domain/pais';
+import {Store} from '../../../core/service/store';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-lista-integrantes',
@@ -21,12 +26,10 @@ import {Provincia} from '../../../core/domain/provincia';
 })
 export class ListaIntegrantesComponent implements OnInit {
 
-  private integranteSelected: Persona = new Persona();
   private currentUser = JSON.parse(localStorage.getItem('currentUser'));
   public busy: Promise<any>;
   public currentPersona = new Persona();
   public modalAction = 'none';
-  public formData: any = {};
   public selectUndefined: any;
   public integrantes: Persona[] = [];
   public lists = {
@@ -41,15 +44,17 @@ export class ListaIntegrantesComponent implements OnInit {
 
   localidades: Localidad[] = [];
   provincias: Provincia[] = [];
+  integrante: Persona = null;
 
   mForm: FormGroup;
 
   modalConfirmacion: ModalDirective;
   modalForm: ModalDirective;
+  subs: Subscription[] = [];
 
   constructor(private fb: FormBuilder,
+              private store: Store,
               private personaService: PersonaService,
-              private metadataService: MetadataService,
               private alertService: AlertService,
               private storeHelper: StoreService) {
 
@@ -60,15 +65,15 @@ export class ListaIntegrantesComponent implements OnInit {
       'tipoDocumento': [null, Validators.required],
       'numeroDocumento': [null, Validators.required],
       'fechaNacimiento': [null, Validators.required],
-      'tipoContacto': [null, Validators.required],
-      'numeroContacto': [null, Validators.required],
-      'estadoCivil': [null, Validators.required],
+      'tipoContacto': [null],
+      'dato': [null],
+      'estadoCivil': [null],
       'pais': [null, Validators.required],
       'provincia': [null, Validators.required],
       'localidad': [null, Validators.required],
-      'calle': [null, Validators.required],
-      'piso': [null, Validators.required],
-      'departamento': [null, Validators.required]
+      'calle': [null],
+      'piso': [null],
+      'departamento': [null]
     });
 
   }
@@ -78,6 +83,16 @@ export class ListaIntegrantesComponent implements OnInit {
     // Popular listas
     this.provincias = this.storeHelper.get('provincias');
     this.lists.paises = this.storeHelper.get('paises');
+    this.localidades = this.storeHelper.get('localidades');
+
+    this.subs.push(
+      this.store.changes.pluck('integrantes').subscribe(
+        (data: any) => {
+          this.integrantes = data;
+        }
+      )
+    );
+
 
     this.integrantes = this.storeHelper.get('integrantes');
     this.currentPersona = this.storeHelper.get('persona');
@@ -108,8 +123,8 @@ export class ListaIntegrantesComponent implements OnInit {
   public rebuildLists(form) {
     this.lists.provincias = [];
     this.lists.localidades = [];
-    console.log(form);
-    if (!form.pais) {
+
+    if (!form.pais || !form.pais.id) {
       return;
     }
 
@@ -129,12 +144,11 @@ export class ListaIntegrantesComponent implements OnInit {
   public showModal(action, integrante: Persona) {
     this.modalForm.show();
     this.modalAction = action;
-    this.integranteSelected = integrante;
+    this.integrante = integrante;
 
     this.rebuildLists(integrante);
 
-    if (['edit', 'view', 'delete'].indexOf(action) >= 0) {
-      console.log(integrante);
+    if (['edit', 'view'].indexOf(action) >= 0) {
 
       const tipoContacto = integrante.contacto[0] ? integrante.contacto[0].tipoContacto : '';
       const dato = integrante.contacto[0] ? integrante.contacto[0].dato : '';
@@ -164,7 +178,7 @@ export class ListaIntegrantesComponent implements OnInit {
         'numeroDocumento': integrante.documento.numero || '',
         'fechaNacimiento': integrante.fechaNacimiento || Date().toLocaleString(),
         'tipoContacto': tipoContacto,
-        'numeroContacto': dato,
+        'dato': dato,
         'estadoCivil': integrante.estadoCivil || '',
         'pais': pais,
         'provincia': provincia,
@@ -180,59 +194,94 @@ export class ListaIntegrantesComponent implements OnInit {
 
   }
 
-  public confirmModal(action, integrante) {
+  showDeleteModal(persona) {
+    this.integrante = persona;
+    this.modalConfirmacion.show();
+  }
 
+  confirmDeleteModal() {
+    const prevPersona = _.merge({}, this.currentPersona);
+    const i = _.findIndex(this.currentPersona.integrantes, this.integrante);
+    if (i >= 0) {
+      this.currentPersona.integrantes.splice(i, 1);
+    }
+
+    this.busy = this.personaService.updatePersonaUser(this.currentPersona)
+      .then(() => {
+        this.alertService.success('Integrante removido correctamente.');
+      })
+      .catch((error) => {
+        this.currentPersona = _.merge({}, prevPersona);
+        console.error(error);
+      });
+
+    this.modalConfirmacion.hide();
+
+  }
+
+  buildIntegrante(form) {
+    const integrante: Persona = new Persona();
+    integrante.nombre = form.nombre;
+    integrante.apellido = form.apellido;
+    integrante.genero = form.genero;
+    integrante.documento = new Documento();
+    integrante.documento.tipo = form.tipoDocumento;
+    integrante.documento.numero = form.numeroDocumento;
+    integrante.fechaNacimiento = form.fechaNacimiento;
+    integrante.contacto = [];
+    integrante.contacto.push(new Contacto(form.tipoContacto, form.dato));
+    integrante.estadoCivil = form.estadoCivil;
+    integrante.domicilio = new Domicilio();
+    integrante.domicilio.localidad = new Localidad(form.localidad);
+    integrante.domicilio.localidad.provincia = new Provincia(form.provincia);
+    integrante.domicilio.localidad.provincia.pais = new Pais(form.pais);
+    integrante.domicilio.calle = form.calle;
+    integrante.domicilio.piso = form.piso;
+    integrante.domicilio.departamento = form.departamento;
+
+    return integrante;
+  }
+
+  public confirmModal(action, form) {
+
+    const integranteNuevo = this.buildIntegrante(form);
     const prevPersona = _.merge({}, this.currentPersona);
 
     switch (action) {
 
-      case 'delete':
-        const i = _.findIndex(this.currentPersona.integrantes, integrante);
-        if (i >= 0) {
-          this.currentPersona.integrantes.splice(i, 1);
-        }
-
-        this.busy = this.personaService.updatePersonaUser(this.currentPersona)
-          .then((res) => {
-            this.alertService.success('Integrante removido correctamente.');
-          })
-          .catch((error) => {
-            this.currentPersona = _.merge({}, prevPersona);
-            console.error(error);
-            this.alertService.error('Ocurrió un error al intentar remover al integrante..');
-          });
-
-        break;
-
       case 'add':
-        this.currentPersona.integrantes.push(integrante);
+        if (!this.currentPersona.integrantes) {
+          this.currentPersona.integrantes = [];
+        }
+        this.currentPersona.integrantes.push(integranteNuevo);
+
+        console.log(integranteNuevo);
+        console.log(this.currentPersona);
+
 
         this.busy = this.personaService.updatePersonaUser(this.currentPersona)
-          .then((res) => {
+          .then(() => {
             this.alertService.success('Integrante agregado correctamente.');
-          })
-          .catch((error) => {
-            this.currentPersona = _.merge({}, prevPersona);
-            this.alertService.error('Ocurrió un error al intentar agregar al integrante..');
           });
         break;
 
       case 'edit':
-        _.merge(this.integranteSelected, this.mForm);
+        _.merge(this.integrante, integranteNuevo);
 
         this.busy = this.personaService.updatePersonaUser(this.currentPersona)
-          .then((res) => {
+          .then(() => {
             this.alertService.success('Integrante editado correctamente.');
           })
-          .catch((error) => {
+          .catch(() => {
             this.currentPersona = _.merge({}, prevPersona);
-            this.alertService.error('Ocurrió un error al intentar editar al integrante..');
           });
         break;
 
       default:
         return;
     }
+
+    this.modalForm.hide();
 
   }
 
@@ -250,10 +299,6 @@ export class ListaIntegrantesComponent implements OnInit {
 
   hideModalForm() {
     this.modalForm.hide();
-  }
-
-  onDateChange(event) {
-    console.log(event)
   }
 
 }

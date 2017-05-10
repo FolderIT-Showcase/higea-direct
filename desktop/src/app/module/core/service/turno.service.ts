@@ -5,8 +5,6 @@ import {Especialidad} from '../domain/especialidad';
 import {Profesional} from '../domain/profesional';
 import {StoreService} from './store.service';
 import {FiltroTurno} from '../domain/filter-turno';
-
-import {Turno} from '../domain/turno';
 import {Persona} from '../domain/persona';
 
 @Injectable()

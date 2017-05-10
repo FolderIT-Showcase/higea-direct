@@ -1,9 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AlertService} from '../../../core/service/alert.service';
-import {ApiService} from '../../../core/service/api.service';
-import {Headers, Http, RequestOptions} from '@angular/http';
-import {Observable} from 'rxjs/Observable';
+import {Headers, Http} from '@angular/http';
 import {PersonaService} from '../../../core/service/persona.service';
 
 @Component({
@@ -47,7 +45,6 @@ export class UserActiveComponent implements OnInit {
           })
           .catch(error => {
             console.error(error);
-            this.alertService.error(error);
           });
       })
       .catch(error => {

@@ -59,8 +59,7 @@ export class AppAuthService {
           .then(() => {
             this.loadingService.finish();
           })
-          .catch(error => {
-            this.alertService.error('Datos de ingreso incorrectos');
+          .catch(() => {
             this.loadingService.finish();
           });
     }

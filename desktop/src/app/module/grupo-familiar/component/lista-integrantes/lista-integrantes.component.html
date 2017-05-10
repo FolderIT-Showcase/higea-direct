@@ -28,31 +28,25 @@
           <th>Integrante</th>
           <th>Fecha de Nacimiento</th>
           <th>Tipo y Nro. de Documento</th>
-          <th class="text-right" style="width:240px;">Acciones</th>
+          <th class="text-right">Acciones</th>
         </tr>
         </thead>
         <tbody>
-        <tr *ngIf="currentPersona.id">
-          <td>{{ currentPersona.nombre }} {{ currentPersona.apellido }}</td>
-          <td>{{ currentPersona.fechaNacimiento | date: 'dd/MM/yyyy' }}</td>
-          <td>{{ label('tipoDocumentos', currentPersona.documento.tipo) }} {{currentPersona.documento.numero}}</td>
-          <td class="text-right">
-            <a (click)="showModal('view', currentPersona)" class="btn btn-default">
-              <span><i class="fa fa-user"></i> Ver</span>
-            </a>
-          </td>
-        </tr>
-        <tr *ngFor="let integrante of currentPersona.integrantes">
+        <tr *ngFor="let integrante of integrantes">
           <td>{{ integrante.nombre }} {{ integrante.apellido }}</td>
           <td>{{ integrante.fechaNacimiento | date: 'dd/MM/yyyy' }}</td>
           <td>{{ label('tipoDocumentos', integrante.documento.tipo) }} {{integrante.documento.numero}}</td>
           <td class="text-right">
             <div class="btn-group">
-              <a (click)="showModal('edit', integrante)" class="btn btn-default">
-                <span><i class="fa fa-pencil"></i> Editar</span>
+              <a (click)="showModal('view', currentPersona)" class="btn btn-primary">
+                <span><i class="fa fa-eye"></i></span>
               </a>
-              <a (click)="showModal('delete', integrante)" class="btn btn-danger">
-                <span><i class="fa fa-trash"></i> Borrar</span>
+              <a (click)="showModal('edit', integrante)" class="btn btn-success">
+                <span><i class="fa fa-pencil"></i></span>
+              </a>
+              <a *ngIf="integrante.id !== integrantes[0].id" (click)="showDeleteModal()"
+                 class="btn btn-danger">
+                <span><i class="fa fa-trash"></i></span>
               </a>
             </div>
           </td>
@@ -67,15 +61,15 @@
   <p>¿Está seguro que desea eliminar el integrante seleccionado?</p>
   <div class="row">
     <div class="text-right">
-      <a (click)="confirmModal(modalAction, formData)" type="submit" class="btn btn-danger">SI</a>
-      <a (click)="hideModalConfirmacion()" class="btn btn-default">NO</a>
+      <a (click)="confirmDeleteModal()" type="submit" class="btn btn-danger">SI</a>
+      <a (click)="modalConfirmacion.hide()" class="btn btn-default">NO</a>
     </div>
   </div>
 </app-modal>
 
 <app-modal [title]="'Datos del Integrante'" (outModal)="handleModalForm($event)">
 
-  <form [formGroup]="mForm" (ngSubmit)="confirmModal(modalAction, formData)">
+  <form [formGroup]="mForm" (ngSubmit)="confirmModal(modalAction, mForm.value)">
     <fieldset [disabled]="modalAction === 'view'">
       <div class="row">
         <div class="col-sm-4">
@@ -146,8 +140,7 @@
           <div class="form-group required"
                [ngClass]="{ 'has-error': !mForm.controls['fechaNacimiento'].valid && mForm.controls['fechaNacimiento'].touched }">
             <label class="control-label">Fecha de Nacimiento</label>
-            <input type="date" class="form-control" [formControl]="mForm.controls['fechaNacimiento']"
-                   (ngModelChange)="onDateChange($event)"/>
+            <input type="date" class="form-control" [formControl]="mForm.controls['fechaNacimiento']"/>
             <small *ngIf="!mForm.controls['fechaNacimiento'].valid && mForm.controls['fechaNacimiento'].touched"
                    class="help-block">Ingrese la Fecha de Nacimiento
             </small>
@@ -161,31 +154,22 @@
             <label class="control-label">Contacto</label>
           </div>
           <div class="col-sm-3" style="padding-left:0;">
-            <div class="form-group required"
-                 [ngClass]="{ 'has-error': !mForm.controls['tipoContacto'].valid && mForm.controls['tipoContacto'].touched }">
+            <div class="form-group required">
               <select type="text" class="form-control" [formControl]="mForm.controls['tipoContacto']">
                 <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
                 <option [value]="tc.id" *ngFor="let tc of lists.tipoContactos">{{tc.label}}</option>
               </select>
-              <small *ngIf="!mForm.controls['tipoContacto'].valid && mForm.controls['tipoContacto'].touched"
-                     class="help-block">Seleccione un Tipo de Contacto
-              </small>
             </div>
           </div>
           <div class="col-sm-9" style="padding-left:0;padding-right:0;">
-            <div class="form-group required"
-                 [ngClass]="{ 'has-error': !mForm.controls['numeroContacto'].valid && mForm.controls['numeroContacto'].touched }">
+            <div class="form-group required">
               <input type="text" class="form-control" placeholder="Ingresar teléfono, celular, email, etc."
-                     [formControl]="mForm.controls['numeroContacto']"/>
-              <small *ngIf="!mForm.controls['numeroContacto'].valid && mForm.controls['numeroContacto'].touched"
-                     class="help-block">Ingrese el Contacto
-              </small>
+                     [formControl]="mForm.controls['dato']"/>
             </div>
           </div>
         </div>
         <div class="col-sm-4">
-          <div class="form-group required"
-               [ngClass]="{ 'has-error': !mForm.controls['estadoCivil'].valid && mForm.controls['estadoCivil'].touched }">
+          <div class="form-group required">
             <label class="control-label">Estado Civil</label>
             <select type="text" class="form-control" [formControl]="mForm.controls['estadoCivil']">
               <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
@@ -193,9 +177,6 @@
                 {{estadoCivil.label}}
               </option>
             </select>
-            <small *ngIf="!mForm.controls['estadoCivil'].valid && mForm.controls['estadoCivil'].touched"
-                   class="help-block">Seleccione el Estado Civil
-            </small>
           </div>
         </div>
       </div>
@@ -208,6 +189,7 @@
             <select type="text" class="form-control" [formControl]="mForm.controls['pais']"
                     (change)="rebuildLists(mForm.value)">
               <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
+              <option [ngValue]="{}">-- Otro --</option>
               <option [ngValue]="pais" *ngFor="let pais of lists.paises">{{pais.nombre}}</option>
             </select>
             <small *ngIf="!mForm.controls['pais'].valid && mForm.controls['pais'].touched" class="help-block">Seleccione
@@ -222,6 +204,7 @@
             <select type="text" class="form-control" [disabled]="!mForm.controls['pais']"
                     [formControl]="mForm.controls['provincia']" (change)="rebuildLists(mForm.value)">
               <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
+              <option [ngValue]="{}">-- Otro --</option>
               <option [ngValue]="provincia" *ngFor="let provincia of lists.provincias">{{provincia.nombre}}
               </option>
             </select>
@@ -237,7 +220,8 @@
             <select type="text" class="form-control" [disabled]="!mForm.controls['provincia']"
                     [formControl]="mForm.controls['localidad']" (change)="rebuildLists(mForm.value)">
               <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
-              <option [ngValue]="localidad" *ngFor="let localidad of lists.localidades">{{localidad}}</option>
+              <option [ngValue]="{}">-- Otro --</option>
+              <option [ngValue]="localidad" *ngFor="let localidad of lists.localidades">{{localidad.nombre}}</option>
             </select>
             <small *ngIf="!mForm.controls['localidad'].valid && mForm.controls['localidad'].touched" class="help-block">
               Seleccione la Localidad
@@ -245,59 +229,45 @@
           </div>
         </div>
       </div>
-
       <div class="row">
         <div class="col-sm-4">
-          <div class="form-group"
-               [ngClass]="{ 'has-error': !mForm.controls['calle'].valid && mForm.controls['calle'].touched }">
+          <div class="form-group">
             <label class="control-label">Dirección | Calle</label>
             <input type="text" class="form-control" placeholder="Ingresar Calle"
                    [formControl]="mForm.controls['calle']"/>
-            <div *ngIf="!mForm.controls['calle'].valid && mForm.controls['calle'].touched" class="help-block">Ingrese la
-              Calle
-            </div>
           </div>
         </div>
         <div class="col-sm-4">
-          <div class="form-group"
-               [ngClass]="{ 'has-error': !mForm.controls['piso'].valid && mForm.controls['piso'].touched }">
+          <div class="form-group">
             <label class="control-label">Dirección | Piso</label>
             <input type="text" class="form-control" placeholder="Ingresar Piso" [formControl]="mForm.controls['piso']"/>
-            <div *ngIf="!mForm.controls['piso'].valid && mForm.controls['piso'].touched" class="help-block">Ingrese el
-              Piso
-            </div>
           </div>
         </div>
         <div class="col-sm-4">
-          <div class="form-group"
-               [ngClass]="{ 'has-error': !mForm.controls['departamento'].valid && mForm.controls['departamento'].touched }">
-            <label class="control-label">Dirección | Dpto.</label>
+          <div class="form-group">
+            <label class="control-label">Dirección | Depto</label>
             <input type="text" class="form-control" placeholder="Ingresar Departamento"
                    [formControl]="mForm.controls['departamento']"/>
-            <div *ngIf="!mForm.controls['departamento'].valid && mForm.controls['departamento'].touched"
-                 class="help-block">Ingrese el Departamento
-            </div>
           </div>
         </div>
       </div>
     </fieldset>
+    <div class="row">
+      <div class="col-sm-12">
+        <p class="text-danger">* Campos Requeridos</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="text-right">
+        <div *ngIf="['add','edit'].indexOf(modalAction) >= 0">
+          <button type="submit" [disabled]="!mForm.valid" class="btn btn-primary">Aceptar</button>
+          <a (click)="hideModalForm()" class="btn btn-default">Cancelar</a>
+        </div>
+        <div *ngIf="['view'].indexOf(modalAction) >= 0">
+          <a (click)="hideModalForm()" class="btn btn-default">Cerrar</a>
+        </div>
+      </div>
+    </div>
   </form>
-
-  <div class="row">
-    <div class="col-sm-12">
-      <p class="text-danger">* Campos Requeridos</p>
-    </div>
-  </div>
-  <div class="row">
-    <div class="text-right">
-      <div *ngIf="['add','edit'].indexOf(modalAction) >= 0">
-        <button type="submit" [disabled]="!mForm.valid" class="btn btn-primary">Aceptar</button>
-        <a (click)="hideModalForm()" class="btn btn-default">Cancelar</a>
-      </div>
-      <div *ngIf="['view'].indexOf(modalAction) >= 0">
-        <a (click)="hideModalForm()" class="btn btn-default">Cerrar</a>
-      </div>
-    </div>
-  </div>
 
 </app-modal>

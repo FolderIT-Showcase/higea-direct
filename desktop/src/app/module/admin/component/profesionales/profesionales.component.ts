@@ -67,7 +67,6 @@ export class ProfesionalesComponent implements OnInit {
     // get current page of items
     this.pagedItems = this.profesionales.slice(this.pager.startIndex, this.pager.endIndex + 1);
     this.currentPage = page;
-    console.log('paginas' + this.pager.totalPages);
     this.totalItems = this.pager.totalPages * this.maxSize;
   }
 
@@ -140,11 +139,10 @@ export class ProfesionalesComponent implements OnInit {
   }
 
   handleSaveEvent(event) {
-    console.log(this.model.nombre);
+
   }
 
   submitSaveForm(value: Data) {
-    console.log(value);
     const prof: Profesional = new Profesional();
     prof.nombre = value.nombre;
     prof.apellido = value.apellido;
@@ -153,30 +151,27 @@ export class ProfesionalesComponent implements OnInit {
   }
 
   save(profesional: Profesional) {
-    this.adminService.saveProfesional(profesional).then(data => {
-      this.alertService.success('Se guardo exitosamente');
-      this.saveModal.hide();
-    })
-      .catch((error) => {
-        console.log(error);
-        this.alertService.error('Error al querer guardar el Profesional');
+    this.adminService.saveProfesional(profesional)
+      .then(() => {
+        this.alertService.success('Se guardo exitosamente');
+        this.saveModal.hide();
+      })
+      .catch(() => {
         this.saveModal.hide();
       });
   }
 
   actualizarProfesionales() {
-    this.adminService.getProfesionales().then(data => {
-      this.storeService.update('profesionales', data);
-    })
-      .catch((error) => {
-        console.log(error);
-        this.alertService.error('Error al querer guardar el Profesional');
+    this.adminService.getProfesionales()
+      .then(data => {
+        this.storeService.update('profesionales', data);
+      })
+      .catch(() => {
         this.saveModal.hide();
       });
   }
 
   submitUpdateForm(value: Data) {
-    console.log(value);
     if (value.nombre) {
       this.profesional.nombre = value.nombre;
     }
@@ -188,14 +183,13 @@ export class ProfesionalesComponent implements OnInit {
   }
 
   update(profesional: Profesional) {
-    this.adminService.updateProfesional(profesional).then(data => {
-      this.alertService.success('Se guardo exitosamente');
-      this.updateModal.hide();
-    })
-      .catch((error) => {
-        console.log(error);
+    this.adminService.updateProfesional(profesional)
+      .then(() => {
+        this.alertService.success('Se guardo exitosamente');
         this.updateModal.hide();
-        this.alertService.error('Error al querer guardar el Profesional');
+      })
+      .catch(() => {
+        this.updateModal.hide();
       });
   }
 

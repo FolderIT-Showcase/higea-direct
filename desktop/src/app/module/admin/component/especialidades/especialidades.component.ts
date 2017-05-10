@@ -60,7 +60,6 @@ export class EspecialidadesComponent implements OnInit {
       this.store.changes.pluck('especialidades').subscribe(
         (data: any) => {
           this.especialidades = data;
-          console.log(data);
           // this.pagedItems = this.especialidades.slice(this.pager.startIndex, this.pager.endIndex + 1);
           this.setPage(this.pager.currentPage);
         }
@@ -99,10 +98,6 @@ export class EspecialidadesComponent implements OnInit {
     this.adminService.saveEspecialidad(this.especialidad)
       .then(data => {
         this.alertService.success('Se guardo exitosamente');
-      })
-      .catch((error) => {
-        console.error(error);
-        this.alertService.error('Error al guardar la especialidad');
       });
     this.saveModal.hide();
     this.clean();
@@ -154,11 +149,7 @@ export class EspecialidadesComponent implements OnInit {
   delete(especialidad: Especialidad) {
     this.adminService.deleteEspecialidad(especialidad).then(data => {
       this.alertService.success('Se borro exitosamente');
-    })
-      .catch((error) => {
-        console.log('Error' + error);
-        this.alertService.error(error.body);
-      });
+    });
   }
 
   submitUpdateForm() {
@@ -171,10 +162,6 @@ export class EspecialidadesComponent implements OnInit {
     this.adminService.updateEspecialidad(especialidad)
       .then(data => {
         this.alertService.success('Se actualizo exitosamente');
-      })
-      .catch((error) => {
-        console.error(error);
-        this.alertService.error('Error al querer actualizar la especialidad');
       });
     this.updateModal.hide();
     this.clean();

@@ -63,7 +63,7 @@ export class RegisterSocialComponent implements OnInit {
     // }
 
     if (this.model.pais.toLowerCase() !== 'argentina') {
-      this.model.tipoDocumento = "Documento Extranjero";
+      this.model.tipoDocumento = 'Documento Extranjero';
     }
 
     this.loading = true;
@@ -77,9 +77,8 @@ export class RegisterSocialComponent implements OnInit {
     persona.documento.numero = this.model.numeroDocumento;
     user.email = this.model.email;
     persona.userAsociado = user;
-    persona.domicilio = {};
 
-    if (persona.documento.tipo === "dni") {
+    if (persona.documento.tipo === 'dni') {
 
       const doc = {
         documento: persona.documento.numero,
@@ -93,7 +92,6 @@ export class RegisterSocialComponent implements OnInit {
           this.savePersona(persona);
         })
         .catch(error => {
-          this.alertService.error('Sus datos no son válidos, por favor revíselos.');
           console.error(error);
         });
 
@@ -115,7 +113,6 @@ export class RegisterSocialComponent implements OnInit {
       })
       .catch(error => {
         this.loadingService.finish();
-        this.alertService.error('Hubo un error inesperado, vuelva a intentarlo más tarde');
       });
   }
 

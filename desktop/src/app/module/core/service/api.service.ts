@@ -36,7 +36,6 @@ export class ApiService {
 
   catchException(exception: AppException) {
     let mException = exception;
-    console.log(mException);
     if (mException.error) {
     } else {
       mException = new AppException();

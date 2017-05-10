@@ -192,3 +192,17 @@ select.minimal {
   box-shadow: 0 0 0 rgba(0, 0, 0, 0);
   margin-bottom: 0;
 }
+
+
+.timepicker {
+  table{
+    margin: 0 auto !important;
+    width: auto !important;
+    height: auto !important;
+    text-align: -webkit-center;
+    text-align: -moz-center;
+    text-align: -o-center;
+    text-align: -ms-center;
+  }
+}
+

@@ -81,7 +81,6 @@ export class CentrosSaludComponent implements OnInit {
     // get current page of items
     this.pagedItems = this.centros.slice(this.pager.startIndex, this.pager.endIndex + 1);
     this.currentPage = page;
-    console.log('paginas' + this.pager.totalPages);
     this.totalItems = this.pager.totalPages * this.maxSize;
   }
 
@@ -146,11 +145,7 @@ export class CentrosSaludComponent implements OnInit {
   delete(centro: CentroSalud) {
     this.adminService.deleteCentroSalud(centro).then(data => {
       this.alertService.success('Se borro exitosamente');
-    })
-      .catch((error) => {
-        console.log('Error' + error);
-        this.alertService.error(error.body);
-      });
+    });
   }
 
   public pageChanged(event: any): void {
@@ -177,11 +172,7 @@ export class CentrosSaludComponent implements OnInit {
   update(centroSalud: CentroSalud) {
     this.adminService.updateCentroSalud(centroSalud).then(data => {
       this.alertService.success('Se guardo exitosamente');
-    })
-      .catch((error) => {
-        console.error(error);
-        this.alertService.error('Error al querer guardar el Centro de Salud');
-      });
+    });
     this.updateModal.hide();
   }
 

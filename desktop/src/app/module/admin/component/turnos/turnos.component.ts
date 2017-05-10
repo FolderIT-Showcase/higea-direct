@@ -57,7 +57,7 @@ export class TurnosComponent implements OnInit {
               private alertService: AlertService,
               private adminService: AdminService,
               private store: Store,
-              private  pagerService: PagerService,
+              private pagerService: PagerService,
               private fb: FormBuilder) {
 
     this.form = fb.group({
@@ -93,7 +93,6 @@ export class TurnosComponent implements OnInit {
    }*/
 
   handleCentroSaludClick(centroSalud: CentroSalud) {
-    console.log(centroSalud);
     this.model.centro = centroSalud;
     this.especialidades = centroSalud.especialidad;
   }
@@ -116,8 +115,6 @@ export class TurnosComponent implements OnInit {
         this.setPage(this.pager.currentPage);
       })
       .catch((error) => {
-        console.error(error);
-        this.alertService.error('Error al guardar el turno');
         this.setPage(this.pager.currentPage);
       });
 
@@ -143,8 +140,6 @@ export class TurnosComponent implements OnInit {
     const turnos: Turno[] = this.storeService.get('turnos');
     for (const x of turnos) {
       if (x.id === this.turno.id) {
-        console.log('turno: ' + x.id);
-        console.log('this.turno.id: ' + this.turno.id);
         this.delete(x);
         this.storeService.findAndDelete('turnos', x.id);
         break;
@@ -156,11 +151,7 @@ export class TurnosComponent implements OnInit {
   delete(turno: Turno) {
     this.adminService.deleteTurno(turno).then(data => {
       this.alertService.success('Se borro exitosamente');
-    })
-      .catch((error) => {
-        console.error(error);
-        this.alertService.error(error.body);
-      });
+    });
 
     this.setPage(this.pager.currentPage);
   }
@@ -176,7 +167,6 @@ export class TurnosComponent implements OnInit {
     // get current page of items
     this.pagedItems = this.turnos.slice(this.pager.startIndex, this.pager.endIndex + 1);
     this.currentPage = page;
-    console.log('paginas' + this.pager.totalPages);
     this.totalItems = this.pager.totalPages * this.maxSize;
   }
 
@@ -185,7 +175,6 @@ export class TurnosComponent implements OnInit {
   }
 
   submitSaveForm(value) {
-    console.log(value);
     this.save(value);
   }
 

@@ -5,6 +5,7 @@ import {Profesional} from '../../../core/domain/profesional';
 import {Persona} from '../../../core/domain/persona';
 import {StoreService} from '../../../core/service/store.service';
 import {TurnoService} from '../../../core/service/turno.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 class Data {
   persona: Persona;
@@ -25,55 +26,62 @@ export class NuevoTurnoComponent implements OnInit {
   especialidades: Especialidad[] = [];
   profesionales: Profesional[] = [];
   personas: Persona[] = [];
+  selectUndefined: any;
+  form: FormGroup;
+  fechaDesde: Date = new Date();
 
-  constructor(private storeService: StoreService, private turnoService: TurnoService) {
+  constructor(private storeService: StoreService,
+              private turnoService: TurnoService,
+              private fb: FormBuilder) {
   }
 
   ngOnInit(): void {
-    const personaUser = this.storeService.get('integrantes');
     this.personas = this.storeService.get('integrantes');
     this.centrosSalud = this.storeService.get('centrosSalud');
-    this.model.fecha = new Date(Date.now());
-    this.model.persona = this.personas[0];
-    this.storeService.update('persona', this.model.persona);
+
+    this.form = this.fb.group({
+      'persona': [null],
+      'centro': [Validators.required],
+      'especialidad': [null],
+      'profesional': [null]
+    });
+    this.form.value.fechaDesde = new Date();
   }
 
   handlePersonaClick(persona: Persona) {
-    this.model.persona = persona;
-    this.storeService.update('persona', this.model.persona);
+    this.storeService.update('persona', persona);
   }
 
-  labelPersona() {
-    if (!this.model.persona) {
+  labelPersona(persona: Persona) {
+    if (!persona) {
       return;
     }
-    return (this.model.persona.nombre + ' ' + this.model.persona.apellido).toUpperCase();
-
+    return (persona.nombre + ' ' + persona.apellido).toUpperCase();
   }
 
   handleCentroSaludClick(centroSalud: CentroSalud) {
-    this.model.centro = centroSalud;
     this.especialidades = centroSalud.especialidad;
   }
 
   handleEspecialidadClick(especialidad: Especialidad) {
-    this.model.especialidad = especialidad;
     this.profesionales = especialidad.profesional;
   }
 
   handleProfesionalClick(profesional: Profesional) {
-    this.model.profesional = profesional;
+
   }
 
-  buscar() {
-    this.turnoService.getTurnos(this.model.centro, this.model.especialidad, this.model.profesional, this.model.fecha)
-      .catch((error) => {
-        console.error(error);
-      });
+  handleFechaChange(event) {
+    console.log(event);
+  }
+
+  submitForm(form) {
+    form.fechaDesde = this.fechaDesde;
+    console.log(form);
+    this.turnoService.getTurnos(form.centro, form.especialidad, form.profesional, form.fecha);
   }
 
   clearForm() {
-    this.model = new Data();
     this.storeService.update('CentroSalud', null);
     this.storeService.update('turnos', []);
   }

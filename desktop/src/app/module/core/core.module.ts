@@ -25,7 +25,7 @@ import {ModalModule} from 'ngx-bootstrap/modal';
 import {CoreComponent} from './core.component';
 import {AdminGuard} from './service/guard/admin.guard';
 import {ModalComponent} from './component/modal/modal.component';
-import {BusyConfig, BusyModule} from 'angular2-busy';
+import {BusyModule} from 'angular2-busy';
 import {LocalidadesResolveService} from './service/resolve/localidad-resolve.service';
 
 @NgModule({

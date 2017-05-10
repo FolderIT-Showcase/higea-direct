@@ -68,7 +68,7 @@
     <div class="row">
       <div class="col-sm-6">
         <div class="form-group"
-             [ngClass]="{'has-error' : !form.controls['centro'].valid && form.controls['centro'].touched}" >
+             [ngClass]="{'has-error' : !form.controls['centro'].valid && form.controls['centro'].touched}">
           <label class="control-label required">Centro de Salud</label>
 
           <select type="text" class="form-control" [formControl]="form.controls['centro']"
@@ -91,7 +91,8 @@
           <select type="text" class="form-control" [formControl]="form.controls['especialidad']"
                   (change)="handleEspecialidadClick(form.value.especialidad)">
             <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
-            <option [ngValue]="especialidad" *ngFor="let especialidad of especialidades">{{especialidad.nombre}}</option>
+            <option [ngValue]="especialidad" *ngFor="let especialidad of especialidades">{{especialidad.nombre}}
+            </option>
           </select>
 
 
@@ -139,24 +140,23 @@
       <div class="col-sm-6">
         <div class="form-group">
           <label class="control-label">Hora</label>
-          <timepicker [(ngModel)]="model.hora" [ngModelOptions]="{standalone: true}" class="form-control"></timepicker>
+          <timepicker class="timepicker" [(ngModel)]="model.hora"
+                      [ngModelOptions]="{standalone: true}" class="form-control"></timepicker>
         </div>
       </div>
       <div class="col-sm-6">
         <div class="form-group">
           <label class="control-label">Fecha</label>
           <div style="display:inline-block; min-height:290px;">
-            <datepicker [(ngModel)]="model.fechaDesde" [ngModelOptions]="{standalone: true}" class="form-control"></datepicker>
+            <datepicker class="timepicker" [(ngModel)]="model.fechaDesde" [ngModelOptions]="{standalone: true}"
+                        class="form-control"></datepicker>
           </div>
         </div>
       </div>
     </div>
 
     <button type="submit" class="btn btn-primary btn-block" [disabled]="!form.valid">GUARDAR</button>
-    <!-- <a (click)="clean()" class="btn btn-default">
-       <span class="app-icon-dark fa fa-times-circle"></span>
-       Limpiar
-     </a>-->
+
   </form>
 </app-modal>
 

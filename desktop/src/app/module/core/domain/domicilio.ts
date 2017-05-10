@@ -5,8 +5,4 @@ export class Domicilio {
   calle?: string;
   piso?: number;
   departamento?: string;
-
-  constructor() {
-    this.localidad = new Localidad();
-  }
 }

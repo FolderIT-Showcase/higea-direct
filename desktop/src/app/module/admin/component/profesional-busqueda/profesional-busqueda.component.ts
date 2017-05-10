@@ -44,7 +44,6 @@ export class ProfesionalBusquedaComponent implements OnInit, OnDestroy {
     // get current page of items
     this.pagedItems = this.profesionales.slice(this.pager.startIndex, this.pager.endIndex + 1);
     this.currentPage = page;
-    console.log('paginas' + this.pager.totalPages);
     this.totalItems = this.pager.totalPages * this.maxSize;
   }
 
