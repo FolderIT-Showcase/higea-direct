@@ -1,5 +1,5 @@
-<div *ngIf="message" class="app-alert">
-  <div style="position:fixed; z-index:1; width: 80%; margin: 0 auto; margin-top: 70px; top: 2%; left: 10%; "
+<div *ngIf="message"  class="app-alert">
+  <div style="position:fixed; z-index:2000; !important; width: 60%; margin: 0 auto; margin-top: 15px; top: 2%; left: 20%; "
        [ngClass]="{ 'alert': message, 'alert-success': message.type === 'success', 'alert-danger': message.type === 'error' }">
     <div class="alert-label"><strong>{{message.text}}</strong></div>
   </div>

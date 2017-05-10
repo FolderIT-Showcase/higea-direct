@@ -93,6 +93,11 @@ export class EspecialidadesComponent implements OnInit {
 
   save() {
     this.profesionales = this.storeService.get('profesionalesSeleccionados');
+    if(!this.profesionales ||
+      this.profesionales.length==0){
+      this.alertService.error('Debe seleccionar los profesionales asociados a la especialidad');
+      return;
+    }
     this.especialidad.nombre = this.model.especialidadLabel.toUpperCase();
     this.especialidad.profesional = this.profesionales;
     this.adminService.saveEspecialidad(this.especialidad)
@@ -117,6 +122,8 @@ export class EspecialidadesComponent implements OnInit {
     this.updateModal.show();
   }
 
+
+
   showDeleteModal(especialidad: Especialidad) {
     this.especialidad = especialidad;
     this.deleteModal.show();
@@ -134,6 +141,8 @@ export class EspecialidadesComponent implements OnInit {
     this.deleteModal = event;
   }
 
+
+
   public deleteEspecialidad() {
     const especialidades: Especialidad[] = this.storeService.get('especialidades');
     for (const x of especialidades) {
@@ -146,6 +155,8 @@ export class EspecialidadesComponent implements OnInit {
     this.deleteModal.hide();
   }
 
+
+
   delete(especialidad: Especialidad) {
     this.adminService.deleteEspecialidad(especialidad).then(data => {
       this.alertService.success('Se borro exitosamente');
@@ -154,6 +165,12 @@ export class EspecialidadesComponent implements OnInit {
 
   submitUpdateForm() {
     this.especialidad.nombre = this.model.especialidadLabel.toUpperCase();
+    let profesionales = this.storeService.get('profesionalesSeleccionados');
+    if(!profesionales ||
+      profesionales.length==0){
+      this.alertService.error('Debe seleccionar los profesionales asociados a la especialidad');
+      return;
+    }
     this.update(this.especialidad);
   }
 

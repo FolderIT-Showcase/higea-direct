@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Persona} from '../../../core/domain/persona';
 import {CentroSalud} from '../../../core/domain/centro-salud';
 import {Especialidad} from '../../../core/domain/especialidad';
@@ -27,7 +27,7 @@ class Data {
   selector: 'app-turnos',
   templateUrl: './turnos.component.html'
 })
-export class TurnosComponent implements OnInit {
+export class TurnosComponent implements OnInit,OnDestroy {
 
   turnos: Turno[] = [];
   model: Data = new Data();
@@ -86,6 +86,10 @@ export class TurnosComponent implements OnInit {
 
     // initialize to page 1
     this.setPage(1);
+  }
+
+  ngOnDestroy(){
+    this.storeService.update('turnos',[]);
   }
 
   /*handlePersonaClick(persona: Persona) {
@@ -183,6 +187,15 @@ export class TurnosComponent implements OnInit {
     value.hora = this.model.hora;
     value.fechaDesde = this.model.fechaDesde;
 
+
+    let ahora:Date = new Date();
+    let fechaTurno = value.fechaDesde;
+
+    if(!(fechaTurno>=ahora)){
+
+      this.alertService.error('No puede crear un turno con fecha invalida, verifique');
+      return;
+    }
     this.crear(value);
     this.saveModal.hide();
     this.clean();
