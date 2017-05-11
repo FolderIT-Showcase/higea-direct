@@ -20,6 +20,11 @@ import {Subscription} from 'rxjs/Subscription';
 
 import * as _ from 'lodash';
 
+class Data {
+  pais: Pais;
+
+}
+
 @Component({
   selector: 'app-lista-integrantes',
   templateUrl: './lista-integrantes.component.html',
@@ -123,6 +128,7 @@ export class ListaIntegrantesComponent implements OnInit {
   };
 
   public rebuildLists(form) {
+    console.log(form)
     this.lists.provincias = [];
     this.lists.localidades = [];
 

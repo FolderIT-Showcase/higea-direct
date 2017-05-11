@@ -187,12 +187,6 @@
                [ngClass]="{ 'has-error': !mForm.controls['pais'].valid && mForm.controls['pais'].touched }">
             <label for="pais" class="control-label">País</label>
 
-            <!--
-              <select class="form-control" id="cliente-vendedor" [(ngModel)]="clienteSeleccionado.vendedor_id" name="vendedor">
-                <option *ngFor="let vendedor of vendedores" [ngValue]="vendedor.id">{{vendedor.nombre}}</option>
-              </select>
-            -->
-
             <select class="form-control"
                     id="pais"
                     [formControl]="mForm.controls['pais']"
