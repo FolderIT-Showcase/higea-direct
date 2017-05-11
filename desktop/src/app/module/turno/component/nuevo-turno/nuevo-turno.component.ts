@@ -19,7 +19,7 @@ class Data {
   selector: 'app-nuevo-turno',
   templateUrl: './nuevo-turno.component.html'
 })
-export class NuevoTurnoComponent implements OnInit,OnDestroy {
+export class NuevoTurnoComponent implements OnInit, OnDestroy {
 
   model: Data = new Data();
   centrosSalud: CentroSalud[] = [];
@@ -48,7 +48,9 @@ export class NuevoTurnoComponent implements OnInit,OnDestroy {
     this.form.value.fechaDesde = new Date();
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
+    this.storeService.update('CentroSalud', null);
+    this.storeService.update('turnos', []);
   }
 
   handlePersonaClick(persona: Persona) {
@@ -70,23 +72,10 @@ export class NuevoTurnoComponent implements OnInit,OnDestroy {
     this.profesionales = especialidad.profesional;
   }
 
-  handleProfesionalClick(profesional: Profesional) {
-
-  }
-
-  handleFechaChange(event) {
-    console.log(event);
-  }
-
   submitForm(form) {
     form.fechaDesde = this.fechaDesde;
     console.log(form);
     this.turnoService.getTurnos(form.centro, form.especialidad, form.profesional, form.fecha);
-  }
-
-  clearForm() {
-    this.storeService.update('CentroSalud', null);
-    this.storeService.update('turnos', []);
   }
 
 }

@@ -39,7 +39,13 @@ import {LocalidadesResolveService} from './service/resolve/localidad-resolve.ser
     ModalModule.forRoot(),
     routing
   ],
-  exports: [BrowserModule, AlertComponent, BsDropdownModule, LoadingComponent, ModalComponent],
+  exports: [
+    BrowserModule,
+    AlertComponent,
+    BsDropdownModule,
+    LoadingComponent,
+    ModalComponent
+  ],
   declarations: [
     AlertComponent,
     HomeComponent,
