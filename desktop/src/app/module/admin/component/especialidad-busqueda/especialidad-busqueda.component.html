@@ -20,8 +20,11 @@
             [ngStyle]="{'background-color': especialidad.seleccionado ? '#67c18c' : '','color': especialidad.seleccionado ? 'white' : ''}">
           <td>{{especialidad.nombre }}</td>
           <td>
-            <a (click)="toggleEspecialidad(especialidad)" class="btn btn-success btn-block">
-              <span class="fa fa-arrow-right"></span>
+            <a (click)="toggleEspecialidad(especialidad)"
+               [ngClass]="{'btn-success': !especialidad.seleccionado , 'btn-danger': especialidad.seleccionado}"
+               class="btn">
+              <span [ngClass]="{'fa-times': especialidad.seleccionado, 'fa-plus' : !especialidad.seleccionado}"
+                    class="fa"></span>
             </a>
           </td>
         </tr>

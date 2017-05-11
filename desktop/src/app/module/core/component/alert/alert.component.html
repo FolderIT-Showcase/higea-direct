@@ -1,20 +1,5 @@
-<div *ngIf="message"  class="app-alert">
-  <div style="margin: 0 auto !important;
-  text-align: -webkit-center !important;
-  text-align: -moz-center !important;
-  text-align: -o-center !important;
-  text-align: -ms-center !important;
-  vertical-align: middle !important;
-  position:fixed;
-  z-index:2000;
-  !important;
-  border-radius: 15px;
-  height:10%;
-  width: 60%;
-  margin: 0 auto;
-  margin-top: 15px;
-  top: 2%;
-  left: 20%;" [ngClass]="{ 'alert': message, 'alert-success': message.type === 'success', 'alert-danger': message.type === 'error' }">
-    <div class="alert-label" style="vertical-align: middle"><strong>{{message.text}}</strong></div>
+<div *ngIf="message" class="app-alert">
+  <div  class="alert-label" [ngClass]="{ 'alert': message, 'alert-success': message.type === 'success', 'alert-danger': message.type === 'error' }">
+    <div  style="vertical-align: middle;text-align: center;line-height: 60px; "><strong>{{message.text}}</strong></div>
   </div>
 </div>
