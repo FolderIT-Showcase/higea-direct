@@ -35,7 +35,7 @@ public class Persona implements Serializable {
 
     private Date fechaNacimiento;
 
-	private Genero genero;
+    private Genero genero;
 
     private String nombre;
 
@@ -43,17 +43,17 @@ public class Persona implements Serializable {
     private boolean enabled = Boolean.TRUE;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="user_id")
+    @JoinColumn(name = "user_id")
     private User userAsociado;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="documento_id")
+    @JoinColumn(name = "documento_id")
     private Documento documento;
 
     private EstadoCivil estadoCivil;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="domicilio_id")
+    @JoinColumn(name = "domicilio_id")
     private Domicilio domicilio;
 
     @OneToMany(cascade = CascadeType.ALL)

@@ -10,7 +10,6 @@ import {GoogleSigninComponent} from './component/google-signin/google-signin.com
 import {FacebookSigninComponent} from './component/facebook-signin/facebook-signin.component';
 import {RegisterSocialComponent} from './component/register-social/register-social.component';
 import {BsDropdownModule} from 'ngx-bootstrap';
-import {DatepickerModule} from 'ngx-bootstrap/datepicker';
 import {StoreService} from '../core/service/store.service';
 import {FacebookService} from 'ngx-facebook';
 import {ReCaptchaModule} from 'angular2-recaptcha';
@@ -25,7 +24,6 @@ import {UserActiveComponent} from './component/user-activate/user.active.compone
     HttpModule,
     RouterModule,
     BsDropdownModule.forRoot(),
-    DatepickerModule.forRoot(),
     ReCaptchaModule
   ],
   declarations: [

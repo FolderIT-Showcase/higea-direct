@@ -24,7 +24,7 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 public class Provincia implements Serializable {
 
     @ManyToOne
-    @JoinColumn(name="pais_id")
+    @JoinColumn(name = "pais_id")
     public Pais pais;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

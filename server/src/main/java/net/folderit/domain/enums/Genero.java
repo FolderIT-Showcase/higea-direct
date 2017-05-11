@@ -10,6 +10,6 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
  * Created by gheng on 19/4/2017.
  */
 @JsonInclude(NON_NULL)
-public enum Genero implements Serializable{
-    MASCULINO,FEMENINO,OTROS
+public enum Genero implements Serializable {
+    MASCULINO, FEMENINO, OTROS
 }

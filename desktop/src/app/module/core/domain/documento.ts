@@ -1,11 +1,5 @@
 export class Documento {
   id?: number;
-  tipo: string;
+  tipoDocumento: string;
   numero: number;
-
-  constructor(mTipo, mNumero) {
-    this.tipo = mTipo;
-    this.numero = mNumero;
-  }
-
 }

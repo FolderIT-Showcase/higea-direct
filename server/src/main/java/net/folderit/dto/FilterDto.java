@@ -10,8 +10,6 @@ import net.folderit.domain.Profesional;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * Created by gheng on 25/4/2017.
@@ -21,8 +19,8 @@ import java.util.Date;
 @AllArgsConstructor
 public class FilterDto implements Serializable {
 
-    @JsonFormat(pattern="yyyy-MM-dd",timezone="America/Buenos_Aires")
-    @DateTimeFormat(pattern = "yyyy-MM-dd",iso = DateTimeFormat.ISO.DATE_TIME)
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "America/Buenos_Aires")
+    @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE_TIME)
     String fecha;
     CentroSalud centroSalud;
     Especialidad especialidad;

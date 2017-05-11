@@ -4,12 +4,9 @@ import net.folderit.domain.Persona;
 import net.folderit.domain.User;
 import net.folderit.domain.enums.Genero;
 import net.folderit.domain.exception.TurneroException;
-import net.folderit.dto.DataDto;
 import net.folderit.dto.ResultAfipDto;
 import net.folderit.repository.PersonaRepository;
-import net.folderit.repository.UserRepository;
 import net.folderit.util.AfipUtil;
-import net.folderit.repository.PersonaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -20,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.Transactional;
-import java.util.UUID;
 
 /**
  * Created by gheng on 18/4/2017.

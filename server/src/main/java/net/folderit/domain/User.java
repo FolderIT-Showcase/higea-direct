@@ -43,7 +43,7 @@ public class User implements Serializable {
     private boolean enabled = Boolean.FALSE;
 
     //@OneToMany(orphanRemoval=true, cascade={CascadeType.ALL})
-    @ManyToMany(cascade={CascadeType.ALL})
+    @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable
             (
                     name = "users_roles",

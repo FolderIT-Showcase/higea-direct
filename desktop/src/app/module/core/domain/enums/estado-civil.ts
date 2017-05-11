@@ -1,5 +1,5 @@
 export class EstadosCiviles {
-  static estadosCiviles = [{
+  static estadosCiviles  = [{
     'id': 'Casado',
     'label': 'Casado'
   }, {
@@ -18,6 +18,18 @@ export class EstadosCiviles {
     'id': 'Viudo',
     'label': 'Viudo'
   }];
+
+  static findByLabel(label) {
+    const estadosCiviles = EstadosCiviles.estadosCiviles;
+    let id = '';
+    for (const x of estadosCiviles) {
+      if (x.label === label) {
+        id = x.id;
+        break;
+      }
+    }
+    return id;
+  }
 
   static build() {
     const estadosCiviles = EstadosCiviles.estadosCiviles.map((e) => {

@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {NuevoTurnoComponent} from './component/nuevo-turno/nuevo-turno.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {DatepickerModule} from 'ngx-bootstrap/datepicker';
 import {PopoverModule} from 'ngx-bootstrap/popover';
 import {ResultadoComponent} from './component/resultado/resultado.component';
 import {TurnoComponent} from './turno.component';
@@ -21,7 +20,6 @@ import {ModalModule, TimepickerModule} from 'ngx-bootstrap';
     FormsModule,
     ReactiveFormsModule,
     CoreModule,
-    DatepickerModule,
     BsDropdownModule.forRoot(),
     TimepickerModule.forRoot(),
     PopoverModule.forRoot(),

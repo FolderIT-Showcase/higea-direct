@@ -25,7 +25,7 @@ public class Domicilio implements Serializable {
 
 
     @ManyToOne
-    @JoinColumn(name="localidad_id")
+    @JoinColumn(name = "localidad_id")
     public Localidad localidad;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

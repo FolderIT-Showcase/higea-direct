@@ -79,7 +79,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
     const persona: Persona = new Persona();
     persona.userAsociado = user;
     persona.genero = data.genero.toUpperCase();
-    persona.documento = new Documento(PersonaService.convertTipoDocumento(data.tipoDocumento), data.numeroDocumento);
+    persona.documento = new Documento();
+    persona.documento.id = null;
+    persona.documento.numero = data.numeroDocumento;
+    persona.documento.tipoDocumento = TipoDocumentos.findByLabel(data.tipoDocumento);
     persona.nombre = data.nombre;
     persona.apellido = data.apellido;
 
@@ -90,7 +93,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
     const persona: Persona = this.buildPersonaUser(data);
 
-    if (persona.documento.tipo === 'dni') {
+    if (persona.documento.tipoDocumento === 'dni') {
 
       const doc = {
         documento: persona.documento.numero,

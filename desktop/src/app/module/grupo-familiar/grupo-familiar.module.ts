@@ -1,7 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {DatepickerModule} from 'ngx-bootstrap/datepicker';
 import {PopoverModule} from 'ngx-bootstrap/popover';
 import {GrupoFamiliarComponent} from './grupo-familiar.component';
 import {ListaIntegrantesComponent} from './component/lista-integrantes/lista-integrantes.component';
@@ -11,6 +10,7 @@ import {RouterModule} from '@angular/router';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {BusyModule} from 'angular2-busy';
 import {CoreModule} from '../core/core.module';
+import { MyDatePickerModule } from 'mydatepicker';
 
 @NgModule({
   imports: [
@@ -18,7 +18,6 @@ import {CoreModule} from '../core/core.module';
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    DatepickerModule,
     CoreModule,
     PopoverModule.forRoot(),
     ModalModule.forRoot(),
@@ -26,6 +25,7 @@ import {CoreModule} from '../core/core.module';
       apiKey: 'AIzaSyAflntypuq6NWQj75NAk_IGgc2uPpJiVqs'
     }),
     BrowserAnimationsModule,
+    MyDatePickerModule,
     BusyModule
   ],
   declarations: [
