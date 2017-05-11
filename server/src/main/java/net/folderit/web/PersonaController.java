@@ -1,6 +1,7 @@
 package net.folderit.web;
 
 import net.folderit.domain.Persona;
+import net.folderit.domain.exception.TurneroException;
 import net.folderit.dto.ResultAfipDto;
 import net.folderit.service.PersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,7 +68,11 @@ public class PersonaController {
         try {
             dto = personaService.isDocumentValid(documento, nombre, apellido, genero);
         } catch (Exception e) {
-            throw new IllegalArgumentException("Sexo o DNI no valido. La longitud no corresponde");
+
+            TurneroException.getInstance().getMessage(TurneroException.MESSAGE_AFIP_INVALID,null);
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(TurneroException.getInstance());
+
         }
         if (dto.getData() != null) return ResponseEntity.ok(dto);
         else return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);

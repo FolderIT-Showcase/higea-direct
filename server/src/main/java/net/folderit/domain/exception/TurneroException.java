@@ -42,6 +42,8 @@ public class TurneroException implements Serializable {
 
     public static final String MESSAGE_PROFESIONALES_ASOCIADA  = "message.profesionales.asociada";
 
+    public static final String MESSAGE_AFIP_INVALID  = "message.afip.invalid";
+
     private String error;
 
     public static TurneroException instance;
