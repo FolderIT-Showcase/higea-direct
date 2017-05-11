@@ -1,4 +1,4 @@
-import * as _ from 'underscore';
+import * as _ from 'lodash';
 
 export class PagerService {
   getPager(totalItems: number, currentPage: number = 1, pageSize: number = 10) {

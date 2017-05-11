@@ -71,9 +71,7 @@ export class RegisterSocialComponent implements OnInit {
     persona.nombre = this.model.nombre;
     persona.apellido = this.model.apellido;
     persona.genero = this.model.genero;
-    persona.documento = new Documento();
-    persona.documento.tipo = PersonaService.convertTipoDocumento(this.model.tipoDocumento);
-    persona.documento.numero = this.model.numeroDocumento;
+    persona.documento = new Documento(PersonaService.convertTipoDocumento(this.model.tipoDocumento), this.model.numeroDocumento);
     user.email = this.model.email;
     persona.userAsociado = user;
 

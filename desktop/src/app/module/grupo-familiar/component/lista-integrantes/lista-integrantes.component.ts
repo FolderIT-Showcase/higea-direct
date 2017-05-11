@@ -6,7 +6,6 @@ import {EstadosCiviles} from '../../../core/domain/enums/estado-civil';
 import {Generos} from '../../../core/domain/enums/genero';
 import {TipoDocumentos} from '../../../core/domain/enums/tipo-documento';
 import {TipoContactos} from '../../../core/domain/enums/tipo-contacto';
-import * as _ from 'lodash';
 import {StoreService} from '../../../core/service/store.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {PersonaService} from '../../../core/service/persona.service';
@@ -19,6 +18,8 @@ import {Pais} from '../../../core/domain/pais';
 import {Store} from '../../../core/service/store';
 import {Subscription} from 'rxjs/Subscription';
 
+import * as _ from 'lodash';
+
 @Component({
   selector: 'app-lista-integrantes',
   templateUrl: './lista-integrantes.component.html',
@@ -28,7 +29,7 @@ export class ListaIntegrantesComponent implements OnInit {
 
   private currentUser = JSON.parse(localStorage.getItem('currentUser'));
   public busy: Promise<any>;
-  public currentPersona = new Persona();
+  public currentPersona;
   public modalAction = 'none';
   public selectUndefined: any;
   public integrantes: Persona[] = [];
@@ -47,7 +48,7 @@ export class ListaIntegrantesComponent implements OnInit {
   integrante: Persona = null;
 
   mForm: FormGroup;
-
+  mPais: Pais;
   modalConfirmacion: ModalDirective;
   modalForm: ModalDirective;
   subs: Subscription[] = [];
@@ -76,6 +77,8 @@ export class ListaIntegrantesComponent implements OnInit {
       'departamento': [null]
     });
 
+    this.mPais = new Pais();
+
   }
 
   ngOnInit(): void {
@@ -92,7 +95,6 @@ export class ListaIntegrantesComponent implements OnInit {
         }
       )
     );
-
 
     this.integrantes = this.storeHelper.get('integrantes');
     this.currentPersona = this.storeHelper.get('persona');
@@ -132,7 +134,7 @@ export class ListaIntegrantesComponent implements OnInit {
     if (form.pais.nombre.toUpperCase() === 'ARGENTINA') {
       this.lists.provincias = this.provincias
     } else {
-      this.lists.provincias.push(new Provincia(' --- OTRA --- '));
+      // TODO: completar otras provincias
     }
 
     // Busqueda de localidades
@@ -142,6 +144,8 @@ export class ListaIntegrantesComponent implements OnInit {
   }
 
   public showModal(action, integrante: Persona) {
+
+    this.mForm.reset();
     this.modalForm.show();
     this.modalAction = action;
     this.integrante = integrante;
@@ -150,21 +154,23 @@ export class ListaIntegrantesComponent implements OnInit {
 
     if (['edit', 'view'].indexOf(action) >= 0) {
 
-      const tipoContacto = integrante.contacto[0] ? integrante.contacto[0].tipoContacto : '';
-      const dato = integrante.contacto[0] ? integrante.contacto[0].dato : '';
-      const localidad = integrante.domicilio.localidad ? integrante.domicilio.localidad.nombre : '';
+      const tipoContacto = (integrante.contacto && integrante.contacto[0] && integrante.contacto[0].tipoContacto)
+        ? integrante.contacto[0].tipoContacto : '';
+      const dato = (integrante.contacto && integrante.contacto[0] && integrante.contacto[0].dato)
+        ? integrante.contacto[0].dato : '';
+      const localidad = (integrante.domicilio && integrante.domicilio.localidad) ? integrante.domicilio.localidad : '';
       const provincia = () => {
         if (integrante.domicilio.localidad && integrante.domicilio.localidad.provincia) {
-          return integrante.domicilio.localidad.provincia.nombre;
+          return integrante.domicilio.localidad.provincia;
         }
         return '';
       };
       const pais = () => {
         if (integrante.domicilio.localidad && integrante.domicilio.localidad.provincia &&
           integrante.domicilio.localidad.provincia.pais) {
-          return integrante.domicilio.localidad.provincia.pais.nombre;
+          return integrante.domicilio.localidad.provincia.pais;
         }
-        return '';
+        return new Pais();
       };
       const calle = (integrante.domicilio && integrante.domicilio.calle) ? integrante.domicilio.calle : '';
       const piso = (integrante.domicilio && integrante.domicilio.piso) ? integrante.domicilio.piso : '';
@@ -180,17 +186,19 @@ export class ListaIntegrantesComponent implements OnInit {
         'tipoContacto': tipoContacto,
         'dato': dato,
         'estadoCivil': integrante.estadoCivil || '',
-        'pais': pais,
-        'provincia': provincia,
+        'pais': pais(),
+        'provincia': provincia(),
         'localidad': localidad,
         'calle': calle,
         'piso': piso,
         'departamento': departamento
       });
-      return;
+
+      this.mPais = pais();
+      console.log(this.mPais);
     }
 
-    this.mForm.reset();
+
 
   }
 
@@ -200,18 +208,13 @@ export class ListaIntegrantesComponent implements OnInit {
   }
 
   confirmDeleteModal() {
-    const prevPersona = _.merge({}, this.currentPersona);
-    const i = _.findIndex(this.currentPersona.integrantes, this.integrante);
-    if (i >= 0) {
-      this.currentPersona.integrantes.splice(i, 1);
-    }
+    this.currentPersona.integrantes = this.currentPersona.integrantes.filter((x: Persona) => x.id === this.integrante.id);
 
     this.busy = this.personaService.updatePersonaUser(this.currentPersona)
       .then(() => {
         this.alertService.success('Integrante removido correctamente.');
       })
       .catch((error) => {
-        this.currentPersona = _.merge({}, prevPersona);
         console.error(error);
       });
 
@@ -221,68 +224,63 @@ export class ListaIntegrantesComponent implements OnInit {
 
   buildIntegrante(form) {
     const integrante: Persona = new Persona();
+
+    for (const i in form) {
+      if (!form[i]) {
+        form[i] = null;
+      }
+    }
+
+    integrante.id = this.integrante.id;
     integrante.nombre = form.nombre;
     integrante.apellido = form.apellido;
     integrante.genero = form.genero;
-    integrante.documento = new Documento();
-    integrante.documento.tipo = form.tipoDocumento;
-    integrante.documento.numero = form.numeroDocumento;
+    integrante.documento = new Documento(form.tipoDocumento, form.numeroDocumento);
     integrante.fechaNacimiento = form.fechaNacimiento;
     integrante.contacto = [];
     integrante.contacto.push(new Contacto(form.tipoContacto, form.dato));
     integrante.estadoCivil = form.estadoCivil;
+
     integrante.domicilio = new Domicilio();
-    integrante.domicilio.localidad = new Localidad(form.localidad);
-    integrante.domicilio.localidad.provincia = new Provincia(form.provincia);
-    integrante.domicilio.localidad.provincia.pais = new Pais(form.pais);
-    integrante.domicilio.calle = form.calle;
     integrante.domicilio.piso = form.piso;
+    integrante.domicilio.calle = form.calle;
     integrante.domicilio.departamento = form.departamento;
+    integrante.domicilio.localidad = form.localidad;
+    integrante.domicilio.localidad.provincia = form.provincia;
+    integrante.domicilio.localidad.provincia.pais = form.pais;
 
     return integrante;
   }
 
   public confirmModal(action, form) {
 
-    const integranteNuevo = this.buildIntegrante(form);
-    const prevPersona = _.merge({}, this.currentPersona);
+    let integranteNuevo = this.buildIntegrante(form);
 
-    switch (action) {
-
-      case 'add':
-        if (!this.currentPersona.integrantes) {
-          this.currentPersona.integrantes = [];
-        }
-        this.currentPersona.integrantes.push(integranteNuevo);
-
-        console.log(integranteNuevo);
-        console.log(this.currentPersona);
-
-
-        this.busy = this.personaService.updatePersonaUser(this.currentPersona)
-          .then(() => {
-            this.alertService.success('Integrante agregado correctamente.');
-          });
-        break;
-
-      case 'edit':
-        _.merge(this.integrante, integranteNuevo);
-
-        this.busy = this.personaService.updatePersonaUser(this.currentPersona)
-          .then(() => {
-            this.alertService.success('Integrante editado correctamente.');
-          })
-          .catch(() => {
-            this.currentPersona = _.merge({}, prevPersona);
-          });
-        break;
-
-      default:
-        return;
+    if (!this.currentPersona.integrantes) {
+      this.currentPersona.integrantes = [];
     }
 
-    this.modalForm.hide();
+    // si es la persona usuario
+    if (integranteNuevo.id === this.integrantes[0].id) {
+      // copiamos los integrantes que ya tenia
+      integranteNuevo = _.defaultsDeep(integranteNuevo, this.currentPersona);
+      integranteNuevo.integrantes = _.merge({}, this.currentPersona.integrantes);
+      // y copiamos a current persona
+      this.currentPersona = _.merge({}, integranteNuevo);
+    } else {
+      this.currentPersona.integrantes.push(integranteNuevo);
+    }
 
+    this.busy = this.personaService.updatePersonaUser(this.currentPersona)
+      .then(() => {
+        if (action === 'add') {
+          this.alertService.success('Integrante agregado correctamente.');
+        } else if (action === 'edit') {
+          this.alertService.success('Integrante editado correctamente.');
+        }
+      });
+
+    this.modalForm.hide();
   }
 
   handleModalConfirmacion(event) {
@@ -299,6 +297,7 @@ export class ListaIntegrantesComponent implements OnInit {
 
   hideModalForm() {
     this.modalForm.hide();
+    this.mForm.reset();
   }
 
 }

@@ -79,9 +79,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     const persona: Persona = new Persona();
     persona.userAsociado = user;
     persona.genero = data.genero.toUpperCase();
-    persona.documento = new Documento();
-    persona.documento.tipo = PersonaService.convertTipoDocumento(data.tipoDocumento);
-    persona.documento.numero = data.numeroDocumento;
+    persona.documento = new Documento(PersonaService.convertTipoDocumento(data.tipoDocumento), data.numeroDocumento);
     persona.nombre = data.nombre;
     persona.apellido = data.apellido;
 
@@ -107,7 +105,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
           this.loadingService.finish();
           this.savePersona(persona);
         })
-        .catch(() => {
+        .catch(error => {
           this.loadingService.finish();
         });
 

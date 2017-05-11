@@ -55,8 +55,7 @@
           <div class="form-group">
             <label>Profesional</label>
 
-            <select type="text" class="form-control" [formControl]="form.controls['profesional']"
-                    (change)="handleProfesionalClick(form.value.profesional)">
+            <select type="text" class="form-control" [formControl]="form.controls['profesional']">
               <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
               <option [ngValue]="profesional" *ngFor="let profesional of profesionales">{{profesional.nombre}}</option>
             </select>

@@ -154,15 +154,15 @@
             <label class="control-label">Contacto</label>
           </div>
           <div class="col-sm-3" style="padding-left:0;">
-            <div class="form-group required">
+            <div class="form-group">
               <select type="text" class="form-control" [formControl]="mForm.controls['tipoContacto']">
                 <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
-                <option [value]="tc.id" *ngFor="let tc of lists.tipoContactos">{{tc.label}}</option>
+                <option [ngValue]="tc" *ngFor="let tc of lists.tipoContactos">{{tc.label}}</option>
               </select>
             </div>
           </div>
           <div class="col-sm-9" style="padding-left:0;padding-right:0;">
-            <div class="form-group required">
+            <div class="form-group">
               <input type="text" class="form-control" placeholder="Ingresar teléfono, celular, email, etc."
                      [formControl]="mForm.controls['dato']"/>
             </div>
@@ -173,7 +173,7 @@
             <label class="control-label">Estado Civil</label>
             <select type="text" class="form-control" [formControl]="mForm.controls['estadoCivil']">
               <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
-              <option [ngValue]="estadoCivil.id" *ngFor="let estadoCivil of lists.estadosCiviles">
+              <option [ngValue]="estadoCivil" *ngFor="let estadoCivil of lists.estadosCiviles">
                 {{estadoCivil.label}}
               </option>
             </select>
@@ -185,13 +185,23 @@
         <div class="col-sm-4">
           <div class="form-group required"
                [ngClass]="{ 'has-error': !mForm.controls['pais'].valid && mForm.controls['pais'].touched }">
-            <label class="control-label">País</label>
-            <select type="text" class="form-control" [formControl]="mForm.controls['pais']"
+            <label for="pais" class="control-label">País</label>
+
+            <!--
+              <select class="form-control" id="cliente-vendedor" [(ngModel)]="clienteSeleccionado.vendedor_id" name="vendedor">
+                <option *ngFor="let vendedor of vendedores" [ngValue]="vendedor.id">{{vendedor.nombre}}</option>
+              </select>
+            -->
+
+            <select class="form-control"
+                    id="pais"
+                    [formControl]="mForm.controls['pais']"
+                    name="pais"
+                    [(ngModel)]="mPais.id"
                     (change)="rebuildLists(mForm.value)">
-              <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
-              <option [ngValue]="{}">-- Otro --</option>
-              <option [ngValue]="pais" *ngFor="let pais of lists.paises">{{pais.nombre}}</option>
+              <option *ngFor="let pais of lists.paises" [ngValue]="pais.id">{{pais.nombre}}</option>
             </select>
+
             <small *ngIf="!mForm.controls['pais'].valid && mForm.controls['pais'].touched" class="help-block">Seleccione
               el País
             </small>
@@ -201,10 +211,11 @@
           <div class="form-group required"
                [ngClass]="{ 'has-error': !mForm.controls['provincia'].valid && mForm.controls['provincia'].touched }">
             <label class="control-label">Provincia</label>
-            <select type="text" class="form-control" [disabled]="!mForm.controls['pais']"
-                    [formControl]="mForm.controls['provincia']" (change)="rebuildLists(mForm.value)">
-              <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
-              <option [ngValue]="{}">-- Otro --</option>
+            <select type="text" class="form-control"
+                    [disabled]="!mForm.controls['pais'].valid"
+                    [(ngModel)]="mForm.value.provincia"
+                    [formControl]="mForm.controls['provincia']"
+                    (change)="rebuildLists(mForm.value)">
               <option [ngValue]="provincia" *ngFor="let provincia of lists.provincias">{{provincia.nombre}}
               </option>
             </select>
@@ -217,10 +228,10 @@
           <div class="form-group required"
                [ngClass]="{ 'has-error': !mForm.controls['localidad'].valid && mForm.controls['localidad'].touched }">
             <label class="control-label">Localidad</label>
-            <select type="text" class="form-control" [disabled]="!mForm.controls['provincia']"
-                    [formControl]="mForm.controls['localidad']" (change)="rebuildLists(mForm.value)">
-              <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
-              <option [ngValue]="{}">-- Otro --</option>
+            <select type="text" class="form-control"
+                    [disabled]="!mForm.controls['provincia'].valid"
+                    [formControl]="mForm.controls['localidad']"
+                    (change)="rebuildLists(mForm.value)">
               <option [ngValue]="localidad" *ngFor="let localidad of lists.localidades">{{localidad.nombre}}</option>
             </select>
             <small *ngIf="!mForm.controls['localidad'].valid && mForm.controls['localidad'].touched" class="help-block">
