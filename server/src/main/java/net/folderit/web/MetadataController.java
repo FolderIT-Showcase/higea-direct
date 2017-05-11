@@ -3,7 +3,6 @@ package net.folderit.web;
 import net.folderit.domain.*;
 import net.folderit.domain.exception.TurneroException;
 import net.folderit.service.MetadataService;
-import net.folderit.service.PersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -11,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.SQLException;
 import java.util.Collection;
 
 /**
@@ -59,6 +57,7 @@ public class MetadataController {
     public ResponseEntity<Especialidad> guardarEspecialidad(@RequestBody Especialidad especialidad) {
         return new ResponseEntity<>((Especialidad) metadataService.saveEspecialidad(especialidad), HttpStatus.OK);
     }
+
     @PutMapping("/especialidad")
     public ResponseEntity<Especialidad> actualizarEspecialidad(@RequestBody Especialidad especialidad) {
         return new ResponseEntity<>((Especialidad) metadataService.saveEspecialidad(especialidad), HttpStatus.OK);
@@ -87,11 +86,11 @@ public class MetadataController {
 
     @DeleteMapping("/profesional")
     public ResponseEntity deleteProfesional(@RequestParam String id) {
-        try{
+        try {
             metadataService.deleteProfesional(Long.valueOf(id));
-        }catch (DataIntegrityViolationException exception){
+        } catch (DataIntegrityViolationException exception) {
 
-            TurneroException.getInstance().getMessage(TurneroException.MESSAGE_ESPECIALIDAD_ASOCIADA,null);
+            TurneroException.getInstance().getMessage(TurneroException.MESSAGE_ESPECIALIDAD_ASOCIADA, null);
 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(TurneroException.getInstance());
 
@@ -102,11 +101,11 @@ public class MetadataController {
 
     @DeleteMapping("/centroSalud")
     public ResponseEntity deleteCentroSalud(@RequestParam String id) {
-        try{
+        try {
             metadataService.deleteCentroSalud(Long.valueOf(id));
-        }catch (DataIntegrityViolationException exception){
+        } catch (DataIntegrityViolationException exception) {
 
-            TurneroException.getInstance().getMessage(TurneroException.MESSAGE_PROFESIONALES_ASOCIADA,null);
+            TurneroException.getInstance().getMessage(TurneroException.MESSAGE_PROFESIONALES_ASOCIADA, null);
 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(TurneroException.getInstance());
 
@@ -117,11 +116,11 @@ public class MetadataController {
 
     @DeleteMapping("/especialidad")
     public ResponseEntity deleteEspecialidad(@RequestParam String id) {
-        try{
+        try {
             metadataService.deleteEspecialidad(Long.valueOf(id));
-        }catch (DataIntegrityViolationException exception){
+        } catch (DataIntegrityViolationException exception) {
 
-            TurneroException.getInstance().getMessage(TurneroException.MESSAGE_PROFESIONALES_ASOCIADA,null);
+            TurneroException.getInstance().getMessage(TurneroException.MESSAGE_PROFESIONALES_ASOCIADA, null);
 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(TurneroException.getInstance());
 

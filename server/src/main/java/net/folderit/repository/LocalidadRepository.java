@@ -1,7 +1,6 @@
 package net.folderit.repository;
 
 import net.folderit.domain.Localidad;
-import net.folderit.domain.Provincia;
 import org.springframework.data.repository.CrudRepository;
 
 /**

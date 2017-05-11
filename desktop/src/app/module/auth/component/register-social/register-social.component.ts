@@ -71,11 +71,14 @@ export class RegisterSocialComponent implements OnInit {
     persona.nombre = this.model.nombre;
     persona.apellido = this.model.apellido;
     persona.genero = this.model.genero;
-    persona.documento = new Documento(PersonaService.convertTipoDocumento(this.model.tipoDocumento), this.model.numeroDocumento);
+    persona.documento = new Documento();
+    persona.documento.id = null;
+    persona.documento.numero = this.model.numeroDocumento;
+    persona.documento.tipoDocumento = TipoDocumentos.findByLabel(this.model.tipoDocumento);
     user.email = this.model.email;
     persona.userAsociado = user;
 
-    if (persona.documento.tipo === 'dni') {
+    if (persona.documento.tipoDocumento === 'dni') {
 
       const doc = {
         documento: persona.documento.numero,

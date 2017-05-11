@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {CommonModule} from '@angular/common';
 import {TimepickerModule} from 'ngx-bootstrap/timepicker';
-import {BsDropdownModule, DatepickerModule, ModalModule, PopoverModule} from 'ngx-bootstrap';
+import {BsDropdownModule, ModalModule, PopoverModule} from 'ngx-bootstrap';
 import {AdminHomeComponent} from './component/admin-home.component';
 import {Store} from '../core/service/store';
 import {AdminService} from '../core/service/admin.service';
@@ -35,7 +35,6 @@ import {ProvinciaResolveService} from '../core/service/resolve/provincia-resolve
     ReactiveFormsModule,
     TimepickerModule.forRoot(),
     BsDropdownModule.forRoot(),
-    DatepickerModule.forRoot(),
     PaginationModule.forRoot(),
     ModalModule.forRoot(),
     PopoverModule.forRoot()

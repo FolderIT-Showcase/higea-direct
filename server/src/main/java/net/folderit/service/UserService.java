@@ -10,7 +10,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -22,15 +21,15 @@ public class UserService {
 
     private VerificationTokenRepository tokenRepository;
 
+    @Autowired
+    public UserService(UserRepository userRepository, VerificationTokenRepository tokenRepository) {
+        this.userRepository = userRepository;
+        this.tokenRepository = tokenRepository;
+    }
+
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-
-    @Autowired
-    public UserService(UserRepository userRepository,VerificationTokenRepository tokenRepository) {
-        this.userRepository = userRepository;
-        this.tokenRepository = tokenRepository;
     }
 
     public List<User> findByLastName(String lastName) {
@@ -54,7 +53,7 @@ public class UserService {
 
     @Transactional
     public User findByEmail(String email) {
-       return userRepository.findByEmail(StringUtils.trimWhitespace(email));
+        return userRepository.findByEmail(StringUtils.trimWhitespace(email));
     }
 
 
@@ -68,7 +67,7 @@ public class UserService {
 
     @Transactional
     public void createVerificationToken(User user, String token) {
-        VerificationToken myToken = new VerificationToken(null,token, user,null);
+        VerificationToken myToken = new VerificationToken(null, token, user, null);
         myToken.calculateExpiryDate(myToken.EXPIRATION);
         tokenRepository.save(myToken);
     }
@@ -82,8 +81,8 @@ public class UserService {
     }
 
     @Transactional
-    public User finByTypeAndExternalId( String externalId,  String type) {
-        return userRepository.findByExternalIdAndType(externalId,type);
+    public User finByTypeAndExternalId(String externalId, String type) {
+        return userRepository.findByExternalIdAndType(externalId, type);
     }
 
     public Iterable<User> findAll() {

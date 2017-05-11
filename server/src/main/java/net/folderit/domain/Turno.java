@@ -1,6 +1,5 @@
 package net.folderit.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,11 +29,11 @@ public class Turno implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-//    @JsonFormat(pattern = "EEEE", timezone = "America/Buenos_Aires")
+    //    @JsonFormat(pattern = "EEEE", timezone = "America/Buenos_Aires")
     @DateTimeFormat(pattern = "EEEE")
     private Date dia;
 
-   /* @JsonFormat(pattern="yyyy-MM-dd",timezone="America/Buenos_Aires")*/
+    /* @JsonFormat(pattern="yyyy-MM-dd",timezone="America/Buenos_Aires")*/
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fecha;
 
@@ -45,15 +44,15 @@ public class Turno implements Serializable {
     private String observaciones;
 
     @ManyToOne
-    @JoinColumn(name="centro_id")
+    @JoinColumn(name = "centro_id")
     private CentroSalud centroSalud;
 
     @ManyToOne
-    @JoinColumn(name="especialidad_id")
+    @JoinColumn(name = "especialidad_id")
     private Especialidad especialidad;
 
     @ManyToOne
-    @JoinColumn(name="profesional_id")
+    @JoinColumn(name = "profesional_id")
     private Profesional profesional;
 
     @Column(name = "enabled")

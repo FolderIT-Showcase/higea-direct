@@ -11,6 +11,18 @@ export class GeneroEnum {
 }
 
 export class Generos {
+
+  static generos = [{
+    'id': 'MASCULINO',
+    'label': 'MASCULINO'
+  }, {
+    'id': 'FEMENINO',
+    'label': 'FEMENINO'
+  }, {
+    'id': 'OTROS',
+    'label': 'OTROS'
+  }];
+
   static build() {
     const generos: string[] = [];
     generos.push(GeneroLabel.masculino);
@@ -21,16 +33,7 @@ export class Generos {
   }
 
   static export() {
-    const generos: { 'id': string, 'label': string }[] = [];
-    for (const e in GeneroEnum) {
-      if (!GeneroEnum.hasOwnProperty(e)) {
-        continue;
-      }
-      generos.push({
-        'id': GeneroEnum[e],
-        'label': GeneroLabel[e]
-      });
-    }
+    const generos = Generos.generos
     generos.sort((a, b) => {
       return (a.label > b.label) ? 1 : ((b.label > a.label) ? -1 : 0);
     });

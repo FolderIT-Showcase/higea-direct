@@ -24,10 +24,10 @@ public class TurnoController {
 
     private TurnoService turnoService;
 
-    private PersonaService  personaService;
+    private PersonaService personaService;
 
     @Autowired
-    public TurnoController(TurnoService turnoService,PersonaService  personaService) {
+    public TurnoController(TurnoService turnoService, PersonaService personaService) {
         this.turnoService = turnoService;
         this.personaService = personaService;
     }
@@ -51,7 +51,7 @@ public class TurnoController {
     }
 
     @DeleteMapping("/turno")
-    public ResponseEntity<Persona> deleteTurno(@RequestParam Long id,@RequestParam Boolean desactivate) {
+    public ResponseEntity<Persona> deleteTurno(@RequestParam Long id, @RequestParam Boolean desactivate) {
         Persona persona = personaService.findByTurno(id);
         //persona.getTurno().remove(persona.getTurno().)
         Persona result = null;
@@ -75,12 +75,16 @@ public class TurnoController {
             }
 
         }
-        if(desactivate){
-           if(turnoDelete==null){turnoDelete = turnoService.findById(id);}
+        if (desactivate) {
+            if (turnoDelete == null) {
+                turnoDelete = turnoService.findById(id);
+            }
             turnoDelete.setEnabled(Boolean.FALSE);
             this.turnoService.saveTurno(turnoDelete);
-        }else{
-            if(turnoDelete==null){turnoDelete = turnoService.findById(id);}
+        } else {
+            if (turnoDelete == null) {
+                turnoDelete = turnoService.findById(id);
+            }
             turnoDelete.setTomado(Boolean.FALSE);
             this.turnoService.saveTurno(turnoDelete);
         }

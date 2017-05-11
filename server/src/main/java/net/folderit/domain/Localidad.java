@@ -31,7 +31,7 @@ public class Localidad implements Serializable {
     private String nombre;
 
     @ManyToOne
-    @JoinColumn(name="provincia_id")
+    @JoinColumn(name = "provincia_id")
     private Provincia provincia;
 
     private Integer codPostal;

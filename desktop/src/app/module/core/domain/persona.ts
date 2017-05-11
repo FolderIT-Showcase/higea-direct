@@ -7,7 +7,7 @@ import {Contacto} from './contacto';
 export class Persona {
   id?: number;
   apellido?: string;
-  fechaNacimiento?: Date;
+  fechaNacimiento?: number;
   genero?: string;
   nombre?: string;
   userAsociado?: User;

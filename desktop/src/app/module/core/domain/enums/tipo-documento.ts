@@ -19,6 +19,18 @@ export class TipoDocumentos {
     'label': 'Documento Extranjero'
   }];
 
+  static findByLabel(label) {
+    const tipoDocumentos = TipoDocumentos.tipoDocumentos;
+    let id = '';
+    for (const x of tipoDocumentos) {
+      if (x.label === label) {
+        id = x.id;
+        break;
+      }
+    }
+    return id;
+  }
+
   static build() {
     const tipoDocumentos = TipoDocumentos.tipoDocumentos.map((e) => {
       return e.label;

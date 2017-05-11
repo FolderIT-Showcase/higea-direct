@@ -19,10 +19,14 @@ import {Store} from '../../../core/service/store';
 import {Subscription} from 'rxjs/Subscription';
 
 import * as _ from 'lodash';
+import {IMyOptions} from 'mydatepicker';
+import {DatePipe} from '@angular/common';
 
 class Data {
-  pais: Pais;
-
+  genero = '';
+  pais: Pais = new Pais();
+  provincia: Provincia = new Provincia();
+  localidad: Localidad = new Localidad();
 }
 
 @Component({
@@ -48,12 +52,17 @@ export class ListaIntegrantesComponent implements OnInit {
     'localidades': []
   };
 
+  myDatePickerOptions: IMyOptions = {
+    dateFormat: 'dd/mm/yyyy',
+  };
+
+  datePipe = new DatePipe('es-AR');
+
   localidades: Localidad[] = [];
   provincias: Provincia[] = [];
   integrante: Persona = null;
 
   mForm: FormGroup;
-  mPais: Pais;
   modalConfirmacion: ModalDirective;
   modalForm: ModalDirective;
   subs: Subscription[] = [];
@@ -63,30 +72,27 @@ export class ListaIntegrantesComponent implements OnInit {
               private personaService: PersonaService,
               private alertService: AlertService,
               private storeHelper: StoreService) {
-
-    this.mForm = fb.group({
-      'nombre': [null, Validators.required],
-      'apellido': [null, Validators.required],
-      'genero': [null, Validators.required],
-      'tipoDocumento': [null, Validators.required],
-      'numeroDocumento': [null, Validators.required],
-      'fechaNacimiento': [null, Validators.required],
-      'tipoContacto': [null],
-      'dato': [null],
-      'estadoCivil': [null],
-      'pais': [null, Validators.required],
-      'provincia': [null, Validators.required],
-      'localidad': [null, Validators.required],
-      'calle': [null],
-      'piso': [null],
-      'departamento': [null]
-    });
-
-    this.mPais = new Pais();
-
   }
 
   ngOnInit(): void {
+
+    this.mForm = this.fb.group({
+      'nombre': ['', Validators.required],
+      'apellido': ['', Validators.required],
+      'genero': ['', Validators.required],
+      'tipoDocumento': [0, Validators.required],
+      'numeroDocumento': [null, Validators.required],
+      'fechaNacimiento': [null, Validators.required],
+      'tipoContacto': [''],
+      'dato': [''],
+      'estadoCivil': [''],
+      'pais': [0, Validators.required],
+      'provincia': [null, Validators.required],
+      'localidad': [null, Validators.required],
+      'calle': [''],
+      'piso': [''],
+      'departamento': ['']
+    });
 
     // Popular listas
     this.provincias = this.storeHelper.get('provincias');
@@ -127,26 +133,23 @@ export class ListaIntegrantesComponent implements OnInit {
     }
   };
 
-  public rebuildLists(form) {
-    console.log(form)
-    this.lists.provincias = [];
-    this.lists.localidades = [];
-
-    if (!form.pais || !form.pais.id) {
+  rebuildProvinceList(paisID) {
+    if (!paisID) {
       return;
     }
-
-    // Busqueda de provincias
-    if (form.pais.nombre.toUpperCase() === 'ARGENTINA') {
+    const argentina: Pais = this.lists.paises.find(x => x.nombre.toUpperCase() === 'ARGENTINA');
+    if (Number(paisID) === Number(argentina.id)) {
       this.lists.provincias = this.provincias
     } else {
       // TODO: completar otras provincias
     }
+  }
 
-    // Busqueda de localidades
-    if (form.provincia) {
-      this.lists.localidades = this.localidades.filter(x => x.provincia.id === form.provincia.id);
+  rebuildLocationList(provinciaID) {
+    if (!provinciaID) {
+      return;
     }
+    this.lists.localidades = this.localidades.filter(x => Number(x.provincia.id) === Number(provinciaID));
   }
 
   public showModal(action, integrante: Persona) {
@@ -156,25 +159,23 @@ export class ListaIntegrantesComponent implements OnInit {
     this.modalAction = action;
     this.integrante = integrante;
 
-    this.rebuildLists(integrante);
-
     if (['edit', 'view'].indexOf(action) >= 0) {
 
       const tipoContacto = (integrante.contacto && integrante.contacto[0] && integrante.contacto[0].tipoContacto)
         ? integrante.contacto[0].tipoContacto : '';
       const dato = (integrante.contacto && integrante.contacto[0] && integrante.contacto[0].dato)
         ? integrante.contacto[0].dato : '';
-      const localidad = (integrante.domicilio && integrante.domicilio.localidad) ? integrante.domicilio.localidad : '';
+      const localidad = (integrante.domicilio && integrante.domicilio.localidad) ? integrante.domicilio.localidad.id : '';
       const provincia = () => {
         if (integrante.domicilio.localidad && integrante.domicilio.localidad.provincia) {
-          return integrante.domicilio.localidad.provincia;
+          return integrante.domicilio.localidad.provincia.id;
         }
         return '';
       };
       const pais = () => {
         if (integrante.domicilio.localidad && integrante.domicilio.localidad.provincia &&
           integrante.domicilio.localidad.provincia.pais) {
-          return integrante.domicilio.localidad.provincia.pais;
+          return integrante.domicilio.localidad.provincia.pais.id;
         }
         return new Pais();
       };
@@ -186,12 +187,19 @@ export class ListaIntegrantesComponent implements OnInit {
         'nombre': integrante.nombre || '',
         'apellido': integrante.apellido || '',
         'genero': integrante.genero || '',
-        'tipoDocumento': integrante.documento.tipo || '',
+        'tipoDocumento': integrante.documento.tipoDocumento || '',
         'numeroDocumento': integrante.documento.numero || '',
-        'fechaNacimiento': integrante.fechaNacimiento || Date().toLocaleString(),
+        // 'fechaNacimiento': this.timeStampToDate(integrante.fechaNacimiento) || Date.now(),
+        'fechaNacimiento': {
+          date: {
+            year: this.datePipe.transform(integrante.fechaNacimiento, 'yyyy'),
+            month: this.datePipe.transform(integrante.fechaNacimiento, 'M'),
+            day: this.datePipe.transform(integrante.fechaNacimiento, 'dd')
+          }
+        },
         'tipoContacto': tipoContacto,
         'dato': dato,
-        'estadoCivil': integrante.estadoCivil || '',
+        'estadoCivil': EstadosCiviles.findByLabel(integrante.estadoCivil) || '',
         'pais': pais(),
         'provincia': provincia(),
         'localidad': localidad,
@@ -200,10 +208,13 @@ export class ListaIntegrantesComponent implements OnInit {
         'departamento': departamento
       });
 
-      this.mPais = pais();
-      console.log(this.mPais);
-    }
+      if (integrante && integrante.domicilio && integrante.domicilio.localidad &&
+        integrante.domicilio.localidad.provincia && integrante.domicilio.localidad.provincia.pais) {
+        this.rebuildProvinceList(integrante.domicilio.localidad.provincia.pais.id);
+        this.rebuildLocationList(integrante.domicilio.localidad.provincia.id);
+      }
 
+    }
 
 
   }
@@ -214,7 +225,17 @@ export class ListaIntegrantesComponent implements OnInit {
   }
 
   confirmDeleteModal() {
-    this.currentPersona.integrantes = this.currentPersona.integrantes.filter((x: Persona) => x.id === this.integrante.id);
+
+    console.log(this.integrante)
+    const integrantes: Persona[] = [];
+
+    this.currentPersona.integrantes.forEach(x => {
+      if (x.id !== this.integrante.id) {
+        integrantes.push(x)
+      }
+    });
+
+    this.currentPersona.integrantes = _.merge([], integrantes);
 
     this.busy = this.personaService.updatePersonaUser(this.currentPersona)
       .then(() => {
@@ -229,6 +250,7 @@ export class ListaIntegrantesComponent implements OnInit {
   }
 
   buildIntegrante(form) {
+
     const integrante: Persona = new Persona();
 
     for (const i in form) {
@@ -241,19 +263,26 @@ export class ListaIntegrantesComponent implements OnInit {
     integrante.nombre = form.nombre;
     integrante.apellido = form.apellido;
     integrante.genero = form.genero;
-    integrante.documento = new Documento(form.tipoDocumento, form.numeroDocumento);
+    integrante.documento = new Documento();
+    integrante.documento.id = null;
+    integrante.documento.tipoDocumento = form.tipoDocumento;
+    integrante.documento.numero = form.numeroDocumento;
     integrante.fechaNacimiento = form.fechaNacimiento;
     integrante.contacto = [];
     integrante.contacto.push(new Contacto(form.tipoContacto, form.dato));
-    integrante.estadoCivil = form.estadoCivil;
+    integrante.estadoCivil = form.estadoCivil.id;
 
     integrante.domicilio = new Domicilio();
     integrante.domicilio.piso = form.piso;
     integrante.domicilio.calle = form.calle;
     integrante.domicilio.departamento = form.departamento;
-    integrante.domicilio.localidad = form.localidad;
-    integrante.domicilio.localidad.provincia = form.provincia;
-    integrante.domicilio.localidad.provincia.pais = form.pais;
+
+    integrante.domicilio.localidad = new Localidad();
+    integrante.domicilio.localidad.id = form.localidad;
+    integrante.domicilio.localidad.provincia = new Provincia();
+    integrante.domicilio.localidad.provincia.id = form.provincia;
+    integrante.domicilio.localidad.provincia.pais = new Pais();
+    integrante.domicilio.localidad.provincia.pais.id = form.pais;
 
     return integrante;
   }
@@ -304,6 +333,23 @@ export class ListaIntegrantesComponent implements OnInit {
   hideModalForm() {
     this.modalForm.hide();
     this.mForm.reset();
+  }
+
+  timeStampToDate(timestamp) {
+    console.log(timestamp);
+
+    if (!timestamp) {
+      return this.datePipe.transform(Date.now(), 'dd/MM/yyyy');
+    }
+    let date: any = new Date(timestamp);
+    date = this.datePipe.transform(date, 'dd/MM/yyyy');
+    console.log(date)
+    return date;
+  }
+
+
+  onDateChanged(event) {
+    console.log(event);
   }
 
 }

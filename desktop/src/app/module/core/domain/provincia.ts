@@ -3,4 +3,9 @@ export class Provincia {
   id?: number;
   nombre: string;
   pais?: Pais;
+
+  constructor() {
+    this.id = 0;
+    this.nombre = '';
+  }
 }

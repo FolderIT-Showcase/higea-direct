@@ -1,19 +1,16 @@
 <div class="row" [ngBusy]="busy">
   <div class="col-sm-12">
-    <div class="col-sm-3">
-      <h3>Administrar</h3>
-    </div>
-    <div class="col-sm-6">
+    <div class="col-sm-6 col-sm-offset-6">
       <div class="input-group h3" *ngIf="false">
         <input name="data[search]" class="form-control" id="search" type="text" placeholder="Buscar Integrantes">
         <span class="input-group-btn">
                     <button class="btn btn-primary" type="submit">
                         <span class="fa fa-search"></span>
                 </button>
-                </span>
+        </span>
       </div>
     </div>
-    <div class="col-sm-3">
+    <div class="col-sm-3 col-sm-offset-9">
       <a (click)="showModal('add', {})" class="btn btn-primary pull-right h3">
         <span><i class="fa fa-user fa-fw"></i> Agregar Integrante</span>
       </a>
@@ -35,7 +32,7 @@
         <tr *ngFor="let integrante of integrantes">
           <td>{{ integrante.nombre }} {{ integrante.apellido }}</td>
           <td>{{ integrante.fechaNacimiento | date: 'dd/MM/yyyy' }}</td>
-          <td>{{ label('tipoDocumentos', integrante.documento.tipo) }} {{integrante.documento.numero}}</td>
+          <td>{{ label('tipoDocumentos', integrante.documento.tipoDocumento) }} {{integrante.documento.numero}}</td>
           <td class="text-right">
             <div class="btn-group">
               <a (click)="showModal('view', currentPersona)" class="btn btn-primary">
@@ -44,7 +41,7 @@
               <a (click)="showModal('edit', integrante)" class="btn btn-success">
                 <span><i class="fa fa-pencil"></i></span>
               </a>
-              <a *ngIf="integrante.id !== integrantes[0].id" (click)="showDeleteModal()"
+              <a *ngIf="integrante.id !== integrantes[0].id" (click)="showDeleteModal(integrante)"
                  class="btn btn-danger">
                 <span><i class="fa fa-trash"></i></span>
               </a>
@@ -97,9 +94,12 @@
         <div class="col-sm-4">
           <div class="form-group required"
                [ngClass]="{'has-error':!mForm.controls['genero'].valid && mForm.controls['genero'].touched}">
-            <label class="control-label">Género</label>
-            <select type="text" class="form-control" [formControl]="mForm.controls['genero']">
-              <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
+            <label for="genero" class="control-label">Género</label>
+            <select
+              type="text"
+              class="form-control"
+              [formControl]="mForm.controls['genero']"
+              name="genero" id="genero">
               <option [value]="genero.id" *ngFor="let genero of lists.generos">{{genero.label}}</option>
             </select>
             <small *ngIf="!mForm.controls['genero'].valid && mForm.controls['genero'].touched" class="help-block">
@@ -113,9 +113,10 @@
         <div class="col-sm-4">
           <div class="form-group required"
                [ngClass]="{'has-error':!mForm.controls['tipoDocumento'].valid && mForm.controls['genero'].touched}">
-            <label class="control-label">Tipo de Documento</label>
-            <select type="text" class="form-control" [formControl]="mForm.controls['tipoDocumento']">
-              <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
+            <label for="tipoDocumento" class="control-label">Tipo de Documento</label>
+
+            <select type="text" name="tipoDocumento" id="tipoDocumento" class="form-control"
+                    [formControl]="mForm.controls['tipoDocumento']">
               <option [value]="tipoDocumento.id" *ngFor="let tipoDocumento of lists.tipoDocumentos">
                 {{tipoDocumento.label}}
               </option>
@@ -139,8 +140,18 @@
         <div class="col-sm-4">
           <div class="form-group required"
                [ngClass]="{ 'has-error': !mForm.controls['fechaNacimiento'].valid && mForm.controls['fechaNacimiento'].touched }">
-            <label class="control-label">Fecha de Nacimiento</label>
-            <input type="date" class="form-control" [formControl]="mForm.controls['fechaNacimiento']"/>
+            <label for="fechaNacimiento" class="control-label">Fecha de Nacimiento</label>
+            <!--
+                        <input id="fechaNacimiento" name="fechaNacimiento" type="date" class="form-control"
+                               [(ngModel)]="mForm.value.fechaNacimiento"
+                               [formControl]="mForm.controls['fechaNacimiento']"/>
+            -->
+
+            <my-date-picker id="fechaNacimiento" [options]="myDatePickerOptions"
+                            (dateChanged)="onDateChanged($event)" [locale]="'es'"
+                            [formControl]="mForm.controls['fechaNacimiento']"
+            ></my-date-picker>
+
             <small *ngIf="!mForm.controls['fechaNacimiento'].valid && mForm.controls['fechaNacimiento'].touched"
                    class="help-block">Ingrese la Fecha de Nacimiento
             </small>
@@ -156,7 +167,6 @@
           <div class="col-sm-3" style="padding-left:0;">
             <div class="form-group">
               <select type="text" class="form-control" [formControl]="mForm.controls['tipoContacto']">
-                <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
                 <option [ngValue]="tc" *ngFor="let tc of lists.tipoContactos">{{tc.label}}</option>
               </select>
             </div>
@@ -172,8 +182,7 @@
           <div class="form-group required">
             <label class="control-label">Estado Civil</label>
             <select type="text" class="form-control" [formControl]="mForm.controls['estadoCivil']">
-              <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
-              <option [ngValue]="estadoCivil" *ngFor="let estadoCivil of lists.estadosCiviles">
+              <option [ngValue]="estadoCivil.id" *ngFor="let estadoCivil of lists.estadosCiviles">
                 {{estadoCivil.label}}
               </option>
             </select>
@@ -187,13 +196,11 @@
                [ngClass]="{ 'has-error': !mForm.controls['pais'].valid && mForm.controls['pais'].touched }">
             <label for="pais" class="control-label">País</label>
 
-            <select class="form-control"
-                    id="pais"
+            <select class="form-control" type="text"
+                    id="pais" name="pais"
                     [formControl]="mForm.controls['pais']"
-                    name="pais"
-                    [(ngModel)]="mPais.id"
-                    (change)="rebuildLists(mForm.value)">
-              <option *ngFor="let pais of lists.paises" [ngValue]="pais.id">{{pais.nombre}}</option>
+                    (change)="rebuildProvinceList(mForm.value.pais)">
+              <option [value]="pais.id" *ngFor="let pais of lists.paises">{{pais.nombre}}</option>
             </select>
 
             <small *ngIf="!mForm.controls['pais'].valid && mForm.controls['pais'].touched" class="help-block">Seleccione
@@ -207,10 +214,9 @@
             <label class="control-label">Provincia</label>
             <select type="text" class="form-control"
                     [disabled]="!mForm.controls['pais'].valid"
-                    [(ngModel)]="mForm.value.provincia"
                     [formControl]="mForm.controls['provincia']"
-                    (change)="rebuildLists(mForm.value)">
-              <option [ngValue]="provincia" *ngFor="let provincia of lists.provincias">{{provincia.nombre}}
+                    (change)="rebuildLocationList(mForm.value.provincia)">
+              <option [ngValue]="provincia.id" *ngFor="let provincia of lists.provincias">{{provincia.nombre}}
               </option>
             </select>
             <small *ngIf="!mForm.controls['provincia'].valid && mForm.controls['provincia'].touched" class="help-block">
@@ -224,9 +230,8 @@
             <label class="control-label">Localidad</label>
             <select type="text" class="form-control"
                     [disabled]="!mForm.controls['provincia'].valid"
-                    [formControl]="mForm.controls['localidad']"
-                    (change)="rebuildLists(mForm.value)">
-              <option [ngValue]="localidad" *ngFor="let localidad of lists.localidades">{{localidad.nombre}}</option>
+                    [formControl]="mForm.controls['localidad']">
+              <option [ngValue]="localidad.id" *ngFor="let localidad of lists.localidades">{{localidad.nombre}}</option>
             </select>
             <small *ngIf="!mForm.controls['localidad'].valid && mForm.controls['localidad'].touched" class="help-block">
               Seleccione la Localidad
