@@ -58,7 +58,7 @@ export class TurnoBusquedaComponent implements OnInit, OnDestroy {
   }
 
   public deleteTurno() {
-     const turnos = this.storeService.get('turnos');
+    const turnos = this.storeService.get('turnos');
     for (const x of turnos) {
       if (x.id === this.turno.id) {
         this.storeService.findAndDelete('turnos', x.id);

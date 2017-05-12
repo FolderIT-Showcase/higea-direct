@@ -20,7 +20,6 @@ import {CentrosSaludComponent} from '../admin/component/centros-salud/centros-sa
 import {ProfesionalesComponent} from '../admin/component/profesionales/profesionales.component';
 import {AdminGuard} from './service/guard/admin.guard';
 import {TurnoResolveService} from './service/resolve/turno-resolve.service';
-import {LocalidadesResolveService} from './service/resolve/localidades-resolve.service';
 
 const appRoutes: Routes = [
   {

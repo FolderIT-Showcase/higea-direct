@@ -31,7 +31,6 @@ import {MetadataService} from '../../../core/service/metadata.service';
 export class ListaIntegrantesComponent implements OnInit {
 
   private currentUser = JSON.parse(localStorage.getItem('currentUser'));
-  public busy: Promise<any>;
   public currentPersona;
   public modalAction = 'none';
   public selectUndefined: any;
@@ -232,7 +231,7 @@ export class ListaIntegrantesComponent implements OnInit {
 
     this.currentPersona.integrantes = _.merge([], integrantes);
 
-    this.busy = this.personaService.updatePersonaUser(this.currentPersona)
+    this.personaService.updatePersonaUser(this.currentPersona)
       .then(() => {
         this.alertService.success('Integrante removido correctamente.');
       })
@@ -302,7 +301,7 @@ export class ListaIntegrantesComponent implements OnInit {
       this.currentPersona.integrantes.push(integranteNuevo);
     }
 
-    this.busy = this.personaService.updatePersonaUser(this.currentPersona)
+    this.personaService.updatePersonaUser(this.currentPersona)
       .then(() => {
         if (action === 'add') {
           this.alertService.success('Integrante agregado correctamente.');

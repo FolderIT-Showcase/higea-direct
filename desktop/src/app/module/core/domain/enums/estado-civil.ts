@@ -1,5 +1,5 @@
 export class EstadosCiviles {
-  static estadosCiviles  = [{
+  static estadosCiviles = [{
     'id': 'Casado',
     'label': 'Casado'
   }, {

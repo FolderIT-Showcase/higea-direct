@@ -16,16 +16,25 @@ export class LoadingService {
     });
   }
 
-  start() {
+  private start() {
     this.subject.next(true);
   }
 
-  finish() {
+  private finish() {
     this.subject.next(false);
   }
 
   getMessage(): Observable<any> {
     return this.subject.asObservable();
+  }
+
+  setLoading(promise: Promise<any>) {
+    this.start();
+    const promises = [];
+    promises.push(promise);
+    Promise.all(promises).then(() => {
+      this.finish();
+    })
   }
 
 }

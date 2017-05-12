@@ -1,5 +1,4 @@
-import {Component, OnInit} from '@angular/core';
-import {MetadataService} from './module/core/service/metadata.service';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-root',

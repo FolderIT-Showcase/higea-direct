@@ -6,6 +6,7 @@ import {User} from '../domain/user';
 import {Router} from '@angular/router';
 import {AlertService} from './alert.service';
 import {AppException} from '../domain/AppException';
+import {LoadingService} from './loading.service';
 
 @Injectable()
 export class ApiService {
@@ -18,12 +19,15 @@ export class ApiService {
     'X-Requested-With': 'XMLHttpRequest'
   });
 
+  private mPromise: Promise<any>;
+
   static getJson(response: Response) {
     return response.json();
   }
 
   constructor(private http: Http,
               private router: Router,
+              private loadingService: LoadingService,
               private alertService: AlertService) {
 
   }
@@ -69,47 +73,57 @@ export class ApiService {
 
   get(path: string, isAuthNecessary: boolean = true): Promise<any> {
     this.isAuthNecessary(isAuthNecessary);
-    return this.http.get(`${this.baseURL}${path}`, {headers: this.headers})
+    this.mPromise = this.http.get(`${this.baseURL}${path}`, {headers: this.headers})
       .map(this.checkForError)
       .map(ApiService.getJson)
       .first().toPromise().catch(error => this.catchException(error.json()));
+    this.loadingService.setLoading(this.mPromise);
+    return this.mPromise;
   }
 
   public post(path: string, body, isAuthNecessary: boolean = true): Promise<any> {
     this.isAuthNecessary(isAuthNecessary);
-    return this.http
+    this.mPromise = this.http
       .post(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
       .map(this.checkForError)
       .map(ApiService.getJson)
       .first().toPromise().catch(error => this.catchException(error.json()));
+    this.loadingService.setLoading(this.mPromise);
+    return this.mPromise;
   }
 
   public put(path: string, body, isAuthNecessary: boolean = true): Promise<any> {
     this.isAuthNecessary(isAuthNecessary);
-    return this.http
+    this.mPromise = this.http
       .put(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
       .map(this.checkForError)
       .map(ApiService.getJson)
       .first().toPromise().catch(error => this.catchException(error.json()));
+    this.loadingService.setLoading(this.mPromise);
+    return this.mPromise;
   }
 
   public patch(path: string, body, isAuthNecessary: boolean = true): Promise<any> {
     this.isAuthNecessary(isAuthNecessary);
-    return this.http
+    this.mPromise = this.http
       .patch(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
       .map(this.checkForError)
       .first().toPromise().catch(error => this.catchException(error.json()));
+    this.loadingService.setLoading(this.mPromise);
+    return this.mPromise;
   }
 
   public delete(path, isAuthNecessary: boolean = true): Promise<any> {
     this.isAuthNecessary(isAuthNecessary);
-    return this.http.delete(`${this.baseURL}${path}`, {headers: this.headers})
+    this.mPromise = this.http.delete(`${this.baseURL}${path}`, {headers: this.headers})
       .map(this.checkForError)
       .first().toPromise().catch(error => this.catchException(error.json()));
+    this.loadingService.setLoading(this.mPromise);
+    return this.mPromise;
   }
 
   public loginPost(path: string, body): Promise<any> {
-    return this.http
+    this.mPromise = this.http
       .post(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
       .map(this.checkForError)
       .map((response: Response) => {
@@ -120,6 +134,8 @@ export class ApiService {
         }
       })
       .first().toPromise();
+    this.loadingService.setLoading(this.mPromise);
+    return this.mPromise;
   }
 
 }

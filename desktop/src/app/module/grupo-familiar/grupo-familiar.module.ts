@@ -10,7 +10,7 @@ import {RouterModule} from '@angular/router';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {BusyModule} from 'angular2-busy';
 import {CoreModule} from '../core/core.module';
-import { MyDatePickerModule } from 'mydatepicker';
+import {MyDatePickerModule} from 'mydatepicker';
 
 @NgModule({
   imports: [
