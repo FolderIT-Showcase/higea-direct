@@ -62,7 +62,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.metadataService.getPaises().then(data => {
+    this.metadataService.getPaises().then((data: any) => {
       this.paises = data;
     });
     this.model.tipoDocumento = this.tipoDocumentos[0];
