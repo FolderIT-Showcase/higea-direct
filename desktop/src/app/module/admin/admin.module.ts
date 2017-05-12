@@ -24,12 +24,13 @@ import {EspecialidadBusquedaComponent} from './component/especialidad-busqueda/e
 import {ProfesionalBusquedaComponent} from './component/profesional-busqueda/profesional-busqueda.component';
 import {TurnoBusquedaComponent} from './component/turno-busqueda/turno-busqueda.component';
 import {TurnoResolveService} from '../core/service/resolve/turno-resolve.service';
-import {ProvinciaResolveService} from '../core/service/resolve/provincia-resolve.service';
+import {MyDatePickerModule} from 'mydatepicker';
 
 @NgModule({
   imports: [
     RouterModule,
     CommonModule,
+    MyDatePickerModule,
     CoreModule,
     FormsModule,
     ReactiveFormsModule,
@@ -59,8 +60,7 @@ import {ProvinciaResolveService} from '../core/service/resolve/provincia-resolve
     EspecialidadResolveService,
     LoadingService,
     PagerService,
-    TurnoResolveService,
-    ProvinciaResolveService
+    TurnoResolveService
   ]
 
 })

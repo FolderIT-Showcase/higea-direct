@@ -7,7 +7,6 @@ import {TurnoComponent} from '../turno/turno.component';
 import {GrupoFamiliarComponent} from '../grupo-familiar/grupo-familiar.component';
 import {UserActiveComponent} from '../auth/component/user-activate/user.active.component';
 import {AuthGuard} from './service/guard/auth.guard';
-import {PaisesResolveService} from './service/resolve/paises-resolve.service';
 import {CentrosSaludResolveService} from './service/resolve/centros-salud-resolve.service';
 import {IntegrantesResolveService} from './service/resolve/integrantes-resolve.service';
 import {ModificarTurnoComponent} from '../turno/component/modificar-turno/modificar-turno.component';
@@ -21,8 +20,7 @@ import {CentrosSaludComponent} from '../admin/component/centros-salud/centros-sa
 import {ProfesionalesComponent} from '../admin/component/profesionales/profesionales.component';
 import {AdminGuard} from './service/guard/admin.guard';
 import {TurnoResolveService} from './service/resolve/turno-resolve.service';
-import {ProvinciaResolveService} from './service/resolve/provincia-resolve.service';
-import {LocalidadesResolveService} from './service/resolve/localidad-resolve.service';
+import {LocalidadesResolveService} from './service/resolve/localidades-resolve.service';
 
 const appRoutes: Routes = [
   {
@@ -61,9 +59,6 @@ const appRoutes: Routes = [
         path: 'grupo-familiar',
         component: GrupoFamiliarComponent,
         resolve: {
-          paises: PaisesResolveService,
-          provincias: ProvinciaResolveService,
-          localidades: LocalidadesResolveService,
           integrantes: IntegrantesResolveService
         }
       },
@@ -109,24 +104,15 @@ const appRoutes: Routes = [
   },
   {
     path: 'login',
-    component: LoginComponent,
-    resolve: {
-      paises: PaisesResolveService,
-    }
+    component: LoginComponent
   },
   {
     path: 'register',
-    component: RegisterComponent,
-    resolve: {
-      paises: PaisesResolveService,
-    }
+    component: RegisterComponent
   },
   {
     path: 'register-social',
-    component: RegisterSocialComponent,
-    resolve: {
-      paises: PaisesResolveService,
-    }
+    component: RegisterSocialComponent
   },
   {
     path: 'regitrationConfirm',

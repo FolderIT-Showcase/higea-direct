@@ -94,7 +94,7 @@ export class ProfesionalesComponent implements OnInit {
   }
 
   public deleteProfesional() {
-    const profesionales: Profesional[] = this.storeService.get('profesionales');
+    const profesionales = this.storeService.get('profesionales');
     for (const x of profesionales) {
       if (x.id === this.profesional.id) {
         this.delete(x);

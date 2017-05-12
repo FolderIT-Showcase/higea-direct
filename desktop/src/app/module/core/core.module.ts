@@ -6,7 +6,6 @@ import {BrowserModule} from '@angular/platform-browser';
 import {RouterModule} from '@angular/router';
 import {HomeComponent} from './component/home/home.component';
 import {Store} from './service/store';
-import {PaisesResolveService} from './service/resolve/paises-resolve.service';
 import {MetadataService} from './service/metadata.service';
 import {AppAuthService} from '../auth/auth.service';
 import {ApiService} from './service/api.service';
@@ -26,7 +25,7 @@ import {CoreComponent} from './core.component';
 import {AdminGuard} from './service/guard/admin.guard';
 import {ModalComponent} from './component/modal/modal.component';
 import {BusyModule} from 'angular2-busy';
-import {LocalidadesResolveService} from './service/resolve/localidad-resolve.service';
+import {LocalidadesResolveService} from './service/resolve/localidades-resolve.service';
 
 @NgModule({
   imports: [
@@ -56,7 +55,6 @@ import {LocalidadesResolveService} from './service/resolve/localidad-resolve.ser
   ],
   providers: [
     Store,
-    PaisesResolveService,
     MetadataService,
     AuthGuard,
     AdminGuard,
@@ -66,9 +64,9 @@ import {LocalidadesResolveService} from './service/resolve/localidad-resolve.ser
     AppAuthService,
     CentrosSaludResolveService,
     IntegrantesResolveService,
+    LocalidadesResolveService,
     LoadingService,
-    TurnoService,
-    LocalidadesResolveService
+    TurnoService
   ]
 })
 export class CoreModule {

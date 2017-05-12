@@ -51,8 +51,7 @@
         </tbody>
       </table>
       <div class="col-md-6">
-        <pagination [boundaryLinks]="true" (pageChanged)="pageChanged($event)" [totalItems]="totalItems"
-                    [(ngModel)]="currentPage" class="pagination-sm"
+        <pagination [boundaryLinks]="true" [totalItems]="totalItems" [(ngModel)]="currentPage" class="pagination-sm"
                     previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
       </div>
     </div>
@@ -140,17 +139,19 @@
       <div class="col-sm-6">
         <div class="form-group">
           <label class="control-label">Hora</label>
-          <timepicker class="timepicker" [(ngModel)]="model.hora"
-                      [ngModelOptions]="{standalone: true}" class="form-control"></timepicker>
+          <div style="display:inline-block; min-height:150px;">
+            <timepicker class="timepicker" [(ngModel)]="model.hora"
+                        [ngModelOptions]="{standalone: true}" class="form-control"></timepicker>
+          </div>
         </div>
       </div>
       <div class="col-sm-6">
         <div class="form-group">
           <label class="control-label">Fecha</label>
-          <div style="display:inline-block; min-height:290px;">
-            <!--<datepicker class="timepicker" [(ngModel)]="model.fechaDesde" [ngModelOptions]="{standalone: true}"-->
-                        <!--class="form-control"></datepicker>-->
-          </div>
+
+          <my-date-picker id="fecha" [options]="myDatePickerOptions"
+                          [locale]="'es'" [formControl]="form.controls['fechaDesde']"></my-date-picker>
+
         </div>
       </div>
     </div>

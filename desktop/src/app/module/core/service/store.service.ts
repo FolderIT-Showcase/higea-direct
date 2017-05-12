@@ -4,6 +4,7 @@ import {Store} from './store';
 
 @Injectable()
 export class StoreService {
+
   constructor(private store: Store) {
   }
 
@@ -80,4 +81,6 @@ export class StoreService {
   clear() {
     this.store.clear();
   }
+
+
 }

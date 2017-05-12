@@ -21,7 +21,7 @@ export class AdminService {
     return this.api.delete(path + '?id=' + turno.id + '&desactivate=true');
   }
 
-  saveTurno(centro: CentroSalud, especialidad: Especialidad, profesional: Profesional, fecha: Date, hora: Date, obs: string) {
+  saveTurno(centro: CentroSalud, especialidad: Especialidad, profesional: Profesional, fecha: number, hora: Date, obs: string) {
     const path = 'turno';
     const turno = new Turno();
     turno.dia = fecha;

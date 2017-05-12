@@ -6,6 +6,7 @@ import {Profesional} from '../domain/profesional';
 import {StoreService} from './store.service';
 import {FiltroTurno} from '../domain/filter-turno';
 import {Persona} from '../domain/persona';
+import {Turno} from '../domain/turno';
 
 @Injectable()
 export class TurnoService {
@@ -66,9 +67,21 @@ export class TurnoService {
     return this.api.post(path, persona);
   }
 
-  cancelarTurno(turno) {
+  cancelarTurno(turno: Turno, persona: Persona) {
     const path = 'turno?id=' + turno.id + '&desactivate=false';
-    return this.api.delete(path);
+    return this.api.delete(path)
+      .then(() => {
+        if (!persona) {
+          return;
+        }
+
+        if (!persona.turno || persona.turno.length === 1) {
+          persona.turno = [];
+        } else {
+          persona.turno = persona.turno.filter(x => x.id === turno.id);
+        }
+        this.storeService.update('persona', persona);
+      });
   }
 
 }

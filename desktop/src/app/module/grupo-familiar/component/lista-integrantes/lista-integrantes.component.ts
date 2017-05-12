@@ -21,13 +21,7 @@ import {Subscription} from 'rxjs/Subscription';
 import * as _ from 'lodash';
 import {IMyOptions} from 'mydatepicker';
 import {DatePipe} from '@angular/common';
-
-class Data {
-  genero = '';
-  pais: Pais = new Pais();
-  provincia: Provincia = new Provincia();
-  localidad: Localidad = new Localidad();
-}
+import {MetadataService} from '../../../core/service/metadata.service';
 
 @Component({
   selector: 'app-lista-integrantes',
@@ -69,6 +63,7 @@ export class ListaIntegrantesComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private store: Store,
+              private metadataService: MetadataService,
               private personaService: PersonaService,
               private alertService: AlertService,
               private storeHelper: StoreService) {
@@ -95,9 +90,10 @@ export class ListaIntegrantesComponent implements OnInit {
     });
 
     // Popular listas
-    this.provincias = this.storeHelper.get('provincias');
-    this.lists.paises = this.storeHelper.get('paises');
-    this.localidades = this.storeHelper.get('localidades');
+
+    this.metadataService.getPaises().then((data: any) => this.lists.paises = data);
+    this.metadataService.getProvincias().then((data: any) => this.provincias = data);
+    this.metadataService.getLocalidades().then((data: any) => this.localidades = data);
 
     this.subs.push(
       this.store.changes.pluck('integrantes').subscribe(
@@ -189,7 +185,6 @@ export class ListaIntegrantesComponent implements OnInit {
         'genero': integrante.genero || '',
         'tipoDocumento': integrante.documento.tipoDocumento || '',
         'numeroDocumento': integrante.documento.numero || '',
-        // 'fechaNacimiento': this.timeStampToDate(integrante.fechaNacimiento) || Date.now(),
         'fechaNacimiento': {
           date: {
             year: this.datePipe.transform(integrante.fechaNacimiento, 'yyyy'),
@@ -199,7 +194,7 @@ export class ListaIntegrantesComponent implements OnInit {
         },
         'tipoContacto': tipoContacto,
         'dato': dato,
-        'estadoCivil': EstadosCiviles.findByLabel(integrante.estadoCivil) || '',
+        'estadoCivil': EstadosCiviles.findIDByLabel(integrante.estadoCivil) || '',
         'pais': pais(),
         'provincia': provincia(),
         'localidad': localidad,
@@ -267,10 +262,11 @@ export class ListaIntegrantesComponent implements OnInit {
     integrante.documento.id = null;
     integrante.documento.tipoDocumento = form.tipoDocumento;
     integrante.documento.numero = form.numeroDocumento;
-    integrante.fechaNacimiento = form.fechaNacimiento;
+
+    integrante.fechaNacimiento = form.fechaNacimiento.epoc;
     integrante.contacto = [];
     integrante.contacto.push(new Contacto(form.tipoContacto, form.dato));
-    integrante.estadoCivil = form.estadoCivil.id;
+    integrante.estadoCivil = form.estadoCivil.id || EstadosCiviles.findIDByLabel('Soltero');
 
     integrante.domicilio = new Domicilio();
     integrante.domicilio.piso = form.piso;
@@ -336,20 +332,12 @@ export class ListaIntegrantesComponent implements OnInit {
   }
 
   timeStampToDate(timestamp) {
-    console.log(timestamp);
-
     if (!timestamp) {
       return this.datePipe.transform(Date.now(), 'dd/MM/yyyy');
     }
     let date: any = new Date(timestamp);
     date = this.datePipe.transform(date, 'dd/MM/yyyy');
-    console.log(date)
     return date;
-  }
-
-
-  onDateChanged(event) {
-    console.log(event);
   }
 
 }

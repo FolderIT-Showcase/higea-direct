@@ -12,7 +12,7 @@
     Seleccione un turno
   </h4>
   <div class="list-group">
-    <a class="list-group-item active">
+    <a class="list-group-item">
       <h4 class="list-group-item-heading">{{centro.nombre}}</h4>
       <p class="list-group-item-text"> {{turnos.length}} turnos disponibles a partir del {{turnos[0].fecha | date:
         'dd/MM/yyyy'}}</p>
@@ -78,6 +78,6 @@
   <label>El turno ha sido tomado con éxito</label><br>
   <label><strong>Podés revisar tus turnos tomados accediendo al menu Mis Turnos</strong></label><br>
   <div class="text-right">
-    <button (click)="successModal.hide()" class="btn btn-default">CERRAR</button>
+    <button (click)="successModal.hide()" class="btn btn-success">CERRAR</button>
   </div>
 </app-modal>

@@ -19,7 +19,7 @@ export class EstadosCiviles {
     'label': 'Viudo'
   }];
 
-  static findByLabel(label) {
+  static findIDByLabel(label) {
     const estadosCiviles = EstadosCiviles.estadosCiviles;
     let id = '';
     for (const x of estadosCiviles) {

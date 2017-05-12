@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Turno} from '../../../core/domain/turno';
 import {Persona} from '../../../core/domain/persona';
 import {StoreService} from '../../../core/service/store.service';
@@ -8,6 +8,8 @@ import {AlertService} from '../../../core/service/alert.service';
 import {Especialidad} from '../../../core/domain/especialidad';
 import {CentroSalud} from '../../../core/domain/centro-salud';
 import {FormBuilder, FormGroup} from '@angular/forms';
+import {Subscription} from 'rxjs/Subscription';
+import {Store} from '../../../core/service/store';
 
 class Data {
   persona: Persona;
@@ -17,17 +19,20 @@ class Data {
   selector: 'app-modificar-turno',
   templateUrl: './modificar-turno.component.html'
 })
-export class ModificarTurnoComponent implements OnInit {
+export class ModificarTurnoComponent implements OnInit, OnDestroy {
 
   turnos: Turno[] = [];
   personas: Persona[] = [];
+  persona: Persona;
   model: Data = new Data();
   turno: Turno = new Turno();
 
   modal: ModalDirective;
   form: FormGroup;
+  subs: Subscription[] = [];
 
   constructor(private storeService: StoreService,
+              private store: Store,
               private turnoService: TurnoService,
               private fb: FormBuilder,
               private alertService: AlertService) {
@@ -44,14 +49,31 @@ export class ModificarTurnoComponent implements OnInit {
       'persona': [this.personas[0]]
     });
     this.turnos = this.personas[0].turno;
+    this.persona = this.personas[0];
+    this.storeService.update('persona', this.personas[0]);
+
+    this.subs.push(this.store.changes.pluck('persona').subscribe(
+      (data: any) => {
+        if (!data) {
+          return;
+        }
+        this.turnos = data.turno;
+      }));
+  }
+
+  ngOnDestroy(): void {
+    this.storeService.update('persona', null);
   }
 
   handlePersonaClick(persona: Persona) {
+    this.storeService.update('persona', persona);
+    this.persona = persona;
     this.turnos = persona.turno;
   }
 
   public showModal(turno: Turno) {
-    this.turno = turno;
+    this.persona =
+      this.turno = turno;
     this.modal.show();
   }
 
@@ -62,18 +84,15 @@ export class ModificarTurnoComponent implements OnInit {
     return (persona.nombre + ' ' + persona.apellido).toUpperCase();
   }
 
-  submitForm(form) {
-
-  }
-
   public eliminarTurno(turno: Turno) {
-    this.turnoService.cancelarTurno(turno)
+    this.turnoService.cancelarTurno(turno, this.persona)
       .then(() => {
         this.alertService.success('Turno cancelado exitosamente');
       })
       .catch(error => {
         console.error(error);
       });
+    this.modal.hide();
   }
 
   handleModal(event) {

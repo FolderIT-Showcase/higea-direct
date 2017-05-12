@@ -11,6 +11,7 @@ import {Documento} from '../../../core/domain/documento';
 import {StoreService} from '../../../core/service/store.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {LoadingService} from '../../../core/service/loading.service';
+import {MetadataService} from '../../../core/service/metadata.service';
 
 class Data {
   nombre = '';
@@ -42,9 +43,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
   constructor(private fb: FormBuilder,
               private loadingService: LoadingService,
               private router: Router,
+              private metadataService: MetadataService,
               private personaService: PersonaService,
-              private alertService: AlertService,
-              private storeService: StoreService) {
+              private alertService: AlertService) {
 
     this.complexForm = fb.group({
       'nombre': [null, Validators.required],
@@ -61,10 +62,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.paises = this.storeService.get('paises');
+    this.metadataService.getPaises().then(data => {
+      this.paises = data;
+    });
     this.model.tipoDocumento = this.tipoDocumentos[0];
     this.model.genero = this.generos[0];
-    this.model.pais = this.paises[11].nombre;
   }
 
   ngOnDestroy(): void {

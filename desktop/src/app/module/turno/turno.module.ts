@@ -11,6 +11,7 @@ import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 import {ModificarTurnoComponent} from './component/modificar-turno/modificar-turno.component';
 import {CoreModule} from '../core/core.module';
 import {ModalModule, TimepickerModule} from 'ngx-bootstrap';
+import {MyDatePickerModule} from 'mydatepicker';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import {ModalModule, TimepickerModule} from 'ngx-bootstrap';
     BsDropdownModule.forRoot(),
     TimepickerModule.forRoot(),
     PopoverModule.forRoot(),
+    MyDatePickerModule,
     ModalModule.forRoot(),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAflntypuq6NWQj75NAk_IGgc2uPpJiVqs'

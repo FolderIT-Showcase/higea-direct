@@ -5,7 +5,7 @@
     <p>Aca podes administrar tus turnos</p>
   </div>
 
-  <form [formGroup]="form" (ngSubmit)="submitForm(form.value)">
+  <form [formGroup]="form">
     <div class="row">
       <div class="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3">
         <div class="form-group">
@@ -78,9 +78,9 @@
   <label>Para la especialidad <strong>{{turno.especialidad.nombre}}</strong> atendido por <strong *ngIf="turno.profesional">{{turno.profesional.nombre}} </strong><strong *ngIf="turno.profesional">{{turno.profesional.apellido}}</strong></label><br>
   <label>En el centro de salud <strong>{{turno.centroSalud.nombre}}</strong></label><br>
   <div *ngIf="false">
-    <sebm-google-map [latitude]="lat" [longitude]="lng">
-      <sebm-google-map-marker [latitude]="lat" [longitude]="lng"></sebm-google-map-marker>
-    </sebm-google-map>
+    <!--<sebm-google-map [latitude]="lat" [longitude]="lng">-->
+      <!--<sebm-google-map-marker [latitude]="lat" [longitude]="lng"></sebm-google-map-marker>-->
+    <!--</sebm-google-map>-->
   </div>
   <div class="row">
     <div class="col-sm-8"></div>

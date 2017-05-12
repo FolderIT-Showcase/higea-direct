@@ -10,6 +10,7 @@ import {Persona} from '../../../core/domain/persona';
 import {Documento} from '../../../core/domain/documento';
 import {StoreService} from '../../../core/service/store.service';
 import {LoadingService} from '../../../core/service/loading.service';
+import {MetadataService} from '../../../core/service/metadata.service';
 
 class Datos {
   nombre = '';
@@ -38,7 +39,7 @@ export class RegisterSocialComponent implements OnInit {
               private loadingService: LoadingService,
               private alertService: AlertService,
               private personaService: PersonaService,
-              private storeService: StoreService) {
+              private metadataService: MetadataService) {
 
     const user: User = JSON.parse(localStorage.getItem('socialUser'));
     if (user) {
@@ -48,10 +49,10 @@ export class RegisterSocialComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.paises = this.storeService.get('paises');
+    this.metadataService.getPaises().then(data => this.paises);
+    this.model.pais = this.paises[11].nombre;
     this.model.tipoDocumento = this.tipoDocumentos[0];
     this.model.genero = this.generos[0];
-    this.model.pais = this.paises[11].nombre;
   }
 
   public register(): void {
