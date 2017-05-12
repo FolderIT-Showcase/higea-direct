@@ -19,34 +19,26 @@ export class MetadataService {
   }
 
   getPaises() {
-    return this.store.db.getItem('paises').then(data => {
-
-      if (data && data[0]) {
+    return this.store.db.getItem('paises')
+      .then(data => {
+        if (data && data[0]) {
+          return new Promise<any>((resolve, reject) => {
+            resolve(data);
+          });
+        }
+        return this.requestPaises();
+      })
+      .then(data => {
+        this.setPaises(data);
         return new Promise<any>((resolve, reject) => {
           resolve(data);
         });
-      }
-
-      this.loadingService.start();
-      return this.requestPaises()
-        .then(() => {
-          this.loadingService.finish();
-        })
-        .catch((error) => {
-          this.loadingService.finish();
-          console.error(error);
-        });
-    });
+      });
   }
 
   requestPaises() {
     const path = 'pais';
-    return this.api.get(path).then(data => {
-      this.setPaises(data);
-      return new Promise<any>((resolve, reject) => {
-        resolve(data);
-      });
-    });
+    return this.api.get(path);
   }
 
   setPaises(mPaises) {
@@ -57,34 +49,26 @@ export class MetadataService {
   }
 
   getProvincias() {
-    return this.store.db.getItem('provincias').then(data => {
-
-      if (data && data[0]) {
+    return this.store.db.getItem('provincias')
+      .then(data => {
+        if (data && data[0]) {
+          return new Promise<any>((resolve, reject) => {
+            resolve(data);
+          });
+        }
+        return this.requestProvincias();
+      })
+      .then(data => {
+        this.setProvincias(data);
         return new Promise<any>((resolve, reject) => {
           resolve(data);
         });
-      }
-
-      this.loadingService.start();
-      return this.requestProvincias()
-        .then(() => {
-          this.loadingService.finish();
-        })
-        .catch((error) => {
-          this.loadingService.finish();
-          console.error(error);
-        });
-    });
+      });
   }
 
   requestProvincias() {
     const path = 'provincia';
-    return this.api.get(path).then(data => {
-      this.setProvincias(data);
-      return new Promise<any>((resolve, reject) => {
-        resolve(data);
-      });
-    });
+    return this.api.get(path);
   }
 
   setProvincias(mProvincias) {
@@ -95,34 +79,26 @@ export class MetadataService {
   }
 
   getLocalidades(): Promise<any> {
-    return this.store.db.getItem('localidades').then((localidades: any) => {
-
-      if (localidades && localidades[0]) {
+    return this.store.db.getItem('localidades')
+      .then((data: any) => {
+        if (data && data[0]) {
+          return new Promise<any>((resolve, reject) => {
+            resolve(data);
+          });
+        }
+        return this.requestLocalidades();
+      })
+      .then(data => {
+        this.setLocalidades(data);
         return new Promise<any>((resolve, reject) => {
-          resolve(localidades);
+          resolve(data);
         });
-      }
-
-      this.loadingService.start();
-      return this.requestLocalidades()
-        .then(() => {
-          this.loadingService.finish();
-        })
-        .catch((error) => {
-          this.loadingService.finish();
-          console.error(error);
-        });
-    });
+      });
   }
 
   requestLocalidades() {
     const path = 'localidad';
-    return this.api.get(path).then(data => {
-      this.setLocalidades(data);
-      return new Promise<any>((resolve, reject) => {
-        resolve(data);
-      });
-    });
+    return this.api.get(path);
   }
 
   setLocalidades(mLocalidades) {
