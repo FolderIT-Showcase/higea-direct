@@ -24,7 +24,6 @@ import {ModalModule} from 'ngx-bootstrap/modal';
 import {CoreComponent} from './core.component';
 import {AdminGuard} from './service/guard/admin.guard';
 import {ModalComponent} from './component/modal/modal.component';
-import {BusyModule} from 'angular2-busy';
 import {LocalidadesResolveService} from './service/resolve/localidades-resolve.service';
 
 @NgModule({
@@ -33,7 +32,6 @@ import {LocalidadesResolveService} from './service/resolve/localidades-resolve.s
     BrowserModule,
     HttpModule,
     RouterModule,
-    BusyModule,
     BsDropdownModule.forRoot(),
     ModalModule.forRoot(),
     routing

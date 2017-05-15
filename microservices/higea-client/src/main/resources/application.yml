@@ -1,6 +1,6 @@
 spring:
   application:
-    name: higea-feign-client
+    name: higea-client
 server:
   port: 8080
 eureka:
@@ -8,13 +8,12 @@ eureka:
     serviceUrl:
       defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
 
-#feign:
-#  hystrix:
- #   enabled: false
+feign:
+  hystrix:
+    enabled: false
 
 hystrix:
   command:
     default:
       execution.isolation.thread.timeoutInMilliseconds: 8000
       fallback.enabled: false
-

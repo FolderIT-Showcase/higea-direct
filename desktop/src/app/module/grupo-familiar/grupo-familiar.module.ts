@@ -8,7 +8,6 @@ import {ModalModule} from 'ngx-bootstrap/modal';
 import {AgmCoreModule} from 'angular2-google-maps/core';
 import {RouterModule} from '@angular/router';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {BusyModule} from 'angular2-busy';
 import {CoreModule} from '../core/core.module';
 import {MyDatePickerModule} from 'mydatepicker';
 
@@ -25,8 +24,7 @@ import {MyDatePickerModule} from 'mydatepicker';
       apiKey: 'AIzaSyAflntypuq6NWQj75NAk_IGgc2uPpJiVqs'
     }),
     BrowserAnimationsModule,
-    MyDatePickerModule,
-    BusyModule
+    MyDatePickerModule
   ],
   declarations: [
     GrupoFamiliarComponent,

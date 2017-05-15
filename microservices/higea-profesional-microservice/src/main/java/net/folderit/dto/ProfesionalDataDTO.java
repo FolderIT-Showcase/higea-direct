@@ -6,9 +6,6 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-/**
- * Created by luis on 13/05/17.
- */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

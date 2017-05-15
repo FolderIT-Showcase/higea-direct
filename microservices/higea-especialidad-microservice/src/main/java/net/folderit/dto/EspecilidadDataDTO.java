@@ -1,8 +1,5 @@
 package net.folderit.dto;
 
-/**
- * Created by luis on 12/05/17.
- */
 public class EspecilidadDataDTO {
 
     Long especialidad_id;

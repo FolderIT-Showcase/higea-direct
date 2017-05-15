@@ -11,9 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- * Created by luis on 12/05/17.
- */
 @SpringBootApplication
 @EnableEurekaClient
 @RestController
@@ -30,7 +27,6 @@ public class HigeaEspecialidadApplication {
     public ResponseEntity<EspecialidadDTO> especialidades(@PathVariable("cliente") String codigo) {
         return connectionMidleWare.especialidades(codigo);
     }
-
 
 
 }

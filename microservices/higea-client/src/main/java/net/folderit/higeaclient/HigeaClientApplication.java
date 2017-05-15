@@ -1,38 +1,35 @@
-package net.folderit;
+package net.folderit.higeaclient;
 
-import net.folderit.dto.ProfesionalDTO;
-import net.folderit.dto.ProfesionalDataDTO;
+import net.folderit.higeaclient.dto.ProfesionalDataDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-/**
- * Created by luis on 15/05/17.
- */
 @SpringBootApplication
 @EnableEurekaClient
 @EnableFeignClients
-@Controller
-public class FeignClientApplication {
+@RestController
+public class HigeaClientApplication {
+
+    private final ProfesionalesClient profesionalesClient;
 
     @Autowired
-    private ProfesionalesClient profesionalesClient;
-
+    public HigeaClientApplication(ProfesionalesClient profesionalesClient) {
+        this.profesionalesClient = profesionalesClient;
+    }
 
     public static void main(String[] args) {
-        SpringApplication.run(FeignClientApplication.class, args);
+        SpringApplication.run(HigeaClientApplication.class, args);
     }
 
     @RequestMapping("/get-profesionales")
-    public String greeting(@RequestParam String codigo) {
+    public ProfesionalDataDTO greeting(@RequestParam String codigo) {
         ProfesionalDataDTO profesionales = profesionalesClient.getProfesionales(codigo);
-        return profesionales.toString();
+        return profesionales;
     }
 }
