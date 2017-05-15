@@ -29,7 +29,6 @@ public class HigeaClientApplication {
 
     @RequestMapping("/get-profesionales")
     public ProfesionalDataDTO greeting(@RequestParam String codigo) {
-        ProfesionalDataDTO profesionales = profesionalesClient.getProfesionales(codigo);
-        return profesionales;
+        return profesionalesClient.getProfesionales(codigo);
     }
 }

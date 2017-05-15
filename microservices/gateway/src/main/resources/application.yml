@@ -1,0 +1,33 @@
+spring:
+  resources:
+    chain:
+      enabled: true
+  application:
+    name: gateway
+server:
+  port: 8080
+  ssl:
+      key-store: classpath:keystore.p12
+      key-store-password: turn3r0sslf0ld3r
+      keyStoreType: PKCS12
+      keyAlias: tomcat
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+  instance:
+    preferIpAddress: true
+
+zuul:
+  add-host-header: true
+  routes:
+    core-server:
+      path: /api/**
+      sensitiveHeaders:
+      url: http://localhost:36000
+    higea-profesional-microservice:
+      path: /get-profesionales/**
+      url: http://localhost:36001
+    higea-especialidad-microservice:
+      path: /higea-especialidad-microservice/**
+      url: http://localhost:36002

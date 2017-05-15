@@ -2,7 +2,7 @@ spring:
   application:
     name: higea-especialidad-microservice
 server:
-  port: 0
+  port: 36002
 eureka:
   client:
     serviceUrl:

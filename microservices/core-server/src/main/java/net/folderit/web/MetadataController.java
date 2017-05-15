@@ -17,8 +17,6 @@ import java.util.Collection;
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class MetadataController {
 
-    private final String client = "TURNERO-SERVER";
-
     private final MetadataService metadataService;
 
     @Autowired
@@ -26,7 +24,7 @@ public class MetadataController {
         this.metadataService = metadataService;
     }
 
-    @GetMapping(client + "/pais")
+    @GetMapping("/pais")
     public ResponseEntity<Collection<Pais>> getAllPais() {
         return new ResponseEntity<>((Collection<Pais>) metadataService.findAllPais(), HttpStatus.OK);
     }

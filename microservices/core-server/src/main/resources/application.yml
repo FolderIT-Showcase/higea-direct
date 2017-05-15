@@ -3,9 +3,9 @@ spring:
     chain:
       enabled: true
   application:
-    name: turnero-server
+    name: core-server
 server:
-  port: 0
+  port: 36000
 eureka:
   client:
     serviceUrl:
@@ -21,10 +21,6 @@ logging:
   level:
     org.springframework.security: DEBUG
 
-#server:
-#  port: 8080
-
 management:
   security:
     enabled: true # set to false to disable 'default' Spring Boot security
-

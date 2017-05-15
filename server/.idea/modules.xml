@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/../microservices/core-server/core-server.iml" filepath="$PROJECT_DIR$/../microservices/core-server/core-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../desktop/desktop.iml" filepath="$PROJECT_DIR$/../desktop/desktop.iml" />
       <module fileurl="file://$PROJECT_DIR$/../microservices/eureka-server/eureka-server.iml" filepath="$PROJECT_DIR$/../microservices/eureka-server/eureka-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../microservices/gateway/gateway.iml" filepath="$PROJECT_DIR$/../microservices/gateway/gateway.iml" />
       <module fileurl="file://$PROJECT_DIR$/../microservices/higea-client/higea-client.iml" filepath="$PROJECT_DIR$/../microservices/higea-client/higea-client.iml" />
       <module fileurl="file://$PROJECT_DIR$/../microservices/higea-especialidad-microservice/higea-especialidad-microservice.iml" filepath="$PROJECT_DIR$/../microservices/higea-especialidad-microservice/higea-especialidad-microservice.iml" />
       <module fileurl="file://$PROJECT_DIR$/../microservices/higea-profesional-microservice/higea-profesional-microservice.iml" filepath="$PROJECT_DIR$/../microservices/higea-profesional-microservice/higea-profesional-microservice.iml" />

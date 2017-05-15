@@ -2,7 +2,7 @@ spring:
   application:
     name: higea-profesional-microservice
 server:
-  port: 0
+  port: 36001
 eureka:
   client:
     serviceUrl:
@@ -13,4 +13,3 @@ eureka:
 feign:
   hystrix:
     enabled: false
-
