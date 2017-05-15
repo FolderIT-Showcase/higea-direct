@@ -16,8 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HigeaEspecialidadApplication {
 
+    private final ConnectionMidleWare connectionMidleWare;
+
     @Autowired
-    private ConnectionMidleWare connectionMidleWare;
+    public HigeaEspecialidadApplication(ConnectionMidleWare connectionMidleWare) {
+        this.connectionMidleWare = connectionMidleWare;
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(HigeaEspecialidadApplication.class, args);

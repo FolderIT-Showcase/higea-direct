@@ -4,12 +4,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>net.folderit</groupId>
-    <artifactId>turnero-web</artifactId>
+    <artifactId>core-server</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>turnero-web</name>
-    <description>Turnero Web UTE</description>
+    <name>Core Server</name>
+    <description>Server Turnero Web UTE</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -92,6 +92,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-eureka</artifactId>
         </dependency>
     </dependencies>
 

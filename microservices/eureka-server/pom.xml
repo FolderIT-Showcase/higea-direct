@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>net.folderit</groupId>
-    <artifactId>turnero-eureka-server</artifactId>
+    <artifactId>eureka-server</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>turnero-eureka-server</name>
+    <name>Eureka Server</name>
     <description>Turnero Eureka Server</description>
 
     <parent>

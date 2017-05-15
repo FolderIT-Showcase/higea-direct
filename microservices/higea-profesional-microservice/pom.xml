@@ -8,7 +8,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>higea-profesional-microservic</name>
+    <name>Higea Profesional Microservice</name>
     <description>higea-profesional-microservic</description>
 
     <parent>
