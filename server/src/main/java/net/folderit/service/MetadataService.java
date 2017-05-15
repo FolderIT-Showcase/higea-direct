@@ -7,10 +7,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
-/**
- * Created by gheng on 19/4/2017.
- */
 @Service
 public class MetadataService {
 

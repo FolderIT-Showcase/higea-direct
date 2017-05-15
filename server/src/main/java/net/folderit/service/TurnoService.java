@@ -8,9 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/**
- * Created by gheng on 25/4/2017.
- */
 @Service
 public class TurnoService {
 
@@ -44,7 +41,6 @@ public class TurnoService {
     public Turno findById(Long id) {
         return turnoRepository.findOne(id);
     }
-
 
     public Iterable<Turno> findAll() {
         return turnoRepository.findAllFilter();

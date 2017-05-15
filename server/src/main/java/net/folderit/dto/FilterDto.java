@@ -11,9 +11,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 
-/**
- * Created by gheng on 25/4/2017.
- */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

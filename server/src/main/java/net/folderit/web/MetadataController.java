@@ -12,16 +12,17 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
-/**
- * Created by gheng on 19/4/2017.
- */
 @RestController
 @ComponentScan
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class MetadataController {
 
+    private final MetadataService metadataService;
+
     @Autowired
-    private MetadataService metadataService;
+    public MetadataController(MetadataService metadataService) {
+        this.metadataService = metadataService;
+    }
 
     @GetMapping("/pais")
     public ResponseEntity<Collection<Pais>> getAllPais() {

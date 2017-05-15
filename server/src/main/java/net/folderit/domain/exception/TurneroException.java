@@ -12,12 +12,7 @@ import java.util.Locale;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
-/**
- * Created by gheng on 24/4/2017.
- */
-
 @Data
-//@Configuration
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(NON_NULL)

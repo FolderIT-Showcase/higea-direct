@@ -10,9 +10,6 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 
-/**
- * Created by gheng on 21/4/2017.
- */
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -38,7 +35,6 @@ public class VerificationToken {
         cal.setTime(new Timestamp(cal.getTime().getTime()));
         cal.add(Calendar.MINUTE, expiryTimeInMinutes);
         this.setExpiryDate(new Date(cal.getTime().getTime()));
-        //return new Date(cal.getTime().getTime());
     }
 
 

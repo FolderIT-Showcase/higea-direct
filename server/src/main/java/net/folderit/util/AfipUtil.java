@@ -3,17 +3,11 @@ package net.folderit.util;
 import net.folderit.domain.enums.Genero;
 import org.springframework.web.client.RestTemplate;
 
-/**
- * Created by gheng on 19/4/2017.
- */
 public class AfipUtil {
 
     private static AfipUtil instance = null;
 
     RestTemplate restTemplate = null;
-
-    ///
-
 
     protected AfipUtil() {
     }

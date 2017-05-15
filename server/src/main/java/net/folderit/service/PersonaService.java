@@ -18,9 +18,6 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.Transactional;
 
-/**
- * Created by gheng on 18/4/2017.
- */
 @Service
 public class PersonaService {
 
@@ -69,7 +66,7 @@ public class PersonaService {
 
     @Transactional
     public Persona findByTurno(Long turnoId) {
-        return personaRepository.finByTurno(turnoId);
+        return personaRepository.findByTurno(turnoId);
     }
 
     @Transactional

@@ -12,17 +12,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by gheng on 19/4/2017.
- */
-
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class PersonaTest {
 
     @Autowired
     private UserService userService;
-
 
     @Test
     public void saveUser() {

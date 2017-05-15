@@ -13,27 +13,28 @@ import org.springframework.stereotype.Component;
 import javax.transaction.Transactional;
 import java.util.UUID;
 
-/**
- * Created by gheng on 21/4/2017.
- */
 @Component
 public class RegistrationListener implements
         ApplicationListener<OnRegistrationCompleteEvent> {
 
-    @Autowired
-    private UserService service;
+    private final UserService service;
 
-    @Autowired
-    private MessageSource messages;
+    private final MessageSource messages;
 
-    @Autowired
-    private JavaMailSender mailSender;
+    private final JavaMailSender mailSender;
 
     @Value("${message.regSucc}")
     private String mensajeSucces;
 
     @Value("${url.regSucc}")
     private String urlRegistration;
+
+    @Autowired
+    public RegistrationListener(UserService service, MessageSource messages, JavaMailSender mailSender) {
+        this.service = service;
+        this.messages = messages;
+        this.mailSender = mailSender;
+    }
 
     @Override
     public void onApplicationEvent(OnRegistrationCompleteEvent event) {

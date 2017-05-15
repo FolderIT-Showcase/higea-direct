@@ -14,9 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
 import java.util.List;
 
-/**
- * Created by gheng on 25/4/2017.
- */
 @RestController
 @ComponentScan
 @CrossOrigin(origins = "*", maxAge = 3600)
