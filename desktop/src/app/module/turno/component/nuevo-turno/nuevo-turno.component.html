@@ -6,7 +6,7 @@
         <div class="col-sm-6">
           <div class="form-group"
                [ngClass]="{'has-error':!form.controls['persona'].valid && form.controls['persona'].touched}">
-            <label>Nuevo Turno para</label>
+            <small>Nuevo Turno para</small>
 
             <select type="text" class="form-control" [formControl]="form.controls['persona']"
                     (change)="handlePersonaClick(form.value.persona)">
@@ -22,7 +22,7 @@
         <div class="col-sm-6">
           <div class="form-group"
                [ngClass]="{'has-error':!form.controls['persona'].valid && form.controls['persona'].touched}">
-            <label>Centro de Salud</label>
+            <small>Centro de Salud</small>
 
             <select type="text" class="form-control" [formControl]="form.controls['centro']"
                     (change)="handleCentroSaludClick(form.value.centro)">
@@ -40,7 +40,7 @@
       <div class="row">
         <div class="col-sm-6">
           <div class="form-group">
-            <label>Especialidad</label>
+            <small>Especialidad</small>
 
             <select type="text" class="form-control" [formControl]="form.controls['especialidad']"
                     (change)="handleEspecialidadClick(form.value.especialidad)">
@@ -53,7 +53,7 @@
         </div>
         <div class="col-sm-6">
           <div class="form-group">
-            <label>Profesional</label>
+            <small>Profesional</small>
 
             <select type="text" class="form-control" [formControl]="form.controls['profesional']">
               <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
@@ -67,9 +67,12 @@
       <div class="row">
         <div class="col-sm-6">
           <div class="form-group">
-            <label class="control-label">Fecha</label>
-            <input name="fecha" #fecha="ngModel" [(ngModel)]="fechaDesde" [ngModelOptions]="{standalone: true}"
-                   class="form-control" id="date" type="date">
+            <small>Fecha</small>
+
+            <my-date-picker id="fecha" [options]="myDatePickerOptions"
+                            [locale]="'es'" [formControl]="form.controls['fecha']"
+            ></my-date-picker>
+
           </div>
         </div>
         <div class="col-sm-3">

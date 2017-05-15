@@ -6,6 +6,8 @@ import {Persona} from '../../../core/domain/persona';
 import {StoreService} from '../../../core/service/store.service';
 import {TurnoService} from '../../../core/service/turno.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {IMyOptions} from 'mydatepicker';
+import {DatePipe} from '@angular/common';
 
 class Data {
   persona: Persona;
@@ -21,6 +23,7 @@ class Data {
 })
 export class NuevoTurnoComponent implements OnInit, OnDestroy {
 
+  datePipe = new DatePipe('es-AR');
   model: Data = new Data();
   centrosSalud: CentroSalud[] = [];
   especialidades: Especialidad[] = [];
@@ -29,6 +32,10 @@ export class NuevoTurnoComponent implements OnInit, OnDestroy {
   selectUndefined: any;
   form: FormGroup;
   fechaDesde: Date = new Date();
+
+  myDatePickerOptions: IMyOptions = {
+    dateFormat: 'dd/mm/yyyy',
+  };
 
   constructor(private storeService: StoreService,
               private turnoService: TurnoService,
@@ -42,6 +49,7 @@ export class NuevoTurnoComponent implements OnInit, OnDestroy {
     this.form = this.fb.group({
       'persona': [null],
       'centro': [Validators.required],
+      'fecha': [null],
       'especialidad': [null],
       'profesional': [null]
     });
@@ -73,9 +81,14 @@ export class NuevoTurnoComponent implements OnInit, OnDestroy {
   }
 
   submitForm(form) {
-    form.fechaDesde = this.fechaDesde;
-    console.log(form);
+    form.fecha = this.timeStampToDate(form.fecha.epoc);
     this.turnoService.getTurnos(form.centro, form.especialidad, form.profesional, form.fecha);
+  }
+
+  timeStampToDate(timestamp) {
+    let date: any = new Date(timestamp * 1000);
+    date = this.datePipe.transform(date, 'yyyy-MM-dd');
+    return date;
   }
 
 }

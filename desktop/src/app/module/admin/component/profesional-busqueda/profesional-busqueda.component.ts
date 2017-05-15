@@ -63,7 +63,6 @@ export class ProfesionalBusquedaComponent implements OnInit, OnDestroy {
           this.updatedSelected();
           this.pagedItems = this.profesionales.slice(this.pager.startIndex, this.pager.endIndex + 1);
         }));
-
     // initialize to page 1
     this.setPage(1);
   }

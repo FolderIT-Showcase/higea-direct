@@ -12,13 +12,13 @@ import {Subscription} from 'rxjs/Subscription';
 import {PagerService} from '../../../core/service/pager.service';
 import {Store} from '../../../core/service/store';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {IMyOptions} from 'mydatepicker';
 
 class Data {
 
   centro: CentroSalud;
   especialidad: Especialidad;
   profesional: Profesional;
-  fechaDesde: Date = new Date();
   hora: Date = new Date();
   observaciones: string;
 }
@@ -27,7 +27,7 @@ class Data {
   selector: 'app-turnos',
   templateUrl: './turnos.component.html'
 })
-export class TurnosComponent implements OnInit,OnDestroy {
+export class TurnosComponent implements OnInit, OnDestroy {
 
   turnos: Turno[] = [];
   model: Data = new Data();
@@ -53,6 +53,10 @@ export class TurnosComponent implements OnInit,OnDestroy {
   subs: Subscription[] = [];
   form: FormGroup;
 
+  myDatePickerOptions: IMyOptions = {
+    dateFormat: 'dd/mm/yyyy',
+  };
+
   constructor(private storeService: StoreService,
               private alertService: AlertService,
               private adminService: AdminService,
@@ -73,7 +77,6 @@ export class TurnosComponent implements OnInit,OnDestroy {
   ngOnInit() {
     this.centrosSalud = this.storeService.get('centrosSalud');
     this.turnos = this.storeService.get('turnos');
-    this.model.fechaDesde = new Date();
     this.model.hora = new Date();
 
     this.subs.push(
@@ -88,13 +91,9 @@ export class TurnosComponent implements OnInit,OnDestroy {
     this.setPage(1);
   }
 
-  ngOnDestroy(){
-    this.storeService.update('turnos',[]);
+  ngOnDestroy() {
+    this.storeService.update('turnos', []);
   }
-
-  /*handlePersonaClick(persona: Persona) {
-   this.model.persona = persona;
-   }*/
 
   handleCentroSaludClick(centroSalud: CentroSalud) {
     this.model.centro = centroSalud;
@@ -108,21 +107,6 @@ export class TurnosComponent implements OnInit,OnDestroy {
 
   handleProfesionalClick(profesional: Profesional) {
     this.model.profesional = profesional;
-  }
-
-  crear(value: Data) {
-
-    this.adminService.saveTurno(this.model.centro, this.model.especialidad, this.model.profesional,
-      value.fechaDesde, value.hora, value.observaciones)
-      .then(data => {
-        this.alertService.success('Registro Exitoso');
-        this.setPage(this.pager.currentPage);
-      })
-      .catch((error) => {
-        this.setPage(this.pager.currentPage);
-      });
-
-
   }
 
   clearForm() {
@@ -141,7 +125,7 @@ export class TurnosComponent implements OnInit,OnDestroy {
   }
 
   public deleteTurno() {
-    const turnos: Turno[] = this.storeService.get('turnos');
+    const turnos = this.storeService.get('turnos');
     for (const x of turnos) {
       if (x.id === this.turno.id) {
         this.delete(x);
@@ -150,6 +134,7 @@ export class TurnosComponent implements OnInit,OnDestroy {
       }
     }
     this.deleteModal.hide();
+
   }
 
   delete(turno: Turno) {
@@ -182,21 +167,35 @@ export class TurnosComponent implements OnInit,OnDestroy {
     this.save(value);
   }
 
-  save(value: Data) {
+  save(value) {
 
     value.hora = this.model.hora;
-    value.fechaDesde = this.model.fechaDesde;
+    value.fechaDesde = value.fechaDesde.epoc * 1000;
 
+    console.log(value)
 
-    let ahora:Date = new Date();
-    let fechaTurno = value.fechaDesde;
+    const ahora: any = Date.now();
+    const fechaTurno = value.fechaDesde;
 
-    if(!(fechaTurno>=ahora)){
+    console.log(ahora)
+    console.log(fechaTurno)
+
+    if (!( Number(fechaTurno) >= Number(ahora))) {
 
       this.alertService.error('No puede crear un turno con fecha invalida, verifique');
       return;
     }
-    this.crear(value);
+
+    this.adminService.saveTurno(this.model.centro, this.model.especialidad, this.model.profesional,
+      value.fechaDesde, value.hora, value.observaciones)
+      .then(data => {
+        this.alertService.success('Registro Exitoso');
+        this.setPage(this.pager.currentPage);
+      })
+      .catch((error) => {
+        this.setPage(this.pager.currentPage);
+      });
+
     this.saveModal.hide();
     this.clean();
   }

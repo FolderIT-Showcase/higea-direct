@@ -36,8 +36,8 @@ export class EspecialidadBusquedaComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.especialidades = this.storeService.get('especialidades');
 
+    this.especialidades = this.storeService.get('especialidades');
     this.subs.push(
       this.store.changes.pluck('centroSalud').subscribe(
         (data: any) => {
@@ -49,8 +49,6 @@ export class EspecialidadBusquedaComponent implements OnInit, OnDestroy {
           this.pagedItems = this.especialidades.slice(this.pager.startIndex, this.pager.endIndex + 1);
         }
       ));
-
-
     this.setPage(1);
   }
 

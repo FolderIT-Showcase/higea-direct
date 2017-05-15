@@ -85,9 +85,9 @@ export class CentrosSaludComponent implements OnInit {
   }
 
   crear(value: Data) {
-    this.especialidades = this.storeService.get('especialidadesSeleccionadas');
-    if(!this.especialidades ||
-      this.especialidades.length==0){
+    this.especialidades = this.storeService.get('especialidadesSeleccionadas')
+
+    if (!this.especialidades || this.especialidades.length === 0) {
       this.alertService.error('Debe seleccionar las especialidades asociadas al centro de salud');
       return;
     }
@@ -98,6 +98,7 @@ export class CentrosSaludComponent implements OnInit {
     this.adminService.saveCentroSalud(this.centro).then(data => {
       this.alertService.success('Se guardo exitosamente');
     });
+
     this.saveModal.hide();
   }
 
@@ -136,8 +137,8 @@ export class CentrosSaludComponent implements OnInit {
   }
 
   public deleteCentroSalud() {
-    const centros = this.storeService.get('centrosSalud');
-    for (const x of centros) {
+    const centrosSalud = this.storeService.get('centrosSalud');
+    for (const x of centrosSalud) {
       if (x.id === this.centro.id) {
         this.delete(x);
         this.storeService.findAndDelete('centrosSalud', x.id);
@@ -145,6 +146,7 @@ export class CentrosSaludComponent implements OnInit {
       }
     }
     this.deleteModal.hide();
+
   }
 
   delete(centro: CentroSalud) {
@@ -170,9 +172,8 @@ export class CentrosSaludComponent implements OnInit {
     if (value.centroSaludName) {
       this.centro.nombre = value.centroSaludName;
     }
-    let especialidades = this.storeService.get('especialidadesSeleccionadas');
-    if(!especialidades ||
-       especialidades.length==0){
+    const especialidades = this.storeService.get('especialidadesSeleccionadas');
+    if (!especialidades || especialidades.length === 0) {
       this.alertService.error('Debe seleccionar las especialidades asociadas al centro de salud');
       return;
     }

@@ -1,5 +1,5 @@
 export class EstadosCiviles {
-  static estadosCiviles  = [{
+  static estadosCiviles = [{
     'id': 'Casado',
     'label': 'Casado'
   }, {
@@ -19,7 +19,7 @@ export class EstadosCiviles {
     'label': 'Viudo'
   }];
 
-  static findByLabel(label) {
+  static findIDByLabel(label) {
     const estadosCiviles = EstadosCiviles.estadosCiviles;
     let id = '';
     for (const x of estadosCiviles) {

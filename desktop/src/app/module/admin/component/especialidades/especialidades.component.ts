@@ -93,8 +93,7 @@ export class EspecialidadesComponent implements OnInit {
 
   save() {
     this.profesionales = this.storeService.get('profesionalesSeleccionados');
-    if(!this.profesionales ||
-      this.profesionales.length==0){
+    if (!this.profesionales || this.profesionales.length === 0) {
       this.alertService.error('Debe seleccionar los profesionales asociados a la especialidad');
       return;
     }
@@ -106,6 +105,7 @@ export class EspecialidadesComponent implements OnInit {
       });
     this.saveModal.hide();
     this.clean();
+
   }
 
   showSaveModal() {
@@ -121,7 +121,6 @@ export class EspecialidadesComponent implements OnInit {
     this.storeService.update('especialidad', especialidad);
     this.updateModal.show();
   }
-
 
 
   showDeleteModal(especialidad: Especialidad) {
@@ -142,9 +141,8 @@ export class EspecialidadesComponent implements OnInit {
   }
 
 
-
   public deleteEspecialidad() {
-    const especialidades: Especialidad[] = this.storeService.get('especialidades');
+    const especialidades = this.storeService.get('especialidades');
     for (const x of especialidades) {
       if (x.id === this.especialidad.id) {
         this.delete(x);
@@ -156,7 +154,6 @@ export class EspecialidadesComponent implements OnInit {
   }
 
 
-
   delete(especialidad: Especialidad) {
     this.adminService.deleteEspecialidad(especialidad).then(data => {
       this.alertService.success('Se borro exitosamente');
@@ -165,13 +162,13 @@ export class EspecialidadesComponent implements OnInit {
 
   submitUpdateForm() {
     this.especialidad.nombre = this.model.especialidadLabel.toUpperCase();
-    let profesionales = this.storeService.get('profesionalesSeleccionados');
-    if(!profesionales ||
-      profesionales.length==0){
+    const profesionales = this.storeService.get('profesionalesSeleccionados');
+    if (!profesionales || profesionales.length === 0) {
       this.alertService.error('Debe seleccionar los profesionales asociados a la especialidad');
       return;
     }
     this.update(this.especialidad);
+
   }
 
   update(especialidad: Especialidad) {

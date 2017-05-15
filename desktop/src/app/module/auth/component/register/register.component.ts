@@ -8,9 +8,9 @@ import {Pais} from '../../../core/domain/pais';
 import {User} from '../../../core/domain/user';
 import {Persona} from '../../../core/domain/persona';
 import {Documento} from '../../../core/domain/documento';
-import {StoreService} from '../../../core/service/store.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {LoadingService} from '../../../core/service/loading.service';
+import {MetadataService} from '../../../core/service/metadata.service';
 
 class Data {
   nombre = '';
@@ -42,9 +42,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
   constructor(private fb: FormBuilder,
               private loadingService: LoadingService,
               private router: Router,
+              private metadataService: MetadataService,
               private personaService: PersonaService,
-              private alertService: AlertService,
-              private storeService: StoreService) {
+              private alertService: AlertService) {
 
     this.complexForm = fb.group({
       'nombre': [null, Validators.required],
@@ -61,10 +61,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.paises = this.storeService.get('paises');
+    this.metadataService.getPaises().then((data: any) => {
+      this.paises = data;
+    });
     this.model.tipoDocumento = this.tipoDocumentos[0];
     this.model.genero = this.generos[0];
-    this.model.pais = this.paises[11].nombre;
   }
 
   ngOnDestroy(): void {
@@ -101,15 +102,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
         apellido: persona.apellido,
         genero: persona.genero.slice(0, 1)
       };
-
-      this.loadingService.start();
       this.personaService.validateDni(doc)
         .then(() => {
-          this.loadingService.finish();
           this.savePersona(persona);
-        })
-        .catch(error => {
-          this.loadingService.finish();
         });
 
       return;
@@ -120,17 +115,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   savePersona(persona: Persona) {
-    this.loadingService.start();
     this.personaService.create(persona)
       .then(() => {
         this.router.navigate(['/login'])
           .then(() => {
-            this.loadingService.finish();
             this.alertService.success('Registro Exitoso, chequee su cuenta de email para activar el usuario');
           });
-      })
-      .catch(() => {
-        this.loadingService.finish();
       });
   }
 

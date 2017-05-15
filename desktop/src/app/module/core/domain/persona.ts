@@ -17,5 +17,4 @@ export class Persona {
   domicilio?: Domicilio;
   contacto?: Contacto[] = [];
   turno?: Turno[] = [];
-
 }
