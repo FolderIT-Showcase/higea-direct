@@ -11,9 +11,9 @@
         <module name="eureka-server" />
         <module name="gateway" />
         <module name="Gateway" />
-        <module name="higea-client" />
         <module name="higea-especialidad-microservice" />
         <module name="higea-profesional-microservice" />
+        <module name="higea-turnos-microservice" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -25,6 +25,7 @@
       <module name="higea-client" target="1.8" />
       <module name="higea-especialidad-microservice" target="1.8" />
       <module name="higea-profesional-microservice" target="1.8" />
+      <module name="higea-turnos-microservice" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
