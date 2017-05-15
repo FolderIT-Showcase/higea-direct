@@ -1,9 +1,9 @@
 package net.folderit.connection;
 
-import net.folderit.dto.EspecialidadDTO;
-import net.folderit.dto.EspecilidadDataDTO;
 import net.folderit.dto.LoginDTO;
 import net.folderit.dto.LoginResultDTO;
+import net.folderit.dto.TurnoDTO;
+import net.folderit.dto.TurnoDataDTO;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -11,13 +11,15 @@ import org.springframework.web.client.RestTemplate;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Created by luis on 15/05/17.
+ */
 @Service
 public class ConnectionMidleWare {
 
-    //http://higea.folderit.net
 
     final String uriLogin = "http://higea.folderit.net/api/login";
-    final String uriEspecialidad = "http://higea.folderit.net/api/{cliente}/especialidades";
+    final String uriEspecialidad = "http://higea.folderit.net/api/{cliente}/turnos";
     private RestTemplate restTemplate = new RestTemplate();
 
     public ResponseEntity<LoginResultDTO> login() {
@@ -34,7 +36,7 @@ public class ConnectionMidleWare {
     }
 
 
-    public ResponseEntity<EspecialidadDTO> especialidades(String codigo) {
+    public TurnoDataDTO turnos(String codigo) {
 
         ResponseEntity<LoginResultDTO> loginResultDTO = login();
 
@@ -49,10 +51,11 @@ public class ConnectionMidleWare {
         headers.set("Authorization", loginResultDTO.getBody().getToken());
         HttpEntity<?> entity = new HttpEntity<>(headers);
 
+        //ResponseEntity<ProfesionalDTO> result=  restTemplate.getForObject(uriEspecialidad ,entity, ProfesionalDTO.class,uriParams);
 
-        ResponseEntity<EspecialidadDTO> result = restTemplate.exchange(uriEspecialidad, HttpMethod.GET, entity, EspecialidadDTO.class, uriParams);
+        ResponseEntity<TurnoDTO> result = restTemplate.exchange(uriEspecialidad, HttpMethod.GET, entity, TurnoDTO.class, uriParams);
 
-
-        return result;
+        return result.getBody().getData();
+        /*return result;*/
     }
 }

@@ -4,16 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class EspecialidadDTO {
+@AllArgsConstructor
+public class LoginResultDTO {
 
     private Boolean result;
-
-    private String error;
-
-    private List<EspecilidadDataDTO> especilidadDataDTO;
+    private String token;
+    private String err;
 }
