@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <type id="Python" />
+  </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/../microservices/gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/../microservices/core-server/target/maven-archiver/pom.properties" />
+        <option value="$PROJECT_DIR$/../microservices/core-server/pom.xml" />
+        <option value="$PROJECT_DIR$/../microservices/eureka-server/pom.xml" />
+        <option value="$PROJECT_DIR$/../microservices/higea-turnos-microservice/pom.xml" />
+        <option value="$PROJECT_DIR$/../microservices/higea-profesional-microservice/pom.xml" />
+        <option value="$PROJECT_DIR$/../microservices/higea-especialidad-microservice/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/../microservices/target" />
+  </component>
+</project>

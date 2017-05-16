@@ -41,11 +41,6 @@ export class RegisterSocialComponent implements OnInit {
               private personaService: PersonaService,
               private metadataService: MetadataService) {
 
-    const user: User = JSON.parse(localStorage.getItem('socialUser'));
-    if (user) {
-      this.model.email = user.email;
-    }
-
     this.complexForm = fb.group({
       'nombre': [null, Validators.required],
       'apellido': [null, Validators.required],
@@ -58,8 +53,10 @@ export class RegisterSocialComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.metadataService.getPaises().then(data => this.paises);
-    this.model.pais = this.paises[11].nombre;
+    this.metadataService.getPaises().then((data: any) => {
+      this.paises = data;
+    });
+
     this.model.tipoDocumento = this.tipoDocumentos[0];
     this.model.genero = this.generos[0];
   }
@@ -93,9 +90,7 @@ export class RegisterSocialComponent implements OnInit {
   }
 
   buildPersonaUser(data) {
-    const user: User = JSON.parse(localStorage.getItem('socialUser'));
-    user.password = user.externalId;
-
+    const user: User = JSON.parse(localStorage.getItem('currentUser'));
     const persona: Persona = new Persona();
     persona.userAsociado = user;
     persona.genero = data.genero.toUpperCase();

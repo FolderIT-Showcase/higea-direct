@@ -1,6 +1,6 @@
 spring:
   application:
-    name: higea-profesional-microservice
+    name: profesional-higea
 server:
   port: 36001
 eureka:

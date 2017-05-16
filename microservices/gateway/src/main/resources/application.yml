@@ -25,8 +25,8 @@ zuul:
       path: /api/**
       sensitiveHeaders:
       url: http://localhost:36000
-    higea-profesional-microservice:
-      path: /profesionales-higea/**
+    profesional-higea:
+      path: /higea/profesionales/**
       url: http://localhost:36001
     higea-especialidad-microservice:
       path: /especialidad-higea/**

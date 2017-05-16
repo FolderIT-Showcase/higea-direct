@@ -34,18 +34,10 @@ export class AppAuthService {
 
   public login(user: User, type: string = '') {
     switch (type) {
-      case 'facebook' :
-      case 'google' :
-        this.getUser(type, user.externalId)
-          .then(() => {
-            // login exitoso rutear a la pagina principal
-            this.normalLogin(user, type)
-          })
-          .catch(() => {
-            // el usuario no existe, registrarlo
-            localStorage.setItem('socialUser', JSON.stringify(user));
-            this.router.navigate(['/register-social']);
-          });
+      case 'social' :
+        this.normalLogin(user).catch((error) => {
+          this.router.navigate(['/register-social']);
+        });
         return;
       default :
         return this.normalLogin(user)

@@ -37,10 +37,10 @@ export class FacebookSigninComponent {
         this.fb.api('/me', 'get', {fields: 'email'})
           .then((data: any) => {
             const user: User = new User();
-            user.externalId = response.authResponse.userID;
+            user.password = response.authResponse.userID;
             user.email = data.email;
-            localStorage.setItem('socialUser', JSON.stringify(user));
-            this.auth.login(user, 'facebook');
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            this.auth.login(user, 'social');
             this.fb.logout();
           })
           .catch(error => {
