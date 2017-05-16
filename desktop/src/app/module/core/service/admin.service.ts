@@ -10,6 +10,12 @@ import {Turno} from '../domain/turno';
 @Injectable()
 export class AdminService {
 
+  license = localStorage.getItem('license');
+  pathTurno = this.license + ' turno';
+  pathEspecialidad = this.license + ' especialidad';
+  pathProfesional = this.license + ' profesional';
+
+
   constructor(private api: ApiService,
               private storeService: StoreService, private alertService: AlertService) {
   }
@@ -17,12 +23,10 @@ export class AdminService {
   // turnos
 
   deleteTurno(turno: Turno) {
-    const path = 'turno';
-    return this.api.delete(path + '?id=' + turno.id + '&desactivate=true');
+    return this.api.delete(this.pathTurno + '?id=' + turno.id + '&desactivate=true');
   }
 
   saveTurno(centro: CentroSalud, especialidad: Especialidad, profesional: Profesional, fecha: number, hora: Date, obs: string) {
-    const path = 'turno';
     const turno = new Turno();
     turno.dia = fecha;
     turno.fecha = fecha;
@@ -31,7 +35,7 @@ export class AdminService {
     turno.especialidad = especialidad;
     turno.profesional = profesional;
     turno.observaciones = obs;
-    return this.api.put(path, turno)
+    return this.api.put(this.pathTurno, turno)
       .then(data => {
         this.storeService.update('CentroSalud', centro);
         this.storeService.add('turnos', data);
@@ -41,29 +45,26 @@ export class AdminService {
   // especialidad
 
   saveEspecialidad(especialidad: Especialidad) {
-    const path = 'especialidad';
-    return this.api.post(path, especialidad)
+    return this.api.post(this.pathEspecialidad, especialidad)
       .then(data => {
         this.storeService.add('especialidades', especialidad);
       });
   }
 
   getEspecialidades() {
-    const path = 'especialidad';
-    return this.api.get(path)
+    return this.api.get(this.pathEspecialidad)
       .then(data => {
         this.storeService.update('especialidades', data);
       });
   }
 
   deleteEspecialidad(especialidad: Especialidad) {
-    const path = 'especialidad' + '?id=' + especialidad.id;
+    const path = this.pathEspecialidad + '?id=' + especialidad.id;
     return this.api.delete(path);
   }
 
   updateEspecialidad(especialidad: Especialidad) {
-    const path = 'especialidad';
-    return this.api.put(path, especialidad)
+    return this.api.put(this.pathEspecialidad, especialidad)
       .then(data => {
         this.storeService.findAndSet('centrosSalud', especialidad.id, especialidad);
       });
@@ -78,7 +79,6 @@ export class AdminService {
         this.storeService.add('centrosSalud', centroSalud);
       });
   }
-
 
   updateCentroSalud(centroSalud: CentroSalud) {
     const path = 'centroSalud';
@@ -96,24 +96,21 @@ export class AdminService {
   // profesionales
 
   getProfesionales() {
-    const path = 'profesional';
-    return this.api.get(path)
+    return this.api.get(this.pathProfesional)
       .then(data => {
         this.storeService.update('profesionales', data);
       });
   }
 
   saveProfesional(profesional: Profesional) {
-    const path = 'profesional';
-    return this.api.post(path, profesional)
+    return this.api.post(this.pathProfesional, profesional)
       .then(data => {
         this.storeService.add('profesionales', profesional);
       });
   }
 
   updateProfesional(profesional: Profesional) {
-    const path = 'profesional';
-    return this.api.put(path, profesional)
+    return this.api.put(this.pathProfesional, profesional)
       .then(data => {
         this.storeService.add('profesionales', profesional);
       });
@@ -121,8 +118,8 @@ export class AdminService {
 
 
   deleteProfesional(profesional: Profesional) {
-    const path = 'profesional';
-    return this.api.delete(path + '?id=' + profesional.id);
+    const path = this.pathProfesional + '?id=' + profesional.id;
+    return this.api.delete(path);
   }
 
 }

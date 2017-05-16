@@ -91,9 +91,11 @@
       <file leaf-file-name="admin.service.ts" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../desktop/src/app/module/core/service/admin.service.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="16" column="11" lean-forward="true" selection-start-line="16" selection-start-column="11" selection-end-line="16" selection-end-column="11" />
-              <folding />
+            <state relative-caret-position="448">
+              <caret line="121" column="31" lean-forward="false" selection-start-line="121" selection-start-column="31" selection-end-line="121" selection-end-column="31" />
+              <folding>
+                <element signature="e#0#41#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -160,7 +162,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/net/folderit/service/PersonaService.java" />
         <option value="$PROJECT_DIR$/src/main/java/net/folderit/service/TurnoService.java" />
         <option value="$PROJECT_DIR$/src/main/java/net/folderit/util/AfipUtil.java" />
         <option value="$PROJECT_DIR$/src/main/java/net/folderit/util/OnRegistrationCompleteEvent.java" />
@@ -211,6 +212,7 @@
         <option value="$PROJECT_DIR$/../desktop/src/app/module/auth/auth.service.ts" />
         <option value="$PROJECT_DIR$/../desktop/src/app/module/grupo-familiar/component/lista-integrantes/lista-integrantes.component.ts" />
         <option value="$PROJECT_DIR$/../desktop/src/app/module/core/service/api.service.ts" />
+        <option value="$PROJECT_DIR$/../desktop/src/app/module/core/service/admin.service.ts" />
       </list>
     </option>
   </component>
@@ -1190,7 +1192,7 @@
       <workItem from="1494866809348" duration="1124000" />
       <workItem from="1494868086581" duration="5994000" />
       <workItem from="1494941194412" duration="7276000" />
-      <workItem from="1494952422321" duration="3609000" />
+      <workItem from="1494952422321" duration="4142000" />
     </task>
     <task id="LOCAL-00001" summary="corregido agregar integrante">
       <created>1494507806773</created>
@@ -1210,7 +1212,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="91615000" />
+    <option name="totallyTimeSpent" value="92148000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1450,6 +1452,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="531">
           <caret line="161" column="10" lean-forward="false" selection-start-line="161" selection-start-column="10" selection-end-line="161" selection-end-column="10" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1664,9 +1667,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../desktop/src/app/module/core/service/admin.service.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="16" column="11" lean-forward="true" selection-start-line="16" selection-start-column="11" selection-end-line="16" selection-end-column="11" />
-          <folding />
+        <state relative-caret-position="448">
+          <caret line="121" column="31" lean-forward="false" selection-start-line="121" selection-start-column="31" selection-end-line="121" selection-end-column="31" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
