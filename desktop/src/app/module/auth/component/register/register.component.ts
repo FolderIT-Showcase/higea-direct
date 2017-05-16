@@ -92,6 +92,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   submitForm(data: any) {
 
+    // if (!this.captcha) {
+    //   this.alertService.error('Por Favor complete todos los datos');
+    //   return;
+    // }
+
     const persona: Persona = this.buildPersonaUser(data);
 
     if (persona.documento.tipoDocumento === 'dni') {

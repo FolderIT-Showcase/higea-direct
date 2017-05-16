@@ -155,9 +155,11 @@
         </div>
       </div>
     </div>
-
-    <button type="submit" class="btn btn-primary btn-block" [disabled]="!form.valid">GUARDAR</button>
-
+    <div class="row">
+      <div class="text-right">
+        <button type="submit" class="btn btn-primary" [disabled]="!form.valid">GUARDAR</button>
+      </div>
+    </div>
   </form>
 </app-modal>
 

@@ -13,6 +13,7 @@ import {PagerService} from '../../../core/service/pager.service';
 import {Store} from '../../../core/service/store';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {IMyOptions} from 'mydatepicker';
+import {DatePipe} from '@angular/common';
 
 class Data {
 
@@ -169,19 +170,15 @@ export class TurnosComponent implements OnInit, OnDestroy {
 
   save(value) {
 
-    value.hora = this.model.hora;
+    const tmp: Date = new Date(Date.now())
+
+    value.hora = this.model.hora.getTime();
     value.fechaDesde = value.fechaDesde.epoc * 1000;
 
-    console.log(value)
+    const ahora = new Date().setHours(0, 0, 0, 0);
+    const fechaTurno = new Date(value.fechaDesde).setHours(0, 0, 0, 0);
 
-    const ahora: any = Date.now();
-    const fechaTurno = value.fechaDesde;
-
-    console.log(ahora)
-    console.log(fechaTurno)
-
-    if (!( Number(fechaTurno) >= Number(ahora))) {
-
+    if (!(fechaTurno >= ahora)) {
       this.alertService.error('No puede crear un turno con fecha invalida, verifique');
       return;
     }
@@ -189,7 +186,7 @@ export class TurnosComponent implements OnInit, OnDestroy {
     this.adminService.saveTurno(this.model.centro, this.model.especialidad, this.model.profesional,
       value.fechaDesde, value.hora, value.observaciones)
       .then(data => {
-        this.alertService.success('Registro Exitoso');
+        this.alertService.success('Nuevo Turno creado correctamente');
         this.setPage(this.pager.currentPage);
       })
       .catch((error) => {
@@ -198,6 +195,16 @@ export class TurnosComponent implements OnInit, OnDestroy {
 
     this.saveModal.hide();
     this.clean();
+  }
+
+  timeStampToDate(timestamp) {
+    const datePipe = new DatePipe('es-AR');
+    if (!timestamp) {
+      return datePipe.transform(Date.now(), 'dd/MM/yyyy');
+    }
+    let date: any = new Date(timestamp);
+    date = datePipe.transform(date, 'dd/MM/yyyy');
+    return date;
   }
 
   clean() {

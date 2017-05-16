@@ -9,6 +9,7 @@ import {User} from '../../../core/domain/user';
 import {Persona} from '../../../core/domain/persona';
 import {Documento} from '../../../core/domain/documento';
 import {MetadataService} from '../../../core/service/metadata.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 class Datos {
   nombre = '';
@@ -32,8 +33,10 @@ export class RegisterSocialComponent implements OnInit {
   generos: string[] = Generos.build();
   loading = false;
   captcha: string = null;
+  complexForm: FormGroup;
 
   constructor(private router: Router,
+              private fb: FormBuilder,
               private alertService: AlertService,
               private personaService: PersonaService,
               private metadataService: MetadataService) {
@@ -42,6 +45,15 @@ export class RegisterSocialComponent implements OnInit {
     if (user) {
       this.model.email = user.email;
     }
+
+    this.complexForm = fb.group({
+      'nombre': [null, Validators.required],
+      'apellido': [null, Validators.required],
+      'numeroDocumento': [null, Validators.required],
+      'tipoDocumento': [null, Validators.required],
+      'pais': [null, Validators.required],
+      'genero': [null, Validators.required],
+    });
 
   }
 
@@ -52,29 +64,14 @@ export class RegisterSocialComponent implements OnInit {
     this.model.genero = this.generos[0];
   }
 
-  public register(): void {
+  submitForm(data: any) {
 
     // if (!this.captcha) {
     //   this.alertService.error('Por Favor complete todos los datos');
     //   return;
     // }
 
-    if (this.model.pais.toLowerCase() !== 'argentina') {
-      this.model.tipoDocumento = 'Documento Extranjero';
-    }
-
-    this.loading = true;
-    const user: User = new User();
-    const persona: Persona = new Persona();
-    persona.nombre = this.model.nombre;
-    persona.apellido = this.model.apellido;
-    persona.genero = this.model.genero;
-    persona.documento = new Documento();
-    persona.documento.id = null;
-    persona.documento.numero = this.model.numeroDocumento;
-    persona.documento.tipoDocumento = TipoDocumentos.findByLabel(this.model.tipoDocumento);
-    user.email = this.model.email;
-    persona.userAsociado = user;
+    const persona: Persona = this.buildPersonaUser(data);
 
     if (persona.documento.tipoDocumento === 'dni') {
 
@@ -84,19 +81,32 @@ export class RegisterSocialComponent implements OnInit {
         apellido: persona.apellido,
         genero: persona.genero.slice(0, 1)
       };
-
       this.personaService.validateDni(doc)
         .then(() => {
           this.savePersona(persona);
-        })
-        .catch(error => {
-          console.error(error);
         });
 
       return;
     }
 
     this.savePersona(persona);
+  }
+
+  buildPersonaUser(data) {
+    const user: User = JSON.parse(localStorage.getItem('socialUser'));
+    user.password = user.externalId;
+
+    const persona: Persona = new Persona();
+    persona.userAsociado = user;
+    persona.genero = data.genero.toUpperCase();
+    persona.documento = new Documento();
+    persona.documento.id = null;
+    persona.documento.numero = data.numeroDocumento;
+    persona.documento.tipoDocumento = TipoDocumentos.findByLabel(data.tipoDocumento);
+    persona.nombre = data.nombre;
+    persona.apellido = data.apellido;
+
+    return persona;
   }
 
   savePersona(persona: Persona) {
@@ -122,6 +132,7 @@ export class RegisterSocialComponent implements OnInit {
   }
 
   handleCorrectCaptcha(event) {
+    this.captcha = event;
   }
 
 }
