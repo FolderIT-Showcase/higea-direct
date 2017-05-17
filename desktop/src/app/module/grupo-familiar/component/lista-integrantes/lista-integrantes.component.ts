@@ -25,8 +25,7 @@ import {MetadataService} from '../../../core/service/metadata.service';
 
 @Component({
   selector: 'app-lista-integrantes',
-  templateUrl: './lista-integrantes.component.html',
-  styleUrls: ['./lista-integrantes.component.scss']
+  templateUrl: './lista-integrantes.component.html'
 })
 export class ListaIntegrantesComponent implements OnInit {
 
@@ -264,7 +263,7 @@ export class ListaIntegrantesComponent implements OnInit {
     integrante.fechaNacimiento = form.fechaNacimiento.epoc;
     integrante.contacto = [];
     integrante.contacto.push(new Contacto(form.tipoContacto, form.dato));
-    integrante.estadoCivil = form.estadoCivil.id || EstadosCiviles.findIDByLabel('Soltero');
+    integrante.estadoCivil = form.estadoCivil ? form.estadoCivil.id : EstadosCiviles.findIDByLabel('Soltero');
 
     integrante.domicilio = new Domicilio();
     integrante.domicilio.piso = form.piso;

@@ -11,12 +11,14 @@ import {Turno} from '../domain/turno';
 @Injectable()
 export class TurnoService {
 
+  basePath = 'core/';
+
   constructor(private api: ApiService,
               private storeService: StoreService) {
   }
 
   getCentrosDeSalud() {
-    const path = 'centroSalud';
+    const path = this.basePath + 'centroSalud';
     return this.api.get(path)
       .then(data => {
         this.storeService.update('centrosSalud', data);
@@ -24,7 +26,7 @@ export class TurnoService {
   }
 
   getAllTurnos() {
-    const path = 'turno';
+    const path = this.basePath + 'turno';
     return this.api.get(path)
       .then(data => {
         this.storeService.update('turnos', data);
@@ -33,7 +35,7 @@ export class TurnoService {
 
   getTurnos(centro: CentroSalud, especialidad: Especialidad, profesional: Profesional, fecha: Date) {
 
-    const path = 'turno';
+    const path = this.basePath + 'turno';
     const filtro = new FiltroTurno;
     if (centro) {
       const tmpCentro: CentroSalud = new CentroSalud();
@@ -63,12 +65,12 @@ export class TurnoService {
   }
 
   reservarTurno(persona: Persona) {
-    const path = 'persona';
+    const path = this.basePath + 'persona';
     return this.api.post(path, persona);
   }
 
   cancelarTurno(turno: Turno, persona: Persona) {
-    const path = 'turno?id=' + turno.id + '&desactivate=false';
+    const path = this.basePath + 'turno?id=' + turno.id + '&desactivate=false';
     return this.api.delete(path)
       .then(() => {
         if (!persona) {

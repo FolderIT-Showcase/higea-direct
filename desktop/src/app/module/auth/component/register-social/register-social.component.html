@@ -90,9 +90,20 @@
     </div>
 
     <div class="row">
+      <div class="col-sm-12"
+           [ngClass]="{'has-error': !captcha}">
+        <div class="g-recaptcha-container">
+          <re-captcha class="g-recaptcha" (captchaResponse)="handleCorrectCaptcha($event)" language="es"
+                      site_key="6Lcf4B0UAAAAAFnu4amKAVQ-I2onmCv9OvLw0J_i"></re-captcha>
+        </div>
+        <small *ngIf="!captcha" class="help-block">Debes aceptar el Captcha.</small>
+      </div>
+    </div>
+
+    <div class="row">
       <div class="col-sm-6">
         <button type="submit" class="btn btn-primary btn-block"
-                [disabled]="!complexForm.valid">Registrarse
+                [disabled]="!complexForm.valid || !captcha">Registrarse
         </button>
       </div>
       <div class="col-sm-6">

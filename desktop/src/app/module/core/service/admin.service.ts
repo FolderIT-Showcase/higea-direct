@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {ApiService} from './api.service';
 import {StoreService} from './store.service';
 import {Especialidad} from '../domain/especialidad';
-import {AlertService} from './alert.service';
 import {CentroSalud} from '../domain/centro-salud';
 import {Profesional} from '../domain/profesional';
 import {Turno} from '../domain/turno';
@@ -11,13 +10,13 @@ import {Turno} from '../domain/turno';
 export class AdminService {
 
   license = localStorage.getItem('license');
-  pathTurno = this.license + ' turno';
-  pathEspecialidad = this.license + ' especialidad';
-  pathProfesional = this.license + ' profesional';
+  client = localStorage.getItem('client');
+  pathTurno = this.license + '/turno/' + this.client;
+  pathEspecialidad = this.license + '/especialidades/' + this.client;
+  pathProfesional = this.license + '/profesionales/' + this.client;
 
 
-  constructor(private api: ApiService,
-              private storeService: StoreService, private alertService: AlertService) {
+  constructor(private api: ApiService, private storeService: StoreService) {
   }
 
   // turnos

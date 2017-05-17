@@ -21,7 +21,6 @@ export class NavbarComponent implements OnInit {
   logout() {
     this.auth.logout()
       .then(() => {
-        this.alert.success('Gracias por usar nuestros servicios');
       })
       .catch(error => {
         console.error(error);

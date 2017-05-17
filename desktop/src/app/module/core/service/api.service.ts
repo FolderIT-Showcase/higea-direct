@@ -36,6 +36,7 @@ export class ApiService {
       .map(res => res.json()).first().toPromise()
       .then(data => {
         localStorage.setItem('license', this.jwtHelper.decodeToken(data.token).license);
+        localStorage.setItem('client', this.jwtHelper.decodeToken(data.token).client);
       });
   }
 

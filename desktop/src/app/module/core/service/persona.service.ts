@@ -9,6 +9,7 @@ import {User} from '../domain/user';
 export class PersonaService {
 
   user: User;
+  basePath = 'core/';
 
   public static convertTipoDocumento(tipo: string): string {
     const tipoRtn = TipoDocumentos.export().find(x => x.label === tipo);
@@ -27,7 +28,7 @@ export class PersonaService {
   }
 
   validateDni(dto: any) {
-    const path = 'persona/afip' +
+    const path = this.basePath + 'persona/afip' +
       '?documento=' + dto.documento +
       '&nombre=' + dto.nombre +
       '&apellido=' + dto.apellido +
@@ -43,7 +44,7 @@ export class PersonaService {
       return;
     }
 
-    const path = 'persona/email?email=' + this.user.email;
+    const path = this.basePath + 'persona/email?email=' + this.user.email;
 
     return this.api.get(path)
       .then((data) => {
@@ -68,7 +69,7 @@ export class PersonaService {
   }
 
   updatePersonaUser(persona: Persona) {
-    const path = 'persona';
+    const path = this.basePath + 'persona';
     return this.api.post(path, persona)
       .then(() => {
         this.buildIntegrantes(persona);
@@ -76,7 +77,7 @@ export class PersonaService {
   }
 
   activateUser(token) {
-    const path = 'users/regitrationConfirm?token=' + token;
+    const path = this.basePath + 'users/regitrationConfirm?token=' + token;
     return this.api.get(path);
   }
 

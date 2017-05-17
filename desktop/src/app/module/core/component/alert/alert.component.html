@@ -1,6 +1,4 @@
-<div *ngIf="message" class="app-alert">
-  <div class="alert-label"
-       [ngClass]="{ 'alert': message, 'alert-success': message.type === 'success', 'alert-danger': message.type === 'error' }">
-    <div style="vertical-align: middle;text-align: center;line-height: 60px; "><strong>{{message.text}}</strong></div>
-  </div>
+<div *ngIf="message" class="alert-label"
+     [ngClass]="{ 'alert': message, 'alert-success': message.type === 'success', 'alert-danger': message.type === 'error' }">
+  <div class="alert-message"><strong>{{message.text}}</strong></div>
 </div>

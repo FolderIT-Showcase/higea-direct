@@ -14,9 +14,9 @@ $gray-4: #aab2bd;
 $gray-5: #666d78;
 $gray-6: #444a54;
 $black: #353b44;
-$green: #67c18c;
-$red: #ec5665;
-$yellow: #FFC107;
+$green: #49c179;
+$red: #ec3924;
+$yellow: #ffd00f;
 $light-blue: #ecf6fc;
 $medium-light-blue: #9dcede;
 
@@ -108,7 +108,7 @@ div.well {
 }
 
 .app-header {
-  margin: 0.5em;
+  margin: 1em;
 }
 
 .text-xs-center {
@@ -205,3 +205,14 @@ select.minimal {
   }
 }
 
+.form-group.required .control-label:after {
+  content: "*";
+  padding-left: 5px;
+  color: $red;
+}
+
+.table td.fit,
+.table th.fit {
+  white-space: nowrap;
+  width: 1%;
+}

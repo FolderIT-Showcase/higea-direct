@@ -8,39 +8,30 @@ import {Pais} from '../../../core/domain/pais';
 import {User} from '../../../core/domain/user';
 import {Persona} from '../../../core/domain/persona';
 import {Documento} from '../../../core/domain/documento';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {LoadingService} from '../../../core/service/loading.service';
+import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MetadataService} from '../../../core/service/metadata.service';
-
-class Data {
-  nombre = '';
-  apellido = '';
-  pais = '';
-  tipoDocumento = '';
-  numeroDocumento: number;
-  genero = '';
-  password1 = '';
-  password2 = '';
-  email = '';
-}
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html'
 })
-export class RegisterComponent implements OnInit, OnDestroy {
+export class RegisterComponent implements OnInit {
 
   complexForm: FormGroup;
 
-  model: Data = new Data;
   paises: Pais[] = [];
   tipoDocumentos: string[] = TipoDocumentos.build();
   generos: string[] = Generos.build();
-  loading = false;
-  captcha: string = null;
+  captcha = null;
+
+  passwordMatcher = (control: AbstractControl): { [key: string]: boolean } => {
+    const password1 = control.get('password1');
+    const password2 = control.get('password2');
+    if (!password1 || !password2) return null;
+    return password1.value === password2.value ? null : {nomatch: true};
+  };
 
   constructor(private fb: FormBuilder,
-              private loadingService: LoadingService,
               private router: Router,
               private metadataService: MetadataService,
               private personaService: PersonaService,
@@ -54,9 +45,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
       'pais': [null, Validators.required],
       'genero': [null, Validators.required],
       'password1': [null, Validators.required],
-      'password2': [null, Validators.required],
-      'email': [null, Validators.required],
-    });
+      'password2': [null, [Validators.required, this.passwordMatch]],
+      'email': [null, Validators.required]
+    }, {validator: this.passwordMatcher});
 
   }
 
@@ -64,12 +55,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.metadataService.getPaises().then((data: any) => {
       this.paises = data;
     });
-    this.model.tipoDocumento = this.tipoDocumentos[0];
-    this.model.genero = this.generos[0];
   }
 
-  ngOnDestroy(): void {
-    this.captcha = null;
+  private passwordMatch() {
+    return (c: FormControl) => {
+      return (c.value === this.complexForm.value.password1) ? null : {'passwordMatch': {valid: false}};
+    }
   }
 
   buildPersonaUser(data) {
@@ -92,12 +83,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   submitForm(data: any) {
 
-    // if (!this.captcha) {
-    //   this.alertService.error('Por Favor complete todos los datos');
-    //   return;
-    // }
-
     const persona: Persona = this.buildPersonaUser(data);
+
+    if(!this.captcha){
+      return;
+    }
 
     if (persona.documento.tipoDocumento === 'dni') {
 

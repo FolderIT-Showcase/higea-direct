@@ -12,6 +12,7 @@ export class MetadataService {
   paises: Pais[] = [];
   provincias: Provincia[] = [];
   localidades: Localidad[] = [];
+  basePath = 'core/';
 
   constructor(private api: ApiService,
               private store: Store,
@@ -37,7 +38,7 @@ export class MetadataService {
   }
 
   requestPaises() {
-    const path = 'pais';
+    const path = this.basePath + 'pais';
     return this.api.get(path);
   }
 
@@ -67,7 +68,7 @@ export class MetadataService {
   }
 
   requestProvincias() {
-    const path = 'provincia';
+    const path = this.basePath + 'provincia';
     return this.api.get(path);
   }
 
@@ -97,7 +98,7 @@ export class MetadataService {
   }
 
   requestLocalidades() {
-    const path = 'localidad';
+    const path = this.basePath + 'localidad';
     return this.api.get(path);
   }
 

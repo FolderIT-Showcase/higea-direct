@@ -32,8 +32,8 @@ export class RegisterSocialComponent implements OnInit {
   tipoDocumentos: string[] = TipoDocumentos.build();
   generos: string[] = Generos.build();
   loading = false;
-  captcha: string = null;
   complexForm: FormGroup;
+  captcha = null;
 
   constructor(private router: Router,
               private fb: FormBuilder,
@@ -56,17 +56,13 @@ export class RegisterSocialComponent implements OnInit {
     this.metadataService.getPaises().then((data: any) => {
       this.paises = data;
     });
-
-    this.model.tipoDocumento = this.tipoDocumentos[0];
-    this.model.genero = this.generos[0];
   }
 
   submitForm(data: any) {
 
-    // if (!this.captcha) {
-    //   this.alertService.error('Por Favor complete todos los datos');
-    //   return;
-    // }
+    if (!this.captcha) {
+      return;
+    }
 
     const persona: Persona = this.buildPersonaUser(data);
 
@@ -112,18 +108,6 @@ export class RegisterSocialComponent implements OnInit {
             this.alertService.success('Registro Exitoso');
           });
       });
-  }
-
-  handleCountriesClick(pais: Pais) {
-    this.model.pais = pais.nombre;
-  }
-
-  handleTipoDocumentoClick(tipoDocumento: string) {
-    this.model.tipoDocumento = tipoDocumento;
-  }
-
-  handleGeneroClick(genero: string) {
-    this.model.genero = genero;
   }
 
   handleCorrectCaptcha(event) {

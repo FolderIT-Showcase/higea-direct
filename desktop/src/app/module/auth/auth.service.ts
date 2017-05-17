@@ -9,6 +9,8 @@ import {AlertService} from '../core/service/alert.service';
 @Injectable()
 export class AppAuthService {
 
+  basePath = 'core/';
+
   static getRole(): string {
     const user: User = JSON.parse(localStorage.getItem('currentUser'));
     if (!user || !user.roles) {
@@ -52,14 +54,8 @@ export class AppAuthService {
     return this.router.navigate(['/login']);
   }
 
-  public getUser(type: string, id: string) {
-    const path = 'users/external?externalId=' + id + '&type=' + type;
-    return this.api.get(path);
-  }
-
-
   normalLogin(user: User, type: string = '') {
-    const path = 'login';
+    const path = this.basePath + 'login';
     return this.api.loginPost(path, user)
       .then(() => {
         this.router.navigate(['/']);

@@ -43,12 +43,12 @@
       </div>
       <div class="col-sm-6">
         <div class="form-group"
-             [ngClass]="{'has-error':!complexForm.controls['password2'].valid && complexForm.controls['password2'].touched}">
+             [ngClass]="{'has-error':complexForm.value.password1 !== complexForm.value.password2 || !complexForm.controls['password2'].valid && complexForm.controls['password2'].touched}">
           <label>Repita su contraseña</label>
           <input class="form-control" type="password" placeholder="la misma contraseña larga"
                  [formControl]="complexForm.controls['password2']">
           <small
-            *ngIf="complexForm.value.password1 !== complexForm.value.password2 &&
+            *ngIf="complexForm.value.password1 !== complexForm.value.password2 ||
              complexForm.controls['password2'].hasError('required') &&
              complexForm.controls['password2'].touched" class="help-block">
             Debes repetir la misma contraseña anterior.
@@ -131,9 +131,21 @@
     </div>
 
     <div class="row">
+      <div class="col-sm-12"
+           [ngClass]="{'has-error': !captcha}">
+        <div class="g-recaptcha-container">
+          <re-captcha class="g-recaptcha" (captchaResponse)="handleCorrectCaptcha($event)" language="es"
+                      site_key="6Lcf4B0UAAAAAFnu4amKAVQ-I2onmCv9OvLw0J_i"></re-captcha>
+        </div>
+        <small *ngIf="!captcha" class="help-block">Debes aceptar el Captcha.</small>
+      </div>
+    </div>
+
+    <div class="row">
+      <br>
       <div class="col-sm-6">
         <button type="submit" class="btn btn-primary btn-block"
-                [disabled]="!complexForm.valid">Registrarse
+                [disabled]="!complexForm.valid || !captcha">Registrarse
         </button>
       </div>
       <div class="col-sm-6">
