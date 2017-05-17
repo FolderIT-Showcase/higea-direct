@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../microservices/commons/commons.iml" filepath="$PROJECT_DIR$/../microservices/commons/commons.iml" />
       <module fileurl="file://$PROJECT_DIR$/../microservices/core-server/core-server.iml" filepath="$PROJECT_DIR$/../microservices/core-server/core-server.iml" />
       <module fileurl="file://$PROJECT_DIR$/../desktop/desktop.iml" filepath="$PROJECT_DIR$/../desktop/desktop.iml" />
       <module fileurl="file://$PROJECT_DIR$/../microservices/eureka-server/eureka-server.iml" filepath="$PROJECT_DIR$/../microservices/eureka-server/eureka-server.iml" />
@@ -9,7 +10,6 @@
       <module fileurl="file://$PROJECT_DIR$/../microservices/higea-especialidad-microservice/higea-especialidad-microservice.iml" filepath="$PROJECT_DIR$/../microservices/higea-especialidad-microservice/higea-especialidad-microservice.iml" />
       <module fileurl="file://$PROJECT_DIR$/../microservices/higea-profesional-microservice/higea-profesional-microservice.iml" filepath="$PROJECT_DIR$/../microservices/higea-profesional-microservice/higea-profesional-microservice.iml" />
       <module fileurl="file://$PROJECT_DIR$/../microservices/higea-turnos-microservice/higea-turnos-microservice.iml" filepath="$PROJECT_DIR$/../microservices/higea-turnos-microservice/higea-turnos-microservice.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../microservices/core-server/target/maven-archiver/maven-archiver.iml" filepath="$PROJECT_DIR$/../microservices/core-server/target/maven-archiver/maven-archiver.iml" />
     </modules>
   </component>
 </project>

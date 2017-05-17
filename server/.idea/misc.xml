@@ -10,9 +10,10 @@
         <option value="$PROJECT_DIR$/../microservices/core-server/target/maven-archiver/pom.properties" />
         <option value="$PROJECT_DIR$/../microservices/core-server/pom.xml" />
         <option value="$PROJECT_DIR$/../microservices/eureka-server/pom.xml" />
-        <option value="$PROJECT_DIR$/../microservices/higea-turnos-microservice/pom.xml" />
         <option value="$PROJECT_DIR$/../microservices/higea-profesional-microservice/pom.xml" />
         <option value="$PROJECT_DIR$/../microservices/higea-especialidad-microservice/pom.xml" />
+        <option value="$PROJECT_DIR$/../microservices/commons/pom.xml" />
+        <option value="$PROJECT_DIR$/../microservices/higea-turnos-microservice/pom.xml" />
       </list>
     </option>
   </component>

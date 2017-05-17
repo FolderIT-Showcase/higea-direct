@@ -26,7 +26,7 @@ public class HigeaProfesionalApplication {
         SpringApplication.run(HigeaProfesionalApplication.class, args);
     }
 
-    @RequestMapping("/{cliente}/profesionales")
+    @RequestMapping("/{cliente}")
     public ProfesionalDataDTO especialidades(@PathVariable("cliente") String codigo) {
         return connectionMidleWare.profesionales(codigo);
     }
