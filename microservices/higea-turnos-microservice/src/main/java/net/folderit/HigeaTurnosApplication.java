@@ -6,15 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @SpringBootApplication
 @EnableEurekaClient
 @RestController
 public class HigeaTurnosApplication {
-
 
     private final ConnectionMidleWare connectionMidleWare;
 
@@ -29,5 +28,11 @@ public class HigeaTurnosApplication {
     @RequestMapping("/{cliente}/turnos")
     public TurnoDataDTO turnos(@PathVariable("cliente") String codigo) {
         return connectionMidleWare.turnos(codigo);
+    }
+
+    @PostMapping("/turno")
+    public ResponseEntity<Collection<Turno>> getAll(@RequestBody FilterDto filterDto) {
+        List<Turno> turnos = turnoService.finAllBy(filterDto);
+        return new ResponseEntity<>((List<Turno>) turnos, HttpStatus.OK);
     }
 }

@@ -21,8 +21,8 @@ eureka:
 zuul:
   add-host-header: true
   routes:
-    higea-profesional-microservice:
-      path: /profesionales-higea/**
+    higea-profesionales:
+      path: /higea/profesionales/**
       url: http://localhost:36001
     higea-especialidades:
       path: /higea/especialidades/**
@@ -31,6 +31,6 @@ zuul:
       path: /turnos-higea/**
       url: http://localhost:36003
     core-server:
-      path: /api/**
+      path: /core/**
       sensitiveHeaders:
       url: http://localhost:36000

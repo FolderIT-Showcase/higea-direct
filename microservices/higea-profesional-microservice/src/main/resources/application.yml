@@ -1,6 +1,6 @@
 spring:
   application:
-    name: profesional-higea
+    name: higea-profesionales
 server:
   port: 36001
 eureka:
