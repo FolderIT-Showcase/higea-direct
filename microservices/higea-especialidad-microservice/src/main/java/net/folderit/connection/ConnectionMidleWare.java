@@ -15,7 +15,7 @@ public class ConnectionMidleWare {
 
     final String uriLogin = "http://higea.folderit.net/api/login";
     final String uriEspecialidad = "http://higea.folderit.net/api/{cliente}/especialidades";
-    final String uriProfesionales = "http://localhost:36001/{cliente}";
+    final String uriProfesionales = "http://localhost:36001/{cliente}/profesionales";
     private RestTemplate restTemplate = new RestTemplate();
 
     public ResponseEntity<LoginResultDTO> login() {
@@ -39,7 +39,7 @@ public class ConnectionMidleWare {
         uriParams.put("cliente", codigo);
 
         // send request and parse result
-        ResponseEntity<ProfesionalDataDTO> result = restTemplate.exchange(uriProfesionales, HttpMethod.GET, entity, ProfesionalDataDTO.class, uriParams);
+       ResponseEntity<ProfesionalDataDTO> result = restTemplate.exchange(uriProfesionales, HttpMethod.GET, entity, ProfesionalDataDTO.class, uriParams);
 
 
         return result.getBody().getRows();
@@ -47,7 +47,7 @@ public class ConnectionMidleWare {
     }
 
 
-    public ResponseEntity<DataDTO> especialidades(String codigo) {
+    public List<EspecialidadCoreDTO> especialidades(String codigo) {
 
         ResponseEntity<LoginResultDTO> loginResultDTO = login();
 
@@ -87,7 +87,7 @@ public class ConnectionMidleWare {
 
 
         }
-        DataDTO dataDTO = new DataDTO(especialidadCoreDTOS);
-        return ResponseEntity.ok(dataDTO);//especialidades core
+        //DataDTO dataDTO = new DataDTO(especialidadCoreDTOS);
+        return especialidadCoreDTOS;//especialidades core
     }
 }
