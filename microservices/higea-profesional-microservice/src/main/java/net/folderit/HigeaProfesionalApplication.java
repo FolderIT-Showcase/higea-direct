@@ -1,7 +1,7 @@
 package net.folderit;
 
 import net.folderit.connection.ConnectionMidleWare;
-import net.folderit.converters.DataCoreDTO;
+import net.folderit.converters.ProfesionalCoreDTO;
 import net.folderit.dto.ProfesionalDataDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -10,6 +10,8 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @SpringBootApplication
 @EnableEurekaClient
@@ -34,7 +36,7 @@ public class HigeaProfesionalApplication {
     }
 
     @RequestMapping("/{cliente}")
-    public DataCoreDTO profesionalesCore(@PathVariable("cliente") String codigo) {
+    public List<ProfesionalCoreDTO> profesionalesCore(@PathVariable("cliente") String codigo) {
         return connectionMidleWare.profesionalesCore(codigo);
     }
 

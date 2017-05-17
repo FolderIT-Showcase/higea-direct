@@ -1,7 +1,7 @@
 package net.folderit.connection;
 
 import net.folderit.converters.DataCoreDTO;
-import net.folderit.converters.PrefesionalCoreDTO;
+import net.folderit.converters.ProfesionalCoreDTO;
 import net.folderit.dto.*;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -55,7 +55,7 @@ public class ConnectionMidleWare {
         /*return result;*/
     }
 
-    public DataCoreDTO profesionalesCore(String codigo) {
+    public List<ProfesionalCoreDTO> profesionalesCore(String codigo) {
 
         ResponseEntity<LoginResultDTO> loginResultDTO = login();
 
@@ -73,16 +73,16 @@ public class ConnectionMidleWare {
 
         ResponseEntity<ProfesionalDTO> result = restTemplate.exchange(uriEspecialidad, HttpMethod.GET, entity, ProfesionalDTO.class, uriParams);
 
-        List<PrefesionalCoreDTO> prefesionalCoreDTOS = new ArrayList<>();
+        List<ProfesionalCoreDTO> profesionalCoreDTOS = new ArrayList<>();
 
         for (Iterator<RowProfesionalDTO> i = result.getBody().getData().getRows().iterator(); i.hasNext();) {
             RowProfesionalDTO item = i.next();
-            prefesionalCoreDTOS.add(item.converterRoProfesionalCore());
+            profesionalCoreDTOS.add(item.converterRoProfesionalCore());
         }
         DataCoreDTO dataCoreDTO = new DataCoreDTO();
 
-        dataCoreDTO.setData(prefesionalCoreDTOS);
-        return dataCoreDTO;
+        dataCoreDTO.setData(profesionalCoreDTOS);
+        return profesionalCoreDTOS;
         /*return result;*/
     }
 }
