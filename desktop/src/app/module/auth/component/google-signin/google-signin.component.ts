@@ -46,9 +46,9 @@ export class GoogleSigninComponent implements AfterViewInit {
       (googleUser) => {
         const user: User = new User();
         user.email = googleUser.getBasicProfile().getEmail();
-        user.externalId = googleUser.getBasicProfile().getId();
-        localStorage.setItem('socialUser', JSON.stringify(user));
-        this.auth.login(user, 'google');
+        user.password = googleUser.getBasicProfile().getId();
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        this.auth.login(user, 'social');
         googleUser.disconnect();
       }, (error) => {
         this.router.navigate(['/login']);

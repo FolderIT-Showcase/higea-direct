@@ -220,7 +220,6 @@ export class ListaIntegrantesComponent implements OnInit {
 
   confirmDeleteModal() {
 
-    console.log(this.integrante)
     const integrantes: Persona[] = [];
 
     this.currentPersona.integrantes.forEach(x => {
