@@ -4,16 +4,19 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
+/**
+ * Created by luis on 17/05/17.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EspecialidadDTO {
+public class PrefesionalCoreDTO {
 
-    private Boolean result;
 
-    private String error;
+    private Long id;
 
-    private EspecilidadDataDTO data;
+    private String apellido;
+
+    private String nombre;
+
 }

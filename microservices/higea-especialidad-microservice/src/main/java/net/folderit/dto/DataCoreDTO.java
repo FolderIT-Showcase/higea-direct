@@ -6,14 +6,13 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+/**
+ * Created by luis on 17/05/17.
+ */
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class EspecialidadDTO {
+@AllArgsConstructor
+public class DataCoreDTO {
 
-    private Boolean result;
-
-    private String error;
-
-    private EspecilidadDataDTO data;
+    List<PrefesionalCoreDTO> data;
 }

@@ -1,15 +1,13 @@
 package net.folderit.connection;
 
-import net.folderit.dto.LoginDTO;
-import net.folderit.dto.LoginResultDTO;
-import net.folderit.dto.ProfesionalDTO;
-import net.folderit.dto.ProfesionalDataDTO;
+import net.folderit.converters.DataCoreDTO;
+import net.folderit.converters.PrefesionalCoreDTO;
+import net.folderit.dto.*;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class ConnectionMidleWare {
@@ -49,9 +47,9 @@ public class ConnectionMidleWare {
         headers.set("Authorization", loginResultDTO.getBody().getToken());
         HttpEntity<?> entity = new HttpEntity<>(headers);
 
-        //ResponseEntity<ProfesionalDTO> result=  restTemplate.getForObject(uriEspecialidad ,entity, ProfesionalDTO.class,uriParams);
 
         ResponseEntity<ProfesionalDTO> result = restTemplate.exchange(uriEspecialidad, HttpMethod.GET, entity, ProfesionalDTO.class, uriParams);
+
 
         return result.getBody().getData();
         /*return result;*/

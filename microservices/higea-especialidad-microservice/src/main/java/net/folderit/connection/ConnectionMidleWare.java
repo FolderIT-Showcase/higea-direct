@@ -1,23 +1,21 @@
 package net.folderit.connection;
 
-import net.folderit.dto.EspecialidadDTO;
-import net.folderit.dto.EspecilidadDataDTO;
-import net.folderit.dto.LoginDTO;
-import net.folderit.dto.LoginResultDTO;
+import net.folderit.converters.DataDTO;
+import net.folderit.converters.EspecialidadCoreDTO;
+import net.folderit.dto.*;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class ConnectionMidleWare {
 
-    //http://higea.folderit.net
 
     final String uriLogin = "http://higea.folderit.net/api/login";
     final String uriEspecialidad = "http://higea.folderit.net/api/{cliente}/especialidades";
+    final String uriProfesionales = "http://localhost:36001/{cliente}/profesionales";
     private RestTemplate restTemplate = new RestTemplate();
 
     public ResponseEntity<LoginResultDTO> login() {
@@ -33,10 +31,27 @@ public class ConnectionMidleWare {
 
     }
 
+    public List<RowProfesionalDTO> getProfesionales(String codigo, HttpEntity<?> entity) {
 
-    public ResponseEntity<EspecialidadDTO> especialidades(String codigo) {
+
+        // URI (URL) parameters
+        Map<String, String> uriParams = new HashMap<>();
+        uriParams.put("cliente", codigo);
+
+        // send request and parse result
+        ResponseEntity<ProfesionalDataDTO> result = restTemplate.exchange(uriProfesionales, HttpMethod.GET, entity, ProfesionalDataDTO.class, uriParams);
+
+
+        return result.getBody().getRows();
+
+    }
+
+
+    public ResponseEntity<DataDTO> especialidades(String codigo) {
 
         ResponseEntity<LoginResultDTO> loginResultDTO = login();
+
+
 
 
         // URI (URL) parameters
@@ -49,10 +64,30 @@ public class ConnectionMidleWare {
         headers.set("Authorization", loginResultDTO.getBody().getToken());
         HttpEntity<?> entity = new HttpEntity<>(headers);
 
+         List<RowProfesionalDTO> prefesionalRowDTO = this.getProfesionales(codigo,entity);
+
 
         ResponseEntity<EspecialidadDTO> result = restTemplate.exchange(uriEspecialidad, HttpMethod.GET, entity, EspecialidadDTO.class, uriParams);
 
+        List<EspecialidadCoreDTO> especialidadCoreDTOS = new ArrayList<>();
 
-        return result;
+        for (Iterator<EspecialidadesRow> i = result.getBody().getData().getRows().iterator(); i.hasNext();) {
+            EspecialidadesRow item = i.next();
+            EspecialidadCoreDTO especilidadCoreDTO = item.convertToEspecialidadCoreDTO();
+
+            for (Iterator<RowProfesionalDTO> j = prefesionalRowDTO.iterator(); j.hasNext();) {
+                RowProfesionalDTO profesionalRowDTO = j.next();
+                if(especilidadCoreDTO.getId().intValue()==profesionalRowDTO.getEspecialidad_id()){
+                    if(especilidadCoreDTO.getProfesional()==null){especilidadCoreDTO.setProfesional(new ArrayList<>());}
+                    especilidadCoreDTO.getProfesional().add(profesionalRowDTO.converterToProfesionalCore());
+                }
+            }
+
+            especialidadCoreDTOS.add(especilidadCoreDTO);
+
+
+        }
+        DataDTO dataDTO = new DataDTO(especialidadCoreDTOS);
+        return ResponseEntity.ok(dataDTO);//especialidades core
     }
 }

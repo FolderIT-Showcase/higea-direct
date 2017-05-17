@@ -1,9 +1,18 @@
 package net.folderit.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import net.folderit.converters.EspecialidadCoreDTO;
+
+import java.util.List;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class EspecilidadDataDTO {
 
-    Long especialidad_id;
-    String especialidad_nombre;
-    String especialidad_abreviatura;
-    String especialidad_observaciones;
+    List<EspecialidadesRow> rows;
+
+
 }

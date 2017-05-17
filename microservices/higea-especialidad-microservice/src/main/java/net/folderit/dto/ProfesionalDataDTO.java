@@ -7,13 +7,11 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class EspecialidadDTO {
+@AllArgsConstructor
+public class ProfesionalDataDTO {
 
-    private Boolean result;
+    private List<RowProfesionalDTO> rows;
 
-    private String error;
 
-    private EspecilidadDataDTO data;
 }
