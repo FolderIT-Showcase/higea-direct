@@ -54,4 +54,35 @@ public class ConnectionMidleWare {
         return result.getBody().getData();
         /*return result;*/
     }
+
+    public DataCoreDTO profesionalesCore(String codigo) {
+
+        ResponseEntity<LoginResultDTO> loginResultDTO = login();
+
+
+        // URI (URL) parameters
+        Map<String, String> uriParams = new HashMap<>();
+        uriParams.put("cliente", codigo);
+
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+        headers.set("Authorization", loginResultDTO.getBody().getToken());
+        HttpEntity<?> entity = new HttpEntity<>(headers);
+
+
+        ResponseEntity<ProfesionalDTO> result = restTemplate.exchange(uriEspecialidad, HttpMethod.GET, entity, ProfesionalDTO.class, uriParams);
+
+        List<PrefesionalCoreDTO> prefesionalCoreDTOS = new ArrayList<>();
+
+        for (Iterator<RowProfesionalDTO> i = result.getBody().getData().getRows().iterator(); i.hasNext();) {
+            RowProfesionalDTO item = i.next();
+            prefesionalCoreDTOS.add(item.converterRoProfesionalCore());
+        }
+        DataCoreDTO dataCoreDTO = new DataCoreDTO();
+
+        dataCoreDTO.setData(prefesionalCoreDTOS);
+        return dataCoreDTO;
+        /*return result;*/
+    }
 }

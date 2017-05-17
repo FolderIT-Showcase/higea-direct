@@ -1,6 +1,7 @@
 package net.folderit;
 
 import net.folderit.connection.ConnectionMidleWare;
+import net.folderit.converters.DataCoreDTO;
 import net.folderit.dto.ProfesionalDataDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -27,8 +28,13 @@ public class HigeaProfesionalApplication {
     }
 
     @RequestMapping("/{cliente}/profesionales")
-    public ProfesionalDataDTO especialidades(@PathVariable("cliente") String codigo) {
+    public ProfesionalDataDTO profesionales(@PathVariable("cliente") String codigo) {
         return connectionMidleWare.profesionales(codigo);
+    }
+
+    @RequestMapping("/{cliente}")
+    public DataCoreDTO profesionalesCore(@PathVariable("cliente") String codigo) {
+        return connectionMidleWare.profesionalesCore(codigo);
     }
 
 }
