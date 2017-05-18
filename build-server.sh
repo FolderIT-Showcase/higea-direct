@@ -79,7 +79,6 @@ function server_dev_mode
     sudo cp -f $WORKSPACE/microservices/gateway/target/gateway-0.0.1-SNAPSHOT.jar /opt/api/gateway.jar
 
     cd $WORKSPACE/microservices/higea-especialidad-microservice
-	mvn dependency:purge-local-repository -DactTransitively=false -DreResolve=false --fail-at-end
     mvn clean package -DskipTests
 	if [ -f /opt/api/higea-especialidad-microservice.jar ]; then
 	    sudo cp -f /opt/api/higea-especialidad-microservice.jar /opt/api/higea-especialidad-microservice-last.jar
@@ -87,7 +86,6 @@ function server_dev_mode
     sudo cp -f$WORKSPACE/microservices/higea-especialidad-microservice/target/higea-especialidad-microservice-0.0.1-SNAPSHOT.jar /opt/api/higea-especialidad-microservice.jar
 
     cd $WORKSPACE/microservices/higea-profesional-microservice
-	mvn dependency:purge-local-repository -DactTransitively=false -DreResolve=false --fail-at-end
     mvn clean package -DskipTests
 	if [ -f /opt/api/higea-profesional-microservice.jar ]; then
 	    sudo cp -f /opt/api/higea-profesional-microservice.jar /opt/api/higea-profesional-microservice-last.jar
@@ -95,7 +93,6 @@ function server_dev_mode
     sudo cp -f $WORKSPACE/microservices/higea-profesional-microservice/target/higea-profesional-microservice-0.0.1-SNAPSHOT.jar /opt/api/higea-profesional-microservice.jar
 
     cd $WORKSPACE/microservices/higea-turnos-microservice
-	mvn dependency:purge-local-repository -DactTransitively=false -DreResolve=false --fail-at-end
     mvn clean package -DskipTests
 	if [ -f /opt/api/higea-turnos-microservice.jar ]; then
 	    sudo cp -f /opt/api/higea-turnos-microservice.jar /opt/api/higea-turnos-microservice-last.jar
