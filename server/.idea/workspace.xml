@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d25063ae-68eb-49a1-9155-5689e6ace45f" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../microservices/higea-especialidad-microservice/pom.xml" afterPath="$PROJECT_DIR$/../microservices/higea-especialidad-microservice/pom.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../microservices/higea-profesional-microservice/pom.xml" afterPath="$PROJECT_DIR$/../microservices/higea-profesional-microservice/pom.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../microservices/higea-turnos-microservice/pom.xml" afterPath="$PROJECT_DIR$/../microservices/higea-turnos-microservice/pom.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/../microservices/feign-client-higea/target/" />
@@ -96,11 +98,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../microservices/higea-especialidad-microservice/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="332">
-              <caret line="37" column="35" lean-forward="false" selection-start-line="37" selection-start-column="35" selection-end-line="37" selection-end-column="35" />
+            <state relative-caret-position="391">
+              <caret line="29" column="60" lean-forward="false" selection-start-line="29" selection-start-column="60" selection-end-line="29" selection-end-column="60" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../microservices/higea-profesional-microservice/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="442">
+              <caret line="29" column="60" lean-forward="false" selection-start-line="29" selection-start-column="60" selection-end-line="29" selection-end-column="60" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/../microservices/higea-turnos-microservice/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="391">
+              <caret line="29" column="60" lean-forward="false" selection-start-line="29" selection-start-column="60" selection-end-line="29" selection-end-column="60" />
               <folding />
             </state>
           </provider>
@@ -237,9 +259,9 @@
         <option value="$PROJECT_DIR$/../microservices/commons/src/main/java/net/folderit/dto/FilterDto.java" />
         <option value="$PROJECT_DIR$/../microservices/commons/src/main/java/net/folderit/domain/Turno.java" />
         <option value="$PROJECT_DIR$/../microservices/higea-especialidad-microservice/src/main/java/net/folderit/connection/ConnectionMidleWare.java" />
+        <option value="$PROJECT_DIR$/../microservices/higea-especialidad-microservice/pom.xml" />
         <option value="$PROJECT_DIR$/../microservices/higea-profesional-microservice/pom.xml" />
         <option value="$PROJECT_DIR$/../microservices/higea-turnos-microservice/pom.xml" />
-        <option value="$PROJECT_DIR$/../microservices/higea-especialidad-microservice/pom.xml" />
       </list>
     </option>
   </component>
@@ -873,7 +895,7 @@
       <workItem from="1495036068438" duration="13406000" />
       <workItem from="1495055167472" duration="9000" />
       <workItem from="1495111879800" duration="8406000" />
-      <workItem from="1495121265617" duration="4461000" />
+      <workItem from="1495121265617" duration="5071000" />
     </task>
     <task id="LOCAL-00001" summary="corregido agregar integrante">
       <created>1494507806773</created>
@@ -893,7 +915,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="127109000" />
+    <option name="totallyTimeSpent" value="127719000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1367,22 +1389,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../microservices/higea-turnos-microservice/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="29" column="53" lean-forward="true" selection-start-line="29" selection-start-column="53" selection-end-line="29" selection-end-column="53" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../microservices/higea-profesional-microservice/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="29" column="47" lean-forward="false" selection-start-line="29" selection-start-column="47" selection-end-line="29" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../microservices/commons/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="481">
@@ -1393,8 +1399,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../microservices/higea-especialidad-microservice/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="332">
-          <caret line="37" column="35" lean-forward="false" selection-start-line="37" selection-start-column="35" selection-end-line="37" selection-end-column="35" />
+        <state relative-caret-position="391">
+          <caret line="29" column="60" lean-forward="false" selection-start-line="29" selection-start-column="60" selection-end-line="29" selection-end-column="60" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../microservices/higea-profesional-microservice/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="29" column="60" lean-forward="false" selection-start-line="29" selection-start-column="60" selection-end-line="29" selection-end-column="60" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../microservices/higea-turnos-microservice/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="29" column="60" lean-forward="false" selection-start-line="29" selection-start-column="60" selection-end-line="29" selection-end-column="60" />
           <folding />
         </state>
       </provider>
