@@ -22,6 +22,17 @@ function stopServices {
 
 }
 
+function help()
+{
+    echo 'Usage'
+    echo
+    echo 'para iniciar microservicios'
+    echo $0 --start
+    echo
+    echo 'para detener microservicios'
+    echo $0 --stop
+}
+
 case "$1"
 in
     --start) startServices;;
