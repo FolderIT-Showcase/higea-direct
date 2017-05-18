@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 function startServices {
 
@@ -11,8 +11,6 @@ function startServices {
 
 }
 
-
-
 function stopServices {
 
     /usr/bin/kill -9 `jps -v |grep -w eureka-server.jar|cut -f1 -d " "`
@@ -23,9 +21,6 @@ function stopServices {
     /usr/bin/kill -9 `jps -v |grep -w higea-turnos-microservice.jar|cut -f1 -d " "`
 
 }
-
-
-
 
 case "$1"
 in
