@@ -3,6 +3,7 @@ package net.folderit.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import net.folderit.domain.Profesional;
 
 import java.io.Serializable;
 
@@ -19,13 +20,11 @@ public class RowProfesionalDTO implements Serializable {
     private int especialidad_id;
 
 
-    public PrefesionalCoreDTO converterToProfesionalCore(){
-        PrefesionalCoreDTO prefesionalCoreDTO = new PrefesionalCoreDTO();
-
-        prefesionalCoreDTO.setApellido(getPersona_apellido());
-        prefesionalCoreDTO.setId(Long.valueOf(getProfesional_id()));
-        prefesionalCoreDTO.setNombre(getPersona_nombres());
-
-        return prefesionalCoreDTO;
+    public Profesional converterToProfesionalCore(){
+        Profesional profesional = new Profesional();
+        profesional.setApellido(getPersona_apellido());
+        profesional.setId(Long.valueOf(getProfesional_id()));
+        profesional.setNombre(getPersona_nombres());
+        return profesional;
     }
 }

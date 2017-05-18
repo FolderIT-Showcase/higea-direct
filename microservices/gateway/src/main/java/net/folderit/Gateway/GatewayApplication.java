@@ -17,10 +17,4 @@ public class GatewayApplication {
     public SimpleFilter simpleFilter() {
         return new SimpleFilter();
     }
-//    @Bean
-//    public PatternServiceRouteMapper serviceRouteMapper() {
-//        return new PatternServiceRouteMapper(
-//                "(?<name>^.+)-(?<license>v.+$)",
-//                "${license}/${name}");
-//    }
 }

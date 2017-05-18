@@ -3,6 +3,7 @@ package net.folderit;
 import net.folderit.connection.ConnectionMidleWare;
 import net.folderit.converters.DataDTO;
 import net.folderit.converters.EspecialidadCoreDTO;
+import net.folderit.domain.Especialidad;
 import net.folderit.dto.EspecialidadDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -34,7 +35,7 @@ public class HigeaEspecialidadApplication {
     }
 
     @RequestMapping("/{cliente}")
-    public List<EspecialidadCoreDTO> especialidades(@PathVariable("cliente") String codigo) {
+    public List<Especialidad> especialidades(@PathVariable("cliente") String codigo) {
         return connectionMidleWare.especialidades(codigo);
     }
 

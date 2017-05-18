@@ -11,22 +11,12 @@ import java.io.Serializable;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
-@Entity
-@Table(name = "documento")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(NON_NULL)
 public class Documento implements Serializable {
-
-
     public TipoDocumento tipoDocumento;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Integer numero;
-
-    public void finalize() throws Throwable {
-
-    }
-}//end Documento
+}

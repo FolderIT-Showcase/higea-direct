@@ -11,8 +11,5 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EspecilidadDataDTO {
-
     List<EspecialidadesRow> rows;
-
-
 }

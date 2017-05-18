@@ -11,8 +11,6 @@ import java.io.Serializable;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
-@Entity
-@Table(name = "contacto")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,12 +18,7 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 public class Contacto implements Serializable {
 
     public TipoContacto tipoContacto;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String dato;
 
-    public void finalize() throws Throwable {
-
-    }
-}//end Contacto
+}

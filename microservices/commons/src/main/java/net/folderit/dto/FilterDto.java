@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import net.folderit.domain.CentroSalud;
 import net.folderit.domain.Especialidad;
 import net.folderit.domain.Profesional;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 
@@ -17,7 +16,6 @@ import java.io.Serializable;
 public class FilterDto implements Serializable {
 
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "America/Buenos_Aires")
-    @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE_TIME)
     String fecha;
     CentroSalud centroSalud;
     Especialidad especialidad;

@@ -4,10 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import net.folderit.converters.EspecialidadCoreDTO;
+import net.folderit.domain.Especialidad;
 
-/**
- * Created by luis on 17/05/17.
- */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,11 +16,11 @@ public class EspecialidadesRow {
     String especialidad_abreviatura;
     String especialidad_observaciones;
 
-    public EspecialidadCoreDTO convertToEspecialidadCoreDTO(){
-        EspecialidadCoreDTO especialidadCoreDTO = new EspecialidadCoreDTO();
-        especialidadCoreDTO.setId(getEspecialidad_id());
-        especialidadCoreDTO.setNombre(getEspecialidad_nombre());
-        return especialidadCoreDTO;
+    public Especialidad convertToEspecialidadCoreDTO(){
+        Especialidad especialidad = new Especialidad();
+        especialidad.setId(getEspecialidad_id());
+        especialidad.setNombre(getEspecialidad_nombre());
+        return especialidad;
 
     }
 }

@@ -3,7 +3,7 @@ package net.folderit.converters;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import net.folderit.dto.PrefesionalCoreDTO;
+import net.folderit.domain.Profesional;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ import java.util.List;
 public class EspecialidadCoreDTO {
 
 
-    public List<PrefesionalCoreDTO> profesional;
+    public List<Profesional> profesional;
     private Long id;
     private String nombre;
 

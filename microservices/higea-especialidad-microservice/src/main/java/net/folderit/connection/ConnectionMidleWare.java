@@ -1,8 +1,10 @@
 package net.folderit.connection;
 
-import net.folderit.converters.DataDTO;
 import net.folderit.converters.EspecialidadCoreDTO;
+import net.folderit.domain.Especialidad;
+import net.folderit.domain.Profesional;
 import net.folderit.dto.*;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -31,63 +33,57 @@ public class ConnectionMidleWare {
 
     }
 
-    public List<RowProfesionalDTO> getProfesionales(String codigo, HttpEntity<?> entity) {
-
+    private ArrayList<RowProfesionalDTO> getProfesionales(String codigo, HttpEntity<?> entity) {
 
         // URI (URL) parameters
         Map<String, String> uriParams = new HashMap<>();
         uriParams.put("cliente", codigo);
 
         // send request and parse result
-       ResponseEntity<ProfesionalDataDTO> result = restTemplate.exchange(uriProfesionales, HttpMethod.GET, entity, ProfesionalDataDTO.class, uriParams);
+        ResponseEntity<ArrayList<RowProfesionalDTO>> result =
+                restTemplate.exchange(uriProfesionales, HttpMethod.GET, entity, new ParameterizedTypeReference<ArrayList<RowProfesionalDTO>>(){}, uriParams);
 
-
-        return result.getBody().getRows();
+        return result.getBody();
 
     }
 
 
-    public List<EspecialidadCoreDTO> especialidades(String codigo) {
+    public List<Especialidad> especialidades(String codigo) {
 
         ResponseEntity<LoginResultDTO> loginResultDTO = login();
-
-
-
 
         // URI (URL) parameters
         Map<String, String> uriParams = new HashMap<>();
         uriParams.put("cliente", codigo);
-
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
         headers.set("Authorization", loginResultDTO.getBody().getToken());
         HttpEntity<?> entity = new HttpEntity<>(headers);
 
-         List<RowProfesionalDTO> prefesionalRowDTO = this.getProfesionales(codigo,entity);
-
+        ArrayList<RowProfesionalDTO> profesionales = this.getProfesionales(codigo, entity);
 
         ResponseEntity<EspecialidadDTO> result = restTemplate.exchange(uriEspecialidad, HttpMethod.GET, entity, EspecialidadDTO.class, uriParams);
 
-        List<EspecialidadCoreDTO> especialidadCoreDTOS = new ArrayList<>();
+        ArrayList<Especialidad> especialidades = new ArrayList<>();
 
-        for (Iterator<EspecialidadesRow> i = result.getBody().getData().getRows().iterator(); i.hasNext();) {
-            EspecialidadesRow item = i.next();
-            EspecialidadCoreDTO especilidadCoreDTO = item.convertToEspecialidadCoreDTO();
+        List<EspecialidadesRow> mEspecialidades = result.getBody().getData().getRows();
 
-            for (Iterator<RowProfesionalDTO> j = prefesionalRowDTO.iterator(); j.hasNext();) {
-                RowProfesionalDTO profesionalRowDTO = j.next();
-                if(especilidadCoreDTO.getId().intValue()==profesionalRowDTO.getEspecialidad_id()){
-                    if(especilidadCoreDTO.getProfesional()==null){especilidadCoreDTO.setProfesional(new ArrayList<>());}
-                    especilidadCoreDTO.getProfesional().add(profesionalRowDTO.converterToProfesionalCore());
+        mEspecialidades.forEach( x -> {
+            Especialidad mEspecialidad = x.convertToEspecialidadCoreDTO();
+
+            profesionales.forEach( y -> {
+                if (mEspecialidad.getId().intValue() == y.getEspecialidad_id()) {
+                    if (mEspecialidad.getProfesional() == null) {
+                        mEspecialidad.setProfesional(new ArrayList<>());
+                    }
+                    mEspecialidad.getProfesional().add(y.converterToProfesionalCore());
                 }
-            }
+            });
 
-            especialidadCoreDTOS.add(especilidadCoreDTO);
+            especialidades.add(mEspecialidad);
+        });
 
-
-        }
-        //DataDTO dataDTO = new DataDTO(especialidadCoreDTOS);
-        return especialidadCoreDTOS;//especialidades core
+        return especialidades;
     }
 }

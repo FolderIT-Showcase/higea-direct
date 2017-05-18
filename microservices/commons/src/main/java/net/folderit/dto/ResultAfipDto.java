@@ -6,8 +6,6 @@ import lombok.Data;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data
 public class ResultAfipDto {
-
     private String result;
-
     private DataDto data;
 }
