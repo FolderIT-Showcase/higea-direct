@@ -43,7 +43,7 @@ function dev_mode
 function server_dev_mode
 {
 
-	WORKSPACE = "/home/turnero/turnero-ute"
+	WORKSPACE="/home/turnero/turnero-ute"
 
     cd $WORKSPACE
 
