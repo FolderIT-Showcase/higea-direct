@@ -22,6 +22,7 @@ import * as _ from 'lodash';
 import {IMyOptions} from 'mydatepicker';
 import {DatePipe} from '@angular/common';
 import {MetadataService} from '../../../core/service/metadata.service';
+import {UtilsService} from '../../../core/service/utils.service';
 
 @Component({
   selector: 'app-lista-integrantes',
@@ -58,13 +59,20 @@ export class ListaIntegrantesComponent implements OnInit {
   modalConfirmacion: ModalDirective;
   modalForm: ModalDirective;
   subs: Subscription[] = [];
+  desktopMode = true;
 
   constructor(private fb: FormBuilder,
+              private utilsService: UtilsService,
               private store: Store,
               private metadataService: MetadataService,
               private personaService: PersonaService,
               private alertService: AlertService,
               private storeHelper: StoreService) {
+    this.desktopMode = (this.utilsService.getWidth()) >= 900;
+
+    this.subs.push(this.utilsService.getWidthResizeEvent().subscribe(data => {
+      this.desktopMode = data >= 900;
+    }));
   }
 
   ngOnInit(): void {
