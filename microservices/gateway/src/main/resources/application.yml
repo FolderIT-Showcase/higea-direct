@@ -28,7 +28,7 @@ zuul:
       path: /higea/especialidades/**
       url: http://localhost:36002
     higea-turnos-microservice:
-      path: /turnos-higea/**
+      path: /higea/turnos/**
       url: http://localhost:36003
     core-server:
       path: /core/**
