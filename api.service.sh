@@ -2,12 +2,14 @@
 
 function startServices {
 
-    /usr/bin/java -jar /opt/api/eureka-server.jar &
-    /usr/bin/java -jar /opt/api/gateway.jar &
-    /usr/bin/java -jar /opt/api/core-server.jar &
-    /usr/bin/java -jar /opt/api/higea-especialidad-microservice.jar &
-    /usr/bin/java -jar /opt/api/higea-profesional-microservice.jar &
-    /usr/bin/java -jar /opt/api/higea-turnos-microservice.jar &
+    JAVA_OPTS=-Xms64m -Xmx128m -XX:PermSize=32m -XX:MaxPermSize=64m -XX:+UseG1GC -Djava.security.egd=file:/dev/urandom
+
+    /usr/bin/java $JAVA_OPTS -jar /opt/api/eureka-server.jar &
+    /usr/bin/java $JAVA_OPTS -jar /opt/api/gateway.jar &
+    /usr/bin/java $JAVA_OPTS -jar /opt/api/core-server.jar &
+    /usr/bin/java $JAVA_OPTS -jar /opt/api/higea-especialidad-microservice.jar &
+    /usr/bin/java $JAVA_OPTS -jar /opt/api/higea-profesional-microservice.jar &
+    /usr/bin/java $JAVA_OPTS -jar /opt/api/higea-turnos-microservice.jar &
 
 }
 
