@@ -20,7 +20,6 @@
       "styles": [
         "assets/css/bootstrap.min.css",
         "styles/styles.scss",
-        "styles/sidebar.scss",
         "styles/card.scss"
       ],
       "scripts": [

@@ -25,6 +25,7 @@ import {CoreComponent} from './core.component';
 import {AdminGuard} from './service/guard/admin.guard';
 import {ModalComponent} from './component/modal/modal.component';
 import {LocalidadesResolveService} from './service/resolve/localidades-resolve.service';
+import {UtilsService} from './service/utils.service';
 
 @NgModule({
   imports: [
@@ -64,7 +65,8 @@ import {LocalidadesResolveService} from './service/resolve/localidades-resolve.s
     IntegrantesResolveService,
     LocalidadesResolveService,
     LoadingService,
-    TurnoService
+    TurnoService,
+    UtilsService
   ]
 })
 export class CoreModule {

@@ -10,6 +10,7 @@ import {CentroSalud} from '../../../core/domain/centro-salud';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {Subscription} from 'rxjs/Subscription';
 import {Store} from '../../../core/service/store';
+import {UtilsService} from '../../../core/service/utils.service';
 
 class Data {
   persona: Persona;
@@ -30,8 +31,10 @@ export class ModificarTurnoComponent implements OnInit, OnDestroy {
   modal: ModalDirective;
   form: FormGroup;
   subs: Subscription[] = [];
+  desktopMode = true;
 
-  constructor(private storeService: StoreService,
+  constructor(private utilsService: UtilsService,
+              private storeService: StoreService,
               private store: Store,
               private turnoService: TurnoService,
               private fb: FormBuilder,
@@ -40,6 +43,13 @@ export class ModificarTurnoComponent implements OnInit, OnDestroy {
     this.turno.especialidad.nombre = '';
     this.turno.centroSalud = new CentroSalud;
     this.turno.centroSalud.nombre = '';
+
+    this.desktopMode = (this.utilsService.getWidth()) >= 900;
+
+    this.subs.push(this.utilsService.getWidthResizeEvent().subscribe(data => {
+      this.desktopMode = data >= 900;
+    }));
+
 
   }
 

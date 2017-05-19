@@ -10,12 +10,17 @@ import {AlertService} from '../../service/alert.service';
 export class NavbarComponent implements OnInit {
 
   isAuth = false;
+  isIn = false;
 
   constructor(private auth: AppAuthService, private alert: AlertService) {
   }
 
   ngOnInit(): void {
     this.isAuth = AppAuthService.isAdmin();
+  }
+
+  toggleState() { // click handler
+    this.isIn = !this.isIn;
   }
 
   logout() {

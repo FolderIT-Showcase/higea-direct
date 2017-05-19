@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {PersonaService} from '../../../core/service/persona.service';
 import {AlertService} from '../../../core/service/alert.service';
@@ -85,7 +85,7 @@ export class RegisterComponent implements OnInit {
 
     const persona: Persona = this.buildPersonaUser(data);
 
-    if(!this.captcha){
+    if (!this.captcha) {
       return;
     }
 

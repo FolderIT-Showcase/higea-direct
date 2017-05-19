@@ -1,4 +1,7 @@
-<app-alert></app-alert>
-<router-outlet></router-outlet>
-<app-loading></app-loading>
+<div (window:resize)="onResize($event)">
+  <app-alert></app-alert>
+  <router-outlet></router-outlet>
+  <app-loading></app-loading>
+</div>
+
 
