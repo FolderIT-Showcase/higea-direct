@@ -12,15 +12,15 @@ export class AdminService {
   license = localStorage.getItem('license');
   client = localStorage.getItem('client');
   pathTurno = this.license + '/turno/' + this.client;
-  pathEspecialidad = this.license + '/especialidades/' + this.client;
-  pathProfesional = this.license + '/profesionales/' + this.client;
+  pathEspecialidad = this.license + '/especialidad/' + this.client;
+  pathProfesional = this.license + '/profesional/' + this.client;
 
 
   constructor(private api: ApiService, private storeService: StoreService) {
     if (this.license === 'core') {
       this.pathTurno = this.license + '/turno';
-      this.pathEspecialidad = this.license + '/especialidades';
-      this.pathProfesional = this.license + '/profesionales';
+      this.pathEspecialidad = this.license + '/especialidad';
+      this.pathProfesional = this.license + '/profesional';
     }
   }
 
