@@ -1,57 +1,85 @@
 <div class="row">
-  <div class="col-sm-12">
-    <div class="col-sm-6 col-sm-offset-6">
-      <div class="input-group h3" *ngIf="false">
-        <input name="data[search]" class="form-control" id="search" type="text" placeholder="Buscar Integrantes">
-        <span class="input-group-btn">
+
+  <div class="col-sm-6 col-sm-offset-6">
+    <div class="input-group h3" *ngIf="false">
+      <input name="data[search]" class="form-control" id="search" type="text" placeholder="Buscar Integrantes">
+      <span class="input-group-btn">
                     <button class="btn btn-primary" type="submit">
                         <span class="fa fa-search"></span>
                 </button>
         </span>
+    </div>
+  </div>
+
+  <div class="col-sm-3 col-sm-offset-9 text-right">
+    <a (click)="showModal('add', {})" class="btn btn-success">
+      <span><i class="fa fa-plus app-icon"></i>Agregar Integrante</span>
+    </a>
+  </div>
+
+  <div *ngIf="integrantes[0] && !desktopMode">
+
+    <div *ngFor="let integrante of integrantes" class="text-center">
+      <div class="card">
+        <div class="card-content text-left">
+          <label><strong>Integrante: </strong>{{ integrante.nombre }} {{ integrante.apellido }}</label><br>
+          <label><strong>Fecha de Nacimiento: </strong>{{ integrante.fechaNacimiento | date: 'dd/MM/yyyy' }}</label><br>
+          <label><strong>Tipo y Nro. de Documento: </strong>{{ label('tipoDocumentos',
+            integrante.documento.tipoDocumento) }} {{integrante.documento.numero}}</label><br>
+        </div>
+        <div class="card-action">
+          <div class="btn-group btn-group-justified">
+            <a (click)="showModal('view', currentPersona)" class="btn btn-primary">
+              <span><i class="fa fa-eye"></i></span></a>
+            <a (click)="showModal('edit', integrante)" class="btn btn-success">
+              <span><i class="fa fa-pencil"></i></span></a>
+            <a *ngIf="integrante.id !== integrantes[0].id" (click)="showDeleteModal(integrante)"
+               class="btn btn-danger"><i class="fa fa-trash"></i></a>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="col-sm-3 col-sm-offset-9">
-      <a (click)="showModal('add', {})" class="btn btn-primary pull-right h3">
-        <span><i class="fa fa-user fa-fw"></i> Agregar Integrante</span>
-      </a>
+
+  </div>
+
+  <div *ngIf="integrantes[0] && desktopMode">
+    <div class="col-sm-12">
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Integrante</th>
+            <th>Fecha de Nacimiento</th>
+            <th>Tipo y Nro. de Documento</th>
+            <th class="text-right">Acciones</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let integrante of integrantes">
+            <td>{{ integrante.nombre }} {{ integrante.apellido }}</td>
+            <td>{{ integrante.fechaNacimiento | date: 'dd/MM/yyyy' }}</td>
+            <td>{{ label('tipoDocumentos', integrante.documento.tipoDocumento) }} {{integrante.documento.numero}}</td>
+            <td class="text-right">
+              <div class="btn-group">
+                <a (click)="showModal('view', currentPersona)" class="btn btn-primary">
+                  <span><i class="fa fa-eye"></i></span>
+                </a>
+                <a (click)="showModal('edit', integrante)" class="btn btn-success">
+                  <span><i class="fa fa-pencil"></i></span>
+                </a>
+                <a *ngIf="integrante.id !== integrantes[0].id" (click)="showDeleteModal(integrante)"
+                   class="btn btn-danger">
+                  <span><i class="fa fa-trash"></i></span>
+                </a>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
-  <hr/>
-  <div class="col-sm-12">
-    <div class="table-responsive">
-      <table class="table table-striped">
-        <thead>
-        <tr>
-          <th>Integrante</th>
-          <th>Fecha de Nacimiento</th>
-          <th>Tipo y Nro. de Documento</th>
-          <th class="text-right">Acciones</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let integrante of integrantes">
-          <td>{{ integrante.nombre }} {{ integrante.apellido }}</td>
-          <td>{{ integrante.fechaNacimiento | date: 'dd/MM/yyyy' }}</td>
-          <td>{{ label('tipoDocumentos', integrante.documento.tipoDocumento) }} {{integrante.documento.numero}}</td>
-          <td class="text-right">
-            <div class="btn-group">
-              <a (click)="showModal('view', currentPersona)" class="btn btn-primary">
-                <span><i class="fa fa-eye"></i></span>
-              </a>
-              <a (click)="showModal('edit', integrante)" class="btn btn-success">
-                <span><i class="fa fa-pencil"></i></span>
-              </a>
-              <a *ngIf="integrante.id !== integrantes[0].id" (click)="showDeleteModal(integrante)"
-                 class="btn btn-danger">
-                <span><i class="fa fa-trash"></i></span>
-              </a>
-            </div>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+
 </div>
 
 <app-modal [small]="true" [title]="'Confirmación'" (outModal)="handleModalConfirmacion($event)">

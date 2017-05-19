@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AppAuthService} from '../../../auth/auth.service';
 import {AlertService} from '../../service/alert.service';
+import {NavigationEnd, Router} from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -12,7 +13,11 @@ export class NavbarComponent implements OnInit {
   isAuth = false;
   isIn = false;
 
-  constructor(private auth: AppAuthService, private alert: AlertService) {
+  constructor(private auth: AppAuthService,
+              private router: Router) {
+    router.events.subscribe((val) => {
+      this.isIn = false;
+    });
   }
 
   ngOnInit(): void {

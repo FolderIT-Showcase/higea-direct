@@ -9,13 +9,13 @@
     <div class="row">
       <div class="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3">
         <div class="form-group">
-          <label class="control-label">Turnos de</label>
-
-          <select type="text" class="form-control" [formControl]="form.controls['persona']"
-                  (change)="handlePersonaClick(form.value.persona)">
-            <option [ngValue]="persona" *ngFor="let persona of personas">{{labelPersona(persona)}}</option>
-          </select>
-
+          <div class="container-fluid">
+            <label class="control-label">Turnos de</label>
+            <select type="text" class="form-control" [formControl]="form.controls['persona']"
+                    (change)="handlePersonaClick(form.value.persona)">
+              <option [ngValue]="persona" *ngFor="let persona of personas">{{labelPersona(persona)}}</option>
+            </select>
+          </div>
         </div>
         <div class="has-error" *ngIf="!turnos[0]">
           <label><strong>No sacaste ningun turno</strong> </label>
@@ -42,7 +42,8 @@
         </div>
         <div class="card-action">
           <div class="btn-group btn-group-justified">
-            <a (click)="showModal(turno)" class="btn btn-danger">Cancelar
+            <a (click)="showModal(turno)" class="btn btn-danger">
+              <i class="fa fa-trash"></i>
             </a>
           </div>
         </div>
@@ -106,6 +107,7 @@
     <!--<sebm-google-map-marker [latitude]="lat" [longitude]="lng"></sebm-google-map-marker>-->
     <!--</sebm-google-map>-->
   </div>
+  <br>
   <div class="row">
     <div class="col-sm-8"></div>
     <div class="col-sm-4">

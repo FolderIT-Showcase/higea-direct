@@ -73,6 +73,7 @@ export class ModificarTurnoComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.storeService.update('persona', null);
+    this.storeService.update('turnos', []);
   }
 
   handlePersonaClick(persona: Persona) {

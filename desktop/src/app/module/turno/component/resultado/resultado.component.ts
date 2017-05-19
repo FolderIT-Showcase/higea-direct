@@ -9,11 +9,11 @@ import {StoreService} from '../../../core/service/store.service';
 import {Persona} from '../../../core/domain/persona';
 import {Especialidad} from '../../../core/domain/especialidad';
 import {Profesional} from '../../../core/domain/profesional';
+import {UtilsService} from '../../../core/service/utils.service';
 
 @Component({
   selector: 'app-busqueda',
-  templateUrl: './resultado.component.html',
-  styleUrls: ['./resultado.component.scss']
+  templateUrl: './resultado.component.html'
 })
 export class ResultadoComponent implements OnInit, OnDestroy {
 
@@ -32,8 +32,10 @@ export class ResultadoComponent implements OnInit, OnDestroy {
 
   turnoModal: ModalDirective;
   successModal: ModalDirective;
+  desktopMode = true;
 
   constructor(private store: Store,
+              private utilsService: UtilsService,
               private turnoService: TurnoService,
               private storeService: StoreService) {
     this.turno.especialidad = new Especialidad;
@@ -42,6 +44,12 @@ export class ResultadoComponent implements OnInit, OnDestroy {
     this.turno.centroSalud.nombre = '';
     this.turno.profesional = new Profesional();
     this.turno.profesional.nombre = '';
+
+    this.desktopMode = (this.utilsService.getWidth()) >= 900;
+
+    this.subs.push(this.utilsService.getWidthResizeEvent().subscribe(data => {
+      this.desktopMode = data >= 900;
+    }));
   }
 
   ngOnInit(): void {
@@ -65,6 +73,7 @@ export class ResultadoComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subs.forEach(x => x.unsubscribe());
+    this.storeService.update('turnos', []);
   }
 
   public showTurnoModal(turno: Turno) {
