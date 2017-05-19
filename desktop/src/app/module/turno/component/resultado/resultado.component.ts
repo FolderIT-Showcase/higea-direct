@@ -45,14 +45,13 @@ export class ResultadoComponent implements OnInit, OnDestroy {
     this.turno.profesional = new Profesional();
     this.turno.profesional.nombre = '';
 
-    this.desktopMode = (this.utilsService.getWidth()) >= 900;
-
     this.subs.push(this.utilsService.getWidthResizeEvent().subscribe(data => {
       this.desktopMode = data >= 900;
     }));
   }
 
   ngOnInit(): void {
+    this.desktopMode = (this.utilsService.getWidth()) >= 900;
     this.subs.push(
       this.store.changes.pluck('CentroSalud').subscribe(
         (data: any) => {

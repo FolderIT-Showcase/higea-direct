@@ -3,8 +3,7 @@ import {ModalDirective} from 'ngx-bootstrap';
 
 @Component({
   selector: 'app-modal',
-  templateUrl: './modal.component.html',
-  styleUrls: ['./modal.component.scss']
+  templateUrl: './modal.component.html'
 })
 export class ModalComponent implements OnInit {
 

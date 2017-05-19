@@ -68,15 +68,13 @@ export class ListaIntegrantesComponent implements OnInit {
               private personaService: PersonaService,
               private alertService: AlertService,
               private storeHelper: StoreService) {
-    this.desktopMode = (this.utilsService.getWidth()) >= 900;
-
     this.subs.push(this.utilsService.getWidthResizeEvent().subscribe(data => {
       this.desktopMode = data >= 900;
     }));
   }
 
   ngOnInit(): void {
-
+    this.desktopMode = (this.utilsService.getWidth()) >= 900;
     this.mForm = this.fb.group({
       'nombre': ['', Validators.required],
       'apellido': ['', Validators.required],

@@ -1,4 +1,4 @@
-import {EventEmitter, HostListener, Injectable} from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 
 // declare const window: any;
 

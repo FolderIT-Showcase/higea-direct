@@ -82,12 +82,14 @@
 
 </div>
 
-<app-modal [small]="true" [title]="'Confirmación'" (outModal)="handleModalConfirmacion($event)">
+<app-modal [title]="'Confirmación'" (outModal)="handleModalConfirmacion($event)">
   <p>¿Está seguro que desea eliminar el integrante seleccionado?</p>
   <div class="row">
-    <div class="text-right">
-      <a (click)="confirmDeleteModal()" type="submit" class="btn btn-danger">SI</a>
-      <a (click)="modalConfirmacion.hide()" class="btn btn-default">NO</a>
+    <div class="col-sm-12 col-md-4 col-md-offset-8">
+      <div class="btn-group btn-group-justified">
+        <a (click)="confirmDeleteModal()" type="submit" class="btn btn-danger">SI</a>
+        <a (click)="modalConfirmacion.hide()" class="btn btn-default">NO</a>
+      </div>
     </div>
   </div>
 </app-modal>

@@ -88,11 +88,10 @@
   </div>
   <br>
   <div class="row">
-    <div class="col-sm-8"></div>
-    <div class="col-sm-4">
+    <div class="col-sm-12 col-md-4 col-md-offset-8">
       <div class="btn-group btn-group-justified">
-        <a (click)="reservarTurno(turno)" class="btn btn-primary">SI</a>
-        <a (click)="turnoModal.hide()" class="btn btn-default">NO</a>
+        <a (click)="reservarTurno(turno)" class="btn btn-block btn-primary">SI</a>
+        <a (click)="turnoModal.hide()" class="btn btn-block btn-default">NO</a>
       </div>
     </div>
   </div>
@@ -102,7 +101,9 @@
   <label>El turno ha sido tomado con éxito</label><br>
   <label><strong>Podés revisar tus turnos tomados accediendo al menu Mis Turnos</strong></label><br>
   <br>
-  <div class="text-right">
-    <button (click)="successModal.hide()" class="btn btn-success">CERRAR</button>
+  <div class="row">
+    <div class="text-right">
+      <button (click)="successModal.hide()" class="btn btn-success">CERRAR</button>
+    </div>
   </div>
 </app-modal>

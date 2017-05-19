@@ -44,8 +44,6 @@ export class ModificarTurnoComponent implements OnInit, OnDestroy {
     this.turno.centroSalud = new CentroSalud;
     this.turno.centroSalud.nombre = '';
 
-    this.desktopMode = (this.utilsService.getWidth()) >= 900;
-
     this.subs.push(this.utilsService.getWidthResizeEvent().subscribe(data => {
       this.desktopMode = data >= 900;
     }));
@@ -54,6 +52,7 @@ export class ModificarTurnoComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.desktopMode = (this.utilsService.getWidth()) >= 900;
     this.personas = this.storeService.get('integrantes');
     this.form = this.fb.group({
       'persona': [this.personas[0]]
