@@ -14,16 +14,16 @@
     <div class="collapse navbar-collapse" [ngClass]="{ 'in': isIn }">
 
       <ul class="nav navbar-nav navbar-left text-center">
-        <li>
+        <li class="navbar-item">
           <a routerLinkActive="active" [routerLink]="['/nuevo-turno']">Sacar Turno</a>
         </li>
-        <li>
+        <li class="navbar-item">
           <a routerLinkActive="active" [routerLink]="['/mis-turnos']">Mis Turnos</a>
         </li>
-        <li>
+        <li class="navbar-item">
           <a routerLinkActive="active" [routerLink]="['/grupo-familiar']">Grupo Familiar</a>
         </li>
-        <li *ngIf="isAuth">
+        <li *ngIf="isAuth" class="navbar-item">
           <a routerLinkActive="active" [routerLink]="['/admin']">Administrar turnos</a>
         </li>
       </ul>

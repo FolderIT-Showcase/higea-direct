@@ -17,6 +17,11 @@ export class AdminService {
 
 
   constructor(private api: ApiService, private storeService: StoreService) {
+    if (this.license === 'core') {
+      this.pathTurno = this.license + '/turno';
+      this.pathEspecialidad = this.license + '/especialidades';
+      this.pathProfesional = this.license + '/profesionales';
+    }
   }
 
   // turnos
