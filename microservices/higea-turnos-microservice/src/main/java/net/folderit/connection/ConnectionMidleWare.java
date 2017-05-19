@@ -17,7 +17,7 @@ import java.util.Map;
 public class ConnectionMidleWare {
 
     final String uriLogin = "http://higea.folderit.net/api/login";
-    final String uriEspecialidad = "http://higea.folderit.net/api/{cliente}/turnos";
+    final String uriTurnos = "http://higea.folderit.net/api/{cliente}/turnos";
     final String uriProfesionales = "http://localhost:36001/{cliente}";
     private RestTemplate restTemplate = new RestTemplate();
 
@@ -30,7 +30,7 @@ public class ConnectionMidleWare {
     }
 
 
-    public TurnoDataDTO turnos(String codigo) {
+    public TurnoDataDTO turnos(String codigo,FilterDto filterDto) {
 
         ResponseEntity<LoginResultDTO> loginResultDTO = login();
         // URI (URL) parameters
@@ -40,18 +40,22 @@ public class ConnectionMidleWare {
         headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
         headers.set("Authorization", loginResultDTO.getBody().getToken());
         HttpEntity<?> entity = new HttpEntity<>(headers);
-        ResponseEntity<TurnoDTO> result = restTemplate.exchange(uriEspecialidad, HttpMethod.GET, entity, TurnoDTO.class, uriParams);
+        ResponseEntity<TurnoDTO> result = restTemplate.exchange(getFilterURIEspecialidad(filterDto), HttpMethod.GET, entity, TurnoDTO.class, uriParams);
 
         return result.getBody().getData();
     }
 
 
-    private ArrayList<Profesional> getProfesionales(String codigo, HttpEntity<?> entity) {
+    private ArrayList<Profesional> getProfesionales(String codigo) {
 
+        ResponseEntity<LoginResultDTO> loginResultDTO = login();
         // URI (URL) parameters
         Map<String, String> uriParams = new HashMap<>();
         uriParams.put("cliente", codigo);
-        // send request and parse result
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+        headers.set("Authorization", loginResultDTO.getBody().getToken());
+        HttpEntity<?> entity = new HttpEntity<>(headers);
         ResponseEntity<ArrayList<Profesional>> result =
                 restTemplate.exchange(uriProfesionales, HttpMethod.GET, entity, new ParameterizedTypeReference<ArrayList<Profesional>>() {
                 }, uriParams);
@@ -63,26 +67,25 @@ public class ConnectionMidleWare {
 
     public List<Turno> finAllBy(String codigo, FilterDto filter) {
 
-        // URI (URL) parameters
-        Map<String, String> uriParams = new HashMap<>();
-//        uriParams.put("cliente", codigo);
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
-//        headers.set("Authorization", loginResultDTO.getBody().getToken());
-        HttpEntity<?> entity = new HttpEntity<>(headers);
 
-
-        ArrayList<Profesional> profesionales = getProfesionales(codigo, entity);
-
-
-        ResponseEntity<TurnoDTO> result = restTemplate.exchange(uriEspecialidad, HttpMethod.GET, entity, TurnoDTO.class, uriParams);
+        TurnoDataDTO result = turnos(codigo,filter);
 
         ArrayList<RowTurnoDTO> turnosHigea = new ArrayList<>();
-        turnosHigea.addAll(result.getBody().getData().getRows());
+        turnosHigea.addAll(result.getRows());
         ArrayList<Turno> turnosCore = new ArrayList<>(turnosHigea.size());
+
+        List<Profesional>  profesionales = getProfesionales(codigo);
 
         turnosHigea.forEach(x -> turnosCore.add(x.convert(profesionales)));
 
         return turnosCore;
     }
+
+    public String getFilterURIEspecialidad(FilterDto filterDto){
+        String filter=uriTurnos;
+        filter+="?"+filterDto.getFilterParameters();
+        return filter;
+    }
+
+
 }

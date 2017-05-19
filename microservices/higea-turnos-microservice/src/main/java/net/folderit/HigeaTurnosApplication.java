@@ -35,7 +35,7 @@ public class HigeaTurnosApplication {
 //        return connectionMidleWare.turnos(codigo);
 //    }
 
-    @PostMapping("/{cliente}/turnos")
+    @PostMapping("/{cliente}")
     public ResponseEntity<Collection<Turno>> getAll(@PathVariable("cliente") String codigo, @RequestBody FilterDto filterDto) {
         List<Turno> turnos = connectionMidleWare.finAllBy(codigo, filterDto);
         return ResponseEntity.ok(turnos);
