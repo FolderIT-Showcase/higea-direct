@@ -22,10 +22,10 @@ zuul:
   add-host-header: true
   routes:
     higea-profesionales:
-      path: /higea/profesionales/**
+      path: /higea/profesional/**
       url: http://localhost:36001
     higea-especialidades:
-      path: /higea/especialidades/**
+      path: /higea/especialidad/**
       url: http://localhost:36002
     higea-turnos-microservice:
       path: /higea/turnos/**

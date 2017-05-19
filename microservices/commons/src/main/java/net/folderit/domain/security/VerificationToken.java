@@ -5,9 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import net.folderit.domain.User;
 
-import javax.persistence.*;
-import java.sql.Timestamp;
-import java.util.Calendar;
 import java.util.Date;
 
 @AllArgsConstructor

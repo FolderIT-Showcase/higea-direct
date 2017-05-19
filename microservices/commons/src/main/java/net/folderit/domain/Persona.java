@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import net.folderit.domain.enums.EstadoCivil;
 import net.folderit.domain.enums.Genero;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
