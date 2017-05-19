@@ -151,34 +151,22 @@ select {
   -moz-appearance: none;
 }
 
-select.minimal {
-  background-image: linear-gradient(45deg, transparent 50%, gray 50%),
-  linear-gradient(135deg, gray 50%, transparent 50%),
-  linear-gradient(to right, #ccc, #ccc);
-
-  background-position: calc(100% - 15px) calc(1em + 2px),
-  calc(100% - 10px) calc(1em + 2px),
-  calc(100% - 2.5em) 0.5em;
-
-  background-size: 5px 5px,
-  5px 5px,
-  1px 1.5em;
-
-  background-repeat: no-repeat;
-}
-
 .btn-back {
   font-size: 1.8em;
 }
 
+.btn-social {
+  padding-left: 44px !important;
+}
+
 .app-icon {
-  margin: 0.3em;
+  margin-right: 0.8em;
   font-size: 1em;
   color: white;
 }
 
 .app-icon-dark {
-  margin: 0.3em;
+  margin-right: 0.8em;
   font-size: 1em;
   color: black;
 }
@@ -215,4 +203,10 @@ select.minimal {
 .table th.fit {
   white-space: nowrap;
   width: 1%;
+}
+
+/* Main body section */
+.side-body {
+  margin-left: 290px;
+  padding: 1em;
 }

@@ -6,8 +6,7 @@ After=syslog.target
 Type=forking
 User=turnero
 ExecStart=/home/turnero/api.service.sh --start
-ExecStop=/home/turnero/api.service.sh --start
-SuccessExitStatus=0
+ExecStop=/home/turnero/api.service.sh --stop
 
 [Install]
 WantedBy=multi-user.target

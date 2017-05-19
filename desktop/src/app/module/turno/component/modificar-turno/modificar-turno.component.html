@@ -9,13 +9,13 @@
     <div class="row">
       <div class="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3">
         <div class="form-group">
-          <label class="control-label">Turnos de</label>
-
-          <select type="text" class="form-control" [formControl]="form.controls['persona']"
-                  (change)="handlePersonaClick(form.value.persona)">
-            <option [ngValue]="persona" *ngFor="let persona of personas">{{labelPersona(persona)}}</option>
-          </select>
-
+          <div class="container-fluid">
+            <label class="control-label">Turnos de</label>
+            <select type="text" class="form-control" [formControl]="form.controls['persona']"
+                    (change)="handlePersonaClick(form.value.persona)">
+              <option [ngValue]="persona" *ngFor="let persona of personas">{{labelPersona(persona)}}</option>
+            </select>
+          </div>
         </div>
         <div class="has-error" *ngIf="!turnos[0]">
           <label><strong>No sacaste ningun turno</strong> </label>
@@ -27,7 +27,32 @@
     </div>
   </form>
 
-  <div *ngIf="turnos[0]" class="col-sm-12">
+  <div *ngIf="turnos[0] && !desktopMode">
+
+    <div *ngFor="let turno of turnos" class="text-center">
+      <div class="card">
+        <div class="card-content text-left">
+          <label><strong>Día: </strong>{{turno.dia | date: 'EEEE'}}</label><br>
+          <label><strong>Fecha: </strong>{{turno.fecha | date: 'dd/MM/yyyy'}}</label><br>
+          <label><strong>Hora: </strong>{{turno.hora | date: 'HH:mm'}}</label><br>
+          <label><strong>Centro de Salud: </strong>{{turno.centroSalud.nombre}}</label><br>
+          <label><strong>Especialidad: </strong>{{turno.especialidad.nombre}}</label><br>
+          <label><strong>Profesional: </strong>{{turno.profesional.nombre}}</label><br>
+          <label><strong>Observaciones: </strong>{{turno.observaciones}}</label>
+        </div>
+        <div class="card-action">
+          <div class="btn-group btn-group-justified">
+            <a (click)="showModal(turno)" class="btn btn-lg btn-danger">Cancelar
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <div *ngIf="turnos[0] && desktopMode" class="col-sm-12">
     <h4>
       Seleccione un turno
     </h4>
@@ -44,7 +69,7 @@
               <th>Especialidad</th>
               <th>Profesional</th>
               <th>Observaciones</th>
-              <th width="1em"></th>
+              <th class="text-right">Acciones</th>
             </tr>
             </thead>
             <tbody>
@@ -56,12 +81,10 @@
               <td>{{turno.especialidad.nombre}}</td>
               <td>{{turno.profesional.nombre}}</td>
               <td>{{turno.observaciones}}</td>
-              <td>
-
+              <td class="text-right">
                 <a (click)="showModal(turno)" class="btn btn-danger btn-md">
                   <span class="fa fa-times"></span>
                 </a>
-
               </td>
             </tr>
             </tbody>
@@ -83,6 +106,7 @@
     <!--<sebm-google-map-marker [latitude]="lat" [longitude]="lng"></sebm-google-map-marker>-->
     <!--</sebm-google-map>-->
   </div>
+  <br>
   <div class="row">
     <div class="col-sm-8"></div>
     <div class="col-sm-4">

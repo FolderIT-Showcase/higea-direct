@@ -7,7 +7,30 @@
   </a>
 </div>
 
-<div *ngIf="turnos[0]">
+<div *ngIf="turnos[0] && !desktopMode">
+
+  <div *ngFor="let turno of turnos" class="text-center">
+    <div class="card">
+      <div class="card-content text-left">
+        <label><strong>Día: </strong>{{turno.dia | date: 'EEEE'}}</label><br>
+        <label><strong>Fecha: </strong>{{turno.fecha | date: 'dd/MM/yyyy'}}</label><br>
+        <label><strong>Hora: </strong>{{turno.hora | date: 'HH:mm'}}</label><br>
+        <label><strong>Centro de Salud: </strong>{{turno.centroSalud.nombre}}</label><br>
+        <label><strong>Especialidad: </strong>{{turno.especialidad.nombre}}</label><br>
+        <label><strong>Profesional: </strong>{{turno.profesional.nombre}}</label><br>
+        <label><strong>Observaciones: </strong>{{turno.observaciones}}</label>
+      </div>
+      <div class="card-action">
+        <div class="btn-group btn-group-justified">
+          <a (click)="showTurnoModal(turno)" class="btn btn-success btn-lg btn-block">Ver</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div *ngIf="turnos[0] && desktopMode">
   <h4>
     Seleccione un turno
   </h4>
@@ -63,6 +86,7 @@
       <sebm-google-map-marker [latitude]="lat" [longitude]="lng"></sebm-google-map-marker>
     </sebm-google-map>
   </div>
+  <br>
   <div class="row">
     <div class="col-sm-8"></div>
     <div class="col-sm-4">
@@ -77,6 +101,7 @@
 <app-modal [title]="'Confirmación'" (outModal)="handleSuccessModal($event)">
   <label>El turno ha sido tomado con éxito</label><br>
   <label><strong>Podés revisar tus turnos tomados accediendo al menu Mis Turnos</strong></label><br>
+  <br>
   <div class="text-right">
     <button (click)="successModal.hide()" class="btn btn-success">CERRAR</button>
   </div>
