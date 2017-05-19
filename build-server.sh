@@ -79,7 +79,7 @@ function server_dev_mode
 	if [ -f /opt/api/higea-especialidad-microservice.jar ]; then
 	    sudo cp -f /opt/api/higea-especialidad-microservice.jar /opt/api/higea-especialidad-microservice-last.jar
 	fi
-    sudo cp -f$WORKSPACE/microservices/higea-especialidad-microservice/target/higea-especialidad-microservice-0.0.1-SNAPSHOT.jar /opt/api/higea-especialidad-microservice.jar
+    sudo cp -f $WORKSPACE/microservices/higea-especialidad-microservice/target/higea-especialidad-microservice-0.0.1-SNAPSHOT.jar /opt/api/higea-especialidad-microservice.jar
 
     cd $WORKSPACE/microservices/higea-profesional-microservice
 	if [ -f /opt/api/higea-profesional-microservice.jar ]; then
