@@ -11,7 +11,7 @@ function startServices {
     /usr/bin/java $JAVA_OPTS -jar /opt/api/higea-profesional-microservice.jar < /dev/null &> /dev/null &
     /usr/bin/java $JAVA_OPTS -jar /opt/api/higea-turnos-microservice.jar < /dev/null &> /dev/null &
 
-    JAVA_OPTS="-server -Xms32m -Xmx32m -XX:MaxMetaspaceSize=72m -Xmn8m -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+UseCMSInitiatingOccupancyOnly -XX:+ScavengeBeforeFullGC -XX:+CMSScavengeBeforeRemark -Djava.security.egd=file:/dev/urandom"
+    JAVA_OPTS="-server -Xms64m -Xmx64m -XX:MaxMetaspaceSize=96m -Xmn32m -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+UseCMSInitiatingOccupancyOnly -XX:+ScavengeBeforeFullGC -XX:+CMSScavengeBeforeRemark -Djava.security.egd=file:/dev/urandom"
     /usr/bin/java $JAVA_OPTS -jar /opt/api/core-server.jar < /dev/null &> /dev/null &
 
 }
