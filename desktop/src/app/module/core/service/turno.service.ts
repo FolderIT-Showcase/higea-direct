@@ -1,20 +1,32 @@
-import {Injectable} from '@angular/core';
-import {ApiService} from './api.service';
-import {CentroSalud} from '../domain/centro-salud';
-import {Especialidad} from '../domain/especialidad';
-import {Profesional} from '../domain/profesional';
-import {StoreService} from './store.service';
-import {FiltroTurno} from '../domain/filter-turno';
-import {Persona} from '../domain/persona';
-import {Turno} from '../domain/turno';
+import {Injectable} from "@angular/core";
+import {ApiService} from "./api.service";
+import {CentroSalud} from "../domain/centro-salud";
+import {Especialidad} from "../domain/especialidad";
+import {Profesional} from "../domain/profesional";
+import {StoreService} from "./store.service";
+import {FiltroTurno} from "../domain/filter-turno";
+import {Persona} from "../domain/persona";
+import {Turno} from "../domain/turno";
 
 @Injectable()
 export class TurnoService {
 
+  license = localStorage.getItem('license');
+  client = localStorage.getItem('client');
+  pathTurno = this.license + '/turnos/' + this.client;
+  pathCentroSalud = this.license + '/centroSalud/' + this.client;
+  pathPersona = this.license + '/persona/' + this.client;
+
   basePath = 'core/';
+
 
   constructor(private api: ApiService,
               private storeService: StoreService) {
+    if (this.license === 'core') {
+      this.pathTurno = this.license + '/turnos';
+      this.pathCentroSalud = this.license + '/centroSalud';
+      this.pathPersona = this.license + '/persona';
+    }
   }
 
   getCentrosDeSalud() {
@@ -35,7 +47,7 @@ export class TurnoService {
 
   getTurnos(centro: CentroSalud, especialidad: Especialidad, profesional: Profesional, fecha: Date) {
 
-    const path = this.basePath + 'turno';
+    const path = this.pathTurno;
     const filtro = new FiltroTurno;
     if (centro) {
       const tmpCentro: CentroSalud = new CentroSalud();

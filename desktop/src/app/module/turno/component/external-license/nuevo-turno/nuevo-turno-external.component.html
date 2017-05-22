@@ -1,0 +1,87 @@
+<div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2">
+  <form [formGroup]="form" (ngSubmit)="submitForm(form.value)">
+
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group"
+             [ngClass]="{'has-error':!form.controls['persona'].valid && form.controls['persona'].touched}">
+          <small>Nuevo Turno para</small>
+
+          <select type="text" class="form-control" [formControl]="form.controls['persona']"
+                  (change)="handlePersonaClick(form.value.persona)">
+            <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
+            <option [ngValue]="persona" *ngFor="let persona of personas">{{labelPersona(persona)}}</option>
+          </select>
+
+          <small *ngIf="form.controls['persona'].hasError('required') && form.controls['persona'].touched"
+                 class="help-block">Ingrese para quien es el turno
+          </small>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group"
+             [ngClass]="{'has-error':!form.controls['persona'].valid && form.controls['persona'].touched}">
+          <small>Centro de Salud</small>
+
+
+          <div><p>{{centroSalud}}</p></div>
+
+
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <small>Especialidad</small>
+
+          <select type="text" class="form-control" [formControl]="form.controls['especialidad']"
+                  (change)="handleEspecialidadClick(form.value.especialidad)">
+            <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
+            <option [ngValue]="especialidad" *ngFor="let especialidad of especialidades">{{especialidad.nombre}}
+            </option>
+          </select>
+
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <small>Profesional</small>
+
+          <select type="text" class="form-control" [formControl]="form.controls['profesional']">
+            <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
+            <option [ngValue]="profesional" *ngFor="let profesional of profesionales">{{profesional.nombre}}</option>
+          </select>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <small>Fecha</small>
+
+          <my-date-picker id="fecha" [options]="myDatePickerOptions"
+                          [locale]="'es'" [formControl]="form.controls['fecha']"
+          ></my-date-picker>
+
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <br>
+        <button type="submit" [disabled]="!form.valid" class="btn btn-primary btn-block">
+          Buscar
+        </button>
+      </div>
+      <div class="col-sm-3">
+        <br>
+        <button (click)="form.reset()" class="btn btn-default btn-block">
+          Limpiar
+        </button>
+      </div>
+    </div>
+
+  </form>
+</div>

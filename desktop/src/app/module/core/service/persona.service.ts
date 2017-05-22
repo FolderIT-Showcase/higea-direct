@@ -1,15 +1,16 @@
-import {Injectable} from '@angular/core';
-import {ApiService} from './api.service';
-import {Persona} from '../domain/persona';
-import {TipoDocumentos} from '../domain/enums/tipo-documento';
-import {StoreService} from './store.service';
-import {User} from '../domain/user';
+import {Injectable} from "@angular/core";
+import {ApiService} from "./api.service";
+import {Persona} from "../domain/persona";
+import {TipoDocumentos} from "../domain/enums/tipo-documento";
+import {StoreService} from "./store.service";
+import {User} from "../domain/user";
 
 @Injectable()
 export class PersonaService {
 
   user: User;
   basePath = 'core/';
+  uriRegistration = this.basePath + 'users/registration';
 
   public static convertTipoDocumento(tipo: string): string {
     const tipoRtn = TipoDocumentos.export().find(x => x.label === tipo);
@@ -24,7 +25,7 @@ export class PersonaService {
   }
 
   create(persona: Persona) {
-    return this.api.post('users/registration', persona, false);
+    return this.api.post(this.uriRegistration, persona, false);
   }
 
   validateDni(dto: any) {

@@ -1,10 +1,10 @@
 import {Component, OnDestroy, OnInit} from "@angular/core";
-import {CentroSalud} from "../../../core/domain/centro-salud";
-import {Especialidad} from "../../../core/domain/especialidad";
-import {Profesional} from "../../../core/domain/profesional";
-import {Persona} from "../../../core/domain/persona";
-import {StoreService} from "../../../core/service/store.service";
-import {TurnoService} from "../../../core/service/turno.service";
+import {CentroSalud} from "../../../../core/domain/centro-salud";
+import {Especialidad} from "../../../../core/domain/especialidad";
+import {Profesional} from "../../../../core/domain/profesional";
+import {Persona} from "../../../../core/domain/persona";
+import {StoreService} from "../../../../core/service/store.service";
+import {TurnoService} from "../../../../core/service/turno.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {IMyOptions} from "mydatepicker";
 import {DatePipe} from "@angular/common";
@@ -18,20 +18,21 @@ class Data {
 }
 
 @Component({
-  selector: 'app-nuevo-turno',
-  templateUrl: './nuevo-turno.component.html'
+  selector: 'app-nuevo-turno-external',
+  templateUrl: './nuevo-turno-external.component.html'
 })
-export class NuevoTurnoComponent implements OnInit, OnDestroy {
+export class NuevoTurnoExternalComponent implements OnInit, OnDestroy {
 
   datePipe = new DatePipe('es-AR');
   model: Data = new Data();
-  centrosSalud: CentroSalud[] = [];
+  // centrosSalud: CentroSalud[] = [];
   especialidades: Especialidad[] = [];
   profesionales: Profesional[] = [];
   personas: Persona[] = [];
   selectUndefined: any;
   form: FormGroup;
   fechaDesde: Date = new Date();
+  centroSalud: string = localStorage.getItem('client');
 
   myDatePickerOptions: IMyOptions = {
     dateFormat: 'dd/mm/yyyy',
@@ -44,7 +45,7 @@ export class NuevoTurnoComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.personas = this.storeService.get('integrantes');
-    this.centrosSalud = this.storeService.get('centrosSalud');
+    // this.centrosSalud = this.storeService.get('centrosSalud');
 
     this.form = this.fb.group({
       'persona': [null],
@@ -54,6 +55,7 @@ export class NuevoTurnoComponent implements OnInit, OnDestroy {
       'profesional': [null]
     });
     this.form.value.fechaDesde = new Date();
+    this.especialidades = this.storeService.get('especialidades');
   }
 
   ngOnDestroy() {
@@ -72,6 +74,9 @@ export class NuevoTurnoComponent implements OnInit, OnDestroy {
     return (persona.nombre + ' ' + persona.apellido).toUpperCase();
   }
 
+  handleCentroSaludClick(centroSalud: CentroSalud) {
+    this.especialidades = centroSalud.especialidad;
+  }
 
   handleEspecialidadClick(especialidad: Especialidad) {
     this.profesionales = especialidad.profesional;

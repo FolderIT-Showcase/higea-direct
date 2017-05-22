@@ -1,0 +1,10 @@
+<div class="container-fluid">
+  <div class="row" *ngIf="coreMode">
+    <app-turno></app-turno>
+  </div>
+  <br>
+  <div class="row" *ngIf="!coreMode">
+    <app-turno-external></app-turno-external>
+  </div>
+</div>
+

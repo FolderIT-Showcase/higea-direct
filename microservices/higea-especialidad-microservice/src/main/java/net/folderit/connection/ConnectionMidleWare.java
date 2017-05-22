@@ -17,7 +17,7 @@ public class ConnectionMidleWare {
 
     final String uriLogin = "http://higea.folderit.net/api/login";
     final String uriEspecialidad = "http://higea.folderit.net/api/{cliente}/especialidades";
-    final String uriProfesionales = "http://localhost:36001/{cliente}/profesional";
+    final String uriProfesionales = "http://localhost:36001/{cliente}/profesionales";
     private RestTemplate restTemplate = new RestTemplate();
 
     public ResponseEntity<LoginResultDTO> login() {
