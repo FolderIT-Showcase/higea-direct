@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, AfterViewInit} from '@angular/core';
 import {ModalDirective} from 'ngx-bootstrap';
 import {AlertService} from '../../../core/service/alert.service';
 import {Persona} from '../../../core/domain/persona';
@@ -28,7 +28,7 @@ import {UtilsService} from '../../../core/service/utils.service';
   selector: 'app-lista-integrantes',
   templateUrl: './lista-integrantes.component.html'
 })
-export class ListaIntegrantesComponent implements OnInit {
+export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
 
   private currentUser = JSON.parse(localStorage.getItem('currentUser'));
   public currentPersona;
@@ -68,13 +68,10 @@ export class ListaIntegrantesComponent implements OnInit {
               private personaService: PersonaService,
               private alertService: AlertService,
               private storeHelper: StoreService) {
-    this.subs.push(this.utilsService.getWidthResizeEvent().subscribe(data => {
-      this.desktopMode = data >= 900;
-    }));
   }
 
   ngOnInit(): void {
-    this.desktopMode = (this.utilsService.getWidth()) >= 900;
+
     this.mForm = this.fb.group({
       'nombre': ['', Validators.required],
       'apellido': ['', Validators.required],
@@ -119,6 +116,14 @@ export class ListaIntegrantesComponent implements OnInit {
         this.lists[list].sort();
       }
     }
+  }
+
+  ngAfterViewInit(): void {
+    this.desktopMode = (this.utilsService.getWidth()) >= 900;
+    console.log('modificar turno' + this.utilsService.getWidth());
+    this.subs.push(this.utilsService.getWidthResizeEvent().subscribe(data => {
+      this.desktopMode = data >= 900;
+    }));
   }
 
   public label(list, id) {

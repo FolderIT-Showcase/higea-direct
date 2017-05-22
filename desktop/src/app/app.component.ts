@@ -1,15 +1,18 @@
-import {Component, EventEmitter} from '@angular/core';
+import {Component, EventEmitter, OnInit} from '@angular/core';
 import {UtilsService} from './module/core/service/utils.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   widhtResize: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private utilsService: UtilsService) {
+  }
+
+  ngOnInit(): void {
     this.utilsService.setWidtEmitter(this.widhtResize);
   }
 

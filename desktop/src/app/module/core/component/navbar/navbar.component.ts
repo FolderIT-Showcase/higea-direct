@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AppAuthService} from '../../../auth/auth.service';
 import {Router} from '@angular/router';
+import {UtilsService} from '../../service/utils.service';
 
 @Component({
   selector: 'app-navbar',
@@ -13,14 +14,14 @@ export class NavbarComponent implements OnInit {
   isIn = false;
 
   constructor(private auth: AppAuthService,
-              private router: Router) {
+              private router: Router, private utilsService: UtilsService) {
     router.events.subscribe((val) => {
       this.isIn = false;
     });
   }
 
   ngOnInit(): void {
-    this.isAuth = AppAuthService.isAdmin();
+    this.isAuth = AppAuthService.isAdmin() && this.utilsService.getWidth() >= 900;
   }
 
   toggleState() { // click handler

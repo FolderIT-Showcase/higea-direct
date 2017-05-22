@@ -3,6 +3,8 @@ spring:
     name: higea-profesionales
 server:
   port: 36001
+  tomcat:
+    max-threads: 4
 eureka:
   client:
     serviceUrl:

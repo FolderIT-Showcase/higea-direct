@@ -6,6 +6,8 @@ spring:
     name: gateway
 server:
   port: 8080
+  tomcat:
+    max-threads: 4
   ssl:
       key-store: classpath:keystore.p12
       key-store-password: turn3r0sslf0ld3r

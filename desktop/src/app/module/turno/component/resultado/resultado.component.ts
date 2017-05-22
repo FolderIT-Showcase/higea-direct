@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ModalDirective} from 'ngx-bootstrap';
 import {Turno} from 'app/module/core/domain/turno';
 import {CentroSalud} from '../../../core/domain/centro-salud';
@@ -15,7 +15,7 @@ import {UtilsService} from '../../../core/service/utils.service';
   selector: 'app-busqueda',
   templateUrl: './resultado.component.html'
 })
-export class ResultadoComponent implements OnInit, OnDestroy {
+export class ResultadoComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('autoShownModal') public autoShownModal: ModalDirective;
   @ViewChild('infoModal') public infoModal: ModalDirective;
@@ -38,6 +38,7 @@ export class ResultadoComponent implements OnInit, OnDestroy {
               private utilsService: UtilsService,
               private turnoService: TurnoService,
               private storeService: StoreService) {
+
     this.turno.especialidad = new Especialidad;
     this.turno.especialidad.nombre = '';
     this.turno.centroSalud = new CentroSalud;
@@ -45,18 +46,16 @@ export class ResultadoComponent implements OnInit, OnDestroy {
     this.turno.profesional = new Profesional();
     this.turno.profesional.nombre = '';
 
-    this.subs.push(this.utilsService.getWidthResizeEvent().subscribe(data => {
-      this.desktopMode = data >= 900;
-    }));
   }
 
   ngOnInit(): void {
-    this.desktopMode = (this.utilsService.getWidth()) >= 900;
+
     this.subs.push(
       this.store.changes.pluck('CentroSalud').subscribe(
         (data: any) => {
           this.centro = data;
         }));
+
     this.subs.push(
       this.store.changes.pluck('turnos').subscribe(
         (data: any) => {
@@ -68,6 +67,14 @@ export class ResultadoComponent implements OnInit, OnDestroy {
           this.turnos = data;
         }
       ));
+  }
+
+  ngAfterViewInit(): void {
+    this.desktopMode = (this.utilsService.getWidth()) >= 900;
+    console.log('modificar turno' + this.utilsService.getWidth());
+    this.subs.push(this.utilsService.getWidthResizeEvent().subscribe(data => {
+      this.desktopMode = data >= 900;
+    }));
   }
 
   ngOnDestroy(): void {
