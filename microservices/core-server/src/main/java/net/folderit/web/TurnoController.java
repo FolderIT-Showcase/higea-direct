@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @ComponentScan
@@ -32,7 +33,7 @@ public class TurnoController {
     @PostMapping("/turnos")
     public ResponseEntity<Collection<Turno>> getAll(@RequestBody FilterDto filterDto) {
         List<Turno> turnos = turnoService.finAllBy(filterDto);
-        return new ResponseEntity<>((List<Turno>) turnos.stream().filter(Turno::isTomado), HttpStatus.OK);
+        return ResponseEntity.ok(turnos.stream().filter(Turno::isTomado).collect(Collectors.toList()));
     }
 
     @GetMapping("/turno")
