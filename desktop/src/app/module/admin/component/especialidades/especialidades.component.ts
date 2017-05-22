@@ -122,7 +122,6 @@ export class EspecialidadesComponent implements OnInit {
     this.updateModal.show();
   }
 
-
   showDeleteModal(especialidad: Especialidad) {
     this.especialidad = especialidad;
     this.deleteModal.show();
@@ -140,7 +139,6 @@ export class EspecialidadesComponent implements OnInit {
     this.deleteModal = event;
   }
 
-
   public deleteEspecialidad() {
     const especialidades = this.storeService.get('especialidades');
     for (const x of especialidades) {
@@ -152,7 +150,6 @@ export class EspecialidadesComponent implements OnInit {
     }
     this.deleteModal.hide();
   }
-
 
   delete(especialidad: Especialidad) {
     this.adminService.deleteEspecialidad(especialidad).then(data => {
@@ -188,6 +185,5 @@ export class EspecialidadesComponent implements OnInit {
     this.especialidad = new Especialidad();
     this.model = new Data();
   }
-
 
 }

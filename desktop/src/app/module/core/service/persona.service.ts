@@ -1,9 +1,9 @@
-import {Injectable} from "@angular/core";
-import {ApiService} from "./api.service";
-import {Persona} from "../domain/persona";
-import {TipoDocumentos} from "../domain/enums/tipo-documento";
-import {StoreService} from "./store.service";
-import {User} from "../domain/user";
+import {Injectable} from '@angular/core';
+import {ApiService} from './api.service';
+import {Persona} from '../domain/persona';
+import {TipoDocumentos} from '../domain/enums/tipo-documento';
+import {StoreService} from './store.service';
+import {User} from '../domain/user';
 
 @Injectable()
 export class PersonaService {

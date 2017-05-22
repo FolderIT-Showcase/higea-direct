@@ -57,7 +57,6 @@ export class GoogleSigninComponent implements AfterViewInit {
       });
   }
 
-
   ngAfterViewInit() {
     this.googleInit();
   }
