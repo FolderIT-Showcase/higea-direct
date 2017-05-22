@@ -6,10 +6,8 @@ import {Provincia} from './provincia';
 import {Localidad} from './localidad';
 import {Pais} from './pais';
 export class AppState {
-  user: User = null;
   integrantes: Persona[] = [];
   persona: Persona = null;
-  loginType = '';
   centroSalud: CentroSalud = null;
   centrosSalud: CentroSalud[] = [];
   turnos: Turno[] = [];

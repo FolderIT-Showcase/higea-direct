@@ -3,7 +3,7 @@
 function startServices {
 
 #    JAVA_OPTS="-Xms32m -Xmx64m -XX:PermSize=32m -XX:MaxPermSize=64m -XX:+UseG1GC -Djava.security.egd=file:/dev/urandom"
-    JAVA_OPTS="-server -Xms32m -Xmx32m -XX:MaxMetaspaceSize=64m -Xmn8m -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+UseCMSInitiatingOccupancyOnly -XX:+ScavengeBeforeFullGC -XX:+CMSScavengeBeforeRemark -Djava.security.egd=file:/dev/urandom"
+    JAVA_OPTS="-server -Xms48m -Xmx48m -XX:MaxMetaspaceSize=64m -Xmn8m -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+UseCMSInitiatingOccupancyOnly -XX:+ScavengeBeforeFullGC -XX:+CMSScavengeBeforeRemark -Djava.security.egd=file:/dev/urandom"
 
     /usr/bin/java $JAVA_OPTS -jar /opt/api/eureka-server.jar < /dev/null &> /dev/null &
     /usr/bin/java $JAVA_OPTS -jar /opt/api/gateway.jar < /dev/null &> /dev/null &

@@ -15,7 +15,7 @@ export class UtilsService {
   }
 
   public getWidth() {
-    return this.innerWidth;
+    return window.innerWidth;
   }
 
   public setWidtEmitter(emitter) {

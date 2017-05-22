@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
 import {Turno} from '../../../core/domain/turno';
 import {Persona} from '../../../core/domain/persona';
 import {StoreService} from '../../../core/service/store.service';
@@ -20,7 +20,7 @@ class Data {
   selector: 'app-modificar-turno',
   templateUrl: './modificar-turno.component.html'
 })
-export class ModificarTurnoComponent implements OnInit, OnDestroy {
+export class ModificarTurnoComponent implements OnInit, OnDestroy, AfterViewInit {
 
   turnos: Turno[] = [];
   personas: Persona[] = [];
@@ -44,15 +44,10 @@ export class ModificarTurnoComponent implements OnInit, OnDestroy {
     this.turno.centroSalud = new CentroSalud;
     this.turno.centroSalud.nombre = '';
 
-    this.subs.push(this.utilsService.getWidthResizeEvent().subscribe(data => {
-      this.desktopMode = data >= 900;
-    }));
-
-
   }
 
   ngOnInit() {
-    this.desktopMode = (this.utilsService.getWidth()) >= 900;
+
     this.personas = this.storeService.get('integrantes');
     this.form = this.fb.group({
       'persona': [this.personas[0]]
@@ -68,6 +63,14 @@ export class ModificarTurnoComponent implements OnInit, OnDestroy {
         }
         this.turnos = data.turno;
       }));
+  }
+
+  ngAfterViewInit(): void {
+    this.desktopMode = (this.utilsService.getWidth()) >= 900;
+    console.log('modificar turno' + this.utilsService.getWidth());
+    this.subs.push(this.utilsService.getWidthResizeEvent().subscribe(data => {
+      this.desktopMode = data >= 900;
+    }));
   }
 
   ngOnDestroy(): void {
