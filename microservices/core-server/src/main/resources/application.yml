@@ -6,6 +6,8 @@ spring:
     name: core-server
 server:
   port: 36000
+  tomcat:
+    max-threads: 4
 eureka:
   client:
     serviceUrl:

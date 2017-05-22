@@ -3,6 +3,8 @@ spring:
     name: higea-turnos
 server:
   port: 36003
+  tomcat:
+    max-threads: 4
 eureka:
   client:
     serviceUrl:

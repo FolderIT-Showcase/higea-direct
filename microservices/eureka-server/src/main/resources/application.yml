@@ -1,5 +1,7 @@
 server:
   port: 8761
+  tomcat:
+    max-threads: 4
 eureka:
   client:
     registerWithEureka: false
