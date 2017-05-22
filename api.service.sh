@@ -3,7 +3,7 @@
 function startServices {
 
 #    JAVA_OPTS="-Xms32m -Xmx64m -XX:PermSize=32m -XX:MaxPermSize=64m -XX:+UseG1GC -Djava.security.egd=file:/dev/urandom"
-    JAVA_OPTS="-Xms32m -Xmx64m -XX:+UseG1GC -Djava.security.egd=file:/dev/urandom"
+    JAVA_OPTS="-Xms16m -Xmx32m -XX:+UseG1GC -Djava.security.egd=file:/dev/urandom"
 
     /usr/bin/java $JAVA_OPTS -jar /opt/api/eureka-server.jar < /dev/null &> /dev/null &
     /usr/bin/java $JAVA_OPTS -jar /opt/api/gateway.jar < /dev/null &> /dev/null &
