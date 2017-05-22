@@ -1,12 +1,12 @@
-import {Injectable} from "@angular/core";
-import {ApiService} from "./api.service";
-import {CentroSalud} from "../domain/centro-salud";
-import {Especialidad} from "../domain/especialidad";
-import {Profesional} from "../domain/profesional";
-import {StoreService} from "./store.service";
-import {FiltroTurno} from "../domain/filter-turno";
-import {Persona} from "../domain/persona";
-import {Turno} from "../domain/turno";
+import {Injectable} from '@angular/core';
+import {ApiService} from './api.service';
+import {CentroSalud} from '../domain/centro-salud';
+import {Especialidad} from '../domain/especialidad';
+import {Profesional} from '../domain/profesional';
+import {StoreService} from './store.service';
+import {FiltroTurno} from '../domain/filter-turno';
+import {Persona} from '../domain/persona';
+import {Turno} from '../domain/turno';
 
 @Injectable()
 export class TurnoService {
@@ -19,9 +19,7 @@ export class TurnoService {
 
   basePath = 'core/';
 
-
-  constructor(private api: ApiService,
-              private storeService: StoreService) {
+  constructor(private api: ApiService, private storeService: StoreService) {
     if (this.license === 'core') {
       this.pathTurno = this.license + '/turnos';
       this.pathCentroSalud = this.license + '/centroSalud';

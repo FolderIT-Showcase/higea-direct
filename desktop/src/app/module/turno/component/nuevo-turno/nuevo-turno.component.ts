@@ -1,21 +1,13 @@
-import {Component, OnDestroy, OnInit} from "@angular/core";
-import {CentroSalud} from "../../../core/domain/centro-salud";
-import {Especialidad} from "../../../core/domain/especialidad";
-import {Profesional} from "../../../core/domain/profesional";
-import {Persona} from "../../../core/domain/persona";
-import {StoreService} from "../../../core/service/store.service";
-import {TurnoService} from "../../../core/service/turno.service";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {IMyOptions} from "mydatepicker";
-import {DatePipe} from "@angular/common";
-
-class Data {
-  persona: Persona;
-  centro: CentroSalud;
-  especialidad: Especialidad;
-  profesional: Profesional;
-  fecha: Date = new Date();
-}
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {CentroSalud} from '../../../core/domain/centro-salud';
+import {Especialidad} from '../../../core/domain/especialidad';
+import {Profesional} from '../../../core/domain/profesional';
+import {Persona} from '../../../core/domain/persona';
+import {StoreService} from '../../../core/service/store.service';
+import {TurnoService} from '../../../core/service/turno.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {IMyOptions} from 'mydatepicker';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-nuevo-turno',
@@ -24,7 +16,6 @@ class Data {
 export class NuevoTurnoComponent implements OnInit, OnDestroy {
 
   datePipe = new DatePipe('es-AR');
-  model: Data = new Data();
   centrosSalud: CentroSalud[] = [];
   especialidades: Especialidad[] = [];
   profesionales: Profesional[] = [];
@@ -63,6 +54,10 @@ export class NuevoTurnoComponent implements OnInit, OnDestroy {
 
   handlePersonaClick(persona: Persona) {
     this.storeService.update('persona', persona);
+  }
+
+  handleCentroSaludClick(centroSalud: CentroSalud) {
+    this.especialidades = centroSalud.especialidad;
   }
 
   labelPersona(persona: Persona) {
