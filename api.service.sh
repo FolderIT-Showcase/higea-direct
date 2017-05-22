@@ -3,16 +3,14 @@
 function startServices {
 
 #    JAVA_OPTS="-Xms32m -Xmx64m -XX:PermSize=32m -XX:MaxPermSize=64m -XX:+UseG1GC -Djava.security.egd=file:/dev/urandom"
-    JAVA_OPTS="-Xmx54613K -XX:MaxMetaspaceSize=64M -Xss568K -Xms54613K -XX:MetaspaceSize=64M -XX:+UseG1GC -Djava.security.egd=file:/dev/urandom"
+    JAVA_OPTS="-Xmx32M -XX:MaxMetaspaceSize=64M -Xss8M -Xms16M -XX:MetaspaceSize=64M -XX:+UseG1GC -Djava.security.egd=file:/dev/urandom"
 
     /usr/bin/java $JAVA_OPTS -jar /opt/api/eureka-server.jar < /dev/null &> /dev/null &
     /usr/bin/java $JAVA_OPTS -jar /opt/api/gateway.jar < /dev/null &> /dev/null &
+    /usr/bin/java $JAVA_OPTS -jar /opt/api/core-server.jar < /dev/null &> /dev/null &
     /usr/bin/java $JAVA_OPTS -jar /opt/api/higea-especialidad-microservice.jar < /dev/null &> /dev/null &
     /usr/bin/java $JAVA_OPTS -jar /opt/api/higea-profesional-microservice.jar < /dev/null &> /dev/null &
     /usr/bin/java $JAVA_OPTS -jar /opt/api/higea-turnos-microservice.jar < /dev/null &> /dev/null &
-
-    JAVA_OPTS="-Xms32m -Xmx64m -XX:PermSize=32m -XX:MaxPermSize=64m -XX:+UseG1GC -Djava.security.egd=file:/dev/urandom"
-    /usr/bin/java $JAVA_OPTS -jar /opt/api/core-server.jar < /dev/null &> /dev/null &
 
 }
 
