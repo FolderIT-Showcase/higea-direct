@@ -29,7 +29,7 @@ public class TurnoController {
         this.personaService = personaService;
     }
 
-    @PostMapping("/turno")
+    @PostMapping("/turnos")
     public ResponseEntity<Collection<Turno>> getAll(@RequestBody FilterDto filterDto) {
         List<Turno> turnos = turnoService.finAllBy(filterDto);
         return new ResponseEntity<>((List<Turno>) turnos, HttpStatus.OK);
