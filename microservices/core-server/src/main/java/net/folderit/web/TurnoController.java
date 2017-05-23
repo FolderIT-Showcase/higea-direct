@@ -44,7 +44,6 @@ public class TurnoController {
 
     @PutMapping("/turno")
     public ResponseEntity<Turno> saveTurno(@RequestBody Turno turno) {
-        turno.setTomado(true);
         Turno result = turnoService.saveTurno(turno);
         return new ResponseEntity<>((Turno) result, HttpStatus.OK);
     }
