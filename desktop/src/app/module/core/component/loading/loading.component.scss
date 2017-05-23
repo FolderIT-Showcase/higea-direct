@@ -1,58 +1,134 @@
-.modal {
-  text-align: center;
-}
-
-@media screen and (min-width: 768px) {
-  .modal:before {
-    display: inline-block;
-    vertical-align: middle;
-    content: "";
-    height: 100%;
+.app-loading {
+  height: 99% !important;
+  max-height: 99% !important;
+  .modal {
+    text-align: center;
+    height: 99% !important;
+    max-height: 99% !important;
   }
-}
 
-.load-modal {
-  width: 60px;
-}
+  .modal-backdrop {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1040;
+    background-color: (255, 255, 255, 0.6) !important;
+  }
 
-.modal-dialog {
-  display: inline-block;
-  text-align: left;
-  vertical-align: middle;
-}
+  @media screen and (min-width: 768px) {
+    .modal:before {
+      display: inline-block;
+      vertical-align: middle;
+      content: "";
+      height: 100%;
+    }
+  }
 
-@media (min-width: 768px) {
+  .modal-dialog {
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
+  }
+
+  @media (min-width: 768px) {
+    .modal-content {
+      box-shadow: 0 0 0 white;
+    }
+  }
+
   .modal-content {
     box-shadow: 0 0 0 white;
   }
+
+  .modal-transparent {
+    background-color: transparent;
+  }
+
+  .modal-transparent .modal-content {
+    background-color: transparent;
+  }
+
+  .modal-backdrop.modal-backdrop-transparent {
+    background: transparent;
+  }
+
+  .modal-backdrop.modal-backdrop-transparent.in {
+    opacity: 0;
+    filter: alpha(opacity=1);
+  }
+
+  .modal .modal-transparent .fade {
+    -webkit-transition: opacity 2s ease-in;
+    -moz-transition: opacity 2s ease-in;
+    -ms-transition: opacity 2s ease-in;
+    -o-transition: opacity 2s ease-in;
+    transition: opacity 2s ease-in;
+  }
+
 }
 
-.modal-content {
-  box-shadow: 0 0 0 white;
+.loader {
+  font-size: 1em;
+  margin: 50px auto;
+  text-indent: -9999em;
+  width: 8em;
+  height: 8em;
+  border-radius: 50%;
+  background: #ffffff;
+  background: -moz-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+  background: -webkit-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+  background: -o-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+  background: -ms-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+  background: linear-gradient(to right, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+  position: relative;
+  -webkit-animation: load3 1.4s infinite linear;
+  animation: load3 1.4s infinite linear;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
 }
-
-.modal-transparent {
-  background: rgba(255, 255, 255, 1);
+.loader:before {
+  width: 50%;
+  height: 50%;
+  background: #ffffff;
+  border-radius: 100% 0 0 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: '';
 }
-
-.modal-transparent .modal-content {
-  background: rgba(255, 255, 255, 0);
+.loader:after {
+  background: #2095F2;
+  width: 75%;
+  height: 75%;
+  border-radius: 50%;
+  content: '';
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
 }
-
-.modal-backdrop.modal-backdrop-transparent {
-  background: transparent;
+@-webkit-keyframes load3 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
 }
-
-.modal-backdrop.modal-backdrop-transparent.in {
-  opacity: 1;
-  filter: alpha(opacity=1);
+@keyframes load3 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
 }
-
-.modal .modal-transparent .fade {
-  -webkit-transition: opacity 2s ease-in;
-  -moz-transition: opacity 2s ease-in;
-  -ms-transition: opacity 2s ease-in;
-  -o-transition: opacity 2s ease-in;
-  transition: opacity 2s ease-in;
-}
-

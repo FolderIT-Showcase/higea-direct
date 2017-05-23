@@ -120,7 +120,6 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.desktopMode = (this.utilsService.getWidth()) >= 900;
-    console.log('modificar turno' + this.utilsService.getWidth());
     this.subs.push(this.utilsService.getWidthResizeEvent().subscribe(data => {
       this.desktopMode = data >= 900;
     }));

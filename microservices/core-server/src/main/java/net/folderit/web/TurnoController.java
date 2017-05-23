@@ -33,7 +33,7 @@ public class TurnoController {
     @PostMapping("/turnos")
     public ResponseEntity<Collection<Turno>> getAll(@RequestBody FilterDto filterDto) {
         List<Turno> turnos = turnoService.finAllBy(filterDto);
-        return ResponseEntity.ok(turnos.stream().filter(Turno::isTomado).collect(Collectors.toList()));
+        return new ResponseEntity<>(turnos, HttpStatus.OK);
     }
 
     @GetMapping("/turno")
@@ -44,7 +44,6 @@ public class TurnoController {
 
     @PutMapping("/turno")
     public ResponseEntity<Turno> saveTurno(@RequestBody Turno turno) {
-        turno.setTomado(true);
         Turno result = turnoService.saveTurno(turno);
         return new ResponseEntity<>((Turno) result, HttpStatus.OK);
     }

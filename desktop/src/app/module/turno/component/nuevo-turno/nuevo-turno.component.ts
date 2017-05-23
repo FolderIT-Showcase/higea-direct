@@ -72,6 +72,9 @@ export class NuevoTurnoComponent implements OnInit, OnDestroy {
   }
 
   submitForm(form) {
+    if(!form.fecha || !form.fecha.epoc){
+      return;
+    }
     form.fecha = this.timeStampToDate(form.fecha.epoc);
     this.turnoService.getTurnos(form.centro, form.especialidad, form.profesional, form.fecha);
   }
