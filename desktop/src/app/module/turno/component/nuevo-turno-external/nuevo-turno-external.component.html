@@ -22,9 +22,7 @@
         <div class="form-group"
              [ngClass]="{'has-error':!form.controls['persona'].valid && form.controls['persona'].touched}">
           <small>Centro de Salud</small>
-
-          <div><p>{{centroSalud}}</p></div>
-
+          <div><strong>{{centroSalud | uppercase}}</strong></div>
         </div>
       </div>
     </div>
