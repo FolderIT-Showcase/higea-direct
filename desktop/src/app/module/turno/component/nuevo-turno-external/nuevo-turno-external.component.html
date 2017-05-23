@@ -3,6 +3,12 @@
 
     <div class="row">
       <div class="col-sm-6">
+        <small>Centro de Salud</small>
+        <div><strong>{{centroSalud | uppercase}}</strong></div>
+
+      </div>
+      <div class="col-sm-6">
+
         <div class="form-group"
              [ngClass]="{'has-error':!form.controls['persona'].valid && form.controls['persona'].touched}">
           <small>Nuevo Turno para</small>
@@ -18,13 +24,7 @@
           </small>
         </div>
       </div>
-      <div class="col-sm-6">
-        <div class="form-group"
-             [ngClass]="{'has-error':!form.controls['persona'].valid && form.controls['persona'].touched}">
-          <small>Centro de Salud</small>
-          <div><strong>{{centroSalud | uppercase}}</strong></div>
-        </div>
-      </div>
+
     </div>
 
     <div class="row">
