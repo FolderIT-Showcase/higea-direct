@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,700');
 @import "card";
 
@@ -28,6 +27,7 @@ body {
   width: 100%;
   font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
   min-width: 320px;
+  overflow: auto;
   -webkit-font-smoothing: subpixel-antialiased !important;
 }
 
