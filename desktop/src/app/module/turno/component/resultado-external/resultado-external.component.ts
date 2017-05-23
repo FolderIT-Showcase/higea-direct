@@ -1,15 +1,15 @@
-import {Component, OnDestroy, OnInit, ViewChild} from "@angular/core";
-import {ModalDirective} from "ngx-bootstrap";
-import {Turno} from "app/module/core/domain/turno";
-import {CentroSalud} from "../../../../core/domain/centro-salud";
-import {Store} from "../../../../core/service/store";
-import {Subscription} from "rxjs/Subscription";
-import {TurnoService} from "../../../../core/service/turno.service";
-import {StoreService} from "../../../../core/service/store.service";
-import {Persona} from "../../../../core/domain/persona";
-import {Especialidad} from "../../../../core/domain/especialidad";
-import {Profesional} from "../../../../core/domain/profesional";
-import {UtilsService} from "../../../../core/service/utils.service";
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {ModalDirective} from 'ngx-bootstrap';
+import {Turno} from 'app/module/core/domain/turno';
+import {CentroSalud} from '../../../core/domain/centro-salud';
+import {Store} from '../../../core/service/store';
+import {Subscription} from 'rxjs/Subscription';
+import {TurnoService} from '../../../core/service/turno.service';
+import {StoreService} from '../../../core/service/store.service';
+import {Persona} from '../../../core/domain/persona';
+import {Especialidad} from '../../../core/domain/especialidad';
+import {Profesional} from '../../../core/domain/profesional';
+import {UtilsService} from '../../../core/service/utils.service';
 
 @Component({
   selector: 'app-busqueda-external',

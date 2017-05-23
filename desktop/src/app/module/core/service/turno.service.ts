@@ -19,9 +19,7 @@ export class TurnoService {
 
   basePath = 'core/';
 
-
-  constructor(private api: ApiService,
-              private storeService: StoreService) {
+  constructor(private api: ApiService, private storeService: StoreService) {
     if (this.license === 'core') {
       this.pathTurno = this.license + '/turnos';
       this.pathCentroSalud = this.license + '/centroSalud';

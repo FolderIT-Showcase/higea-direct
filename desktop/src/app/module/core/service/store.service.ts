@@ -82,12 +82,11 @@ export class StoreService {
     this.store.clear();
   }
 
-  clearCache(){
+  clearCache() {
     this.update('centroSalud', null);
     this.update('centrosSalud', []);
     this.update('turnos', []);
     this.update('integrantes', []);
   }
-
 
 }

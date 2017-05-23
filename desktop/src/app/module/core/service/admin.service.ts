@@ -15,7 +15,6 @@ export class AdminService {
   pathEspecialidad = this.license + '/especialidad/' + this.client;
   pathProfesional = this.license + '/profesional/' + this.client;
 
-
   constructor(private api: ApiService, private storeService: StoreService) {
     if (this.license === 'core') {
       this.pathTurno = this.license + '/turno';
@@ -119,7 +118,6 @@ export class AdminService {
         this.storeService.add('profesionales', profesional);
       });
   }
-
 
   deleteProfesional(profesional: Profesional) {
     const path = this.pathProfesional + '?id=' + profesional.id;

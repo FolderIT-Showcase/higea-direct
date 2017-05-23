@@ -1,4 +1,5 @@
-/* You can add global styles to this file, and also import other style files */
+
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,700');
 @import "card";
 
 .brand-no-auth {
@@ -24,7 +25,9 @@ html,
 body {
   font-size: 15px;
   height: 100%;
-  font-family: 'Roboto', sans-serif;
+  width: 100%;
+  font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  min-width: 320px;
   -webkit-font-smoothing: subpixel-antialiased !important;
 }
 
@@ -109,7 +112,7 @@ div.well {
 }
 
 .app-header {
-  margin: 0.75em;
+  margin-top: 0.75em;
 }
 
 .text-xs-center {
@@ -209,16 +212,14 @@ select {
 
 /* Main body section */
 .side-body {
-  margin-left: 290px;
-  padding: 1em;
+  margin-left: 250px;
+  padding: 0;
 }
 
 .sebm-google-map-container {
   height: 300px;
   padding: 1em;
 }
-
-
 
 @media (max-width: 900px) {
   .no-padding {

@@ -27,7 +27,6 @@ export class ProfesionalBusquedaComponent implements OnInit, OnDestroy {
   // paged items
   pagedItems: any[];
 
-
   constructor(private store: Store,
               private storeService: StoreService,
               private pagerService: PagerService) {

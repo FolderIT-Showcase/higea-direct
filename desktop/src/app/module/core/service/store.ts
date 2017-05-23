@@ -7,7 +7,6 @@ import * as localforage from 'localforage';
 const state: AppState = new AppState();
 const store = new BehaviorSubject<AppState>(state);
 
-
 @Injectable()
 export class Store {
   private store = store;

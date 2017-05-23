@@ -7,7 +7,6 @@ import {ListaIntegrantesComponent} from './component/lista-integrantes/lista-int
 import {ModalModule} from 'ngx-bootstrap/modal';
 import {AgmCoreModule} from 'angular2-google-maps/core';
 import {RouterModule} from '@angular/router';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CoreModule} from '../core/core.module';
 import {MyDatePickerModule} from 'mydatepicker';
 
@@ -23,7 +22,6 @@ import {MyDatePickerModule} from 'mydatepicker';
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAflntypuq6NWQj75NAk_IGgc2uPpJiVqs'
     }),
-    BrowserAnimationsModule,
     MyDatePickerModule
   ],
   declarations: [

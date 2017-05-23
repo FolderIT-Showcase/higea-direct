@@ -1,4 +1,4 @@
-import {Component, OnInit, AfterViewInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {ModalDirective} from 'ngx-bootstrap';
 import {AlertService} from '../../../core/service/alert.service';
 import {Persona} from '../../../core/domain/persona';
@@ -219,7 +219,6 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
       }
 
     }
-
 
   }
 

@@ -293,17 +293,19 @@
         <p class="text-danger">* Campos Requeridos</p>
       </div>
     </div>
-    <div class="row">
-      <div class="text-right">
-        <div *ngIf="['add','edit'].indexOf(modalAction) >= 0">
-          <button type="submit" [disabled]="!mForm.valid" class="btn btn-primary">Aceptar</button>
-          <a (click)="hideModalForm()" class="btn btn-default">Cancelar</a>
-        </div>
-        <div *ngIf="['view'].indexOf(modalAction) >= 0">
-          <a (click)="hideModalForm()" class="btn btn-default">Cerrar</a>
-        </div>
+
+    <div class="row text-right">
+      <div class="col-sm-12 col-md-2 col-md-offset-8">
+        <button type="submit" *ngIf="['add', 'edit'].indexOf(modalAction) >= 0"
+                [disabled]="!mForm.valid" class="btn btn-block btn-primary">Aceptar
+        </button>
+        <br>
+      </div>
+      <div class="col-sm-12 col-md-2">
+        <a (click)="hideModalForm()" class="btn btn-block btn-default">Cerrar</a>
       </div>
     </div>
+
   </form>
 
 </app-modal>

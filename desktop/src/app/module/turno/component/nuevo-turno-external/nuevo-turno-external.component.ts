@@ -1,13 +1,13 @@
-import {Component, OnDestroy, OnInit} from "@angular/core";
-import {CentroSalud} from "../../../../core/domain/centro-salud";
-import {Especialidad} from "../../../../core/domain/especialidad";
-import {Profesional} from "../../../../core/domain/profesional";
-import {Persona} from "../../../../core/domain/persona";
-import {StoreService} from "../../../../core/service/store.service";
-import {TurnoService} from "../../../../core/service/turno.service";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {IMyOptions} from "mydatepicker";
-import {DatePipe} from "@angular/common";
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {CentroSalud} from '../../../core/domain/centro-salud';
+import {Especialidad} from '../../../core/domain/especialidad';
+import {Profesional} from '../../../core/domain/profesional';
+import {Persona} from '../../../core/domain/persona';
+import {StoreService} from '../../../core/service/store.service';
+import {TurnoService} from '../../../core/service/turno.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {IMyOptions} from 'mydatepicker';
+import {DatePipe} from '@angular/common';
 
 class Data {
   persona: Persona;

@@ -1,4 +1,3 @@
-import {User} from './user';
 import {Persona} from './persona';
 import {CentroSalud} from './centro-salud';
 import {Turno} from './turno';

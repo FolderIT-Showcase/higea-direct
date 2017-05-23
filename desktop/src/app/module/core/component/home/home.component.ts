@@ -6,7 +6,7 @@ import {StoreService} from '../../service/store.service';
   selector: 'app-home',
   templateUrl: './home.component.html'
 })
-export class HomeComponent implements OnInit{
+export class HomeComponent implements OnInit {
 
   constructor(private router: Router, private storeService: StoreService) {
   }
