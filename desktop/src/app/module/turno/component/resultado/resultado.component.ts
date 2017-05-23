@@ -99,9 +99,11 @@ export class ResultadoComponent implements OnInit, OnDestroy, AfterViewInit {
     this.persona.turno.push(turno);
     this.turnoService.reservarTurno(this.persona)
       .then(() => {
+        this.storeService.update('turnos', []);
         this.successModal.show();
       })
       .catch(error => {
+        this.storeService.update('turnos', []);
         console.error(error);
       });
   }

@@ -31,7 +31,7 @@ import {UtilsService} from '../../../core/service/utils.service';
 export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
 
   private currentUser = JSON.parse(localStorage.getItem('currentUser'));
-  public currentPersona;
+  public currentPersona: Persona;
   public modalAction = 'none';
   public selectUndefined: any;
   public integrantes: Persona[] = [];
@@ -291,7 +291,7 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
 
   public confirmModal(action, form) {
 
-    let integranteNuevo = this.buildIntegrante(form);
+    let integranteNuevo: Persona = this.buildIntegrante(form);
 
     if (!this.currentPersona.integrantes) {
       this.currentPersona.integrantes = [];
@@ -305,6 +305,11 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
       // y copiamos a current persona
       this.currentPersona = _.merge({}, integranteNuevo);
     } else {
+
+      if (action === 'edit') {
+        const index = this.currentPersona.integrantes.findIndex((value, index, obj) => value.id === integranteNuevo.id);
+        this.currentPersona.integrantes[index] = integranteNuevo;
+      }
       this.currentPersona.integrantes.push(integranteNuevo);
     }
 
