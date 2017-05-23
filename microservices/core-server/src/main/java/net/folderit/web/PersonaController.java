@@ -5,6 +5,7 @@ import net.folderit.domain.Turno;
 import net.folderit.domain.exception.TurneroException;
 import net.folderit.dto.ResultAfipDto;
 import net.folderit.service.PersonaService;
+import net.folderit.service.TurnoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
@@ -13,17 +14,20 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 @ComponentScan
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class PersonaController {
 
-    private PersonaService personaService;
+    private final PersonaService personaService;
+    private final TurnoService turnoService;
 
     @Autowired
-    public PersonaController(PersonaService personaService) {
+    public PersonaController(PersonaService personaService, TurnoService turnoService) {
         this.personaService = personaService;
+        this.turnoService = turnoService;
     }
 
 
@@ -39,9 +43,6 @@ public class PersonaController {
 
     @PostMapping("/persona")
     public ResponseEntity<Long> createUser(@RequestBody Persona persona) {
-        ArrayList<Turno> turnos = new ArrayList<Turno>(persona.getTurno());
-        turnos.forEach( turno -> turno.setTomado(true));
-        persona.setTurno(turnos);
         Persona mPersona = personaService.save(persona);
         return ResponseEntity.ok(mPersona.getId());
     }
@@ -70,7 +71,7 @@ public class PersonaController {
             dto = personaService.isDocumentValid(documento, nombre, apellido, genero);
         } catch (Exception e) {
 
-            TurneroException.getInstance().getMessage(TurneroException.MESSAGE_AFIP_INVALID,null);
+            TurneroException.getInstance().getMessage(TurneroException.MESSAGE_AFIP_INVALID, null);
 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(TurneroException.getInstance());
 

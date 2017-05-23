@@ -74,7 +74,7 @@ public class Persona implements Serializable {
             )
     private List<Contacto> contacto;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable
             (
                     name = "persona_turno",
