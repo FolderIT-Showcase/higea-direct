@@ -8,36 +8,44 @@ import {TurnoService} from '../../../core/service/turno.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {IMyOptions} from 'mydatepicker';
 import {DatePipe} from '@angular/common';
-import {AlertService} from '../../../core/service/alert.service';
+
+class Data {
+  persona: Persona;
+  centro: CentroSalud;
+  especialidad: Especialidad;
+  profesional: Profesional;
+  fecha: Date = new Date();
+}
 
 @Component({
-  selector: 'app-nuevo-turno',
-  templateUrl: './nuevo-turno.component.html'
+  selector: 'app-turno-busqueda-avanzada-external',
+  templateUrl: './turno-busqueda-avanzada-external.component.html'
 })
-export class NuevoTurnoComponent implements OnInit, OnDestroy {
+export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy {
 
   datePipe = new DatePipe('es-AR');
-  centrosSalud: CentroSalud[] = [];
+  model: Data = new Data();
+  // centrosSalud: CentroSalud[] = [];
   especialidades: Especialidad[] = [];
   profesionales: Profesional[] = [];
   personas: Persona[] = [];
   selectUndefined: any;
   form: FormGroup;
   fechaDesde: Date = new Date();
+  centroSalud: string = localStorage.getItem('client');
 
   myDatePickerOptions: IMyOptions = {
     dateFormat: 'dd/mm/yyyy',
   };
 
   constructor(private storeService: StoreService,
-              private alertService: AlertService,
               private turnoService: TurnoService,
               private fb: FormBuilder) {
   }
 
   ngOnInit(): void {
     this.personas = this.storeService.get('integrantes');
-    this.centrosSalud = this.storeService.get('centrosSalud');
+    // this.centrosSalud = this.storeService.get('centrosSalud');
 
     this.form = this.fb.group({
       'persona': [null],
@@ -47,6 +55,7 @@ export class NuevoTurnoComponent implements OnInit, OnDestroy {
       'profesional': [null]
     });
     this.form.value.fechaDesde = new Date();
+    this.especialidades = this.storeService.get('especialidades');
   }
 
   ngOnDestroy() {
@@ -58,10 +67,6 @@ export class NuevoTurnoComponent implements OnInit, OnDestroy {
     this.storeService.update('persona', persona);
   }
 
-  handleCentroSaludClick(centroSalud: CentroSalud) {
-    this.especialidades = centroSalud.especialidad;
-  }
-
   labelPersona(persona: Persona) {
     if (!persona) {
       return;
@@ -69,25 +74,15 @@ export class NuevoTurnoComponent implements OnInit, OnDestroy {
     return (persona.nombre + ' ' + persona.apellido).toUpperCase();
   }
 
+  handleCentroSaludClick(centroSalud: CentroSalud) {
+    this.especialidades = centroSalud.especialidad;
+  }
+
   handleEspecialidadClick(especialidad: Especialidad) {
     this.profesionales = especialidad.profesional;
   }
 
   submitForm(form) {
-    if (!form.fecha || !form.fecha.epoc) {
-      return;
-    }
-
-    const fechaDesde = form.fecha.epoc * 1000;
-
-    const ahora = new Date().setHours(0, 0, 0, 0);
-    const fechaTurno = new Date(fechaDesde).setHours(0, 0, 0, 0);
-
-    if (!(fechaTurno >= ahora)) {
-      this.alertService.error('No puede sacar un turno con fecha invalida, verifique');
-      return;
-    }
-
     form.fecha = this.timeStampToDate(form.fecha.epoc);
     this.turnoService.getTurnos(form.centro, form.especialidad, form.profesional, form.fecha);
   }

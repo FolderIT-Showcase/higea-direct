@@ -12,10 +12,10 @@ import {Profesional} from '../../../core/domain/profesional';
 import {UtilsService} from '../../../core/service/utils.service';
 
 @Component({
-  selector: 'app-busqueda',
-  templateUrl: './resultado.component.html'
+  selector: 'app-turno-resultado',
+  templateUrl: './turno-resultado.component.html'
 })
-export class ResultadoComponent implements OnInit, OnDestroy, AfterViewInit {
+export class TurnoResultadoComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('autoShownModal') public autoShownModal: ModalDirective;
   @ViewChild('infoModal') public infoModal: ModalDirective;

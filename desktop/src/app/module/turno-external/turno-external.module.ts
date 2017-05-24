@@ -7,8 +7,9 @@ import {BsDropdownModule, ModalModule, PopoverModule, TimepickerModule} from 'ng
 import {MyDatePickerModule} from 'mydatepicker';
 import {AgmCoreModule} from 'angular2-google-maps/core';
 import {TurnoExternalComponent} from './component/turno-external/turno-external.component';
-import {NuevoTurnoExternalComponent} from './component/nuevo-turno-external/nuevo-turno-external.component';
-import {ResultadoExternalComponent} from './component/resultado-external/resultado-external.component';
+import {TurnoBusquedaAvanzadaExternalComponent} from './component/turno-busqueda-avanzada-external/turno-busqueda-avanzada-external.component';
+import {TurnoResultadoExternalComponent} from './component/turno-resultado-external/turno-resultado-external.component';
+import { TurnoBusquedaRapidaExternalComponent } from './component/turno-busqueda-rapida-external/turno-busqueda-rapida-external.component';
 
 @NgModule({
   imports: [
@@ -28,13 +29,14 @@ import {ResultadoExternalComponent} from './component/resultado-external/resulta
   ],
   declarations: [
     TurnoExternalComponent,
-    NuevoTurnoExternalComponent,
-    ResultadoExternalComponent
+    TurnoBusquedaAvanzadaExternalComponent,
+    TurnoResultadoExternalComponent,
+    TurnoBusquedaRapidaExternalComponent
   ],
   exports: [
     TurnoExternalComponent,
-    NuevoTurnoExternalComponent,
-    ResultadoExternalComponent
+    TurnoBusquedaAvanzadaExternalComponent,
+    TurnoResultadoExternalComponent
   ]
 })
 export class TurnoExternalModule {

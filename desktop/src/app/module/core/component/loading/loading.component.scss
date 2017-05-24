@@ -1,3 +1,5 @@
+$accentColor: #BCDEFF;
+
 .loading-wrapper {
   z-index: 1000;
   position: fixed;
@@ -26,11 +28,11 @@
   height: 8em;
   border-radius: 50%;
   background: transparent;
-  background: -moz-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
-  background: -webkit-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
-  background: -o-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
-  background: -ms-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
-  background: linear-gradient(to right, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+  background: -moz-linear-gradient(left, $accentColor 10%, rgba(255, 255, 255, 0) 42%);
+  background: -webkit-linear-gradient(left, $accentColor 10%, rgba(255, 255, 255, 0) 42%);
+  background: -o-linear-gradient(left, $accentColor 10%, rgba(255, 255, 255, 0) 42%);
+  background: -ms-linear-gradient(left, $accentColor 10%, rgba(255, 255, 255, 0) 42%);
+  background: linear-gradient(to right, $accentColor 10%, rgba(255, 255, 255, 0) 42%);
   -webkit-animation: load3 1.4s infinite linear;
   animation: load3 1.4s infinite linear;
   -webkit-transform: translateZ(0);

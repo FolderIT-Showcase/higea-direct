@@ -1,17 +1,33 @@
 <div class="container-fluid">
-  <div class="app-header">
-    <h2>Nuevo Turno {{licencia}}</h2>
+  <div class="col-sm-12">
+    <label style="font-size: 45px;">Nuevo Turno {{licencia}}</label>
     <p>Acá podes sacar un nuevo turno</p>
   </div>
-  <div class="row">
-    <app-nuevo-turno-external></app-nuevo-turno-external>
-  </div>
-  <br>
-  <div class="row container-fluid">
-    <app-busqueda-external></app-busqueda-external>
+  <div class="container">
+    <tabset [justified]="true">
+      <tab heading="Busqueda Rápida">
+        <br>
+        <div class="row">
+          <app-turno-busqueda-rapida-external></app-turno-busqueda-rapida-external>
+        </div>
+        <br>
+        <div class="row">
+          <app-turno-resultado-external></app-turno-resultado-external>
+        </div>
+      </tab>
+      <tab heading="Busqueda Avanzada">
+        <br>
+        <div class="row">
+          <app-turno-busqueda-avanzada-external></app-turno-busqueda-avanzada-external>
+        </div>
+        <br>
+        <div class="row">
+          <app-turno-resultado-external></app-turno-resultado-external>
+        </div>
+      </tab>
+    </tabset>
   </div>
 </div>
-
 
 
 

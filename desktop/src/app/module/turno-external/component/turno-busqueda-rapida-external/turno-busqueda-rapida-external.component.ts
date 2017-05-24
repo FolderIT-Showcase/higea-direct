@@ -1,13 +1,13 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {CentroSalud} from '../../../core/domain/centro-salud';
+import {DatePipe} from '@angular/common';
 import {Especialidad} from '../../../core/domain/especialidad';
 import {Profesional} from '../../../core/domain/profesional';
-import {Persona} from '../../../core/domain/persona';
-import {StoreService} from '../../../core/service/store.service';
-import {TurnoService} from '../../../core/service/turno.service';
+import {Persona} from 'app/module/core/domain/persona';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {IMyOptions} from 'mydatepicker';
-import {DatePipe} from '@angular/common';
+import {StoreService} from '../../../core/service/store.service';
+import {TurnoService} from '../../../core/service/turno.service';
+import {CentroSalud} from '../../../core/domain/centro-salud';
 
 class Data {
   persona: Persona;
@@ -18,10 +18,10 @@ class Data {
 }
 
 @Component({
-  selector: 'app-nuevo-turno-external',
-  templateUrl: './nuevo-turno-external.component.html'
+  selector: 'app-turno-busqueda-rapida-external',
+  templateUrl: './turno-busqueda-rapida-external.component.html'
 })
-export class NuevoTurnoExternalComponent implements OnInit, OnDestroy {
+export class TurnoBusquedaRapidaExternalComponent implements OnInit, OnDestroy {
 
   datePipe = new DatePipe('es-AR');
   model: Data = new Data();
