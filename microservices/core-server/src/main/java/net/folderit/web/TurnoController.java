@@ -2,6 +2,7 @@ package net.folderit.web;
 
 import net.folderit.domain.Persona;
 import net.folderit.domain.Turno;
+import net.folderit.domain.exception.TurneroException;
 import net.folderit.dto.FilterDto;
 import net.folderit.service.PersonaService;
 import net.folderit.service.TurnoService;
@@ -11,9 +12,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Locale;
 
 @RestController
 @ComponentScan
@@ -31,7 +36,22 @@ public class TurnoController {
     }
 
     @PostMapping("/turnos")
-    public ResponseEntity<Collection<Turno>> getAll(@RequestBody FilterDto filterDto) {
+    public ResponseEntity getAll(@RequestBody FilterDto filterDto) {
+
+        String target = filterDto.getFecha();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        Date result = null;
+        try {
+            result = df.parse(target);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        if ((result != null ? result.compareTo(new Date()) : 0) <= 0) {
+            TurneroException.getInstance().getMessage(TurneroException.MESSAGE_INVALID_TOKEN, null);
+            return new ResponseEntity<>(TurneroException.getInstance(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
         List<Turno> turnos = turnoService.finAllBy(filterDto);
         return new ResponseEntity<>(turnos, HttpStatus.OK);
     }
