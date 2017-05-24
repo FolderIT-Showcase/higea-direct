@@ -1,12 +1,3 @@
-<div class="app-loading">
-  <div class="modal modal-transparent fade" bsModal #staticModal="bs-modal" [config]="{backdrop: 'static'}"
-       tabindex="-1">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <div class="loader">Loading...</div>
-        </div>
-      </div>
-    </div>
-  </div>
+<div *ngIf="loading" class="loading-wrapper">
+  <div class="loader"></div>
 </div>

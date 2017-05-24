@@ -8,6 +8,7 @@ import {TurnoService} from '../../../core/service/turno.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {IMyOptions} from 'mydatepicker';
 import {DatePipe} from '@angular/common';
+import {AlertService} from '../../../core/service/alert.service';
 
 @Component({
   selector: 'app-nuevo-turno',
@@ -29,6 +30,7 @@ export class NuevoTurnoComponent implements OnInit, OnDestroy {
   };
 
   constructor(private storeService: StoreService,
+              private alertService: AlertService,
               private turnoService: TurnoService,
               private fb: FormBuilder) {
   }
@@ -75,6 +77,17 @@ export class NuevoTurnoComponent implements OnInit, OnDestroy {
     if (!form.fecha || !form.fecha.epoc) {
       return;
     }
+
+    const fechaDesde = form.fecha.epoc * 1000;
+
+    const ahora = new Date().setHours(0, 0, 0, 0);
+    const fechaTurno = new Date(fechaDesde).setHours(0, 0, 0, 0);
+
+    if (!(fechaTurno >= ahora)) {
+      this.alertService.error('No puede sacar un turno con fecha invalida, verifique');
+      return;
+    }
+
     form.fecha = this.timeStampToDate(form.fecha.epoc);
     this.turnoService.getTurnos(form.centro, form.especialidad, form.profesional, form.fecha);
   }

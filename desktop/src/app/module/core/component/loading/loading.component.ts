@@ -10,16 +10,14 @@ import {ModalDirective} from 'ngx-bootstrap';
 export class LoadingComponent implements OnInit {
   @ViewChild('staticModal') public staticModal: ModalDirective;
 
+  loading = false;
+
   constructor(private loadingService: LoadingService) {
   }
 
   ngOnInit() {
     this.loadingService.getMessage().subscribe(loading => {
-      if (loading === true) {
-        this.staticModal.show();
-      } else {
-        this.staticModal.hide();
-      }
+      this.loading = loading;
     });
   }
 

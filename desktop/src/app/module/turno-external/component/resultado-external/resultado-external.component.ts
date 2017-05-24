@@ -46,12 +46,12 @@ export class ResultadoExternalComponent implements OnInit, OnDestroy {
     this.turno.profesional.nombre = '';
 
     this.subs.push(this.utilsService.getWidthResizeEvent().subscribe(data => {
-      this.desktopMode = data >= 900;
+      this.desktopMode = data >= 1000;
     }));
   }
 
   ngOnInit(): void {
-    this.desktopMode = (this.utilsService.getWidth()) >= 900;
+    this.desktopMode = (this.utilsService.getWidth()) >= 1000;
     this.subs.push(
       this.store.changes.pluck('CentroSalud').subscribe(
         (data: any) => {

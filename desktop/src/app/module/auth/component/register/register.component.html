@@ -118,15 +118,29 @@
       </div>
     </div>
 
-    <div class="col-sm-12">
-      <div class="form-group"
-           [ngClass]="{'has-error':!complexForm.controls['email'].valid && complexForm.controls['email'].touched}">
-        <label>Correo Electrónico</label>
-        <input class="form-control" type="email" placeholder="tucorreo@hotmail.com"
-               [formControl]="complexForm.controls['email']">
-        <small *ngIf="complexForm.controls['email'].hasError('required') && complexForm.controls['email'].touched"
-               class="help-block">Debes incluir un correo electrónico.
-        </small>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group"
+             [ngClass]="{'has-error':!complexForm.controls['email'].valid && complexForm.controls['email'].touched}">
+          <label>Correo Electrónico</label>
+          <input class="form-control" type="email" placeholder="tucorreo@hotmail.com"
+                 [formControl]="complexForm.controls['email']">
+          <small *ngIf="complexForm.controls['email'].hasError('required') && complexForm.controls['email'].touched"
+                 class="help-block">Debes incluir un correo electrónico.
+          </small>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group"
+             [ngClass]="{'has-error':!complexForm.controls['telefono'].valid && complexForm.controls['telefono'].touched}">
+          <label>Teléfono</label>
+          <input class="form-control" type="tel" placeholder="03424749698"
+                 [formControl]="complexForm.controls['telefono']">
+          <small
+            *ngIf="complexForm.controls['telefono'].hasError('required') && complexForm.controls['telefono'].touched"
+            class="help-block">Debes incluir un Teléfono.
+          </small>
+        </div>
       </div>
     </div>
 

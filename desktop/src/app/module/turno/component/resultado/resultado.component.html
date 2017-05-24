@@ -2,8 +2,9 @@
 <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2" *ngIf="emptyResponse === true">
   <a class="list-group-item">
     <h4 class="list-group-item-heading">No hay resultados</h4>
-    <p class="list-group-item-text">No hay resultados para tu busqueda, por favor cambie las opciones e intente
-      nuevamente</p>
+    <p class="list-group-item-text">
+      No hay resultados para tu busqueda, por favor cambie las opciones e intente nuevamente
+    </p>
   </a>
 </div>
 
@@ -66,7 +67,7 @@
             <td>{{turno.observaciones}}</td>
             <td>
               <a (click)="showTurnoModal(turno)" class="btn btn-success btn-block">
-                <span class="fa fa-ellipsis-h"></span>
+                SACAR TURNO
               </a>
             </td>
           </tr>

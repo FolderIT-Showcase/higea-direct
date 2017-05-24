@@ -17,12 +17,14 @@ class Data {
 }
 
 @Component({
-  selector: 'app-modificar-turno',
-  templateUrl: './modificar-turno.component.html'
+  selector: 'app-mis-turnos',
+  templateUrl: './mis-turnos.component.html'
 })
-export class ModificarTurnoComponent implements OnInit, OnDestroy, AfterViewInit {
+export class MisTurnosComponent implements OnInit, OnDestroy, AfterViewInit {
 
   turnos: Turno[] = [];
+  turnosProximos: Turno[] = [];
+  turnosHistorial: Turno[] = [];
   personas: Persona[] = [];
   persona: Persona;
   model: Data = new Data();
@@ -53,6 +55,15 @@ export class ModificarTurnoComponent implements OnInit, OnDestroy, AfterViewInit
       'persona': [this.personas[0]]
     });
     this.turnos = this.personas[0].turno;
+
+    this.turnos.forEach(x => {
+      if (x.fecha <= Date.now()) {
+        this.turnosHistorial.push(x);
+      } else {
+        this.turnosProximos.push(x);
+      }
+    });
+
     this.persona = this.personas[0];
     this.storeService.update('persona', this.personas[0]);
 
@@ -66,9 +77,9 @@ export class ModificarTurnoComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   ngAfterViewInit(): void {
-    this.desktopMode = (this.utilsService.getWidth()) >= 900;
+    this.desktopMode = (this.utilsService.getWidth()) >= 1000;
     this.subs.push(this.utilsService.getWidthResizeEvent().subscribe(data => {
-      this.desktopMode = data >= 900;
+      this.desktopMode = data >= 1000;
     }));
   }
 

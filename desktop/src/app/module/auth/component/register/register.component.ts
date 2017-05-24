@@ -10,6 +10,7 @@ import {Persona} from '../../../core/domain/persona';
 import {Documento} from '../../../core/domain/documento';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MetadataService} from '../../../core/service/metadata.service';
+import {Contacto} from '../../../core/domain/contacto';
 
 @Component({
   selector: 'app-register',
@@ -46,7 +47,8 @@ export class RegisterComponent implements OnInit {
       'genero': [null, Validators.required],
       'password1': [null, Validators.required],
       'password2': [null, [Validators.required, this.passwordMatch]],
-      'email': [null, Validators.required]
+      'email': [null, Validators.required],
+      'telefono': [null, Validators.required]
     }, {validator: this.passwordMatcher});
 
   }
@@ -77,6 +79,10 @@ export class RegisterComponent implements OnInit {
     persona.documento.tipoDocumento = TipoDocumentos.findByLabel(data.tipoDocumento);
     persona.nombre = data.nombre;
     persona.apellido = data.apellido;
+
+    persona.contacto = [];
+    const contacto: Contacto = new Contacto('telefono', data.telefono);
+    persona.contacto.push(contacto);
 
     return persona;
   }

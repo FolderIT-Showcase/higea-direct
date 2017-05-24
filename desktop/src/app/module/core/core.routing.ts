@@ -8,7 +8,7 @@ import {UserActiveComponent} from '../auth/component/user-activate/user.active.c
 import {AuthGuard} from './service/guard/auth.guard';
 import {CentrosSaludResolveService} from './service/resolve/centros-salud-resolve.service';
 import {IntegrantesResolveService} from './service/resolve/integrantes-resolve.service';
-import {ModificarTurnoComponent} from '../turno/component/modificar-turno/modificar-turno.component';
+import {MisTurnosComponent} from '../turno/component/mis-turnos/mis-turnos.component';
 import {AdminHomeComponent} from '../admin/component/admin-home.component';
 import {ProfesionalResolveService} from './service/resolve/profesionales-resolve.service';
 import {CoreComponent} from './core.component';
@@ -50,7 +50,7 @@ const appRoutes: Routes = [
       },
       {
         path: 'mis-turnos',
-        component: ModificarTurnoComponent,
+        component: MisTurnosComponent,
         resolve: {
           integrantes: IntegrantesResolveService,
         }

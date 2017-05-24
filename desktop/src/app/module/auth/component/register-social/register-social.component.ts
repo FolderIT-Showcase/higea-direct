@@ -10,6 +10,7 @@ import {Persona} from '../../../core/domain/persona';
 import {Documento} from '../../../core/domain/documento';
 import {MetadataService} from '../../../core/service/metadata.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Contacto} from '../../../core/domain/contacto';
 
 class Datos {
   nombre = '';
@@ -48,6 +49,7 @@ export class RegisterSocialComponent implements OnInit {
       'tipoDocumento': [null, Validators.required],
       'pais': [null, Validators.required],
       'genero': [null, Validators.required],
+      'telefono': [null, Validators.required]
     });
 
   }
@@ -96,6 +98,9 @@ export class RegisterSocialComponent implements OnInit {
     persona.documento.tipoDocumento = TipoDocumentos.findByLabel(data.tipoDocumento);
     persona.nombre = data.nombre;
     persona.apellido = data.apellido;
+    persona.contacto = [];
+    const contacto: Contacto = new Contacto('telefono', data.telefono);
+    persona.contacto.push(contacto);
 
     return persona;
   }

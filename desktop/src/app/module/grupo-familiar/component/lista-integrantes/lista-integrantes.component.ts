@@ -87,7 +87,10 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
       'localidad': [null, Validators.required],
       'calle': [''],
       'piso': [''],
-      'departamento': ['']
+      'departamento': [''],
+      'telefono': [''],
+      'celular': [''],
+      'email': ['']
     });
 
     // Popular listas
@@ -119,9 +122,9 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.desktopMode = (this.utilsService.getWidth()) >= 900;
+    this.desktopMode = (this.utilsService.getWidth()) >= 1000;
     this.subs.push(this.utilsService.getWidthResizeEvent().subscribe(data => {
-      this.desktopMode = data >= 900;
+      this.desktopMode = data >= 1000;
     }));
   }
 
@@ -271,7 +274,15 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
 
     integrante.fechaNacimiento = form.fechaNacimiento.epoc;
     integrante.contacto = [];
-    integrante.contacto.push(new Contacto(form.tipoContacto, form.dato));
+
+    integrante.contacto.push(new Contacto('telefono', form.telefono));
+    if (form.celular) {
+      integrante.contacto.push(new Contacto('celular', form.celular));
+    }
+    if (form.email) {
+      integrante.contacto.push(new Contacto('mail', form.email));
+    }
+
     integrante.estadoCivil = form.estadoCivil ? form.estadoCivil.id : EstadosCiviles.findIDByLabel('Soltero');
 
     integrante.domicilio = new Domicilio();

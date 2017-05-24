@@ -90,6 +90,21 @@
     </div>
 
     <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group"
+             [ngClass]="{'has-error':!complexForm.controls['telefono'].valid && complexForm.controls['telefono'].touched}">
+          <label>Teléfono</label>
+          <input class="form-control" type="tel" placeholder="03424749698"
+                 [formControl]="complexForm.controls['telefono']">
+          <small
+            *ngIf="complexForm.controls['telefono'].hasError('required') && complexForm.controls['telefono'].touched"
+            class="help-block">Debes incluir un Teléfono.
+          </small>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
       <div class="col-sm-12"
            [ngClass]="{'has-error': !captcha}">
         <div class="g-recaptcha-container">
