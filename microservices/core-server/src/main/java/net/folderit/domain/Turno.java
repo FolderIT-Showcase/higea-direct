@@ -55,6 +55,14 @@ public class Turno implements Serializable {
     @JoinColumn(name = "profesional_id")
     private Profesional profesional;
 
+    @ManyToOne
+    @JoinColumn(name = "plan_id")
+    private Plan plan;
+
+    @ManyToOne
+    @JoinColumn(name = "tipo_turno_id")
+    private TipoTurno tipoTurno;
+
     @Column(name = "enabled")
     private boolean enabled = Boolean.TRUE;
 
