@@ -11,6 +11,8 @@ import {Documento} from '../../../core/domain/documento';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MetadataService} from '../../../core/service/metadata.service';
 import {Contacto} from '../../../core/domain/contacto';
+import {ObraSocial} from '../../../core/domain/obra-social';
+import {Plan} from '../../../core/domain/plan';
 
 @Component({
   selector: 'app-register',
@@ -21,9 +23,14 @@ export class RegisterComponent implements OnInit {
   complexForm: FormGroup;
 
   paises: Pais[] = [];
+  obras_sociales: ObraSocial[] = [];
+  obraSocial: ObraSocial;
+  planes: Plan[] = [];
+  plan: Plan;
   tipoDocumentos: string[] = TipoDocumentos.build();
   generos: string[] = Generos.build();
   captcha = null;
+  selectUndefined: any;
 
   passwordMatcher = (control: AbstractControl): { [key: string]: boolean } => {
     const password1 = control.get('password1');
@@ -48,7 +55,9 @@ export class RegisterComponent implements OnInit {
       'password1': [null, Validators.required],
       'password2': [null, [Validators.required, this.passwordMatch]],
       'email': [null, Validators.required],
-      'telefono': [null, Validators.required]
+      'telefono': [null, Validators.required],
+      'obraSocial': [null],
+      'plan': [null]
     }, {validator: this.passwordMatcher});
 
   }
@@ -56,6 +65,9 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
     this.metadataService.getPaises().then((data: any) => {
       this.paises = data;
+    });
+    this.metadataService.getObrasSociales().then((data: any) => {
+      this.obras_sociales = data;
     });
   }
 
@@ -127,6 +139,10 @@ export class RegisterComponent implements OnInit {
 
   handleCorrectCaptcha(event) {
     this.captcha = event;
+  }
+
+  handleObraSocialClick(obra_social: ObraSocial) {
+    this.planes = obra_social.planes;
   }
 
 }

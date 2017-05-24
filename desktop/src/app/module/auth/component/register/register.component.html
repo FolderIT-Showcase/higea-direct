@@ -145,6 +145,34 @@
     </div>
 
     <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <small>Obra Social</small>
+
+          <select type="text" class="form-control" [formControl]="complexForm.controls['obraSocial']"
+                  (change)="handleObraSocialClick(form.value.obraSocial)">
+            <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
+            <option [ngValue]="obraSocial" *ngFor="let obraSocial of obras_sociales">{{obraSocial.nombre}}
+            </option>
+          </select>
+
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <small>Plan</small>
+
+          <select type="text" class="form-control" [formControl]="complexForm.controls['plan']">
+            <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
+            <option [ngValue]="plan" *ngFor="let plan of planes">{{plan.razon_social}}</option>
+          </select>
+
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row">
       <div class="col-sm-12"
            [ngClass]="{'has-error': !captcha}">
         <div class="g-recaptcha-container">

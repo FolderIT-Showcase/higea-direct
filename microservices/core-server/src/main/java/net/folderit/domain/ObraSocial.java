@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+import java.util.List;
+
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
 /**
@@ -30,5 +32,14 @@ public class ObraSocial {
     private String razon_social;
 
     private int codigo;
+
+    @OneToMany()
+    @JoinTable
+            (
+                    name = "os_plan",
+                    joinColumns = {@JoinColumn(name = "os_id", referencedColumnName = "id")},
+                    inverseJoinColumns = {@JoinColumn(name = "plan_id", referencedColumnName = "id", unique = false)}
+            )
+    private List<Plan> planes;
 
 }

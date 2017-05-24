@@ -5,6 +5,7 @@ import {Provincia} from '../domain/provincia';
 import {Localidad} from '../domain/localidad';
 import {LoadingService} from './loading.service';
 import {Store} from './store';
+import {ObraSocial} from '../domain/obra-social';
 
 @Injectable()
 export class MetadataService {
@@ -12,6 +13,7 @@ export class MetadataService {
   paises: Pais[] = [];
   provincias: Provincia[] = [];
   localidades: Localidad[] = [];
+  obras_sociales: ObraSocial[] = [];
   basePath = 'core/';
 
   constructor(private api: ApiService,
@@ -107,6 +109,37 @@ export class MetadataService {
       return (a.nombre > b.nombre) ? 1 : ((b.nombre > a.nombre) ? -1 : 0);
     });
     this.store.db.setItem('localidades', this.localidades);
+  }
+
+
+  getObrasSociales(): Promise<any> {
+    return this.store.db.getItem('obras_sociales')
+      .then((data: any) => {
+        if (data && data[0]) {
+          return new Promise<any>((resolve, reject) => {
+            resolve(data);
+          });
+        }
+        return this.requestObrasSociales();
+      })
+      .then(data => {
+        this.setObrasSociales(data);
+        return new Promise<any>((resolve, reject) => {
+          resolve(data);
+        });
+      });
+  }
+
+  requestObrasSociales() {
+    const path = this.basePath + 'obraSocial';
+    return this.api.get(path);
+  }
+
+  setObrasSociales(mOS) {
+    this.localidades = mOS.sort((a, b) => {
+      return (a.nombre > b.nombre) ? 1 : ((b.nombre > a.nombre) ? -1 : 0);
+    });
+    this.store.db.setItem('obras_sociales', this.obras_sociales);
   }
 
 }

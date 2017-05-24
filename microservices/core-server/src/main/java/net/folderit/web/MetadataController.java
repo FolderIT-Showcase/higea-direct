@@ -129,4 +129,9 @@ public class MetadataController {
 
         return new ResponseEntity(HttpStatus.OK);
     }
+
+    @GetMapping("/obraSocial")
+    public ResponseEntity<Collection<ObraSocial>> getAllObrasSociales() {
+        return new ResponseEntity<>((Collection<ObraSocial>) metadataService.getAllObrasSociales(), HttpStatus.OK);
+    }
 }

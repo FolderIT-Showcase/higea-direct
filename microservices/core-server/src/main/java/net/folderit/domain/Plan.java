@@ -28,7 +28,7 @@ public class Plan {
 
     private int codigo;
 
-    @ManyToOne
+  /*  @ManyToOne
     @JoinColumn(name = "os_id")
-    private ObraSocial obraSocial;
+    private ObraSocial obraSocial;*/
 }
