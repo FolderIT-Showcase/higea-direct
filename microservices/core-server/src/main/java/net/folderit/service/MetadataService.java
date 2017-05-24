@@ -22,13 +22,16 @@ public class MetadataService {
 
     private ProfesionalRepository profesionalRepository;
 
+    private ObraSocialRepository obraSocialRepository;
+
     @Autowired
     public MetadataService(PaisRepository paisRepository,
                            ProvinciaRepository provinciaRepository,
                            LocalidadRepository localidadRepository,
                            CentroSaludRepository centroSaludRepository,
                            EspecialidadRepository especialidadRepository,
-                           ProfesionalRepository profesionalRepository
+                           ProfesionalRepository profesionalRepository,
+                           ObraSocialRepository obraSocialRepository
     ) {
         this.paisRepository = paisRepository;
         this.provinciaRepository = provinciaRepository;
@@ -36,6 +39,7 @@ public class MetadataService {
         this.centroSaludRepository = centroSaludRepository;
         this.especialidadRepository = especialidadRepository;
         this.profesionalRepository = profesionalRepository;
+        this.obraSocialRepository = obraSocialRepository;
     }
 
 
@@ -65,6 +69,11 @@ public class MetadataService {
 
     public List<Profesional> findAllProfesional() {
         return profesionalRepository.findAllByOrderByApellidoAsc();
+    }
+
+    public List<ObraSocial> getAllObrasSociales() {
+        List<ObraSocial> obraSocials = obraSocialRepository.findAllByOrderByNombreAsc();
+        return obraSocials;
     }
 
     public CentroSalud saveCentroSalud(CentroSalud centroSalud) {

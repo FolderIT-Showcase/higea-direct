@@ -3,6 +3,7 @@ import {Documento} from './documento';
 import {Domicilio} from './domicilio';
 import {Turno} from './turno';
 import {Contacto} from './contacto';
+import {Plan} from './plan';
 
 export class Persona {
   id?: number;
@@ -17,4 +18,5 @@ export class Persona {
   domicilio?: Domicilio;
   contacto?: Contacto[] = [];
   turno?: Turno[] = [];
+  plan?: Plan;
 }
