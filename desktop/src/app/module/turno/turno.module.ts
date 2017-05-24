@@ -8,14 +8,13 @@ import {TurnoComponent} from './component/turno/turno.component';
 import {AgmCoreModule} from 'angular2-google-maps/core';
 import {RouterModule} from '@angular/router';
 import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
-import {ModificarTurnoComponent} from './component/modificar-turno/modificar-turno.component';
+import {MisTurnosComponent} from './component/mis-turnos/mis-turnos.component';
 import {CoreModule} from '../core/core.module';
 import {ModalModule, TimepickerModule} from 'ngx-bootstrap';
 import {MyDatePickerModule} from 'mydatepicker';
-import {TurnoExternalComponent} from './component/turno-external/turno-external.component';
-import {NuevoTurnoExternalComponent} from './component/nuevo-turno-external/nuevo-turno-external.component';
-import {ResultadoExternalComponent} from './component/resultado-external/resultado-external.component';
+import {TurnoExternalModule} from '../turno-external/turno-external.module';
 import {SwitchTurnoComponent} from './component/switch-turno/switch-turno.component';
+import {TurnosListaComponent} from './component/turnos-lista/turnos-lista.component';
 
 @NgModule({
   imports: [
@@ -24,6 +23,7 @@ import {SwitchTurnoComponent} from './component/switch-turno/switch-turno.compon
     FormsModule,
     ReactiveFormsModule,
     CoreModule,
+    TurnoExternalModule,
     BsDropdownModule.forRoot(),
     TimepickerModule.forRoot(),
     PopoverModule.forRoot(),
@@ -37,12 +37,9 @@ import {SwitchTurnoComponent} from './component/switch-turno/switch-turno.compon
     TurnoComponent,
     NuevoTurnoComponent,
     ResultadoComponent,
-    ModificarTurnoComponent,
-    // turnos external
-    TurnoExternalComponent,
-    NuevoTurnoExternalComponent,
-    ResultadoExternalComponent,
-    SwitchTurnoComponent
+    MisTurnosComponent,
+    SwitchTurnoComponent,
+    TurnosListaComponent,
   ]
 })
 export class TurnoModule {

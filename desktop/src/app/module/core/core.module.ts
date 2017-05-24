@@ -26,6 +26,7 @@ import {AdminGuard} from './service/guard/admin.guard';
 import {ModalComponent} from './component/modal/modal.component';
 import {LocalidadesResolveService} from './service/resolve/localidades-resolve.service';
 import {UtilsService} from './service/utils.service';
+import {TabsModule} from 'ngx-bootstrap';
 
 @NgModule({
   imports: [
@@ -35,12 +36,14 @@ import {UtilsService} from './service/utils.service';
     RouterModule,
     BsDropdownModule.forRoot(),
     ModalModule.forRoot(),
+    TabsModule.forRoot(),
     routing
   ],
   exports: [
     BrowserModule,
     AlertComponent,
     BsDropdownModule,
+    TabsModule,
     LoadingComponent,
     ModalComponent
   ],

@@ -1,0 +1,65 @@
+<div class="container-fluid">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12 col-md-4">
+        <div>
+          <label style="font-size: 45px;">Mis Turnos</label>
+          <p>Aca podes administrar tus turnos</p>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-4">
+        <br>
+        <form [formGroup]="form">
+          <div class="form-group">
+            <label class="control-label">Turnos de</label>
+            <select type="text" class="form-control" [formControl]="form.controls['persona']"
+                    (change)="handlePersonaClick(form.value.persona)">
+              <option [ngValue]="persona" *ngFor="let persona of personas">{{labelPersona(persona)}}</option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="col-sm-12 col-md-4 col-lg-3" *ngIf="!turnos[0]">
+        <br>
+        <label><strong>No sacaste ningun turno</strong></label>
+        <a [routerLink]="['/nuevo-turno']" class="btn btn-block btn-primary">
+          SACAR UN TURNO
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <tabset [justified]="!desktopMode">
+      <tab heading="Turnos Próximos">
+        <app-turnos-proximos [turnos]="turnosProximos" [desktopMode]="desktopMode"
+                             [mode]="'proximos'"></app-turnos-proximos>
+      </tab>
+      <tab heading="Historial de Turnos">
+        <app-turnos-proximos [turnos]="turnosHistorial" [desktopMode]="desktopMode"
+                             [mode]="'historial'"></app-turnos-proximos>
+      </tab>
+    </tabset>
+  </div>
+</div>
+
+<app-modal [title]="'Información'" (outModal)="handleModal($event)">
+  <label>Para el dia <strong>{{turno.dia | date: 'dd/MM/yyyy'}}</strong> en el horario <strong>{{turno.hora | date:
+    'HH:mm'}}</strong></label><br>
+  <label>Para la especialidad <strong>{{turno.especialidad.nombre}}</strong> atendido por <strong
+    *ngIf="turno.profesional">{{turno.profesional.nombre}} </strong><strong *ngIf="turno.profesional">{{turno.profesional.apellido}}</strong></label><br>
+  <label>En el centro de salud <strong>{{turno.centroSalud.nombre}}</strong></label><br>
+  <div *ngIf="false">
+    <sebm-google-map [latitude]="lat" [longitude]="lng">
+      <sebm-google-map-marker [latitude]="lat" [longitude]="lng"></sebm-google-map-marker>
+    </sebm-google-map>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-sm-12 col-md-5 col-md-offset-7">
+      <div class="btn-group btn-group-justified">
+        <a (click)="eliminarTurno(turno)" class="btn btn-danger">ELIMINAR</a>
+        <a (click)="hideModal()" class="btn btn-default">CERRAR</a>
+      </div>
+    </div>
+  </div>
+</app-modal>

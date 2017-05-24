@@ -70,9 +70,9 @@ export class ResultadoComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.desktopMode = (this.utilsService.getWidth()) >= 900;
+    this.desktopMode = (this.utilsService.getWidth()) >= 1000;
     this.subs.push(this.utilsService.getWidthResizeEvent().subscribe(data => {
-      this.desktopMode = data >= 900;
+      this.desktopMode = data >= 1000;
     }));
   }
 
@@ -99,9 +99,11 @@ export class ResultadoComponent implements OnInit, OnDestroy, AfterViewInit {
     this.persona.turno.push(turno);
     this.turnoService.reservarTurno(this.persona)
       .then(() => {
+        this.storeService.update('turnos', []);
         this.successModal.show();
       })
       .catch(error => {
+        this.storeService.update('turnos', []);
         console.error(error);
       });
   }

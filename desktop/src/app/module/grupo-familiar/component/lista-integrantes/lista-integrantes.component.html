@@ -100,7 +100,12 @@
 <app-modal [title]="'Datos del Integrante'" (outModal)="handleModalForm($event)">
 
   <form [formGroup]="mForm" (ngSubmit)="confirmModal(modalAction, mForm.value)">
-    <fieldset [disabled]="modalAction === 'view'">
+    <div class="row">
+      <div class="col-sm-12">
+        <p class="text-danger">* Campos Requeridos</p>
+      </div>
+    </div>
+    <fieldset style="padding: 0;" [disabled]="modalAction === 'view'">
       <div class="row">
         <div class="col-sm-4">
           <div class="form-group required"
@@ -186,37 +191,6 @@
       </div>
 
       <div class="row">
-        <div class="col-sm-8">
-          <div class="col-sm-12" style="padding-left:0;">
-            <label class="control-label">Contacto</label>
-          </div>
-          <div class="col-sm-3" style="padding-left:0;">
-            <div class="form-group">
-              <select type="text" class="form-control" [formControl]="mForm.controls['tipoContacto']">
-                <option [ngValue]="tc" *ngFor="let tc of lists.tipoContactos">{{tc.label}}</option>
-              </select>
-            </div>
-          </div>
-          <div class="col-sm-9" style="padding-left:0;padding-right:0;">
-            <div class="form-group">
-              <input type="text" class="form-control" placeholder="Ingresar teléfono, celular, email, etc."
-                     [formControl]="mForm.controls['dato']"/>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="form-group">
-            <label class="control-label">Estado Civil</label>
-            <select type="text" class="form-control" [formControl]="mForm.controls['estadoCivil']">
-              <option [ngValue]="estadoCivil.id" *ngFor="let estadoCivil of lists.estadosCiviles">
-                {{estadoCivil.label}}
-              </option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
         <div class="col-sm-4">
           <div class="form-group required"
                [ngClass]="{ 'has-error': !mForm.controls['pais'].valid && mForm.controls['pais'].touched }">
@@ -287,25 +261,74 @@
           </div>
         </div>
       </div>
+
+      <div class="row">
+        <div class="col-sm-4">
+
+          <div class="form-group required"
+               [ngClass]="{ 'has-error': !mForm.controls['telefono'].valid && mForm.controls['telefono'].touched }">
+            <label class="control-label">Telefono</label>
+            <input type="tel" class="form-control" placeholder="Ingresar teléfono."
+                   [formControl]="mForm.controls['telefono']"/>
+            <small *ngIf="!mForm.controls['telefono'].valid && mForm.controls['telefono'].touched" class="help-block">
+              Ingrese su telefono.
+            </small>
+          </div>
+
+        </div>
+        <div class="col-sm-4">
+          <div class="col-sm-12 no-padding-horizontal">
+            <label class="control-label">Celular</label>
+          </div>
+          <div class="col-sm-12 no-padding-horizontal">
+            <div class="form-group">
+              <input type="tel" class="form-control" placeholder="Ingresar teléfono."
+                     [formControl]="mForm.controls['celular']"/>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label class="control-label">Estado Civil</label>
+            <select type="text" class="form-control" [formControl]="mForm.controls['estadoCivil']">
+              <option [ngValue]="estadoCivil.id" *ngFor="let estadoCivil of lists.estadosCiviles">
+                {{estadoCivil.label}}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="col-sm-12 no-padding-horizontal">
+            <label class="control-label">Email</label>
+          </div>
+          <div class="col-sm-12 no-padding-horizontal">
+            <div class="form-group">
+              <input type="email" class="form-control" placeholder="Ingresar Corréo Electrónico."
+                     [formControl]="mForm.controls['email']"/>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="col-sm-12 no-padding-horizontal">
+            <label class="control-label"> </label>
+          </div>
+          <div class="row text-right">
+            <div class="col-sm-6">
+              <button type="submit" *ngIf="['add', 'edit'].indexOf(modalAction) >= 0"
+                      [disabled]="!mForm.valid" class="btn btn-block btn-primary">
+                Aceptar
+              </button>
+            </div>
+            <div class="col-sm-6">
+              <a (click)="hideModalForm()" class="btn btn-block btn-default">Cerrar</a>
+            </div>
+          </div>
+        </div>
+      </div>
     </fieldset>
-    <div class="row">
-      <div class="col-sm-12">
-        <p class="text-danger">* Campos Requeridos</p>
-      </div>
-    </div>
-
-    <div class="row text-right">
-      <div class="col-sm-12 col-md-2 col-md-offset-8">
-        <button type="submit" *ngIf="['add', 'edit'].indexOf(modalAction) >= 0"
-                [disabled]="!mForm.valid" class="btn btn-block btn-primary">Aceptar
-        </button>
-        <br>
-      </div>
-      <div class="col-sm-12 col-md-2">
-        <a (click)="hideModalForm()" class="btn btn-block btn-default">Cerrar</a>
-      </div>
-    </div>
-
   </form>
 
 </app-modal>

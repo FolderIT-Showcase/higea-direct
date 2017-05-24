@@ -31,17 +31,17 @@ import java.util.*;
 public class UserController {
 
     private static final Map<String, String> credentials = new HashMap<>();
+    final ApplicationEventPublisher eventPublisher;
     private final UserService userService;
     private final PersonaService personaService;
     private final RoleRepository roleRepository;
-    @Autowired
-    ApplicationEventPublisher eventPublisher;
 
     @Autowired
-    public UserController(UserService userService, PersonaService personaService, RoleRepository roleRepository) {
+    public UserController(UserService userService, PersonaService personaService, RoleRepository roleRepository, ApplicationEventPublisher eventPublisher) {
         this.userService = userService;
         this.personaService = personaService;
         this.roleRepository = roleRepository;
+        this.eventPublisher = eventPublisher;
     }
 
     @Bean

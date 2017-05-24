@@ -13,7 +13,6 @@ import {PagerService} from '../../../core/service/pager.service';
 import {Store} from '../../../core/service/store';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {IMyOptions} from 'mydatepicker';
-import {DatePipe} from '@angular/common';
 
 class Data {
 
@@ -170,8 +169,6 @@ export class TurnosComponent implements OnInit, OnDestroy {
 
   save(value) {
 
-    const tmp: Date = new Date(Date.now())
-
     value.hora = this.model.hora.getTime();
     value.fechaDesde = value.fechaDesde.epoc * 1000;
 
@@ -195,16 +192,6 @@ export class TurnosComponent implements OnInit, OnDestroy {
 
     this.saveModal.hide();
     this.clean();
-  }
-
-  timeStampToDate(timestamp) {
-    const datePipe = new DatePipe('es-AR');
-    if (!timestamp) {
-      return datePipe.transform(Date.now(), 'dd/MM/yyyy');
-    }
-    let date: any = new Date(timestamp);
-    date = datePipe.transform(date, 'dd/MM/yyyy');
-    return date;
   }
 
   clean() {
