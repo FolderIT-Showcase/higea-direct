@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {PersonaService} from '../../../core/service/persona.service';
 import {AlertService} from '../../../core/service/alert.service';
@@ -26,11 +26,14 @@ export class RegisterComponent implements OnInit {
   obras_sociales: ObraSocial[] = [];
   obraSocial: ObraSocial;
   planes: Plan[] = [];
+  @Input()
   plan: Plan;
   tipoDocumentos: string[] = TipoDocumentos.build();
   generos: string[] = Generos.build();
   captcha = null;
   selectUndefined: any;
+  @Input()
+  validatorPlan: any [] = [];
 
   passwordMatcher = (control: AbstractControl): { [key: string]: boolean } => {
     const password1 = control.get('password1');
@@ -57,7 +60,7 @@ export class RegisterComponent implements OnInit {
       'email': [null, Validators.required],
       'telefono': [null, Validators.required],
       'obraSocial': [null],
-      'plan': [null]
+      'plan': [null, this.planValid]
     }, {validator: this.passwordMatcher});
 
   }
@@ -74,6 +77,12 @@ export class RegisterComponent implements OnInit {
   private passwordMatch() {
     return (c: FormControl) => {
       return (c.value === this.complexForm.value.password1) ? null : {'passwordMatch': {valid: false}};
+    }
+  }
+
+  private planValid() {
+    return (c: FormControl) => {
+      return (c.value && this.complexForm.value.obraSocial) ? null : {'planValid': {valid: false}};
     }
   }
 
@@ -95,6 +104,8 @@ export class RegisterComponent implements OnInit {
     persona.contacto = [];
     const contacto: Contacto = new Contacto('telefono', data.telefono);
     persona.contacto.push(contacto);
+
+    if (data.plan) persona.plan = data.plan;
 
     return persona;
   }
@@ -143,6 +154,8 @@ export class RegisterComponent implements OnInit {
 
   handleObraSocialClick(obra_social: ObraSocial) {
     this.planes = obra_social.planes;
+    this.validatorPlan.push(Validators.required);
+    this.complexForm.controls['plan'].updateValueAndValidity();
   }
 
 }

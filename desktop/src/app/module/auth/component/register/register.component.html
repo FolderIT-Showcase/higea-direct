@@ -150,7 +150,7 @@
           <small>Obra Social</small>
 
           <select type="text" class="form-control" [formControl]="complexForm.controls['obraSocial']"
-                  (change)="handleObraSocialClick(form.value.obraSocial)">
+                  (change)="handleObraSocialClick(complexForm.value.obraSocial)">
             <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
             <option [ngValue]="obraSocial" *ngFor="let obraSocial of obras_sociales">{{obraSocial.nombre}}
             </option>
@@ -159,14 +159,22 @@
         </div>
       </div>
       <div class="col-sm-6">
-        <div class="form-group">
+        <div class="form-group" [ngClass]="{'has-error':complexForm.value.obraSocial && !complexForm.value.plan  && complexForm.controls['plan'].touched}">
           <small>Plan</small>
 
           <select type="text" class="form-control" [formControl]="complexForm.controls['plan']">
             <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
             <option [ngValue]="plan" *ngFor="let plan of planes">{{plan.razon_social}}</option>
           </select>
+          <small
+            *ngIf="complexForm.value.obraSocial && !complexForm.value.plan &&
 
+             complexForm.controls['plan'].touched" class="help-block">
+            Ingrese su Plan.
+          </small>
+          <!--<small *ngIf="complexForm.controls['plan'].hasError('required') && complexForm.controls['plan'].touched"
+                 class="help-block">Ingrese su Plan
+          </small>-->
         </div>
       </div>
     </div>
