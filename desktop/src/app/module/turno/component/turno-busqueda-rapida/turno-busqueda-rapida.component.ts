@@ -35,8 +35,8 @@ export class TurnoBusquedaRapidaComponent implements OnInit, OnDestroy {
     this.centrosSalud = this.storeService.get('centrosSalud');
 
     this.form = this.fb.group({
-      'persona': [null],
-      'centro': [Validators.required],
+      'persona': [null, Validators.required],
+      'centro': [null, Validators.required],
       'especialidad': [null],
       'profesional': [null]
     });

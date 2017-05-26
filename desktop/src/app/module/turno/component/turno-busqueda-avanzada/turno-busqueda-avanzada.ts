@@ -41,8 +41,8 @@ export class TurnoBusquedaAvanzadaComponent implements OnInit, OnDestroy {
 
     this.form = this.fb.group({
       'persona': [null],
-      'centro': [Validators.required],
-      'fecha': [null],
+      'centro': [null, Validators.required],
+      'fecha': [null, Validators.required],
       'especialidad': [null],
       'profesional': [null]
     });

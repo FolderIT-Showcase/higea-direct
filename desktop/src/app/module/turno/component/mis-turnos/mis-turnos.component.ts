@@ -126,4 +126,8 @@ export class MisTurnosComponent implements OnInit, OnDestroy, AfterViewInit {
     this.modal.hide();
   }
 
+  clearTable(){
+    this.storeService.update('turnos', []);
+  }
+
 }
