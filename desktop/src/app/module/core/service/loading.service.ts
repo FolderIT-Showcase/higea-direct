@@ -36,7 +36,7 @@ export class LoadingService {
       setTimeout(() => {
         this.finish();
       }, 300);
-    })
+    }).catch(() => this.finish());
   }
 
 }

@@ -95,9 +95,9 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
 
     // Popular listas
 
-    this.metadataService.getPaises().then((data: any) => this.lists.paises = data).catch(() => {});
-    this.metadataService.getProvincias().then((data: any) => this.provincias = data).catch(() => {});
-    this.metadataService.getLocalidades().then((data: any) => this.localidades = data).catch(() => {});
+    this.metadataService.getPaises().then((data: any) => this.lists.paises = data);
+    this.metadataService.getProvincias().then((data: any) => this.provincias = data);
+    this.metadataService.getLocalidades().then((data: any) => this.localidades = data);
 
     this.subs.push(
       this.store.changes.pluck('integrantes').subscribe(
@@ -331,7 +331,7 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
         } else if (action === 'edit') {
           this.alertService.success('Integrante editado correctamente.');
         }
-      }).catch(() => {});
+      });
 
     this.modalForm.hide();
   }

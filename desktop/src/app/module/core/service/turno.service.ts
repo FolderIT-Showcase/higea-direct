@@ -71,7 +71,7 @@ export class TurnoService {
       .then(data => {
         this.storeService.update('CentroSalud', centro);
         this.storeService.update('turnos', data);
-      }).catch(() => {});
+      });
   }
 
 
@@ -104,7 +104,7 @@ export class TurnoService {
       .then(data => {
         this.storeService.update('CentroSalud', centro);
         this.storeService.update('turnos', data);
-      }).catch(() => {});
+      });
   }
 
   reservarTurno(persona: Persona) {
