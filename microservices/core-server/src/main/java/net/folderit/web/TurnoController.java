@@ -35,7 +35,7 @@ public class TurnoController {
         this.personaService = personaService;
     }
 
-    @PostMapping("/turnos/proximo")
+    @PostMapping("/turnos")
     public ResponseEntity getAll(@RequestBody FilterDto filterDto) {
 
         String target = filterDto.getFecha();
@@ -56,7 +56,7 @@ public class TurnoController {
         return new ResponseEntity<>(turnos, HttpStatus.OK);
     }
 
-    @PostMapping("/turnos")
+    @PostMapping("/turnos/proximo")
     public ResponseEntity getNextAvailable(@RequestBody FilterDto filterDto) {
         List<Turno> turnos = turnoService.findNextAvailable(filterDto);
         return new ResponseEntity<>(turnos, HttpStatus.OK);
