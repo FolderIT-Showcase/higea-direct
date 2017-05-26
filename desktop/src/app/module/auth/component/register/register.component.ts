@@ -68,10 +68,10 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
     this.metadataService.getPaises().then((data: any) => {
       this.paises = data;
-    });
+    }).catch(() => {});
     this.metadataService.getObrasSociales().then((data: any) => {
       this.obras_sociales = data;
-    });
+    }).catch(() => {});
   }
 
   private passwordMatch() {
@@ -129,7 +129,7 @@ export class RegisterComponent implements OnInit {
       this.personaService.validateDni(doc)
         .then(() => {
           this.savePersona(persona);
-        });
+        }).catch(() => {});
 
       return;
     }
@@ -144,8 +144,8 @@ export class RegisterComponent implements OnInit {
         this.router.navigate(['/login'])
           .then(() => {
             this.alertService.success('Registro Exitoso, chequee su cuenta de email para activar el usuario');
-          });
-      });
+          }).catch(() => {});
+      }).catch(() => {});
   }
 
   handleCorrectCaptcha(event) {

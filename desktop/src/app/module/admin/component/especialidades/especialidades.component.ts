@@ -102,7 +102,7 @@ export class EspecialidadesComponent implements OnInit {
     this.adminService.saveEspecialidad(this.especialidad)
       .then(data => {
         this.alertService.success('Se guardo exitosamente');
-      });
+      }).catch(() => {});
     this.saveModal.hide();
     this.clean();
 
@@ -154,7 +154,7 @@ export class EspecialidadesComponent implements OnInit {
   delete(especialidad: Especialidad) {
     this.adminService.deleteEspecialidad(especialidad).then(data => {
       this.alertService.success('Se borro exitosamente');
-    });
+    }).catch(() => {});
   }
 
   submitUpdateForm() {
@@ -173,7 +173,7 @@ export class EspecialidadesComponent implements OnInit {
     this.adminService.updateEspecialidad(especialidad)
       .then(data => {
         this.alertService.success('Se actualizo exitosamente');
-      });
+      }).catch(() => {});
     this.updateModal.hide();
     this.clean();
   }

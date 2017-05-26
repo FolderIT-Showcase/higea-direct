@@ -140,7 +140,7 @@ export class TurnosComponent implements OnInit, OnDestroy {
   delete(turno: Turno) {
     this.adminService.deleteTurno(turno).then(data => {
       this.alertService.success('Se borro exitosamente');
-    });
+    }).catch(() => {});
 
     this.setPage(this.pager.currentPage);
   }

@@ -1,36 +1,31 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CentroSalud} from '../../../core/domain/centro-salud';
 import {Especialidad} from '../../../core/domain/especialidad';
-import {Profesional} from '../../../core/domain/profesional';
 import {Persona} from '../../../core/domain/persona';
-import {StoreService} from '../../../core/service/store.service';
-import {TurnoService} from '../../../core/service/turno.service';
+import {Profesional} from '../../../core/domain/profesional';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {IMyOptions} from 'mydatepicker';
-import {DatePipe} from '@angular/common';
-import {AlertService} from '../../../core/service/alert.service';
+import {StoreService} from '../../../core/service/store.service';
+import {TurnoService} from '../../../core/service/turno.service';
 
 @Component({
-  selector: 'app-nuevo-turno',
-  templateUrl: './nuevo-turno.component.html'
+  selector: 'app-turno-busqueda-rapida',
+  templateUrl: './turno-busqueda-rapida.component.html'
 })
-export class NuevoTurnoComponent implements OnInit, OnDestroy {
+export class TurnoBusquedaRapidaComponent implements OnInit, OnDestroy {
 
-  datePipe = new DatePipe('es-AR');
   centrosSalud: CentroSalud[] = [];
   especialidades: Especialidad[] = [];
   profesionales: Profesional[] = [];
   personas: Persona[] = [];
   selectUndefined: any;
   form: FormGroup;
-  fechaDesde: Date = new Date();
 
   myDatePickerOptions: IMyOptions = {
     dateFormat: 'dd/mm/yyyy',
   };
 
   constructor(private storeService: StoreService,
-              private alertService: AlertService,
               private turnoService: TurnoService,
               private fb: FormBuilder) {
   }
@@ -40,13 +35,11 @@ export class NuevoTurnoComponent implements OnInit, OnDestroy {
     this.centrosSalud = this.storeService.get('centrosSalud');
 
     this.form = this.fb.group({
-      'persona': [null],
-      'centro': [Validators.required],
-      'fecha': [null],
+      'persona': [null, Validators.required],
+      'centro': [null, Validators.required],
       'especialidad': [null],
       'profesional': [null]
     });
-    this.form.value.fechaDesde = new Date();
   }
 
   ngOnDestroy() {
@@ -74,28 +67,7 @@ export class NuevoTurnoComponent implements OnInit, OnDestroy {
   }
 
   submitForm(form) {
-    if (!form.fecha || !form.fecha.epoc) {
-      return;
-    }
-
-    const fechaDesde = form.fecha.epoc * 1000;
-
-    const ahora = new Date().setHours(0, 0, 0, 0);
-    const fechaTurno = new Date(fechaDesde).setHours(0, 0, 0, 0);
-
-    if (!(fechaTurno >= ahora)) {
-      this.alertService.error('No puede sacar un turno con fecha invalida, verifique');
-      return;
-    }
-
-    form.fecha = this.timeStampToDate(form.fecha.epoc);
-    this.turnoService.getTurnos(form.centro, form.especialidad, form.profesional, form.fecha);
-  }
-
-  timeStampToDate(timestamp) {
-    let date: any = new Date(timestamp * 1000);
-    date = this.datePipe.transform(date, 'yyyy-MM-dd');
-    return date;
+    this.turnoService.getProximosTurnos(form.centro, form.especialidad, form.profesional);
   }
 
 }

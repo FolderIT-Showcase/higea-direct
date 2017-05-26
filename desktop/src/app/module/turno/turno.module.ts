@@ -1,9 +1,9 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {NuevoTurnoComponent} from './component/nuevo-turno/nuevo-turno.component';
+import {TurnoBusquedaAvanzadaComponent} from './component/turno-busqueda-avanzada/turno-busqueda-avanzada';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {PopoverModule} from 'ngx-bootstrap/popover';
-import {ResultadoComponent} from './component/resultado/resultado.component';
+import {TurnoResultadoComponent} from './component/turno-resultado/turno-resultado.component';
 import {TurnoComponent} from './component/turno/turno.component';
 import {AgmCoreModule} from 'angular2-google-maps/core';
 import {RouterModule} from '@angular/router';
@@ -15,6 +15,7 @@ import {MyDatePickerModule} from 'mydatepicker';
 import {TurnoExternalModule} from '../turno-external/turno-external.module';
 import {SwitchTurnoComponent} from './component/switch-turno/switch-turno.component';
 import {TurnosListaComponent} from './component/turnos-lista/turnos-lista.component';
+import { TurnoBusquedaRapidaComponent } from './component/turno-busqueda-rapida/turno-busqueda-rapida.component';
 
 @NgModule({
   imports: [
@@ -35,11 +36,12 @@ import {TurnosListaComponent} from './component/turnos-lista/turnos-lista.compon
   ],
   declarations: [
     TurnoComponent,
-    NuevoTurnoComponent,
-    ResultadoComponent,
+    TurnoBusquedaAvanzadaComponent,
+    TurnoResultadoComponent,
     MisTurnosComponent,
     SwitchTurnoComponent,
     TurnosListaComponent,
+    TurnoBusquedaRapidaComponent,
   ]
 })
 export class TurnoModule {

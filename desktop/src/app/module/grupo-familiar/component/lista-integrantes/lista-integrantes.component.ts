@@ -112,6 +112,7 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
 
     // Popular listas
 
+
     this.metadataService.getPaises().then((data: any) => this.lists.paises = data);
     this.metadataService.getProvincias().then((data: any) => this.provincias = data);
     this.metadataService.getLocalidades().then((data: any) => this.localidades = data);
@@ -349,7 +350,7 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
         } else if (action === 'edit') {
           this.alertService.success('Integrante editado correctamente.');
         }
-      });
+      }).catch(() => {});
 
     this.modalForm.hide();
   }

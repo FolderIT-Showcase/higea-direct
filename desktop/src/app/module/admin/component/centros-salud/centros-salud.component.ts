@@ -97,7 +97,7 @@ export class CentrosSaludComponent implements OnInit {
 
     this.adminService.saveCentroSalud(this.centro).then(data => {
       this.alertService.success('Se guardo exitosamente');
-    });
+    }).catch(() => {});
 
     this.saveModal.hide();
   }
@@ -152,7 +152,7 @@ export class CentrosSaludComponent implements OnInit {
   delete(centro: CentroSalud) {
     this.adminService.deleteCentroSalud(centro).then(data => {
       this.alertService.success('Se borro exitosamente');
-    });
+    }).catch(() => {});
   }
 
   public pageChanged(event: any): void {
@@ -184,7 +184,7 @@ export class CentrosSaludComponent implements OnInit {
   update(centroSalud: CentroSalud) {
     this.adminService.updateCentroSalud(centroSalud).then(data => {
       this.alertService.success('Se guardo exitosamente');
-    });
+    }).catch(() => {});
     this.updateModal.hide();
   }
 

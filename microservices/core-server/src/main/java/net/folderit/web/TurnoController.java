@@ -52,7 +52,13 @@ public class TurnoController {
             return new ResponseEntity<>(TurneroException.getInstance(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        List<Turno> turnos = turnoService.finAllBy(filterDto);
+        List<Turno> turnos = turnoService.findAllBy(filterDto);
+        return new ResponseEntity<>(turnos, HttpStatus.OK);
+    }
+
+    @PostMapping("/turnos/proximo")
+    public ResponseEntity getNextAvailable(@RequestBody FilterDto filterDto) {
+        List<Turno> turnos = turnoService.findNextAvailable(filterDto);
         return new ResponseEntity<>(turnos, HttpStatus.OK);
     }
 

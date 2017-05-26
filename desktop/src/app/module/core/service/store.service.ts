@@ -83,7 +83,6 @@ export class StoreService {
   }
 
   clearCache() {
-    this.update('centroSalud', null);
     this.update('centrosSalud', []);
     this.update('turnos', []);
     this.update('integrantes', []);

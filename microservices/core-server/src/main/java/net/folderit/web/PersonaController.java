@@ -1,7 +1,6 @@
 package net.folderit.web;
 
 import net.folderit.domain.Persona;
-import net.folderit.domain.Turno;
 import net.folderit.domain.exception.TurneroException;
 import net.folderit.dto.ResultAfipDto;
 import net.folderit.service.PersonaService;
@@ -12,9 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 @RestController
 @ComponentScan
@@ -29,7 +26,6 @@ public class PersonaController {
         this.personaService = personaService;
         this.turnoService = turnoService;
     }
-
 
     @GetMapping("/persona")
     public ResponseEntity<Collection<Persona>> getAll() {

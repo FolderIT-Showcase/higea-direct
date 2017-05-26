@@ -71,7 +71,40 @@ export class TurnoService {
       .then(data => {
         this.storeService.update('CentroSalud', centro);
         this.storeService.update('turnos', data);
-      });
+      }).catch(() => {});
+  }
+
+
+  getProximosTurnos(centro: CentroSalud, especialidad: Especialidad, profesional: Profesional) {
+
+    const path = this.pathTurno + '/proximo';
+    const filtro = new FiltroTurno;
+
+    if (centro) {
+      const tmpCentro: CentroSalud = new CentroSalud();
+      Object.assign(tmpCentro, centro);
+      filtro.centroSalud = tmpCentro;
+      filtro.centroSalud.nombre = null;
+      filtro.centroSalud.especialidad = null;
+    }
+
+    if (profesional) {
+      const tmpProfesional: Profesional = new Profesional();
+      Object.assign(tmpProfesional, profesional);
+      filtro.profesional = tmpProfesional;
+      filtro.profesional.nombre = null;
+      filtro.profesional.apellido = null;
+    }
+
+    if (especialidad) {
+      filtro.especialidad = especialidad;
+    }
+
+    return this.api.post(path, filtro)
+      .then(data => {
+        this.storeService.update('CentroSalud', centro);
+        this.storeService.update('turnos', data);
+      }).catch(() => {});
   }
 
   reservarTurno(persona: Persona) {

@@ -29,12 +29,12 @@
     </div>
   </div>
   <div class="container">
-    <tabset [justified]="!desktopMode">
-      <tab heading="Turnos Próximos">
+    <tabset [justified]="true">
+      <tab (click)="clearTable()" heading="Turnos Próximos">
         <app-turnos-proximos [turnos]="turnosProximos" [desktopMode]="desktopMode"
                              [mode]="'proximos'"></app-turnos-proximos>
       </tab>
-      <tab heading="Historial de Turnos">
+      <tab (click)="clearTable()" heading="Historial de Turnos">
         <app-turnos-proximos [turnos]="turnosHistorial" [desktopMode]="desktopMode"
                              [mode]="'historial'"></app-turnos-proximos>
       </tab>
