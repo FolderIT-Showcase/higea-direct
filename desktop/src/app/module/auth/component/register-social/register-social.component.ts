@@ -57,7 +57,7 @@ export class RegisterSocialComponent implements OnInit {
   ngOnInit(): void {
     this.metadataService.getPaises().then((data: any) => {
       this.paises = data;
-    });
+    }).catch(() => {});
   }
 
   submitForm(data: any) {
@@ -79,7 +79,7 @@ export class RegisterSocialComponent implements OnInit {
       this.personaService.validateDni(doc)
         .then(() => {
           this.savePersona(persona);
-        });
+        }).catch(() => {});
 
       return;
     }
@@ -111,8 +111,8 @@ export class RegisterSocialComponent implements OnInit {
         this.router.navigate(['/login'])
           .then(() => {
             this.alertService.success('Registro Exitoso');
-          });
-      });
+          }).catch(() => {});
+      }).catch(() => {});
   }
 
   handleCorrectCaptcha(event) {

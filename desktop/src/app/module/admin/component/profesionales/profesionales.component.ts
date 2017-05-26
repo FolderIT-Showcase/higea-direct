@@ -197,7 +197,7 @@ export class ProfesionalesComponent implements OnInit {
 
     this.adminService.deleteProfesional(profesional).then(data => {
       this.alertService.success('Se borro exitosamente');
-    })
+    }).catch(() => {});
   }
 
   clean() {
