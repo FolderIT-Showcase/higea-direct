@@ -150,7 +150,7 @@
           <small>Obra Social</small>
 
           <select type="text" class="form-control" [formControl]="complexForm.controls['obraSocial']"
-                  (change)="handleObraSocialClick(form.value.obraSocial)">
+                  (change)="handleObraSocialClick(complexForm.value.obraSocial)">
             <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
             <option [ngValue]="obraSocial" *ngFor="let obraSocial of obras_sociales">{{obraSocial.nombre}}
             </option>
