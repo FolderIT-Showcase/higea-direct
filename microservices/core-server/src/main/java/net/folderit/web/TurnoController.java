@@ -35,7 +35,7 @@ public class TurnoController {
         this.personaService = personaService;
     }
 
-    @PostMapping("/turnos")
+    @PostMapping("/turnos/proximo")
     public ResponseEntity getAll(@RequestBody FilterDto filterDto) {
 
         String target = filterDto.getFecha();
