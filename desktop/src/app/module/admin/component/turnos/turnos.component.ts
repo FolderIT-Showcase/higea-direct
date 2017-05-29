@@ -90,7 +90,7 @@ export class TurnosComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.centrosSalud = this.storeService.get('centrosSalud');
     this.turnos = this.storeService.get('turnos');
-    //this.tiposDeTurnos = this.storeService.get('tipos_turnos');
+    // this.tiposDeTurnos = this.storeService.get('tipos_turnos');
 
     this.metadataService.getAllTiposTurnos().then((data: any) => {
       this.tiposDeTurnos = data;
@@ -170,7 +170,9 @@ export class TurnosComponent implements OnInit, OnDestroy {
   delete(turno: Turno) {
     this.adminService.deleteTurno(turno).then(data => {
       this.alertService.success('Se borro exitosamente');
+
     }).catch(() => {
+
     });
 
     this.setPage(this.pager.currentPage);

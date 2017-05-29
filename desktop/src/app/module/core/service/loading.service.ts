@@ -32,11 +32,14 @@ export class LoadingService {
     this.start();
     const promises = [];
     promises.push(promise);
-    Promise.all(promises).then(() => {
-      setTimeout(() => {
-        this.finish();
-      }, 300);
-    })
+    Promise.all(promises)
+      .catch(() => this.finish())
+      .then(() => {
+        setTimeout(() => {
+          this.finish();
+        }, 300);
+      });
+
   }
 
 }
