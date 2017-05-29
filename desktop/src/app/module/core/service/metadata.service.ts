@@ -136,7 +136,7 @@ export class MetadataService {
   }
 
   setObrasSociales(mOS) {
-    this.localidades = mOS.sort((a, b) => {
+    this.obras_sociales = mOS.sort((a, b) => {
       return (a.nombre > b.nombre) ? 1 : ((b.nombre > a.nombre) ? -1 : 0);
     });
     this.store.db.setItem('obras_sociales', this.obras_sociales);

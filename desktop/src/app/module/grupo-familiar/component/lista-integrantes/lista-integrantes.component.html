@@ -299,8 +299,37 @@
         </div>
       </div>
 
+
       <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-4">
+          <div class="form-group" [ngClass]="{'has-error':!mForm.controls['obraSocial'].valid && mForm.controls['obraSocial'].touched}">
+            <label>Obra Social</label>
+
+            <select type="text" class="form-control" [formControl]="mForm.controls['obraSocial']"
+                    (change)="handleObraSocialClick(mForm.value.obraSocial)">
+              <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
+              <option [ngValue]="obraSocial" *ngFor="let obraSocial of obras_sociales">{{obraSocial.nombre}}
+              </option>
+            </select>
+            <small *ngIf="mForm.controls['obraSocial'].hasError('required') && mForm.controls['obraSocial'].touched"
+                   class="help-block">Ingrese su Obra Social
+            </small>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group" [ngClass]="{'has-error':!mForm.controls['plan'].valid && mForm.controls['plan'].touched}">
+            <label>Plan</label>
+
+            <select type="text" class="form-control" [formControl]="mForm.controls['plan']">
+              <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
+              <option [ngValue]="plan" *ngFor="let plan of planes">{{plan.razon_social}}</option>
+            </select>
+            <small *ngIf="mForm.controls['plan'].hasError('required') && mForm.controls['plan'].touched"
+                   class="help-block">Ingrese su Plan
+            </small>
+          </div>
+        </div>
+        <div class="col-sm-4">
           <div class="col-sm-12 no-padding-horizontal">
             <label class="control-label">Email</label>
           </div>
@@ -311,6 +340,10 @@
             </div>
           </div>
         </div>
+      </div>
+
+      <div class="row">
+
         <div class="col-sm-6">
           <div class="col-sm-12 no-padding-horizontal">
             <label class="control-label"> </label>

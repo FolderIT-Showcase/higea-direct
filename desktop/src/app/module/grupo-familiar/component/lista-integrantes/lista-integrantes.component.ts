@@ -7,7 +7,7 @@ import {Generos} from '../../../core/domain/enums/genero';
 import {TipoDocumentos} from '../../../core/domain/enums/tipo-documento';
 import {TipoContactos} from '../../../core/domain/enums/tipo-contacto';
 import {StoreService} from '../../../core/service/store.service';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {PersonaService} from '../../../core/service/persona.service';
 import {Localidad} from '../../../core/domain/localidad';
 import {Provincia} from '../../../core/domain/provincia';
@@ -23,6 +23,8 @@ import {IMyOptions} from 'mydatepicker';
 import {DatePipe} from '@angular/common';
 import {MetadataService} from '../../../core/service/metadata.service';
 import {UtilsService} from '../../../core/service/utils.service';
+import {ObraSocial} from '../../../core/domain/obra-social';
+import {Plan} from '../../../core/domain/plan';
 
 @Component({
   selector: 'app-lista-integrantes',
@@ -54,12 +56,18 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
   localidades: Localidad[] = [];
   provincias: Provincia[] = [];
   integrante: Persona = null;
+  obras_sociales: ObraSocial[] = [];
+  obraSocial: ObraSocial;
+  planes: Plan[] = [];
+  plan: Plan;
 
   mForm: FormGroup;
   modalConfirmacion: ModalDirective;
   modalForm: ModalDirective;
   subs: Subscription[] = [];
   desktopMode = true;
+
+  validatorPlan: any [] = [];
 
   constructor(private fb: FormBuilder,
               private utilsService: UtilsService,
@@ -69,6 +77,13 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
               private alertService: AlertService,
               private storeHelper: StoreService) {
   }
+
+  planMatcher = (control: AbstractControl): { [key: string]: boolean } => {
+    const plan = control.get('plan');
+    const os = control.get('obraSocial');
+    if (!os) return null;
+    return (os && plan) ? null : {nomatch: true};
+  };
 
   ngOnInit(): void {
 
@@ -90,14 +105,16 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
       'departamento': [''],
       'telefono': [''],
       'celular': [''],
-      'email': ['']
+      'email': [''],
+      'obraSocial': [null],
+      'plan': [null, this.validatorPlan]
     });
 
     // Popular listas
-
     this.metadataService.getPaises().then((data: any) => this.lists.paises = data);
     this.metadataService.getProvincias().then((data: any) => this.provincias = data);
     this.metadataService.getLocalidades().then((data: any) => this.localidades = data);
+    this.metadataService.getObrasSociales().then((data: any) => this.obras_sociales = data);
 
     this.subs.push(
       this.store.changes.pluck('integrantes').subscribe(
@@ -361,5 +378,14 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
     date = this.datePipe.transform(date, 'dd/MM/yyyy');
     return date;
   }
+
+  handleObraSocialClick(obra_social: ObraSocial) {
+    if (obra_social) {
+      this.planes = obra_social.planes;
+      this.validatorPlan.push(Validators.required);
+      this.mForm.controls['plan'].valid;
+    }
+  }
+
 
 }
