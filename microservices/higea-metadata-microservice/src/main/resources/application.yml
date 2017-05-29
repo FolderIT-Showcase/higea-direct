@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: higea-metadata
+server:
+  port: 36004
+  tomcat:
+    max-threads: 4
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+  instance:
+    preferIpAddress: true
+
+feign:
+  hystrix:
+    enabled: false

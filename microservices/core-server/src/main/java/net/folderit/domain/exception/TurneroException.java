@@ -28,9 +28,9 @@ public class TurneroException implements Serializable {
 
     public static final String MESSAGE_TURNO_CANCELED = "message.turno.canceled";
 
-    public static final String MESSAGE_PROFESIONALES_ASOCIADA  = "message.profesionales.asociada";
+    public static final String MESSAGE_PROFESIONALES_ASOCIADA = "message.profesionales.asociada";
 
-    public static final String MESSAGE_AFIP_INVALID  = "message.afip.invalid";
+    public static final String MESSAGE_AFIP_INVALID = "message.afip.invalid";
 
     public static final String MESSAGE_ESPECIALIDAD_ASOCIADA = "message.especialidad.asociada";
 

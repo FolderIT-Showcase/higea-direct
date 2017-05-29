@@ -41,6 +41,9 @@ zuul:
     higea-turnos-microservice:
       path: /higea/turnos/**
       url: http://localhost:36003
+    higea-metadata-microservice:
+      path: /higea/metadata/**
+      url: http://localhost:36004
     core-server:
       path: /core/**
       sensitiveHeaders:

@@ -45,16 +45,16 @@ public class TurnoService {
         }
 
         if (filterDto.getProfesional() != null && filterDto.getEspecialidad() != null) {
-            return turnoRepository.findAllByFechaAndCentroSaludAndEspecialidadAndProfesionalOrderByFechaDesc(
+            return turnoRepository.findAllByEnabledIsTrueAndTomadoIsFalseAndFechaAndCentroSaludAndEspecialidadAndProfesionalOrderByFechaDesc(
                     date, filterDto.getCentroSalud(), filterDto.getEspecialidad(), filterDto.getProfesional());
         } else if (filterDto.getProfesional() == null && filterDto.getEspecialidad() == null) {
-            return turnoRepository.findAllByFechaAndCentroSaludOrderByFechaDesc(
+            return turnoRepository.findAllByEnabledIsTrueAndTomadoIsFalseAndFechaAndCentroSaludOrderByFechaDesc(
                     date, filterDto.getCentroSalud());
         } else if (filterDto.getProfesional() == null) {
-            return turnoRepository.findAllByFechaAndCentroSaludAndEspecialidadOrderByFechaDesc(
+            return turnoRepository.findAllByEnabledIsTrueAndTomadoIsFalseAndFechaAndCentroSaludAndEspecialidadOrderByFechaDesc(
                     date, filterDto.getCentroSalud(), filterDto.getEspecialidad());
         } else if (filterDto.getEspecialidad() == null) {
-            return turnoRepository.findAllByFechaAndCentroSaludAndProfesionalOrderByFechaDesc(
+            return turnoRepository.findAllByEnabledIsTrueAndTomadoIsFalseAndFechaAndCentroSaludAndProfesionalOrderByFechaDesc(
                     date, filterDto.getCentroSalud(), filterDto.getProfesional());
         }
         return turnos;
@@ -64,15 +64,15 @@ public class TurnoService {
         List<Turno> turnos = new ArrayList<>();
         Date date = new Date();
         if (filterDto.getProfesional() != null && filterDto.getEspecialidad() != null) {
-            return turnoRepository.findTop10ByFechaAfterAndCentroSaludAndEspecialidadAndProfesional(date,
+            return turnoRepository.findTop10ByEnabledIsTrueAndTomadoIsFalseAndFechaAfterAndCentroSaludAndEspecialidadAndProfesional(date,
                     filterDto.getCentroSalud(), filterDto.getEspecialidad(), filterDto.getProfesional());
         } else if (filterDto.getProfesional() == null && filterDto.getEspecialidad() == null) {
-            return turnoRepository.findTop10ByFechaAfterAndCentroSalud(date, filterDto.getCentroSalud());
+            return turnoRepository.findTop10ByEnabledIsTrueAndTomadoIsFalseAndFechaAfterAndCentroSalud(date, filterDto.getCentroSalud());
         } else if (filterDto.getProfesional() == null) {
-            return turnoRepository.findTop10ByFechaAfterAndCentroSaludAndEspecialidad(date, filterDto.getCentroSalud(),
+            return turnoRepository.findTop10ByEnabledIsTrueAndTomadoIsFalseAndFechaAfterAndCentroSaludAndEspecialidad(date, filterDto.getCentroSalud(),
                     filterDto.getEspecialidad());
         } else if (filterDto.getEspecialidad() == null) {
-            return turnoRepository.findTop10ByFechaAfterAndCentroSaludAndProfesional(date, filterDto.getCentroSalud(),
+            return turnoRepository.findTop10ByEnabledIsTrueAndTomadoIsFalseAndFechaAfterAndCentroSaludAndProfesional(date, filterDto.getCentroSalud(),
                     filterDto.getProfesional());
         }
         return turnos;
