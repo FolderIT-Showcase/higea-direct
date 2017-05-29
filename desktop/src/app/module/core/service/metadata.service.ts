@@ -6,6 +6,7 @@ import {Localidad} from '../domain/localidad';
 import {LoadingService} from './loading.service';
 import {Store} from './store';
 import {ObraSocial} from '../domain/obra-social';
+import {TipoTurno} from '../domain/tipo-turno';
 
 @Injectable()
 export class MetadataService {
@@ -14,6 +15,7 @@ export class MetadataService {
   provincias: Provincia[] = [];
   localidades: Localidad[] = [];
   obras_sociales: ObraSocial[] = [];
+  tipos_turnos: TipoTurno[] = [];
   basePath = 'core/';
 
   constructor(private api: ApiService,
@@ -140,6 +142,36 @@ export class MetadataService {
       return (a.nombre > b.nombre) ? 1 : ((b.nombre > a.nombre) ? -1 : 0);
     });
     this.store.db.setItem('obras_sociales', this.obras_sociales);
+  }
+
+  getAllTiposTurnos(): Promise<any> {
+    return this.store.db.getItem('tipos_turnos')
+      .then((data: any) => {
+        if (data && data[0]) {
+          return new Promise<any>((resolve, reject) => {
+            resolve(data);
+          });
+        }
+        return this.requestTiposTurnos();
+      })
+      .then(data => {
+        this.setTipoTurnos(data);
+        return new Promise<any>((resolve, reject) => {
+          resolve(data);
+        });
+      });
+  }
+
+  requestTiposTurnos() {
+    const path = this.basePath + 'tipoTurno';
+    return this.api.get(path);
+  }
+
+  setTipoTurnos(mTT) {
+    this.tipos_turnos = mTT.sort((a, b) => {
+      return (a.nombre > b.nombre) ? 1 : ((b.nombre > a.nombre) ? -1 : 0);
+    });
+    this.store.db.setItem('tipos_turnos', this.tipos_turnos);
   }
 
 }

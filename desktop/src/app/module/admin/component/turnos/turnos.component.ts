@@ -13,6 +13,9 @@ import {PagerService} from '../../../core/service/pager.service';
 import {Store} from '../../../core/service/store';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {IMyOptions} from 'mydatepicker';
+import {TipoTurno} from '../../../core/domain/tipo-turno';
+import {MotivoTurno} from '../../../core/domain/motivo-turno';
+import {MetadataService} from '../../../core/service/metadata.service';
 
 class Data {
 
@@ -21,6 +24,8 @@ class Data {
   profesional: Profesional;
   hora: Date = new Date();
   observaciones: string;
+  tipoTurno: TipoTurno;
+  motivoTurno: MotivoTurno;
 }
 
 @Component({
@@ -37,6 +42,11 @@ export class TurnosComponent implements OnInit, OnDestroy {
   profesionales: Profesional[] = [];
   personas: Persona[] = [];
   turno: Turno;
+  tipoTurno: TipoTurno;
+  tiposDeTurnos: TipoTurno[] = [];
+
+  motivoTurno: MotivoTurno;
+  motivosTurno: MotivoTurno[] = [];
 
   deleteModal: ModalDirective;
   saveModal: ModalDirective;
@@ -60,6 +70,7 @@ export class TurnosComponent implements OnInit, OnDestroy {
   constructor(private storeService: StoreService,
               private alertService: AlertService,
               private adminService: AdminService,
+              private metadataService: MetadataService,
               private store: Store,
               private pagerService: PagerService,
               private fb: FormBuilder) {
@@ -70,13 +81,22 @@ export class TurnosComponent implements OnInit, OnDestroy {
       'profesional': [null, Validators.required],
       'fechaDesde': [null],
       'hora': [null],
-      'observaciones': [null, Validators.required]
+      'observaciones': [null, Validators.required],
+      'tipoTurno': [null, Validators.required],
+      'motivoTurno': [null, Validators.required]
     });
   }
 
   ngOnInit() {
     this.centrosSalud = this.storeService.get('centrosSalud');
     this.turnos = this.storeService.get('turnos');
+    // this.tiposDeTurnos = this.storeService.get('tipos_turnos');
+
+    this.metadataService.getAllTiposTurnos().then((data: any) => {
+      this.tiposDeTurnos = data;
+    }).catch(() => {
+    });
+
     this.model.hora = new Date();
 
     this.subs.push(
@@ -107,6 +127,16 @@ export class TurnosComponent implements OnInit, OnDestroy {
 
   handleProfesionalClick(profesional: Profesional) {
     this.model.profesional = profesional;
+  }
+
+  handleTipoTurnoClick(tipo: TipoTurno) {
+    console.log(tipo);
+    this.model.tipoTurno = tipo;
+    this.motivosTurno = tipo.motivoTurno;
+  }
+
+  handleMotivoTurnoClick(motivo: MotivoTurno) {
+    this.model.motivoTurno = motivo;
   }
 
   clearForm() {
@@ -140,6 +170,9 @@ export class TurnosComponent implements OnInit, OnDestroy {
   delete(turno: Turno) {
     this.adminService.deleteTurno(turno).then(data => {
       this.alertService.success('Se borro exitosamente');
+
+    }).catch(() => {
+
     });
 
     this.setPage(this.pager.currentPage);

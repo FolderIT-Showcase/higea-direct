@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+import java.util.List;
+
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
 /**
@@ -28,7 +30,12 @@ public class TipoTurno {
 
     private String descripcion;
 
-    @ManyToOne
-    @JoinColumn(name = "motivo_turno_id")
-    private MotivoTurno motivoTurno;
+    @OneToMany()
+    @JoinTable
+            (
+                    name = "tipo_motivo",
+                    joinColumns = {@JoinColumn(name = "tipo_id", referencedColumnName = "id")},
+                    inverseJoinColumns = {@JoinColumn(name = "motivo_id", referencedColumnName = "id", unique = false)}
+            )
+    private List<MotivoTurno> motivoTurno;
 }

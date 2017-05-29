@@ -156,6 +156,50 @@
         </div>
       </div>
     </div>
+
+
+    <!--Tipo Turno, Motivo turno-->
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group"
+             [ngClass]="{'has-error' : !form.controls['tipoTurno'].valid && form.controls['tipoTurno'].touched}">
+          <label class="control-label required">Tipo Turno</label>
+
+          <select type="text" class="form-control" [formControl]="form.controls['tipoTurno']"
+                  (change)="handleTipoTurnoClick(form.value.tipoTurno)">
+            <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
+            <option [ngValue]="tipo" *ngFor="let tipo of tiposDeTurnos">{{tipo.descripcion}}</option>
+          </select>
+
+          <small *ngIf="form.controls['tipoTurno'].hasError('required') && form.controls['tipoTurno'].touched"
+                 class="help-block">Debes incluir el tipo de Turno.
+          </small>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group"
+             [ngClass]="{'has-error':!form.controls['motivoTurno'].valid && form.controls['motivoTurno'].touched}">
+
+          <label class="control-label required">Motivo Turno</label>
+
+          <select type="text" class="form-control" [formControl]="form.controls['motivoTurno']"
+                  (change)="handleMotivoTurnoClick(form.value.motivoTurno)">
+            <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
+            <option [ngValue]="motivo" *ngFor="let motivo of motivosTurno">{{motivo.descripcion}}
+            </option>
+          </select>
+
+
+          <small *ngIf="form.controls['motivoTurno'].hasError('required') && form.controls['motivoTurno'].touched"
+                 class="help-block">Debes incluir el motivo del turno.
+          </small>
+        </div>
+      </div>
+    </div>
+
+
+
+
     <div class="row">
       <div class="text-right">
         <button type="submit" class="btn btn-primary" [disabled]="!form.valid">GUARDAR</button>

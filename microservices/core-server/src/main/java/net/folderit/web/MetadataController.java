@@ -134,4 +134,9 @@ public class MetadataController {
     public ResponseEntity<Collection<ObraSocial>> getAllObrasSociales() {
         return new ResponseEntity<>((Collection<ObraSocial>) metadataService.getAllObrasSociales(), HttpStatus.OK);
     }
+
+    @GetMapping("/tipoTurno")
+    public ResponseEntity<Collection<TipoTurno>> getAllTiposTurnos() {
+        return new ResponseEntity<>((Collection<TipoTurno>) metadataService.getAllTiposTurnos(), HttpStatus.OK);
+    }
 }
