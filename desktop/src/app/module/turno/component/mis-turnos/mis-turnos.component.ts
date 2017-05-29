@@ -72,6 +72,7 @@ export class MisTurnosComponent implements OnInit, OnDestroy, AfterViewInit {
         if (!data) {
           return;
         }
+        this.persona = data;
         this.turnos = data.turno;
       }));
   }
@@ -95,8 +96,7 @@ export class MisTurnosComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public showModal(turno: Turno) {
-    this.persona =
-      this.turno = turno;
+    this.turno = turno;
     this.modal.show();
   }
 
@@ -126,7 +126,7 @@ export class MisTurnosComponent implements OnInit, OnDestroy, AfterViewInit {
     this.modal.hide();
   }
 
-  clearTable(){
+  clearTable() {
     this.storeService.update('turnos', []);
   }
 

@@ -53,7 +53,7 @@ export class ApiService {
       mException = new AppException();
     }
     this.alertService.error(mException.error);
-    throw new Error(mException.error);
+    // throw new Error(mException.error);
   }
 
   isAuthNecessary(isAuthNecessary: boolean) {

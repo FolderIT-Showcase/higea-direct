@@ -119,7 +119,6 @@ export class TurnoService {
         if (!persona) {
           return;
         }
-
         if (!persona.turno || persona.turno.length === 1) {
           persona.turno = [];
         } else {
