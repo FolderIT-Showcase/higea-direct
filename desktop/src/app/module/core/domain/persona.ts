@@ -19,4 +19,5 @@ export class Persona {
   contacto?: Contacto[] = [];
   turno?: Turno[] = [];
   plan?: Plan;
+  nroAfiliado?: number;
 }

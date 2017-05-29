@@ -16,7 +16,9 @@ export class MetadataService {
   localidades: Localidad[] = [];
   obras_sociales: ObraSocial[] = [];
   tipos_turnos: TipoTurno[] = [];
-  basePath = 'core/';
+  license = localStorage.getItem('license');
+  client = localStorage.getItem('client');
+  basePath = this.license + '/';
 
   constructor(private api: ApiService,
               private store: Store,

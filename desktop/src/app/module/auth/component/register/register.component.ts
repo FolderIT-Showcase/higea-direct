@@ -60,7 +60,7 @@ export class RegisterComponent implements OnInit {
       'email': [null, Validators.required],
       'telefono': [null, Validators.required],
       'obraSocial': [null],
-      'plan': [null, this.planValid],
+      'plan': [null],
       'nroAfiliado': [null],
     }, {validator: this.passwordMatcher});
 
@@ -107,6 +107,7 @@ export class RegisterComponent implements OnInit {
     persona.contacto.push(contacto);
 
     if (data.plan) persona.plan = data.plan;
+    persona.nroAfiliado = data.nroAfiliado;
 
     return persona;
   }
@@ -155,8 +156,22 @@ export class RegisterComponent implements OnInit {
 
   handleObraSocialClick(obra_social: ObraSocial) {
     this.planes = obra_social.planes;
-    this.validatorPlan.push(Validators.required);
-    this.complexForm.controls['plan'].updateValueAndValidity();
+
+    this.complexForm = this.fb.group({
+      'nombre': [this.complexForm.value.nombre, Validators.required],
+      'apellido': [this.complexForm.value.apellido, Validators.required],
+      'numeroDocumento': [this.complexForm.value.numeroDocumento, Validators.required],
+      'tipoDocumento': [this.complexForm.value.tipoDocumento, Validators.required],
+      'pais': [this.complexForm.value.pais, Validators.required],
+      'genero': [this.complexForm.value.genero, Validators.required],
+      'password1': [this.complexForm.value.password1, Validators.required],
+      'password2': [this.complexForm.value.password2, [Validators.required, this.passwordMatch]],
+      'email': [this.complexForm.value.email, Validators.required],
+      'telefono': [this.complexForm.value.telefono, Validators.required],
+      'obraSocial': [this.complexForm.value.obraSocial],
+      'plan': [this.complexForm.value.plan, Validators.required],
+      'nroAfiliado': [this.complexForm.value.nroAfiliado],
+    }, {validator: this.passwordMatcher});
   }
 
 }
