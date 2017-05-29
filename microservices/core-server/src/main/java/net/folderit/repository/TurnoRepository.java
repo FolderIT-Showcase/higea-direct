@@ -11,23 +11,28 @@ import java.util.List;
 
 public interface TurnoRepository extends CrudRepository<Turno, Long> {
 
+    // todos los turnos
+
     List<Turno> findAllByEnabledIsTrueOrderByFechaDesc();
 
-    List<Turno> findAllByFechaAndCentroSaludAndEspecialidadAndProfesionalOrderByFechaDesc(Date date, CentroSalud centroSalud, Especialidad especialidad, Profesional profesional);
+    // por fecha especifica
 
-    List<Turno> findAllByFechaAndCentroSaludOrderByFechaDesc(Date date, CentroSalud centroSalud);
+    List<Turno> findAllByEnabledIsTrueAndTomadoIsFalseAndFechaAndCentroSaludAndEspecialidadAndProfesionalOrderByFechaDesc(Date date, CentroSalud centroSalud, Especialidad especialidad, Profesional profesional);
 
-    List<Turno> findAllByFechaAndCentroSaludAndEspecialidadOrderByFechaDesc(Date date, CentroSalud centroSalud, Especialidad especialidad);
+    List<Turno> findAllByEnabledIsTrueAndTomadoIsFalseAndFechaAndCentroSaludOrderByFechaDesc(Date date, CentroSalud centroSalud);
 
-    List<Turno> findAllByFechaAndCentroSaludAndProfesionalOrderByFechaDesc(Date date, CentroSalud centroSalud, Profesional profesional);
-    // find Next Turnos
+    List<Turno> findAllByEnabledIsTrueAndTomadoIsFalseAndFechaAndCentroSaludAndEspecialidadOrderByFechaDesc(Date date, CentroSalud centroSalud, Especialidad especialidad);
 
-    List<Turno> findTop10ByFechaAfterAndCentroSalud(Date date, CentroSalud centroSalud);
+    List<Turno> findAllByEnabledIsTrueAndTomadoIsFalseAndFechaAndCentroSaludAndProfesionalOrderByFechaDesc(Date date, CentroSalud centroSalud, Profesional profesional);
 
-    List<Turno> findTop10ByFechaAfterAndCentroSaludAndEspecialidad(Date date, CentroSalud centroSalud, Especialidad especialidad);
+    // Proximos Turnos
 
-    List<Turno> findTop10ByFechaAfterAndCentroSaludAndProfesional(Date date, CentroSalud centroSalud, Profesional profesional);
+    List<Turno> findTop10ByEnabledIsTrueAndTomadoIsFalseAndFechaAfterAndCentroSalud(Date date, CentroSalud centroSalud);
 
-    List<Turno> findTop10ByFechaAfterAndCentroSaludAndEspecialidadAndProfesional(Date date, CentroSalud centroSalud, Especialidad especialidad, Profesional profesional);
+    List<Turno> findTop10ByEnabledIsTrueAndTomadoIsFalseAndFechaAfterAndCentroSaludAndEspecialidad(Date date, CentroSalud centroSalud, Especialidad especialidad);
+
+    List<Turno> findTop10ByEnabledIsTrueAndTomadoIsFalseAndFechaAfterAndCentroSaludAndProfesional(Date date, CentroSalud centroSalud, Profesional profesional);
+
+    List<Turno> findTop10ByEnabledIsTrueAndTomadoIsFalseAndFechaAfterAndCentroSaludAndEspecialidadAndProfesional(Date date, CentroSalud centroSalud, Especialidad especialidad, Profesional profesional);
 
 }

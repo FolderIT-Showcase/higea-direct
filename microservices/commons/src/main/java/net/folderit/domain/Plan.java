@@ -13,20 +13,22 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
  * Created by luis on 24/05/17.
  */
 @Entity
-@Table(name = "motivo_turno")
+@Table(name = "plan")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(NON_NULL)
-public class MotivoTurno {
+public class Plan {
 
-    @ManyToOne
-    @JoinColumn(name = "preparacion_id")
-    Preparacion preparacion;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    private String razon_social;
+
     private int codigo;
-    private String descripcion;
-    private Double coseguro;
+
+  /*  @ManyToOne
+    @JoinColumn(name = "os_id")
+    private ObraSocial obraSocial;*/
 }

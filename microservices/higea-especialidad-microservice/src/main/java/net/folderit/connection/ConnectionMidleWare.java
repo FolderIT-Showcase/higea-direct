@@ -1,15 +1,16 @@
 package net.folderit.connection;
 
-import net.folderit.converters.EspecialidadCoreDTO;
 import net.folderit.domain.Especialidad;
-import net.folderit.domain.Profesional;
 import net.folderit.dto.*;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class ConnectionMidleWare {
@@ -41,7 +42,8 @@ public class ConnectionMidleWare {
 
         // send request and parse result
         ResponseEntity<ArrayList<RowProfesionalDTO>> result =
-                restTemplate.exchange(uriProfesionales, HttpMethod.GET, entity, new ParameterizedTypeReference<ArrayList<RowProfesionalDTO>>(){}, uriParams);
+                restTemplate.exchange(uriProfesionales, HttpMethod.GET, entity, new ParameterizedTypeReference<ArrayList<RowProfesionalDTO>>() {
+                }, uriParams);
 
         return result.getBody();
 
@@ -69,10 +71,10 @@ public class ConnectionMidleWare {
 
         List<EspecialidadesRow> mEspecialidades = result.getBody().getData().getRows();
 
-        mEspecialidades.forEach( x -> {
+        mEspecialidades.forEach(x -> {
             Especialidad mEspecialidad = x.convertToEspecialidadCoreDTO();
 
-            profesionales.forEach( y -> {
+            profesionales.forEach(y -> {
                 if (mEspecialidad.getId().intValue() == y.getEspecialidad_id()) {
                     if (mEspecialidad.getProfesional() == null) {
                         mEspecialidad.setProfesional(new ArrayList<>());
