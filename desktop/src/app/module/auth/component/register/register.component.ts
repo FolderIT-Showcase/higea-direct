@@ -33,7 +33,7 @@ export class RegisterComponent implements OnInit {
   captcha = null;
   selectUndefined: any;
   @Input()
-  validatorPlan: any [] = [];
+  validatorPlan: any [] = [this.planValid];
 
   passwordMatcher = (control: AbstractControl): { [key: string]: boolean } => {
     const password1 = control.get('password1');
@@ -60,7 +60,8 @@ export class RegisterComponent implements OnInit {
       'email': [null, Validators.required],
       'telefono': [null, Validators.required],
       'obraSocial': [null],
-      'plan': [null, this.planValid]
+      'plan': [null, this.validatorPlan],
+      'nroAfiliado': [null]
     }, {validator: this.passwordMatcher});
 
   }
@@ -68,10 +69,12 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
     this.metadataService.getPaises().then((data: any) => {
       this.paises = data;
-    }).catch(() => {});
+    }).catch(() => {
+    });
     this.metadataService.getObrasSociales().then((data: any) => {
       this.obras_sociales = data;
-    }).catch(() => {});
+    }).catch(() => {
+    });
   }
 
   private passwordMatch() {
@@ -129,7 +132,8 @@ export class RegisterComponent implements OnInit {
       this.personaService.validateDni(doc)
         .then(() => {
           this.savePersona(persona);
-        }).catch(() => {});
+        }).catch(() => {
+      });
 
       return;
     }
@@ -144,8 +148,10 @@ export class RegisterComponent implements OnInit {
         this.router.navigate(['/login'])
           .then(() => {
             this.alertService.success('Registro Exitoso, chequee su cuenta de email para activar el usuario');
-          }).catch(() => {});
-      }).catch(() => {});
+          }).catch(() => {
+        });
+      }).catch(() => {
+    });
   }
 
   handleCorrectCaptcha(event) {
@@ -156,6 +162,7 @@ export class RegisterComponent implements OnInit {
     this.planes = obra_social.planes;
     this.validatorPlan.push(Validators.required);
     this.complexForm.controls['plan'].updateValueAndValidity();
+
   }
 
 }

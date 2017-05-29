@@ -25,6 +25,7 @@ import {ProfesionalBusquedaComponent} from './component/profesional-busqueda/pro
 import {TurnoBusquedaComponent} from './component/turno-busqueda/turno-busqueda.component';
 import {TurnoResolveService} from '../core/service/resolve/turno-resolve.service';
 import {MyDatePickerModule} from 'mydatepicker';
+import {TipoTurnoResolveService} from '../core/service/resolve/tipo-turno-resolve.service';
 
 @NgModule({
   imports: [
@@ -58,6 +59,7 @@ import {MyDatePickerModule} from 'mydatepicker';
     ProfesionalResolveService,
     CentrosSaludResolveService,
     EspecialidadResolveService,
+    TipoTurnoResolveService,
     LoadingService,
     PagerService,
     TurnoResolveService
