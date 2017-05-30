@@ -1,21 +1,21 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Persona} from '../../../core/domain/persona';
-import {CentroSalud} from '../../../core/domain/centro-salud';
-import {Especialidad} from '../../../core/domain/especialidad';
-import {Profesional} from '../../../core/domain/profesional';
-import {Turno} from '../../../core/domain/turno';
-import {StoreService} from '../../../core/service/store.service';
-import {AlertService} from '../../../core/service/alert.service';
+import {Persona} from '../../../../domain/persona';
+import {CentroSalud} from '../../../../domain/centro-salud';
+import {Especialidad} from '../../../../domain/especialidad';
+import {Profesional} from '../../../../domain/profesional';
+import {Turno} from '../../../../domain/turno';
+import {StoreService} from '../../../../service/store.service';
+import {AlertService} from '../../../../service/alert.service';
 import {ModalDirective} from 'ngx-bootstrap';
-import {AdminService} from '../../../core/service/admin.service';
+import {AdminService} from '../../../../service/admin.service';
 import {Subscription} from 'rxjs/Subscription';
-import {PagerService} from '../../../core/service/pager.service';
-import {Store} from '../../../core/service/store';
+import {PagerService} from '../../../../service/pager.service';
+import {Store} from '../../../../service/store';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {IMyOptions} from 'mydatepicker';
-import {TipoTurno} from '../../../core/domain/tipo-turno';
-import {MotivoTurno} from '../../../core/domain/motivo-turno';
-import {MetadataService} from '../../../core/service/metadata.service';
+import {TipoTurno} from '../../../../domain/tipo-turno';
+import {MotivoTurno} from '../../../../domain/motivo-turno';
+import {MetadataService} from '../../../../service/metadata.service';
 
 class Data {
 

@@ -302,7 +302,8 @@
 
       <div class="row">
         <div class="col-sm-4">
-          <div class="form-group" [ngClass]="{'has-error':!mForm.controls['obraSocial'].valid && mForm.controls['obraSocial'].touched}">
+          <div class="form-group"
+               [ngClass]="{'has-error':!mForm.controls['obraSocial'].valid && mForm.controls['obraSocial'].touched}">
             <label>Obra Social</label>
 
             <select type="text" class="form-control" [formControl]="mForm.controls['obraSocial']"
@@ -317,7 +318,8 @@
           </div>
         </div>
         <div class="col-sm-4">
-          <div class="form-group" [ngClass]="{'has-error':!mForm.controls['plan'].valid && mForm.controls['plan'].touched}">
+          <div class="form-group"
+               [ngClass]="{'has-error':!mForm.controls['plan'].valid && mForm.controls['plan'].touched}">
             <label>Plan</label>
 
             <select type="text" class="form-control" [formControl]="mForm.controls['plan']">

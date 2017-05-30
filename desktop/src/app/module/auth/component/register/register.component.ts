@@ -1,18 +1,18 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {PersonaService} from '../../../core/service/persona.service';
-import {AlertService} from '../../../core/service/alert.service';
-import {TipoDocumentos} from '../../../core/domain/enums/tipo-documento';
-import {Generos} from '../../../core/domain/enums/genero';
-import {Pais} from '../../../core/domain/pais';
-import {User} from '../../../core/domain/user';
-import {Persona} from '../../../core/domain/persona';
-import {Documento} from '../../../core/domain/documento';
+import {PersonaService} from '../../../../service/persona.service';
+import {AlertService} from '../../../../service/alert.service';
+import {TipoDocumentos} from '../../../../domain/enums/tipo-documento';
+import {Generos} from '../../../../domain/enums/genero';
+import {Pais} from '../../../../domain/pais';
+import {User} from '../../../../domain/user';
+import {Persona} from '../../../../domain/persona';
+import {Documento} from '../../../../domain/documento';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {MetadataService} from '../../../core/service/metadata.service';
-import {Contacto} from '../../../core/domain/contacto';
-import {ObraSocial} from '../../../core/domain/obra-social';
-import {Plan} from '../../../core/domain/plan';
+import {MetadataService} from '../../../../service/metadata.service';
+import {Contacto} from '../../../../domain/contacto';
+import {ObraSocial} from '../../../../domain/obra-social';
+import {Plan} from '../../../../domain/plan';
 
 @Component({
   selector: 'app-register',

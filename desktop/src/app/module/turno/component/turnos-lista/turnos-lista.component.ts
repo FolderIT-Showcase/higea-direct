@@ -1,8 +1,8 @@
 import {Component, Input} from '@angular/core';
-import {Turno} from '../../../core/domain/turno';
+import {Turno} from '../../../../domain/turno';
 import {ModalDirective} from 'ngx-bootstrap';
-import {TurnoService} from '../../../core/service/turno.service';
-import {StoreService} from '../../../core/service/store.service';
+import {TurnoService} from '../../../../service/turno.service';
+import {StoreService} from '../../../../service/store.service';
 
 @Component({
   selector: 'app-turnos-proximos',

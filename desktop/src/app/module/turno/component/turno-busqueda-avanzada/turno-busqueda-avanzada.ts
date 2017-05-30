@@ -1,14 +1,14 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {CentroSalud} from '../../../core/domain/centro-salud';
-import {Especialidad} from '../../../core/domain/especialidad';
-import {Profesional} from '../../../core/domain/profesional';
-import {Persona} from '../../../core/domain/persona';
-import {StoreService} from '../../../core/service/store.service';
-import {TurnoService} from '../../../core/service/turno.service';
+import {CentroSalud} from '../../../../domain/centro-salud';
+import {Especialidad} from '../../../../domain/especialidad';
+import {Profesional} from '../../../../domain/profesional';
+import {Persona} from '../../../../domain/persona';
+import {StoreService} from '../../../../service/store.service';
+import {TurnoService} from '../../../../service/turno.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {IMyOptions} from 'mydatepicker';
 import {DatePipe} from '@angular/common';
-import {AlertService} from '../../../core/service/alert.service';
+import {AlertService} from '../../../../service/alert.service';
 
 @Component({
   selector: 'app-turno-busqueda-avanzada',

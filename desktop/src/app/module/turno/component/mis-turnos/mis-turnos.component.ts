@@ -1,16 +1,16 @@
 import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
-import {Turno} from '../../../core/domain/turno';
-import {Persona} from '../../../core/domain/persona';
-import {StoreService} from '../../../core/service/store.service';
+import {Turno} from '../../../../domain/turno';
+import {Persona} from '../../../../domain/persona';
+import {StoreService} from '../../../../service/store.service';
 import {ModalDirective} from 'ngx-bootstrap';
-import {TurnoService} from '../../../core/service/turno.service';
-import {AlertService} from '../../../core/service/alert.service';
-import {Especialidad} from '../../../core/domain/especialidad';
-import {CentroSalud} from '../../../core/domain/centro-salud';
+import {TurnoService} from '../../../../service/turno.service';
+import {AlertService} from '../../../../service/alert.service';
+import {Especialidad} from '../../../../domain/especialidad';
+import {CentroSalud} from '../../../../domain/centro-salud';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {Subscription} from 'rxjs/Subscription';
-import {Store} from '../../../core/service/store';
-import {UtilsService} from '../../../core/service/utils.service';
+import {Store} from '../../../../service/store';
+import {UtilsService} from '../../../../service/utils.service';
 
 class Data {
   persona: Persona;

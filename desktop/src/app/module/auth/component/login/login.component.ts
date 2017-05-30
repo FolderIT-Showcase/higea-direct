@@ -1,8 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {AlertService} from '../../../core/service/alert.service';
+import {AlertService} from '../../../../service/alert.service';
 import {AppAuthService} from '../../auth.service';
-import {User} from '../../../core/domain/user';
+import {User} from '../../../../domain/user';
 
 @Component({
   selector: 'app-login',
