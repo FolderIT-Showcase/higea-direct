@@ -51,7 +51,7 @@ export class AppAuthService {
     // remove user from local storage to log user out
     localStorage.removeItem('currentUser');
     this.api.removeJwt();
-    return this.router.navigate(['/login']);
+    return this.router.navigate(['/auth/login']);
   }
 
   normalLogin(user: User, type: string = '') {
