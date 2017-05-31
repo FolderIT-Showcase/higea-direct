@@ -1,10 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs/Subscription';
-import {StoreService} from '../../../core/service/store.service';
-import {Store} from '../../../core/service/store';
-import {PagerService} from '../../../core/service/pager.service';
-import {Especialidad} from '../../../core/domain/especialidad';
-import {CentroSalud} from '../../../core/domain/centro-salud';
+import {StoreService} from '../../../../service/store.service';
+import {Store} from '../../../../service/store';
+import {PagerService} from '../../../../service/pager.service';
+import {Especialidad} from '../../../../domain/especialidad';
+import {CentroSalud} from '../../../../domain/centro-salud';
 
 @Component({
   selector: 'app-especialidad-busqueda',

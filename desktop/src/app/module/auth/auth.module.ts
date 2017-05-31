@@ -1,30 +1,25 @@
 import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
 import {LoginComponent} from './component/login/login.component';
 import {RegisterComponent} from './component/register/register.component';
-import {BrowserModule} from '@angular/platform-browser';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HttpModule} from '@angular/http';
-import {RouterModule} from '@angular/router';
 import {GoogleSigninComponent} from './component/google-signin/google-signin.component';
 import {FacebookSigninComponent} from './component/facebook-signin/facebook-signin.component';
 import {RegisterSocialComponent} from './component/register-social/register-social.component';
-import {BsDropdownModule} from 'ngx-bootstrap';
-import {StoreService} from '../core/service/store.service';
+import {StoreService} from '../../service/store.service';
 import {FacebookService} from 'ngx-facebook';
-import {ReCaptchaModule} from 'angular2-recaptcha';
 import {UserActiveComponent} from './component/user-activate/user.active.component';
+import {AuthRoutingModule} from './auth.routing.module';
+import {CommonModule} from '@angular/common';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {ReCaptchaModule} from 'angular2-recaptcha';
+import {AuthHomeComponent} from './auth-home.component';
 
 @NgModule({
   imports: [
+    AuthRoutingModule,
     CommonModule,
-    BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpModule,
-    RouterModule,
-    BsDropdownModule.forRoot(),
-    ReCaptchaModule
+    ReCaptchaModule,
   ],
   declarations: [
     LoginComponent,
@@ -32,7 +27,8 @@ import {UserActiveComponent} from './component/user-activate/user.active.compone
     GoogleSigninComponent,
     FacebookSigninComponent,
     RegisterSocialComponent,
-    UserActiveComponent
+    UserActiveComponent,
+    AuthHomeComponent
   ],
   providers: [
     StoreService,

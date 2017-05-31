@@ -5,11 +5,13 @@ import net.folderit.domain.exception.TurneroException;
 import net.folderit.dto.ResultAfipDto;
 import net.folderit.service.PersonaService;
 import net.folderit.service.TurnoService;
+import net.folderit.util.JasperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Collection;
 
@@ -41,6 +43,16 @@ public class PersonaController {
     public ResponseEntity<Long> createUser(@RequestBody Persona persona) {
         Persona mPersona = personaService.save(persona);
         return ResponseEntity.ok(mPersona.getId());
+    }
+
+
+    @PostMapping(value = "/persona/pdf")
+    public ResponseEntity getPDf(@RequestBody Persona persona) throws  Exception {
+
+        JasperUtil jasperUtil = new JasperUtil();
+
+        return ResponseEntity.ok(jasperUtil.buildReportTurno(persona.getTurno()));
+
     }
 
     @DeleteMapping("/persona")

@@ -1,15 +1,15 @@
 import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ModalDirective} from 'ngx-bootstrap';
-import {Turno} from 'app/module/core/domain/turno';
-import {CentroSalud} from '../../../core/domain/centro-salud';
-import {Store} from '../../../core/service/store';
+import {Turno} from 'app/domain/turno';
+import {CentroSalud} from '../../../../domain/centro-salud';
+import {Store} from '../../../../service/store';
 import {Subscription} from 'rxjs/Subscription';
-import {TurnoService} from '../../../core/service/turno.service';
-import {StoreService} from '../../../core/service/store.service';
-import {Persona} from '../../../core/domain/persona';
-import {Especialidad} from '../../../core/domain/especialidad';
-import {Profesional} from '../../../core/domain/profesional';
-import {UtilsService} from '../../../core/service/utils.service';
+import {TurnoService} from '../../../../service/turno.service';
+import {StoreService} from '../../../../service/store.service';
+import {Persona} from '../../../../domain/persona';
+import {Especialidad} from '../../../../domain/especialidad';
+import {Profesional} from '../../../../domain/profesional';
+import {UtilsService} from '../../../../service/utils.service';
 
 @Component({
   selector: 'app-turno-resultado',
@@ -114,6 +114,16 @@ export class TurnoResultadoComponent implements OnInit, OnDestroy, AfterViewInit
 
   handleSuccessModal(event) {
     this.successModal = event;
+  }
+
+  generarPDF() {
+    this.turnoService.generarPDF(this.persona)
+      .then( data => {
+          // window.open(data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
 }

@@ -1,12 +1,12 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ModalDirective} from 'ngx-bootstrap';
 import {Subscription} from 'rxjs/Subscription';
-import {StoreService} from '../../../core/service/store.service';
-import {Store} from '../../../core/service/store';
-import {CentroSalud} from '../../../core/domain/centro-salud';
-import {Turno} from '../../../core/domain/turno';
-import {Persona} from '../../../core/domain/persona';
-import {AdminService} from '../../../core/service/admin.service';
+import {StoreService} from '../../../../service/store.service';
+import {Store} from '../../../../service/store';
+import {CentroSalud} from '../../../../domain/centro-salud';
+import {Turno} from '../../../../domain/turno';
+import {Persona} from '../../../../domain/persona';
+import {AdminService} from '../../../../service/admin.service';
 
 @Component({
   selector: 'app-turno-busqueda',

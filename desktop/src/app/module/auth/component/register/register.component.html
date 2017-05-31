@@ -54,7 +54,7 @@
         </div>
       </div>
       <div class="col-sm-6">
-          <div class="form-group"
+        <div class="form-group"
              [ngClass]="{'has-error':complexForm.value.password1 !== complexForm.value.password2 || !complexForm.controls['password2'].valid && complexForm.controls['password2'].touched}">
           <!--<label>Repita su contraseña</label>-->
             <div class="input-group">
@@ -210,14 +210,11 @@
               </option>
             </select>
           </div>
-
-
-
-
         </div>
       </div>
       <div class="col-sm-6">
-        <div class="form-group" [ngClass]="{'has-error':complexForm.value.obraSocial && !complexForm.value.plan  && complexForm.controls['plan'].touched}">
+        <div class="form-group"
+             [ngClass]="{'has-error':complexForm.value.obraSocial && !complexForm.value.plan  && complexForm.controls['plan'].touched}">
 
 
           <div class="input-group">
@@ -244,7 +241,6 @@
 
     <div class="row">
       <div class="col-sm-6">
-
           <div class="form-group"
                [ngClass]="{'has-error':!complexForm.controls['nroAfiliado'].valid && complexForm.controls['nroAfiliado'].touched}">
 
@@ -260,7 +256,6 @@
 
 
           </div>
-
       </div>
     </div>
 

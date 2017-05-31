@@ -197,7 +197,22 @@
       </div>
     </div>
 
+    <!--Preparacion-->
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group"
+             [ngClass]="{'has-error' : !form.controls['preparacion'].valid && form.controls['preparacion'].touched}">
+          <label class="control-label required">Preparacion</label>
 
+          <textarea type="text" class="form-control" [formControl]="form.controls['preparacion']">
+          </textarea>
+
+          <small *ngIf="form.controls['preparacion'].hasError('required') && form.controls['preparacion'].touched"
+                 class="help-block">Debes incluir la preparacion para el turno.
+          </small>
+        </div>
+      </div>
+    </div>
 
 
     <div class="row">

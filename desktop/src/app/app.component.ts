@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnInit} from '@angular/core';
-import {UtilsService} from './module/core/service/utils.service';
+import {UtilsService} from './service/utils.service';
 
 @Component({
   selector: 'app-root',

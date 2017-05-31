@@ -1,14 +1,14 @@
 import {Component, OnInit} from '@angular/core';
-import {Especialidad} from '../../../core/domain/especialidad';
-import {StoreService} from '../../../core/service/store.service';
-import {Profesional} from '../../../core/domain/profesional';
-import {AlertService} from '../../../core/service/alert.service';
-import {AdminService} from '../../../core/service/admin.service';
+import {Especialidad} from '../../../../domain/especialidad';
+import {StoreService} from '../../../../service/store.service';
+import {Profesional} from '../../../../domain/profesional';
+import {AlertService} from '../../../../service/alert.service';
+import {AdminService} from '../../../../service/admin.service';
 import {ModalDirective} from 'ngx-bootstrap';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {PagerService} from '../../../core/service/pager.service';
+import {PagerService} from '../../../../service/pager.service';
 import {Subscription} from 'rxjs/Subscription';
-import {Store} from '../../../core/service/store';
+import {Store} from '../../../../service/store';
 
 class Data {
   especialidadLabel: string;

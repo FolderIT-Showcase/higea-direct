@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
 import {AppAuthService} from '../../auth.service';
 import {FacebookService, InitParams, LoginOptions, LoginResponse} from 'ngx-facebook';
-import {User} from '../../../core/domain/user';
+import {User} from '../../../../domain/user';
 import {Router} from '@angular/router';
-import {AlertService} from '../../../core/service/alert.service';
+import {AlertService} from '../../../../service/alert.service';
 
 @Component({
   selector: 'app-facebook-signin',

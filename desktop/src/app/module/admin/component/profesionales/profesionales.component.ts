@@ -1,15 +1,15 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Profesional} from '../../../core/domain/profesional';
-import {StoreService} from '../../../core/service/store.service';
-import {AlertService} from '../../../core/service/alert.service';
-import {AdminService} from '../../../core/service/admin.service';
-import {Store} from '../../../core/service/store';
-import {PagerService} from '../../../core/service/pager.service';
+import {Profesional} from '../../../../domain/profesional';
+import {StoreService} from '../../../../service/store.service';
+import {AlertService} from '../../../../service/alert.service';
+import {AdminService} from '../../../../service/admin.service';
+import {Store} from '../../../../service/store';
+import {PagerService} from '../../../../service/pager.service';
 import {Router} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
 import {ModalDirective} from 'ngx-bootstrap';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Especialidad} from '../../../core/domain/especialidad';
+import {Especialidad} from '../../../../domain/especialidad';
 
 class Data {
   nombre: string;

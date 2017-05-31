@@ -1,16 +1,16 @@
 import {Component, OnInit} from '@angular/core';
-import {CentroSalud} from '../../../core/domain/centro-salud';
-import {StoreService} from '../../../core/service/store.service';
-import {Profesional} from '../../../core/domain/profesional';
-import {Especialidad} from '../../../core/domain/especialidad';
-import {TurnoService} from '../../../core/service/turno.service';
-import {AlertService} from '../../../core/service/alert.service';
-import {AdminService} from '../../../core/service/admin.service';
+import {CentroSalud} from '../../../../domain/centro-salud';
+import {StoreService} from '../../../../service/store.service';
+import {Profesional} from '../../../../domain/profesional';
+import {Especialidad} from '../../../../domain/especialidad';
+import {TurnoService} from '../../../../service/turno.service';
+import {AlertService} from '../../../../service/alert.service';
+import {AdminService} from '../../../../service/admin.service';
 import {ModalDirective} from 'ngx-bootstrap';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs/Subscription';
-import {Store} from '../../../core/service/store';
-import {PagerService} from '../../../core/service/pager.service';
+import {Store} from '../../../../service/store';
+import {PagerService} from '../../../../service/pager.service';
 
 class Data {
   centroSaludName: string;

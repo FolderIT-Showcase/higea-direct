@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {AlertService} from '../../../core/service/alert.service';
+import {AlertService} from '../../../../service/alert.service';
 import {Headers, Http} from '@angular/http';
-import {PersonaService} from '../../../core/service/persona.service';
+import {PersonaService} from '../../../../service/persona.service';
 
 @Component({
   selector: 'app-user-active',

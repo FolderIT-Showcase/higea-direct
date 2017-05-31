@@ -1,30 +1,30 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {ModalDirective} from 'ngx-bootstrap';
-import {AlertService} from '../../../core/service/alert.service';
-import {Persona} from '../../../core/domain/persona';
-import {EstadosCiviles} from '../../../core/domain/enums/estado-civil';
-import {Generos} from '../../../core/domain/enums/genero';
-import {TipoDocumentos} from '../../../core/domain/enums/tipo-documento';
-import {TipoContactos} from '../../../core/domain/enums/tipo-contacto';
-import {StoreService} from '../../../core/service/store.service';
+import {AlertService} from '../../../../service/alert.service';
+import {Persona} from '../../../../domain/persona';
+import {EstadosCiviles} from '../../../../domain/enums/estado-civil';
+import {Generos} from '../../../../domain/enums/genero';
+import {TipoDocumentos} from '../../../../domain/enums/tipo-documento';
+import {TipoContactos} from '../../../../domain/enums/tipo-contacto';
+import {StoreService} from '../../../../service/store.service';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {PersonaService} from '../../../core/service/persona.service';
-import {Localidad} from '../../../core/domain/localidad';
-import {Provincia} from '../../../core/domain/provincia';
-import {Documento} from '../../../core/domain/documento';
-import {Contacto} from '../../../core/domain/contacto';
-import {Domicilio} from '../../../core/domain/domicilio';
-import {Pais} from '../../../core/domain/pais';
-import {Store} from '../../../core/service/store';
+import {PersonaService} from '../../../../service/persona.service';
+import {Localidad} from '../../../../domain/localidad';
+import {Provincia} from '../../../../domain/provincia';
+import {Documento} from '../../../../domain/documento';
+import {Contacto} from '../../../../domain/contacto';
+import {Domicilio} from '../../../../domain/domicilio';
+import {Pais} from '../../../../domain/pais';
+import {Store} from '../../../../service/store';
 import {Subscription} from 'rxjs/Subscription';
 
 import * as _ from 'lodash';
 import {IMyOptions} from 'mydatepicker';
 import {DatePipe} from '@angular/common';
-import {MetadataService} from '../../../core/service/metadata.service';
-import {UtilsService} from '../../../core/service/utils.service';
-import {ObraSocial} from '../../../core/domain/obra-social';
-import {Plan} from '../../../core/domain/plan';
+import {MetadataService} from '../../../../service/metadata.service';
+import {UtilsService} from '../../../../service/utils.service';
+import {ObraSocial} from '../../../../domain/obra-social';
+import {Plan} from '../../../../domain/plan';
 
 @Component({
   selector: 'app-lista-integrantes',
@@ -386,6 +386,5 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
       this.mForm.controls['plan'].valid;
     }
   }
-
 
 }

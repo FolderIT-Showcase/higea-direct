@@ -1,16 +1,16 @@
 import {Component, OnInit} from '@angular/core';
-import {TipoDocumentos} from '../../../core/domain/enums/tipo-documento';
-import {Generos} from '../../../core/domain/enums/genero';
-import {Pais} from '../../../core/domain/pais';
+import {TipoDocumentos} from '../../../../domain/enums/tipo-documento';
+import {Generos} from '../../../../domain/enums/genero';
+import {Pais} from '../../../../domain/pais';
 import {Router} from '@angular/router';
-import {PersonaService} from '../../../core/service/persona.service';
-import {AlertService} from '../../../core/service/alert.service';
-import {User} from '../../../core/domain/user';
-import {Persona} from '../../../core/domain/persona';
-import {Documento} from '../../../core/domain/documento';
-import {MetadataService} from '../../../core/service/metadata.service';
+import {PersonaService} from '../../../../service/persona.service';
+import {AlertService} from '../../../../service/alert.service';
+import {User} from '../../../../domain/user';
+import {Persona} from '../../../../domain/persona';
+import {Documento} from '../../../../domain/documento';
+import {MetadataService} from '../../../../service/metadata.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Contacto} from '../../../core/domain/contacto';
+import {Contacto} from '../../../../domain/contacto';
 
 class Datos {
   nombre = '';

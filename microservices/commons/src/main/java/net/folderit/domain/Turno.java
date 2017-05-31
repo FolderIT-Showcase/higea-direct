@@ -53,8 +53,8 @@ public class Turno implements Serializable {
     private Plan plan;
 
     @ManyToOne
-    @JoinColumn(name = "tipo_turno_id")
-    private TipoTurno tipoTurno;
+    @JoinColumn(name = "motivo_turno_id")
+    private MotivoTurno motivoTurno;
 
     @Column(name = "enabled")
     private boolean enabled = Boolean.TRUE;

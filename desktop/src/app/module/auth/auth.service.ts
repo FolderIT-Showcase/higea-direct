@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import 'rxjs/add/operator/map';
-import {ApiService} from '../core/service/api.service';
-import {User} from '../core/domain/user';
-import {StoreService} from '../core/service/store.service';
+import {ApiService} from '../../service/api.service';
+import {User} from '../../domain/user';
+import {StoreService} from '../../service/store.service';
 import {Router} from '@angular/router';
-import {AlertService} from '../core/service/alert.service';
+import {AlertService} from '../../service/alert.service';
 
 @Injectable()
 export class AppAuthService {
@@ -51,7 +51,7 @@ export class AppAuthService {
     // remove user from local storage to log user out
     localStorage.removeItem('currentUser');
     this.api.removeJwt();
-    return this.router.navigate(['/login']);
+    return this.router.navigate(['/auth/login']);
   }
 
   normalLogin(user: User, type: string = '') {
