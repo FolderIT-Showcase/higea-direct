@@ -1,7 +1,7 @@
 {
   "name": "Turnero",
   "version": "0.0.1",
-  "license": "MIT",
+  "license": "All rights reserved Folder IT 2017",
   "scripts": {
     "ng": "ng",
     "start": "ng serve  --port 8083 --proxy-config proxy.conf.json",
