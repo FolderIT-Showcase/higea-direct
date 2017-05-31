@@ -1,5 +1,6 @@
 package net.folderit.connection;
 
+import com.sun.rowset.internal.Row;
 import net.folderit.domain.Profesional;
 import net.folderit.domain.Turno;
 import net.folderit.dto.*;
@@ -87,5 +88,19 @@ public class ConnectionMidleWare {
         return filter;
     }
 
+    public RowTurnoDTO save(String codigo, RowTurnoDTO turnoDTO){
+
+        ResponseEntity<LoginResultDTO> loginResultDTO = login();
+        // URI (URL) parameters
+        Map<String, String> uriParams = new HashMap<>();
+        uriParams.put("cliente", codigo);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+        headers.set("Authorization", loginResultDTO.getBody().getToken());
+        HttpEntity<?> entity = new HttpEntity<>(headers);
+        ResponseEntity<TurnoDTO> result = restTemplate.exchange(uriTurnos, HttpMethod.POST, entity, TurnoDTO.class, uriParams);
+
+        return result.getBody().getData().getRows().get(0);
+    }
 
 }

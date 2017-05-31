@@ -56,7 +56,7 @@ public class Persona implements Serializable {
     @JoinColumn(name = "plan_id")
     private Plan plan;
 
-    private int nroAfiliado;
+    private Integer nroAfiliado;
 
 
     @ManyToOne(cascade = CascadeType.ALL)

@@ -46,7 +46,7 @@ public class RowTurnoDTO {
     private Long derivador_id;
     private Long tipo_turno_fac_id;
     private Long tot_id;
-
+    private Long turno_tipo_turno;
     private String turno_fecha;
     private String turno_hora;
 
@@ -57,6 +57,10 @@ public class RowTurnoDTO {
     private int turno_factor_duracion;
     private String turno_asistencia;
     private String turno_pasado;
+
+    private String paciente_nro_doc;
+    private String paciente_nro_tel;
+    private String paciente_nro_afil;
 
     public Turno convert(List<Profesional> profesionales){
         Turno mTurno = new Turno();

@@ -32,7 +32,7 @@ public class HigeaMetadataApplication {
         SpringApplication.run(HigeaMetadataApplication.class, args);
     }
 
-    @GetMapping("/{cliente}/obrasSociales")
+    @GetMapping("/{cliente}/obraSocial")
     public ResponseEntity<List<ObraSocial>> getObrasSociales(@PathVariable("cliente") String codigo) {
         return ResponseEntity.ok(metadataService.findAllObrasSociales(codigo));
     }

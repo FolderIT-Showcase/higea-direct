@@ -18,7 +18,7 @@ export class MetadataService {
   tipos_turnos: TipoTurno[] = [];
   license = localStorage.getItem('license');
   client = localStorage.getItem('client');
-  basePath = this.license + '/';
+  basePath = this.license + '/' + 'metadata' + '/' + this.client + '/';
 
   constructor(private api: ApiService,
               private store: Store,
@@ -45,7 +45,7 @@ export class MetadataService {
 
   requestPaises() {
     const path = this.basePath + 'pais';
-    return this.api.get(path);
+    //return this.api.get(path);
   }
 
   setPaises(mPaises) {

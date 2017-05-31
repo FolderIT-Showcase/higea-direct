@@ -43,7 +43,7 @@
 
           <select type="text" class="form-control" [formControl]="form.controls['especialidad']"
                   (change)="handleEspecialidadClick(form.value.especialidad)">
-            <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
+
             <option [ngValue]="especialidad" *ngFor="let especialidad of especialidades">{{especialidad.nombre}}
             </option>
           </select>

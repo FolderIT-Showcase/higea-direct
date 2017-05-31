@@ -170,7 +170,7 @@ export class RegisterComponent implements OnInit {
       'telefono': [this.complexForm.value.telefono, Validators.required],
       'obraSocial': [this.complexForm.value.obraSocial],
       'plan': [this.complexForm.value.plan, Validators.required],
-      'nroAfiliado': [this.complexForm.value.nroAfiliado],
+      'nroAfiliado': [this.complexForm.value.nroAfiliado, Validators.required],
     }, {validator: this.passwordMatcher});
   }
 

@@ -3,6 +3,7 @@ package net.folderit;
 import net.folderit.connection.ConnectionMidleWare;
 import net.folderit.domain.Turno;
 import net.folderit.dto.FilterDto;
+import net.folderit.dto.RowTurnoDTO;
 import net.folderit.dto.TurnoDataDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -35,9 +36,15 @@ public class HigeaTurnosApplication {
 //        return connectionMidleWare.turnos(codigo);
 //    }
 
-    @PostMapping("/{cliente}")
+    @GetMapping("/{cliente}")
     public ResponseEntity<Collection<Turno>> getAll(@PathVariable("cliente") String codigo, @RequestBody FilterDto filterDto) {
         List<Turno> turnos = connectionMidleWare.finAllBy(codigo, filterDto);
         return ResponseEntity.ok(turnos);
+    }
+
+    @PostMapping("/{cliente}")
+    public ResponseEntity<?> save(@PathVariable("cliente") String codigo, @RequestBody RowTurnoDTO turnoDTO) {
+        RowTurnoDTO turno = connectionMidleWare.save(codigo, turnoDTO);
+        return ResponseEntity.ok(turno);
     }
 }
