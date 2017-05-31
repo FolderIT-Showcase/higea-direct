@@ -1,6 +1,5 @@
 import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ModalDirective} from 'ngx-bootstrap';
-import {Turno} from 'app/domain/turno';
 import {CentroSalud} from '../../../../domain/centro-salud';
 import {Store} from '../../../../service/store';
 import {Subscription} from 'rxjs/Subscription';
@@ -10,6 +9,7 @@ import {Persona} from '../../../../domain/persona';
 import {Especialidad} from '../../../../domain/especialidad';
 import {Profesional} from '../../../../domain/profesional';
 import {UtilsService} from '../../../../service/utils.service';
+import {Turno} from '../../../../domain/turno';
 
 @Component({
   selector: 'app-turno-resultado',

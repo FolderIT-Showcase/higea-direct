@@ -4,11 +4,7 @@
     "outDir": "../out-tsc/app",
     "module": "es2015",
     "baseUrl": "",
-    "types": [
-      "gapi",
-      "gapi.auth2",
-      "lodash"
-    ]
+    "types": []
   },
   "exclude": [
     "test.ts",
