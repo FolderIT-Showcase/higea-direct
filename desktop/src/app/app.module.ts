@@ -1,5 +1,4 @@
-import {Compiler, LOCALE_ID, NgModule} from '@angular/core';
-import {COMPILER_PROVIDERS} from '@angular/compiler';
+import {LOCALE_ID, NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app.routing.module';
 import {BrowserModule} from '@angular/platform-browser';
@@ -38,7 +37,6 @@ import {AdminService} from './service/admin.service';
   bootstrap: [AppComponent],
   providers: [
     {provide: LOCALE_ID, useValue: 'es-AR'},
-    COMPILER_PROVIDERS,
     Store,
     StoreService,
     MetadataService,
