@@ -7,7 +7,7 @@
     "start": "ng serve  --port 8083 --proxy-config proxy.conf.json",
     "mstart": "ng serve --proxy-config proxy.conf.json",
     "build": "ng build --prod --aot=false --verbose=true",
-    "build:prod": "ng build --prod--verbose=true"
+    "build:prod": "ng build --prod --verbose=true"
   },
   "private": true,
   "dependencies": {
