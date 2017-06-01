@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import net.folderit.domain.enums.TipoContacto;
+import net.folderit.domain.core.enums.TipoContacto;
 
 import javax.persistence.*;
 import java.io.Serializable;

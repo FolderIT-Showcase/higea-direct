@@ -1,7 +1,11 @@
 package net.folderit.connection;
 
-import net.folderit.domain.Especialidad;
-import net.folderit.dto.*;
+import net.folderit.domain.core.Especialidad;
+import net.folderit.domain.higea.EspecialidadHigea;
+import net.folderit.domain.higea.LoginHigea;
+import net.folderit.domain.higea.LoginResultHigea;
+import net.folderit.domain.higea.ProfesionalHigea;
+import net.folderit.domain.higea.Result;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -21,38 +25,32 @@ public class ConnectionMidleWare {
     final String uriProfesionales = "http://localhost:36001/{cliente}/profesionales";
     private RestTemplate restTemplate = new RestTemplate();
 
-    public ResponseEntity<LoginResultDTO> login() {
-
-
-        LoginDTO loginDTO = new LoginDTO("turneroweb", "WroteScientistFarmerCarbon");
-
+    public ResponseEntity<LoginResultHigea> login() {
+        LoginHigea loginDTO = new LoginHigea("turneroweb", "WroteScientistFarmerCarbon");
         // send request and parse result
-
-        LoginResultDTO result = restTemplate.postForObject(uriLogin, loginDTO, LoginResultDTO.class);
-
+        LoginResultHigea result = restTemplate.postForObject(uriLogin, loginDTO, LoginResultHigea.class);
         return ResponseEntity.ok(result);
-
     }
 
-    private ArrayList<RowProfesionalDTO> getProfesionales(String codigo, HttpEntity<?> entity) {
+    private List<ProfesionalHigea> getProfesionales(String codigo, HttpEntity<?> entity) {
 
         // URI (URL) parameters
         Map<String, String> uriParams = new HashMap<>();
         uriParams.put("cliente", codigo);
 
         // send request and parse result
-        ResponseEntity<ArrayList<RowProfesionalDTO>> result =
-                restTemplate.exchange(uriProfesionales, HttpMethod.GET, entity, new ParameterizedTypeReference<ArrayList<RowProfesionalDTO>>() {
+        ResponseEntity<Result<ProfesionalHigea>> result =
+                restTemplate.exchange(uriProfesionales, HttpMethod.GET, entity, new ParameterizedTypeReference<Result<ProfesionalHigea>>() {
                 }, uriParams);
 
-        return result.getBody();
+        return result.getBody().getData().getRows();
 
     }
 
 
     public List<Especialidad> especialidades(String codigo) {
 
-        ResponseEntity<LoginResultDTO> loginResultDTO = login();
+        ResponseEntity<LoginResultHigea> loginResultDTO = login();
 
         // URI (URL) parameters
         Map<String, String> uriParams = new HashMap<>();
@@ -63,13 +61,15 @@ public class ConnectionMidleWare {
         headers.set("Authorization", loginResultDTO.getBody().getToken());
         HttpEntity<?> entity = new HttpEntity<>(headers);
 
-        ArrayList<RowProfesionalDTO> profesionales = this.getProfesionales(codigo, entity);
+        List<ProfesionalHigea> profesionales = this.getProfesionales(codigo, entity);
 
-        ResponseEntity<EspecialidadDTO> result = restTemplate.exchange(uriEspecialidad, HttpMethod.GET, entity, EspecialidadDTO.class, uriParams);
+        ResponseEntity<Result<EspecialidadHigea>> result = restTemplate.exchange(uriEspecialidad, HttpMethod.GET,
+                entity, new ParameterizedTypeReference<Result<EspecialidadHigea>>() {
+                }, uriParams);
 
         ArrayList<Especialidad> especialidades = new ArrayList<>();
 
-        List<EspecialidadesRow> mEspecialidades = result.getBody().getData().getRows();
+        List<EspecialidadHigea> mEspecialidades = result.getBody().getData().getRows();
 
         mEspecialidades.forEach(x -> {
             Especialidad mEspecialidad = x.convertToEspecialidadCoreDTO();
@@ -79,7 +79,7 @@ public class ConnectionMidleWare {
                     if (mEspecialidad.getProfesional() == null) {
                         mEspecialidad.setProfesional(new ArrayList<>());
                     }
-                    mEspecialidad.getProfesional().add(y.converterToProfesionalCore());
+                    mEspecialidad.getProfesional().add(y.convert());
                 }
             });
 

@@ -1,15 +1,13 @@
 package net.folderit;
 
 import net.folderit.connection.ConnectionMidleWare;
-import net.folderit.domain.Turno;
+import net.folderit.domain.higea.TurnoHigea;
+import net.folderit.domain.core.Turno;
 import net.folderit.dto.FilterDto;
-import net.folderit.dto.RowTurnoDTO;
-import net.folderit.dto.TurnoDataDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,14 +25,10 @@ public class HigeaTurnosApplication {
     public HigeaTurnosApplication(ConnectionMidleWare connectionMidleWare) {
         this.connectionMidleWare = connectionMidleWare;
     }
+
     public static void main(String[] args) {
         SpringApplication.run(HigeaTurnosApplication.class, args);
     }
-
-//    @RequestMapping("/{cliente}/turnos")
-//    public TurnoDataDTO turnos(@PathVariable("cliente") String codigo) {
-//        return connectionMidleWare.turnos(codigo);
-//    }
 
     @GetMapping("/{cliente}")
     public ResponseEntity<Collection<Turno>> getAll(@PathVariable("cliente") String codigo, @RequestBody FilterDto filterDto) {
@@ -43,8 +37,16 @@ public class HigeaTurnosApplication {
     }
 
     @PostMapping("/{cliente}")
-    public ResponseEntity<?> save(@PathVariable("cliente") String codigo, @RequestBody RowTurnoDTO turnoDTO) {
-        RowTurnoDTO turno = connectionMidleWare.save(codigo, turnoDTO);
-        return ResponseEntity.ok(turno);
+    public ResponseEntity<?> save(@PathVariable("cliente") String codigo, @RequestBody TurnoHigea turnoDTO) {
+        // TurnoDTO turno = connectionMidleWare.save(codigo, turnoDTO, -1);
+        return ResponseEntity.ok("Deprecated endpoint");
     }
+
+    @PostMapping("/{cliente}/persona/{personaId}/turno")
+    public ResponseEntity<?> saveTurno(@PathVariable("cliente") String codigo,
+                                       @PathVariable("personaId") Integer personaId,
+                                       @RequestBody Turno turno) {
+        return ResponseEntity.ok(connectionMidleWare.save(codigo, turno, personaId));
+    }
+
 }

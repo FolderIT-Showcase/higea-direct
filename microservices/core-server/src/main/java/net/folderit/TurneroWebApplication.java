@@ -25,16 +25,20 @@ import org.springframework.web.bind.annotation.RestController;
 @EnableScheduling
 @RestController
 public class TurneroWebApplication {
+
+    private final SyncService syncService;
+
+    @Autowired
+    public TurneroWebApplication(SyncService syncService) {
+        this.syncService = syncService;
+    }
+
     public static void main(String[] args) {
         SpringApplication.run(TurneroWebApplication.class, args);
     }
 
-
-    @Autowired
-    SyncService syncService;
-
     @GetMapping("/test/sync")
-    public ResponseEntity<?> sync(){
+    public ResponseEntity<?> sync() {
         return ResponseEntity.ok(syncService.SyncObrasSociales());
     }
 

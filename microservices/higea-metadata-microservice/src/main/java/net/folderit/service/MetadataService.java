@@ -1,7 +1,7 @@
 package net.folderit.service;
 
-import net.folderit.domain.*;
-import net.folderit.dto.*;
+import net.folderit.domain.core.*;
+import net.folderit.domain.higea.*;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -18,11 +18,11 @@ public class MetadataService {
 
     private RestTemplate restTemplate = new RestTemplate();
 
-    private ResponseEntity<LoginResultDTO> login() {
-        LoginDTO loginDTO = new LoginDTO("turneroweb", "WroteScientistFarmerCarbon");
+    private ResponseEntity<LoginResultHigea> login() {
+        LoginHigea loginDTO = new LoginHigea("turneroweb", "WroteScientistFarmerCarbon");
         // send request and parse result
         String url = "http://higea.folderit.net/api/login";
-        LoginResultDTO result = restTemplate.postForObject(url, loginDTO, LoginResultDTO.class);
+        LoginResultHigea result = restTemplate.postForObject(url, loginDTO, LoginResultHigea.class);
         return ResponseEntity.ok(result);
     }
 
@@ -37,7 +37,7 @@ public class MetadataService {
 
     public List<ObraSocial> findAllObrasSociales(String codigo) {
 
-        ResponseEntity<LoginResultDTO> loginResultDTO = login();
+        ResponseEntity<LoginResultHigea> loginResultDTO = login();
         // URI (URL) parameters
         Map<String, String> uriParams = new HashMap<>();
         uriParams.put("cliente", codigo);
@@ -56,87 +56,25 @@ public class MetadataService {
 
         ArrayList<ObraSocial> obrasSociales = new ArrayList<>();
 
-        result.getBody().getData().getRows().forEach(obraSocial -> {
+        result.getBody().getData().getRows().forEach(obraSocialHigea -> {
 
             List<PlanObraSocialHigea> planesHigea = todosLosPlanes.stream().filter(plan ->
-                    plan.getObra_social_id() == obraSocial.getObra_social_id()).collect(Collectors.toList());
+                    plan.getObra_social_id() == obraSocialHigea.getObra_social_id()).collect(Collectors.toList());
 
             List<Plan> planes = new ArrayList<>();
 
             planesHigea.forEach(p -> planes.add(p.convert()));
 
-            ObraSocial obraSocialTmp = obraSocial.convert();
-            obraSocialTmp.setPlanes(planes);
-            obrasSociales.add(obraSocialTmp);
+            ObraSocial obraSocialCore = obraSocialHigea.convert();
+            obraSocialCore.setPlanes(planes);
+            obrasSociales.add(obraSocialCore);
         });
 
         return obrasSociales;
     }
 
     public List<TipoTurno> findTiposTurnoFac(String codigo) {
-        ResponseEntity<LoginResultDTO> loginResultDTO = login();
-        // URI (URL) parameters
-        Map<String, String> uriParams = new HashMap<>();
-        uriParams.put("cliente", codigo);
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
-        headers.set("Authorization", loginResultDTO.getBody().getToken());
-        HttpEntity<?> entity = new HttpEntity<>(headers);
-
-        String url = "http://higea.folderit.net/api/paises";
-        ResponseEntity<Result<TipoTurnoFac>> result = restTemplate.exchange(url, HttpMethod.GET, entity,
-                new ParameterizedTypeReference<Result<TipoTurnoFac>>() {
-                }, uriParams);
-
-        ArrayList<TipoTurno> tiposTurno = new ArrayList<>();
-
-        result.getBody().getData().getRows().forEach(tipoTurnoHigea -> tiposTurno.add(tipoTurnoHigea.convert()));
-
-        return tiposTurno;
-    }
-
-    public List<Pais> findPaises(String codigo) {
-        ResponseEntity<LoginResultDTO> loginResultDTO = login();
-        // URI (URL) parameters
-        Map<String, String> uriParams = new HashMap<>();
-        uriParams.put("cliente", codigo);
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
-        headers.set("Authorization", loginResultDTO.getBody().getToken());
-        HttpEntity<?> entity = new HttpEntity<>(headers);
-
-        String url = "http://higea.folderit.net/api/provincias";
-        ResponseEntity<Result<Pais>> result = restTemplate.exchange(url, HttpMethod.GET, entity,
-                new ParameterizedTypeReference<Result<Pais>>() {
-                }, uriParams);
-
-        return new ArrayList<>(result.getBody().getData().getRows());
-
-    }
-
-    public List<Provincia> findProvincias(String codigo) {
-        ResponseEntity<LoginResultDTO> loginResultDTO = login();
-        // URI (URL) parameters
-        Map<String, String> uriParams = new HashMap<>();
-        uriParams.put("cliente", codigo);
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
-        headers.set("Authorization", loginResultDTO.getBody().getToken());
-        HttpEntity<?> entity = new HttpEntity<>(headers);
-
-        String url = "http://higea.folderit.net/api/localidades";
-        ResponseEntity<Result<Provincia>> result = restTemplate.exchange(url, HttpMethod.GET, entity,
-                new ParameterizedTypeReference<Result<Provincia>>() {
-                }, uriParams);
-
-        return new ArrayList<>(result.getBody().getData().getRows());
-    }
-
-    public List<Localidad> findLocalidades(String codigo) {
-        ResponseEntity<LoginResultDTO> loginResultDTO = login();
+        ResponseEntity<LoginResultHigea> loginResultDTO = login();
         // URI (URL) parameters
         Map<String, String> uriParams = new HashMap<>();
         uriParams.put("cliente", codigo);
@@ -147,12 +85,91 @@ public class MetadataService {
         HttpEntity<?> entity = new HttpEntity<>(headers);
 
         String url = "http://higea.folderit.net/api/{cliente}/tipoTurnoFac";
-        ResponseEntity<Result<Localidad>> result = restTemplate.exchange(url, HttpMethod.GET, entity,
-                new ParameterizedTypeReference<Result<Localidad>>() {
+        ResponseEntity<Result<TipoTurnoHigea>> result = restTemplate.exchange(url, HttpMethod.GET, entity,
+                new ParameterizedTypeReference<Result<TipoTurnoHigea>>() {
                 }, uriParams);
 
-        return new ArrayList<>(result.getBody().getData().getRows());
+        ArrayList<TipoTurno> tiposTurno = new ArrayList<>();
+
+        result.getBody().getData().getRows().forEach(tipoTurnoHigea -> tiposTurno.add(tipoTurnoHigea.convert()));
+
+        return tiposTurno;
     }
 
+    public List<Pais> findPaises(String codigo) {
+        ResponseEntity<LoginResultHigea> loginResultDTO = login();
+        // URI (URL) parameters
+        Map<String, String> uriParams = new HashMap<>();
+        uriParams.put("cliente", codigo);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+        headers.set("Authorization", loginResultDTO.getBody().getToken());
+        HttpEntity<?> entity = new HttpEntity<>(headers);
+
+        String url = "http://higea.folderit.net/api/{cliente}/paises";
+        ResponseEntity<Result<PaisHigea>> result = restTemplate.exchange(url, HttpMethod.GET, entity,
+                new ParameterizedTypeReference<Result<PaisHigea>>() {
+                }, uriParams);
+
+        List<Pais> paises = new ArrayList<>();
+
+        result.getBody().getData().getRows().forEach(paisHigea -> {
+            paises.add(paisHigea.convert());
+        });
+
+        return paises;
+
+    }
+
+    public List<Provincia> findProvincias(String codigo) {
+        ResponseEntity<LoginResultHigea> loginResultDTO = login();
+        // URI (URL) parameters
+        Map<String, String> uriParams = new HashMap<>();
+        uriParams.put("cliente", codigo);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+        headers.set("Authorization", loginResultDTO.getBody().getToken());
+        HttpEntity<?> entity = new HttpEntity<>(headers);
+
+        String url = "http://higea.folderit.net/api/{cliente}/provincias";
+        ResponseEntity<Result<ProvinciaHigea>> result = restTemplate.exchange(url, HttpMethod.GET, entity,
+                new ParameterizedTypeReference<Result<ProvinciaHigea>>() {
+                }, uriParams);
+
+        List<Provincia> provincias = new ArrayList<>();
+
+        result.getBody().getData().getRows().forEach(provinciaHigea -> {
+            provincias.add(provinciaHigea.convert());
+        });
+
+        return provincias;
+    }
+
+    public List<Localidad> findLocalidades(String codigo) {
+        ResponseEntity<LoginResultHigea> loginResultDTO = login();
+        // URI (URL) parameters
+        Map<String, String> uriParams = new HashMap<>();
+        uriParams.put("cliente", codigo);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+        headers.set("Authorization", loginResultDTO.getBody().getToken());
+        HttpEntity<?> entity = new HttpEntity<>(headers);
+
+        String url = "http://higea.folderit.net/api/{cliente}/localidades";
+        ResponseEntity<Result<LocalidadHigea>> result = restTemplate.exchange(url, HttpMethod.GET, entity,
+                new ParameterizedTypeReference<Result<LocalidadHigea>>() {
+                }, uriParams);
+
+        List<Localidad> localidades = new ArrayList<>();
+
+        result.getBody().getData().getRows().forEach(localidadHigea -> {
+            localidades.add(localidadHigea.convert());
+        });
+
+        return localidades;
+    }
 
 }

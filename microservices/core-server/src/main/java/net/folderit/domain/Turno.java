@@ -12,11 +12,6 @@ import java.util.Date;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
-/**
- * @author Luis Bonsembiante
- * @version 1.0
- * @created 18-abr.-2017 11:26:32 a. m.
- */
 @Entity
 @Table(name = "turno")
 @Data

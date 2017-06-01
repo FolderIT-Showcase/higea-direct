@@ -1,8 +1,8 @@
 package net.folderit;
 
 import net.folderit.connection.ConnectionMidleWare;
-import net.folderit.domain.Profesional;
-import net.folderit.dto.RowProfesionalDTO;
+import net.folderit.domain.core.Profesional;
+import net.folderit.domain.higea.ProfesionalHigea;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -38,7 +38,7 @@ public class HigeaProfesionalApplication {
     }
 
     @RequestMapping("/{cliente}/profesionales")
-    public List<RowProfesionalDTO> profesionalesHigea(@PathVariable("cliente") String codigo) {
+    public List<ProfesionalHigea> profesionalesHigea(@PathVariable("cliente") String codigo) {
         return connectionMidleWare.getProfesionalesHigea(codigo);
     }
 

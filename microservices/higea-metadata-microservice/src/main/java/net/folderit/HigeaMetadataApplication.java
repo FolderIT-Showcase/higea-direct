@@ -1,6 +1,6 @@
 package net.folderit;
 
-import net.folderit.domain.*;
+import net.folderit.domain.core.*;
 import net.folderit.service.MetadataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -36,7 +36,7 @@ public class HigeaMetadataApplication {
         return ResponseEntity.ok(metadataService.findAllObrasSociales(codigo));
     }
 
-    @GetMapping("/{cliente}/tipoTurnoFac")
+    @GetMapping("/{cliente}/tipoTurno")
     public ResponseEntity<List<TipoTurno>> getTiposTurnoFac(@PathVariable("cliente") String codigo) {
         return ResponseEntity.ok(metadataService.findTiposTurnoFac(codigo));
     }

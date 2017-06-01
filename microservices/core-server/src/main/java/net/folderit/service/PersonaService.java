@@ -2,7 +2,7 @@ package net.folderit.service;
 
 import net.folderit.domain.Persona;
 import net.folderit.domain.User;
-import net.folderit.domain.enums.Genero;
+import net.folderit.domain.core.enums.Genero;
 import net.folderit.domain.exception.TurneroException;
 import net.folderit.dto.ResultAfipDto;
 import net.folderit.repository.PersonaRepository;
