@@ -118,8 +118,8 @@ export class TurnoResultadoComponent implements OnInit, OnDestroy, AfterViewInit
 
   generarPDF() {
     this.turnoService.generarPDF(this.persona)
-      .then( data => {
-          // window.open(data);
+      .then(data => {
+        // window.open(data);
       })
       .catch(error => {
         console.error(error);

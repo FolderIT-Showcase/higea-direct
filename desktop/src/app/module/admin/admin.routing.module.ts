@@ -1,4 +1,4 @@
-import {ModuleWithProviders, NgModule} from '@angular/core';
+import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {AdminHomeComponent} from './component/admin-home.component';
 import {AdminGuard} from '../../service/guard/admin.guard';
@@ -63,4 +63,5 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: []
 })
-export class AdminRoutingModule { }
+export class AdminRoutingModule {
+}

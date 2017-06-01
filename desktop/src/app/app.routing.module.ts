@@ -9,10 +9,18 @@ import {GrupoFamiliarModule} from './module/grupo-familiar/grupo-familiar.module
 import {AdminModule} from './module/admin/admin.module';
 import {AuthModule} from './module/auth/auth.module';
 
-export function loadTurnoModule() { return TurnoModule }
-export function loadGrupoFamiliarModule() { return GrupoFamiliarModule }
-export function loadAdminModule() { return AdminModule }
-export function loadAuthModule() { return AuthModule }
+export function loadTurnoModule() {
+  return TurnoModule
+}
+export function loadGrupoFamiliarModule() {
+  return GrupoFamiliarModule
+}
+export function loadAdminModule() {
+  return AdminModule
+}
+export function loadAuthModule() {
+  return AuthModule
+}
 
 const routes: Routes = [
   {

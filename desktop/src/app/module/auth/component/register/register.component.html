@@ -22,7 +22,8 @@
              [ngClass]="{'has-error':!complexForm.controls['apellido'].valid && complexForm.controls['apellido'].touched}">
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-user"></i></span>
-            <input class="form-control" type="text" placeholder="Apellido" [formControl]="complexForm.controls['apellido']">
+            <input class="form-control" type="text" placeholder="Apellido"
+                   [formControl]="complexForm.controls['apellido']">
             <small
               *ngIf="complexForm.controls['apellido'].hasError('required') && complexForm.controls['apellido'].touched"
               class="help-block">Debes incluir tu apellido.
@@ -40,7 +41,7 @@
              [ngClass]="{'has-error':!complexForm.controls['password1'].valid && complexForm.controls['password1'].touched}">
           <!--<label>Contraseña</label>-->
           <div class="input-group">
-          <span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
+            <span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
             <input class="form-control" type="password" placeholder="una contraseña larga"
                    [formControl]="complexForm.controls['password1']">
             <small
@@ -50,24 +51,23 @@
           </div>
 
 
-
         </div>
       </div>
       <div class="col-sm-6">
         <div class="form-group"
              [ngClass]="{'has-error':complexForm.value.password1 !== complexForm.value.password2 || !complexForm.controls['password2'].valid && complexForm.controls['password2'].touched}">
           <!--<label>Repita su contraseña</label>-->
-            <div class="input-group">
-                <span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
-                <input class="form-control" type="password" placeholder="la misma contraseña larga"
-                       [formControl]="complexForm.controls['password2']">
-                <small
-                  *ngIf="complexForm.value.password1 !== complexForm.value.password2 ||
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
+            <input class="form-control" type="password" placeholder="la misma contraseña larga"
+                   [formControl]="complexForm.controls['password2']">
+            <small
+              *ngIf="complexForm.value.password1 !== complexForm.value.password2 ||
                    complexForm.controls['password2'].hasError('required') &&
                    complexForm.controls['password2'].touched" class="help-block">
-                  Debes repetir la misma contraseña anterior.
-                </small>
-            </div>
+              Debes repetir la misma contraseña anterior.
+            </small>
+          </div>
 
 
         </div>
@@ -81,8 +81,8 @@
 
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-id-card "></i></span>
-            <select type="text" class="form-control" [formControl]="complexForm.controls['tipoDocumento']" >
-              <option disabled selected="selected" value="" >Tipo Documento</option>
+            <select type="text" class="form-control" [formControl]="complexForm.controls['tipoDocumento']">
+              <option value="">Placeholder text..</option>
               <option [ngValue]="tipoDocumento" *ngFor="let tipoDocumento of tipoDocumentos">{{tipoDocumento}}</option>
             </select>
             <small
@@ -90,7 +90,6 @@
               class="help-block">Ingrese su Tipo de Documento
             </small>
           </div>
-
 
 
         </div>
@@ -121,7 +120,7 @@
 
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-globe"></i></span>
-            <select type="text" class="form-control"  [formControl]="complexForm.controls['pais']">
+            <select type="text" class="form-control" [formControl]="complexForm.controls['pais']">
               <option disabled selected>Pais</option>
               <option [ngValue]="pais" *ngFor="let pais of paises">{{pais.nombre}}</option>
             </select>
@@ -130,7 +129,6 @@
                    class="help-block">Debes incluir tu País de origen
             </small>
           </div>
-
 
 
         </div>
@@ -163,8 +161,8 @@
              [ngClass]="{'has-error':!complexForm.controls['email'].valid && complexForm.controls['email'].touched}">
           <!--<label>Correo Electrónico</label>-->
 
-        <!--  <input class="form-group" type="email" placeholder="E-mail"
-                 [formControl]="complexForm.controls['email']">-->
+          <!--  <input class="form-group" type="email" placeholder="E-mail"
+                   [formControl]="complexForm.controls['email']">-->
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-envelope-o"></i></span>
             <input class="form-control" type="email" placeholder="Correo"
@@ -241,21 +239,21 @@
 
     <div class="row">
       <div class="col-sm-6">
-          <div class="form-group"
-               [ngClass]="{'has-error':!complexForm.controls['nroAfiliado'].valid && complexForm.controls['nroAfiliado'].touched}">
+        <div class="form-group"
+             [ngClass]="{'has-error':!complexForm.controls['nroAfiliado'].valid && complexForm.controls['nroAfiliado'].touched}">
 
-            <div class="input-group">
-              <span class="input-group-addon"><i class="fa fa-handshake-o"></i></span>
-              <input class="form-control" type="text" placeholder="Numero Afiliado" [formControl]="complexForm.controls['nroAfiliado']">
-              <small
-                *ngIf="complexForm.controls['nroAfiliado'].hasError('required') && complexForm.controls['nroAfiliado'].touched"
-                class="help-block">Debes incluir su numero afiliado.
-              </small>
-            </div>
-
-
-
+          <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-handshake-o"></i></span>
+            <input class="form-control" type="text" placeholder="Numero Afiliado"
+                   [formControl]="complexForm.controls['nroAfiliado']">
+            <small
+              *ngIf="complexForm.controls['nroAfiliado'].hasError('required') && complexForm.controls['nroAfiliado'].touched"
+              class="help-block">Debes incluir su numero afiliado.
+            </small>
           </div>
+
+
+        </div>
       </div>
     </div>
 
