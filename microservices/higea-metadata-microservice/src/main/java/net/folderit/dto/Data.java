@@ -1,11 +1,14 @@
 package net.folderit.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 
-public class Data<T> {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class ResultData<T> {
     private List<T> rows;
-
-    public List<T> getRows() {
-        return rows;
-    }
 }

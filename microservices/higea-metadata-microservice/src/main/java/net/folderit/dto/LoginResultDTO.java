@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LoginResultDTO {
-
     private Boolean result;
     private String token;
     private String err;

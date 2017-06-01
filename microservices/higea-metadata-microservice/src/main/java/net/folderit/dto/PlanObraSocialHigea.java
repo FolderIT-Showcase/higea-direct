@@ -1,10 +1,11 @@
 package net.folderit.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import net.folderit.domain.Plan;
 
-@lombok.Data
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class PlanObraSocialHigea {
