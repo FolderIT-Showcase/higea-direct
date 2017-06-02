@@ -75,8 +75,8 @@ export class RegisterComponent implements OnInit {
     });
 
     /*this.metadataService.getAllEstadoCiviles().then((data: any) => {
-      this.generos = data;
-    });*/
+     this.generos = data;
+     });*/
   }
 
   private passwordMatch() {
@@ -147,10 +147,9 @@ export class RegisterComponent implements OnInit {
   savePersona(persona: Persona) {
     this.personaService.create(persona)
       .then(() => {
-        this.router.navigate(['/login']).then(() => {
-          this.alertService.success('Registro Exitoso, chequee su cuenta de email para activar el usuario');
-        });
+        this.alertService.success('Registro Exitoso, chequee su cuenta de email para activar el usuario');
       });
+    this.router.navigate(['/login']);
   }
 
   handleCorrectCaptcha(event) {

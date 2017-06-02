@@ -7,7 +7,6 @@ import net.folderit.domain.higea.PacienteHigea;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -19,13 +18,12 @@ import java.util.Map;
 @Service
 public class ConnectionMidleWare {
 
-    private final String uriLogin = "http://higea.folderit.net/api/login";
-    private final String uriPaciente = "http://higea.folderit.net/api/{cliente}/pacientes";
     private RestTemplate restTemplate = new RestTemplate();
 
     private ResponseEntity<LoginResultHigea> login() {
         LoginHigea loginDTO = new LoginHigea("turneroweb", "WroteScientistFarmerCarbon");
         // send request and parse result
+        String uriLogin = "http://higea.folderit.net/api/login";
         LoginResultHigea result = restTemplate.postForObject(uriLogin, loginDTO, LoginResultHigea.class);
         return ResponseEntity.ok(result);
     }
@@ -47,6 +45,7 @@ public class ConnectionMidleWare {
         Map<String, String> uriParams = new HashMap<>();
         uriParams.put("cliente", codigo);
 
+        String uriPaciente = "http://higea.folderit.net/api/{cliente}/pacientes";
         ResponseEntity<PacienteHigea> result = restTemplate.postForEntity(uriPaciente, request, PacienteHigea.class, uriParams);
         return result.getBody();
     }
