@@ -21,4 +21,19 @@ public class FilterDto implements Serializable {
     CentroSalud centroSalud;
     Especialidad especialidad;
     Profesional profesional;
+
+
+    public String getFilterParameters() {
+        String query = "";
+        if (getFecha() != null && !getFecha().isEmpty()) {
+            query += "turno_fecha=" + getFecha() + "&";
+        }
+        if (getEspecialidad() != null) {
+            query += "especialidad_id=" + getEspecialidad().getId() + "&";
+        }
+        if (getProfesional() != null) {
+            query += "profesional_id=" + getProfesional().getId();
+        }
+        return query;
+    }
 }
