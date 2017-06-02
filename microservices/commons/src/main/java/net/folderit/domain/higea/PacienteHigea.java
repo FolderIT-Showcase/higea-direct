@@ -18,21 +18,21 @@ public class PacienteHigea {
     private Long localidad_id;
     private Long estado_civil_id;
     private Long documento_id;
-    private String persona_apellido;
-    private String persona_nombres;
-    private String persona_fecha_nacimiento;
-    private String persona_sexo;
-    private String persona_documento_nro;
-    private String persona_telefono_part_nro;
-    private String persona_telefono_cel_nro;
-    private String persona_telefono_lab_nro;
-    private String persona_calle_texto;
-    private String persona_calle_nro;
-    private String persona_departamento_nro;
-    private String persona_piso_nro;
-    private String persona_email;
-    private String paciente_os_afiliado1_nro;
-    private String paciente_os_afiliado2_nro;
-    private String paciente_os_afiliado3_nro;
+    private String persona_apellido="";
+    private String persona_nombres="";
+    private String persona_fecha_nacimiento="";
+    private String persona_sexo="";
+    private String persona_documento_nro="";
+    private String persona_telefono_part_nro="";
+    private String persona_telefono_cel_nro="";
+    private String persona_telefono_lab_nro="";
+    private String persona_calle_texto="";
+    private String persona_calle_nro="";
+    private String persona_departamento_nro="";
+    private String persona_piso_nro="";
+    private String persona_email="";
+    private String paciente_os_afiliado1_nro="";
+    private String paciente_os_afiliado2_nro="";
+    private String paciente_os_afiliado3_nro="";
 
 }

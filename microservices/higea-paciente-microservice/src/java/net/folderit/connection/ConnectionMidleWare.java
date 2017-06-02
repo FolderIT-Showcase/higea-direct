@@ -39,9 +39,7 @@ public class ConnectionMidleWare {
         headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
         headers.set("Authorization", loginResultDTO.getBody().getToken());
 
-        RestTemplate restTemplate = new RestTemplate();
-        //restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-
+       
         HttpEntity<?> request = new HttpEntity<>(dto, headers);
 
         Map<String, String> uriParams = new HashMap<>();
