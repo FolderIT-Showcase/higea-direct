@@ -16,6 +16,7 @@ import {IMyOptions} from 'mydatepicker';
 import {TipoTurno} from '../../../../domain/tipo-turno';
 import {MotivoTurno} from '../../../../domain/motivo-turno';
 import {MetadataService} from '../../../../service/metadata.service';
+import {Preparacion} from '../../../../domain/preparacion';
 
 class Data {
 
@@ -26,7 +27,7 @@ class Data {
   observaciones: string;
   tipoTurno: TipoTurno;
   motivoTurno: MotivoTurno;
-  preparacion: string;
+  preparacion: Preparacion;
 }
 
 @Component({
@@ -96,6 +97,7 @@ export class TurnosComponent implements OnInit, OnDestroy {
 
     this.metadataService.getAllTiposTurnos().then((data: any) => {
       this.tiposDeTurnos = data;
+      console.log(data);
     }).catch(() => {
     });
 
@@ -111,6 +113,10 @@ export class TurnosComponent implements OnInit, OnDestroy {
 
     // initialize to page 1
     this.setPage(1);
+
+    const tipo = this.storeService.get('tipos_turnos');
+
+    console.log(tipo);
   }
 
   ngOnDestroy() {
@@ -135,10 +141,25 @@ export class TurnosComponent implements OnInit, OnDestroy {
     console.log(tipo);
     this.model.tipoTurno = tipo;
     this.motivosTurno = tipo.motivoTurno;
+    console.log(this.motivosTurno);
   }
 
   handleMotivoTurnoClick(motivo: MotivoTurno) {
     this.model.motivoTurno = motivo;
+    console.log(motivo);
+    if (motivo.preparacion) {
+      this.form = this.fb.group({
+        'centro': [this.form.value.centro, Validators.required],
+        'especialidad': [this.form.value.especialidad, Validators.required],
+        'profesional': [this.form.value.profesional, Validators.required],
+        'fechaDesde': [this.form.value.fechaDesde],
+        'hora': [this.form.value.hora],
+        'observaciones': [this.form.value.observaciones, Validators.required],
+        'tipoTurno': [this.form.value.tipoTurno, Validators.required],
+        'motivoTurno': [this.form.value.motivoTurno, Validators.required],
+        'preparacion': [motivo.preparacion.descripcion, Validators.required]
+      });
+    }
   }
 
   clearForm() {
@@ -216,7 +237,7 @@ export class TurnosComponent implements OnInit, OnDestroy {
     }
 
     this.adminService.saveTurno(this.model.centro, this.model.especialidad, this.model.profesional,
-      value.fechaDesde, value.hora, value.observaciones, value.motivoTurno, value.preparacion)
+      value.fechaDesde, value.hora, value.observaciones, value.motivoTurno, value.preparacion, this.model.motivoTurno.preparacion)
       .then(data => {
         this.alertService.success('Nuevo Turno creado correctamente');
         this.setPage(this.pager.currentPage);

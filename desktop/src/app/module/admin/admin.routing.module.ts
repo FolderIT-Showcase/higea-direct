@@ -1,4 +1,4 @@
-import {ModuleWithProviders, NgModule} from '@angular/core';
+import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {AdminHomeComponent} from './component/admin-home.component';
 import {AdminGuard} from '../../service/guard/admin.guard';
@@ -11,6 +11,7 @@ import {ProfesionalesComponent} from './component/profesionales/profesionales.co
 import {CentrosSaludComponent} from './component/centros-salud/centros-salud.component';
 import {EspecialidadesComponent} from './component/especialidades/especialidades.component';
 import {TurnosComponent} from './component/turnos/turnos.component';
+import {MotivoTurnoComponent} from './component/motivo-turno/motivo-turno.component';
 
 const routes: Routes = [
   {
@@ -53,6 +54,10 @@ const routes: Routes = [
         resolve: {
           profesionales: ProfesionalResolveService
         }
+      },
+      {
+        path: 'motivo-turno',
+        component: MotivoTurnoComponent,
       }
     ]
   }
@@ -63,4 +68,5 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: []
 })
-export class AdminRoutingModule { }
+export class AdminRoutingModule {
+}

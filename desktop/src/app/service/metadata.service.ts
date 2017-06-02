@@ -47,7 +47,7 @@ export class MetadataService {
 
   requestPaises() {
     const path = this.basePath + 'pais';
-    //return this.api.get(path);
+    return this.api.get(path);
   }
 
   setPaises(mPaises) {
@@ -115,7 +115,7 @@ export class MetadataService {
       return (a.nombre > b.nombre) ? 1 : ((b.nombre > a.nombre) ? -1 : 0);
     });
     this.store.db.setItem('localidades', this.localidades);
-  }
+  }uriRegistration = this.basePath + 'users/registration';
 
   getObrasSociales(): Promise<any> {
     return this.store.db.getItem('obras_sociales')
@@ -159,6 +159,8 @@ export class MetadataService {
       })
       .then(data => {
         this.setTipoTurnos(data);
+        console.log("data");
+        console.log(data);
         return new Promise<any>((resolve, reject) => {
           resolve(data);
         });

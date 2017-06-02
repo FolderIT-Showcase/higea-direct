@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import net.folderit.domain.enums.EstadoCivil;
 import net.folderit.domain.enums.Genero;
+import net.folderit.domain.enums.TipoContacto;
+import net.folderit.dto.PacienteDTO;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -92,4 +94,49 @@ public class Persona implements Serializable {
     public void finalize() throws Throwable {
 
     }
+
+
+    public PacienteDTO convertToPacienteHigeaDTO() {
+
+        PacienteDTO pacienteDTO = new PacienteDTO();
+        pacienteDTO.setPaciente_id(this.getId());
+        pacienteDTO.setPlan_os_id_1(getPlan() != null ? getPlan().getId() : null);
+        pacienteDTO.setPais_id(getDomicilio() != null && getDomicilio().getLocalidad() != null && getDomicilio().getLocalidad().getProvincia() != null
+                && getDomicilio().getLocalidad().getProvincia().getPais() != null ? getDomicilio().getLocalidad().getProvincia().getPais().getId() : null);
+        pacienteDTO.setProvincia_id(getDomicilio() != null && getDomicilio().getLocalidad() != null && getDomicilio().getLocalidad().getProvincia() != null ? getDomicilio().getLocalidad().getProvincia().getId() : null);
+        pacienteDTO.setLocalidad_id(getDomicilio() != null && getDomicilio().getLocalidad() != null ? getDomicilio().getLocalidad().getId() : null);
+       // pacienteDTO.setEstado_civil_id(getEstadoCivil() != null ? getEstadoCivil().equals(EstadoCivil.Casado):null);
+        pacienteDTO.setDocumento_id(getDocumento() != null ? getDocumento().getId():null);
+        pacienteDTO.setPersona_apellido(getApellido());
+        pacienteDTO.setPersona_nombres(getNombre());
+        pacienteDTO.setPersona_fecha_nacimiento(getFechaNacimiento()!=null ? getFechaNacimiento().toString():null);
+        // pacienteDTO.setPersona_sexo(getGenero());
+        pacienteDTO.setPersona_documento_nro(getDocumento() != null ? getDocumento().getNumero().toString():"");
+        pacienteDTO.setPersona_telefono_part_nro(getTipoContaco(TipoContacto.telefono));
+        pacienteDTO.setPersona_telefono_cel_nro(getTipoContaco(TipoContacto.celular));
+        pacienteDTO.setPersona_telefono_lab_nro(null);
+        pacienteDTO.setPersona_calle_nro(getDomicilio() != null ? getDomicilio().getCalle() : null);
+        pacienteDTO.setPersona_calle_texto(getDomicilio() != null ? getDomicilio().getCalle() : null);
+      // pacienteDTO.setPersona_departamento_nro();
+        pacienteDTO.setPersona_piso_nro(getDomicilio() != null ? getDomicilio().getPiso().toString() : null);
+        pacienteDTO.setPersona_email(getTipoContaco(TipoContacto.mail));
+        // pacienteDTO.setPaciente_os_afiliado1_nro(getPlan().);
+
+        return pacienteDTO;
+
+    }
+
+    public String getTipoContaco(TipoContacto tipoContacto) {
+        String numeroTelefono = "";
+
+        for (Contacto tipo : getContacto()) {
+            if (tipo.getTipoContacto().equals(tipoContacto)) {
+                numeroTelefono = tipo.getDato().toString();
+            }
+        }
+
+        return numeroTelefono;
+    }
+
+
 }//end Persona

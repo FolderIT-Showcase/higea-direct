@@ -8,9 +8,14 @@ import {User} from '../domain/user';
 @Injectable()
 export class PersonaService {
 
+  license = localStorage.getItem('license');
+  client = localStorage.getItem('client');
   user: User;
-  basePath = 'core/';
-  uriRegistration = this.basePath + 'users/registration';
+  basePathCore = 'core/';
+  basePathHigea = 'higea/'
+  uriRegistration = this.basePathCore + 'users/registration';
+  externalUriRegistration = this.basePathHigea + '/paciente/' + this.client;
+
 
   public static convertTipoDocumento(tipo: string): string {
     const tipoRtn = TipoDocumentos.export().find(x => x.label === tipo);
@@ -22,14 +27,38 @@ export class PersonaService {
   }
 
   constructor(private api: ApiService, private storeService: StoreService) {
+
+
   }
 
   create(persona: Persona) {
-    return this.api.post(this.uriRegistration, persona, false);
+
+    const promises: Promise<any>[] = [];
+
+
+     if (this.license === 'core') {
+     promises.push(this.api.post(this.uriRegistration, persona, false));
+     } else if (this.license === 'higea') {
+     promises.push(this.api.post(this.uriRegistration, persona, false));
+     promises.push(this.api.post(this.externalUriRegistration, persona, false));
+     }
+ /*   let coreRequest;
+    let externalRequest;
+    if (this.license === 'core') {
+      coreRequest = this.api.post(this.uriRegistration, persona, false);
+    } else {
+      coreRequest = this.api.post(this.uriRegistration, persona, false);
+      externalRequest = this.api.post(this.externalUriRegistration, persona, false);
+    }
+
+    return coreRequest.then(() => {
+      return externalRequest
+    });*/
+    return Promise.all(promises);
   }
 
   validateDni(dto: any) {
-    const path = this.basePath + 'persona/afip' +
+    const path = this.basePathCore + 'persona/afip' +
       '?documento=' + dto.documento +
       '&nombre=' + dto.nombre +
       '&apellido=' + dto.apellido +
@@ -45,7 +74,7 @@ export class PersonaService {
       return;
     }
 
-    const path = this.basePath + 'persona/email?email=' + this.user.email;
+    const path = this.basePathCore + 'persona/email?email=' + this.user.email;
 
     return this.api.get(path)
       .then((data) => {
@@ -70,7 +99,7 @@ export class PersonaService {
   }
 
   updatePersonaUser(persona: Persona) {
-    const path = this.basePath + 'persona';
+    const path = this.basePathCore + 'persona';
     return this.api.post(path, persona)
       .then(() => {
         this.buildIntegrantes(persona);
@@ -78,7 +107,7 @@ export class PersonaService {
   }
 
   activateUser(token) {
-    const path = this.basePath + 'users/regitrationConfirm?token=' + token;
+    const path = this.basePathCore + 'users/regitrationConfirm?token=' + token;
     return this.api.get(path);
   }
 

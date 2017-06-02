@@ -3,7 +3,7 @@ export class TipoTurno {
   id?: number;
   codigo: number;
   descripcion: string;
-  motivoTurno?: MotivoTurno[] = [];
+  motivoTurno: MotivoTurno[] = [];
 
   constructor() {
   }
