@@ -12,10 +12,9 @@ export class PersonaService {
   client = localStorage.getItem('client');
   user: User;
   basePathCore = 'core/';
-  basePathHigea = 'higea/'
-  uriRegistration = this.basePathCore + 'users/registration';
-  externalUriRegistration = this.basePathHigea + 'paciente/' + this.client;
-
+  basePathHigea = `${this.license}/`;
+  uriRegistration = `${this.basePathCore}users/registration`;
+  externalUriRegistration = `${this.basePathHigea}paciente/${this.client}`;
 
   public static convertTipoDocumento(tipo: string): string {
     const tipoRtn = TipoDocumentos.export().find(x => x.label === tipo);
@@ -28,33 +27,25 @@ export class PersonaService {
 
   constructor(private api: ApiService, private storeService: StoreService) {
 
-
   }
 
   create(persona: Persona) {
 
-    const promises: Promise<any>[] = [];
+    const coreRequest = this.api.post(this.uriRegistration, persona, false);
+    const externalRequest = this.api.post(this.externalUriRegistration, persona, false);
 
-
-     if (this.license === 'core') {
-     promises.push(this.api.post(this.uriRegistration, persona, false));
-     } else if (this.license === 'higea') {
-     promises.push(this.api.post(this.uriRegistration, persona, false));
-     promises.push(this.api.post(this.externalUriRegistration, persona, false));
-     }
- /*   let coreRequest;
-    let externalRequest;
     if (this.license === 'core') {
-      coreRequest = this.api.post(this.uriRegistration, persona, false);
+      return coreRequest;
     } else {
-      coreRequest = this.api.post(this.uriRegistration, persona, false);
-      externalRequest = this.api.post(this.externalUriRegistration, persona, false);
+      return coreRequest
+        .then(() => {
+          return externalRequest
+        })
+        .then(() => {
+
+        });
     }
 
-    return coreRequest.then(() => {
-      return externalRequest
-    });*/
-    return Promise.all(promises);
   }
 
   validateDni(dto: any) {
