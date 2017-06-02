@@ -4,7 +4,7 @@ import ar.com.fdvs.dj.core.DynamicJasperHelper;
 import ar.com.fdvs.dj.core.layout.ClassicLayoutManager;
 import ar.com.fdvs.dj.domain.DynamicReport;
 import ar.com.fdvs.dj.domain.builders.FastReportBuilder;
-import net.folderit.domain.Turno;
+import net.folderit.domain.core.Turno;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -13,9 +13,6 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by luis on 31/05/17.
- */
 public class JasperUtil {
 
     public byte[] buildReportTurno(List<Turno> turnos) throws Exception {

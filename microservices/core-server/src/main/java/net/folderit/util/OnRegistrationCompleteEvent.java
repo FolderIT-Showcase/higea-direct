@@ -1,7 +1,7 @@
 package net.folderit.util;
 
 import lombok.Data;
-import net.folderit.domain.User;
+import net.folderit.domain.core.User;
 import org.springframework.context.ApplicationEvent;
 
 import java.util.Locale;

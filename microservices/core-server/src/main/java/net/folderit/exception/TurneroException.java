@@ -1,4 +1,4 @@
-package net.folderit.domain.exception;
+package net.folderit.exception;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;

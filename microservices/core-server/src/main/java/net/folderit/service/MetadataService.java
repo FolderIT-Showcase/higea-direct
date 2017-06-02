@@ -1,6 +1,6 @@
 package net.folderit.service;
 
-import net.folderit.domain.*;
+import net.folderit.domain.core.*;
 import net.folderit.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

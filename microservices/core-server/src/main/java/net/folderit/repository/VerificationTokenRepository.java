@@ -1,6 +1,6 @@
 package net.folderit.repository;
 
-import net.folderit.domain.User;
+import net.folderit.domain.core.User;
 import net.folderit.domain.core.security.VerificationToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -11,11 +11,6 @@ import java.util.List;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
-/**
- * @author Luis Bonsembiante
- * @version 1.0
- * @created 18-abr.-2017 11:26:24 a. m.
- */
 @Entity
 @Table(name = "especialidad")
 @Data

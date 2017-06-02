@@ -1,6 +1,6 @@
 package net.folderit.service;
 
-import net.folderit.domain.User;
+import net.folderit.domain.core.User;
 import net.folderit.domain.core.security.VerificationToken;
 import net.folderit.repository.UserRepository;
 import net.folderit.repository.VerificationTokenRepository;

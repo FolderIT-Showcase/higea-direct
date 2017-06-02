@@ -1,10 +1,10 @@
 package net.folderit.service;
 
-import net.folderit.domain.Persona;
-import net.folderit.domain.User;
+import net.folderit.domain.core.Persona;
+import net.folderit.domain.core.User;
 import net.folderit.domain.core.enums.Genero;
-import net.folderit.domain.exception.TurneroException;
 import net.folderit.dto.ResultAfipDto;
+import net.folderit.exception.TurneroException;
 import net.folderit.repository.PersonaRepository;
 import net.folderit.util.AfipUtil;
 import org.springframework.beans.factory.annotation.Autowired;
