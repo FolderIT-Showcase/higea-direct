@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
 @EnableEurekaClient
-@EnableFeignClients
 @RestController
 public class HigeaPacienteApplication {
 
@@ -33,7 +32,7 @@ public class HigeaPacienteApplication {
 
 
     @PostMapping("/{cliente}")
-    public ResponseEntity<PacienteDTO> save(@PathVariable("cliente") String codigo, @RequestBody Persona persona) {
+    public Persona save(@PathVariable("cliente") String codigo, @RequestBody Persona persona) {
         return connectionMidleWare.savePaciente(codigo, persona);
     }
 

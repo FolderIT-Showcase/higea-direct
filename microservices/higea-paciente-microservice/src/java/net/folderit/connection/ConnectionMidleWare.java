@@ -31,7 +31,7 @@ public class ConnectionMidleWare {
     }
 
 
-    public ResponseEntity<PacienteDTO> savePaciente(String codigo, Persona persona) {
+    public Persona savePaciente(String codigo, Persona persona) {
 
         PacienteDTO dto = persona.convertToPacienteHigeaDTO();
 
@@ -42,16 +42,16 @@ public class ConnectionMidleWare {
         headers.set("Authorization", loginResultDTO.getBody().getToken());
 
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+        //restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 
         HttpEntity<?> request = new HttpEntity<>(dto, headers);
 
         Map<String, String> uriParams = new HashMap<>();
         uriParams.put("cliente", codigo);
 
-        restTemplate.postForObject(uriPaciente, request, PacienteDTO.class, uriParams);
+        PacienteDTO response = restTemplate.postForObject(uriPaciente, request, PacienteDTO.class, uriParams);
 
-        return null;
+        return persona;
     }
 
 
