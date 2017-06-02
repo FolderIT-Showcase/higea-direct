@@ -116,7 +116,6 @@ export class TurnoService {
     return this.api.getFile(path, 'application/pdf', 'tmp', persona);
   }
 
-
   cancelarTurno(turno: Turno, persona: Persona) {
     const path = this.basePath + 'turno?id=' + turno.id + '&desactivate=false';
     return this.api.delete(path)

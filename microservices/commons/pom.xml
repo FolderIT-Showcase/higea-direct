@@ -39,6 +39,11 @@
             <version>RELEASE</version>
             <optional>true</optional>
         </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.9.9</version>
+        </dependency>
     </dependencies>
 
 </project>

@@ -4,9 +4,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import net.folderit.domain.CentroSalud;
-import net.folderit.domain.Especialidad;
-import net.folderit.domain.Profesional;
+import net.folderit.domain.core.CentroSalud;
+import net.folderit.domain.core.Especialidad;
+import net.folderit.domain.core.Profesional;
 
 import java.io.Serializable;
 

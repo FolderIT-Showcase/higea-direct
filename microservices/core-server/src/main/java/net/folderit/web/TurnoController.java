@@ -56,6 +56,12 @@ public class TurnoController {
         return new ResponseEntity<>(turnos, HttpStatus.OK);
     }
 
+    @PostMapping("/persona/{personaId}/turno")
+    public ResponseEntity saveTurno(@PathVariable("personaId") Integer personaId, @RequestBody Turno turno) {
+
+        return ResponseEntity.ok(turnoService.saveTurno(turno));
+    }
+
     @PostMapping("/turnos/proximo")
     public ResponseEntity getNextAvailable(@RequestBody FilterDto filterDto) {
         List<Turno> turnos = turnoService.findNextAvailable(filterDto);

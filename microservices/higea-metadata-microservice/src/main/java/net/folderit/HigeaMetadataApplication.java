@@ -1,7 +1,7 @@
 package net.folderit;
 
-import net.folderit.domain.ObraSocial;
-import net.folderit.domain.TipoTurno;
+import net.folderit.domain.core.*;
+import net.folderit.domain.core.enums.EstadoCivil;
 import net.folderit.service.MetadataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -37,9 +37,29 @@ public class HigeaMetadataApplication {
         return ResponseEntity.ok(metadataService.findAllObrasSociales(codigo));
     }
 
-    @GetMapping("/{cliente}/tipoTurnoFac")
+    @GetMapping("/{cliente}/tipoTurno")
     public ResponseEntity<List<TipoTurno>> getTiposTurnoFac(@PathVariable("cliente") String codigo) {
         return ResponseEntity.ok(metadataService.findTiposTurnoFac(codigo));
+    }
+
+    @GetMapping("/{cliente}/pais")
+    public ResponseEntity<List<Pais>> getPaises(@PathVariable("cliente") String codigo) {
+        return ResponseEntity.ok(metadataService.findPaises(codigo));
+    }
+
+    @GetMapping("/{cliente}/provincia")
+    public ResponseEntity<List<Provincia>> getProvincias(@PathVariable("cliente") String codigo) {
+        return ResponseEntity.ok(metadataService.findProvincias(codigo));
+    }
+
+    @GetMapping("/{cliente}/localidad")
+    public ResponseEntity<List<Localidad>> getLocalidades(@PathVariable("cliente") String codigo) {
+        return ResponseEntity.ok(metadataService.findLocalidades(codigo));
+    }
+
+    @GetMapping("/{cliente}/estadoCivil")
+    public ResponseEntity<List<EstadoCivil>> getEstadoCiviles(@PathVariable("cliente") String codigo) {
+        return ResponseEntity.ok(metadataService.findEstadoCiviles(codigo));
     }
 
 }

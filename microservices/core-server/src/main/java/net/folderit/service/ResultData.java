@@ -1,4 +1,4 @@
-package net.folderit.dto;
+package net.folderit.service;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

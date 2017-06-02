@@ -1,9 +1,12 @@
 package net.folderit.connection;
 
-import com.sun.rowset.internal.Row;
-import net.folderit.domain.Profesional;
-import net.folderit.domain.Turno;
-import net.folderit.dto.*;
+import net.folderit.domain.core.Profesional;
+import net.folderit.domain.core.Turno;
+import net.folderit.domain.higea.LoginHigea;
+import net.folderit.domain.higea.LoginResultHigea;
+import net.folderit.domain.higea.TurnoHigea;
+import net.folderit.dto.FilterDto;
+import net.folderit.domain.higea.Result;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -17,23 +20,20 @@ import java.util.Map;
 @Service
 public class ConnectionMidleWare {
 
-    final String uriLogin = "http://higea.folderit.net/api/login";
-    final String uriTurnos = "http://higea.folderit.net/api/{cliente}/turnos";
-    final String uriProfesionales = "http://localhost:36001/{cliente}";
+    private final String uriTurnos = "http://higea.folderit.net/api/{cliente}/turnos";
     private RestTemplate restTemplate = new RestTemplate();
 
-    public ResponseEntity<LoginResultDTO> login() {
-        LoginDTO loginDTO = new LoginDTO("turneroweb", "WroteScientistFarmerCarbon");
+    public ResponseEntity<LoginResultHigea> login() {
+        LoginHigea loginDTO = new LoginHigea("turneroweb", "WroteScientistFarmerCarbon");
         // send request and parse result
-        LoginResultDTO result = restTemplate.postForObject(uriLogin, loginDTO, LoginResultDTO.class);
+        String uriLogin = "http://higea.folderit.net/api/login";
+        LoginResultHigea result = restTemplate.postForObject(uriLogin, loginDTO, LoginResultHigea.class);
         return ResponseEntity.ok(result);
-
     }
 
+    private List<net.folderit.domain.higea.TurnoHigea> turnos(String codigo, FilterDto filterDto) {
 
-    public TurnoDataDTO turnos(String codigo,FilterDto filterDto) {
-
-        ResponseEntity<LoginResultDTO> loginResultDTO = login();
+        ResponseEntity<LoginResultHigea> loginResultDTO = login();
         // URI (URL) parameters
         Map<String, String> uriParams = new HashMap<>();
         uriParams.put("cliente", codigo);
@@ -41,15 +41,17 @@ public class ConnectionMidleWare {
         headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
         headers.set("Authorization", loginResultDTO.getBody().getToken());
         HttpEntity<?> entity = new HttpEntity<>(headers);
-        ResponseEntity<TurnoDTO> result = restTemplate.exchange(getFilterURIEspecialidad(filterDto), HttpMethod.GET, entity, TurnoDTO.class, uriParams);
+        ResponseEntity<Result<TurnoHigea>> result = restTemplate.exchange(getFilterURIEspecialidad(filterDto), HttpMethod.GET, entity,
+                new ParameterizedTypeReference<Result<TurnoHigea>>() {
+                }, uriParams);
 
-        return result.getBody().getData();
+        return result.getBody().getData().getRows();
     }
 
 
     private ArrayList<Profesional> getProfesionales(String codigo) {
 
-        ResponseEntity<LoginResultDTO> loginResultDTO = login();
+        ResponseEntity<LoginResultHigea> loginResultDTO = login();
         // URI (URL) parameters
         Map<String, String> uriParams = new HashMap<>();
         uriParams.put("cliente", codigo);
@@ -57,6 +59,7 @@ public class ConnectionMidleWare {
         headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
         headers.set("Authorization", loginResultDTO.getBody().getToken());
         HttpEntity<?> entity = new HttpEntity<>(headers);
+        String uriProfesionales = "http://localhost:36001/{cliente}";
         ResponseEntity<ArrayList<Profesional>> result =
                 restTemplate.exchange(uriProfesionales, HttpMethod.GET, entity, new ParameterizedTypeReference<ArrayList<Profesional>>() {
                 }, uriParams);
@@ -68,29 +71,24 @@ public class ConnectionMidleWare {
 
     public List<Turno> finAllBy(String codigo, FilterDto filter) {
 
-
-        TurnoDataDTO result = turnos(codigo,filter);
-
-        ArrayList<RowTurnoDTO> turnosHigea = new ArrayList<>();
-        turnosHigea.addAll(result.getRows());
-        ArrayList<Turno> turnosCore = new ArrayList<>(turnosHigea.size());
-
-        List<Profesional>  profesionales = getProfesionales(codigo);
+        List<TurnoHigea> turnosHigea = turnos(codigo, filter);
+        List<Turno> turnosCore = new ArrayList<>(turnosHigea.size());
+        List<Profesional> profesionales = getProfesionales(codigo);
 
         turnosHigea.forEach(x -> turnosCore.add(x.convert(profesionales)));
 
         return turnosCore;
     }
 
-    public String getFilterURIEspecialidad(FilterDto filterDto){
-        String filter=uriTurnos;
-        filter+="?"+filterDto.getFilterParameters();
+    public String getFilterURIEspecialidad(FilterDto filterDto) {
+        String filter = uriTurnos;
+        filter += "?" + filterDto.getFilterParameters();
         return filter;
     }
 
-    public RowTurnoDTO save(String codigo, RowTurnoDTO turnoDTO){
+    public Turno save(String codigo, Turno turno, int pacienteId) {
 
-        ResponseEntity<LoginResultDTO> loginResultDTO = login();
+        ResponseEntity<LoginResultHigea> loginResultDTO = login();
         // URI (URL) parameters
         Map<String, String> uriParams = new HashMap<>();
         uriParams.put("cliente", codigo);
@@ -98,9 +96,13 @@ public class ConnectionMidleWare {
         headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
         headers.set("Authorization", loginResultDTO.getBody().getToken());
         HttpEntity<?> entity = new HttpEntity<>(headers);
-        ResponseEntity<TurnoDTO> result = restTemplate.exchange(uriTurnos, HttpMethod.POST, entity, TurnoDTO.class, uriParams);
 
-        return result.getBody().getData().getRows().get(0);
+        TurnoHigea turnoHigea = turno.convertHigea();
+        turnoHigea.setPaciente_id((long) pacienteId);
+
+        ResponseEntity<TurnoHigea> result = restTemplate.postForEntity(uriTurnos, turnoHigea, TurnoHigea.class, uriParams);
+        List<Profesional> profesionales = getProfesionales(codigo);
+        return result.getBody().convert(profesionales);
     }
 
 }

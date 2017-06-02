@@ -1,7 +1,7 @@
 package net.folderit;
 
 import net.folderit.connection.ConnectionMidleWare;
-import net.folderit.domain.Persona;
+import net.folderit.domain.core.Persona;
 import net.folderit.dto.PacienteDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;

@@ -1,10 +1,12 @@
 package net.folderit.connection;
 
-import net.folderit.domain.Persona;
+import net.folderit.domain.core.Persona;
 import net.folderit.dto.LoginDTO;
 import net.folderit.dto.LoginResultDTO;
 import net.folderit.dto.PacienteDTO;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;

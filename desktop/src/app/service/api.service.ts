@@ -35,7 +35,7 @@ export class ApiService {
 
     this.http.get('assets/license.json')
       .map(res => res.json()).first().toPromise()
-      .then(data => {
+      .then((data: any) => {
         localStorage.setItem('license', this.jwtHelper.decodeToken(data.token).license);
         localStorage.setItem('client', this.jwtHelper.decodeToken(data.token).client);
       });
@@ -95,9 +95,8 @@ export class ApiService {
     this.headers.set('Accept', mimeType);
     const options = {
       responseType: ResponseContentType.Blob,
-      headers:  this.headers
+      headers: this.headers
     };
-
 
     this.mPromise = this.http.post(`${this.baseURL}${path}`, JSON.stringify(obj), options)
       .map(this.filterError)

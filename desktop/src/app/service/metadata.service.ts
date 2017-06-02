@@ -6,6 +6,8 @@ import {Localidad} from '../domain/localidad';
 import {Store} from './store';
 import {ObraSocial} from '../domain/obra-social';
 import {TipoTurno} from '../domain/tipo-turno';
+import {EstadosCiviles} from '../domain/enums/estado-civil';
+import {Generos} from '../domain/enums/genero';
 
 @Injectable()
 export class MetadataService {
@@ -15,16 +17,18 @@ export class MetadataService {
   localidades: Localidad[] = [];
   obras_sociales: ObraSocial[] = [];
   tipos_turnos: TipoTurno[] = [];
+  estados_civil: EstadosCiviles[] = [];
   license = localStorage.getItem('license');
   client = localStorage.getItem('client');
-  basePath = this.license + '/' + 'metadata' + '/' + this.client + '/';
+  basePath = `${this.license}/${this.client}/`;
 
   constructor(private api: ApiService,
               private store: Store) {
+
     if (this.license === 'core') {
       this.basePath = this.license + '/';
+    }
 
-    }else {this.basePath = this.license + '/' + 'metadata' + '/' + this.client + '/'}
   }
 
   getPaises() {
@@ -159,9 +163,7 @@ export class MetadataService {
       })
       .then(data => {
         this.setTipoTurnos(data);
-        console.log("data");
-        console.log(data);
-        return new Promise<any>((resolve, reject) => {
+         return new Promise<any>((resolve, reject) => {
           resolve(data);
         });
       });
@@ -177,6 +179,37 @@ export class MetadataService {
       return (a.nombre > b.nombre) ? 1 : ((b.nombre > a.nombre) ? -1 : 0);
     });
     this.store.db.setItem('tipos_turnos', this.tipos_turnos);
+  }
+
+  getAllEstadoCiviles(): Promise<any> {
+    //if(this.license==='core') return new Promise<any> (Generos.build());
+    return this.store.db.getItem('estado_civil')
+      .then((data: any) => {
+        if (data && data[0]) {
+          return new Promise<any>((resolve, reject) => {
+            resolve(data);
+          });
+        }
+        return this.requestEstadoCivil();
+      })
+      .then(data => {
+        this.setEstadoCivil(data);
+         return new Promise<any>((resolve, reject) => {
+          resolve(data);
+        });
+      });
+  }
+
+  requestEstadoCivil() {
+    const path = this.basePath + 'estadoCivil';
+    return this.api.get(path);
+  }
+
+  setEstadoCivil(estado) {
+    this.estados_civil = estado.sort((a, b) => {
+      return (a.nombre > b.nombre) ? 1 : ((b.nombre > a.nombre) ? -1 : 0);
+    });
+    this.store.db.setItem('estado_civil', this.estados_civil);
   }
 
 }

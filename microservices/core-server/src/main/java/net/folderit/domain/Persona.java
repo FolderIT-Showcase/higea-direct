@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import net.folderit.domain.enums.EstadoCivil;
-import net.folderit.domain.enums.Genero;
+import net.folderit.domain.core.enums.EstadoCivil;
+import net.folderit.domain.core.enums.Genero;
 
 import javax.persistence.*;
 import java.io.Serializable;

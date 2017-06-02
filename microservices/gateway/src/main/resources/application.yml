@@ -25,10 +25,12 @@ hystrix:
     default:
       execution:
         isolation:
+          strategy: THREAD
           thread:
-            timeoutInMilliseconds: 60000
+            timeoutInMilliseconds : 60000
         timeout:
           enabled: false
+
 zuul:
   add-host-header: true
   routes:
@@ -42,7 +44,7 @@ zuul:
       path: /higea/turnos/**
       url: http://localhost:36003
     higea-metadata-microservice:
-      path: /higea/metadata/**
+      path: /higea/**
       url: http://localhost:36004
     higea-paciente-microservice:
       path: /higea/paciente/**

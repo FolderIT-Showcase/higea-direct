@@ -1,6 +1,6 @@
 package net.folderit.util;
 
-import net.folderit.domain.enums.Genero;
+import net.folderit.domain.core.enums.Genero;
 import org.springframework.web.client.RestTemplate;
 
 public class AfipUtil {

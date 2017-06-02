@@ -76,13 +76,11 @@ public class MetadataService {
     }
 
     public List<ObraSocial> getAllObrasSociales() {
-        List<ObraSocial> obraSocials = obraSocialRepository.findAllByOrderByNombreAsc();
-        return obraSocials;
+        return obraSocialRepository.findAllByOrderByNombreAsc();
     }
 
     public List<TipoTurno> getAllTiposTurnos() {
-        List<TipoTurno> tiposTurnos = tipoTurnoRepository.findAllByOrderByDescripcionAsc();
-        return tiposTurnos;
+        return tipoTurnoRepository.findAllByOrderByDescripcionAsc();
     }
 
     public CentroSalud saveCentroSalud(CentroSalud centroSalud) {
@@ -91,6 +89,10 @@ public class MetadataService {
 
     public Profesional saveProfesional(Profesional profesional) {
         return profesionalRepository.save(profesional);
+    }
+
+    public ObraSocial saveObraSocial(ObraSocial obraSocial) {
+        return obraSocialRepository.save(obraSocial);
     }
 
     public void deleteProfesional(Long id) {

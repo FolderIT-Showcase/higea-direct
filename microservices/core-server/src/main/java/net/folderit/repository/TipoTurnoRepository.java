@@ -1,8 +1,6 @@
 package net.folderit.repository;
 
-import net.folderit.domain.ObraSocial;
 import net.folderit.domain.TipoTurno;
-import net.folderit.domain.Turno;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

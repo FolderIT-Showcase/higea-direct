@@ -1,4 +1,4 @@
-import {ModuleWithProviders, NgModule} from '@angular/core';
+import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {GrupoFamiliarComponent} from './grupo-familiar.component';
 import {IntegrantesResolveService} from '../../service/resolve/integrantes-resolve.service';
@@ -18,4 +18,5 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: []
 })
-export class GrupoFamiliarRoutingModule { }
+export class GrupoFamiliarRoutingModule {
+}
