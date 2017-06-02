@@ -11,6 +11,7 @@ import {ProfesionalesComponent} from './component/profesionales/profesionales.co
 import {CentrosSaludComponent} from './component/centros-salud/centros-salud.component';
 import {EspecialidadesComponent} from './component/especialidades/especialidades.component';
 import {TurnosComponent} from './component/turnos/turnos.component';
+import {MotivoTurnoComponent} from './component/motivo-turno/motivo-turno.component';
 
 const routes: Routes = [
   {
@@ -53,6 +54,10 @@ const routes: Routes = [
         resolve: {
           profesionales: ProfesionalResolveService
         }
+      },
+      {
+        path: 'motivo-turno',
+        component: MotivoTurnoComponent,
       }
     ]
   }

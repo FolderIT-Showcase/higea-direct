@@ -32,7 +32,7 @@ export class AdminService {
   }
 
   saveTurno(centro: CentroSalud, especialidad: Especialidad, profesional: Profesional,
-            fecha: number, hora: Date, obs: string, motivo: MotivoTurno, preparacion: string) {
+            fecha: number, hora: Date, obs: string, motivo: MotivoTurno, preparacion: string, objectPrep: Preparacion) {
 
     const turno = new Turno();
     turno.dia = fecha;
@@ -43,7 +43,13 @@ export class AdminService {
     turno.profesional = profesional;
     turno.observaciones = obs;
 
-    const prep = new Preparacion();
+    let prep;
+    if (objectPrep) {
+      prep = objectPrep
+    } else {
+      prep = new Preparacion();
+    }
+
     prep.descripcion = preparacion;
     motivo.preparacion = prep;
 

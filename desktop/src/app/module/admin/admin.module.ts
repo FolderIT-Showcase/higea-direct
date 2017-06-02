@@ -24,6 +24,7 @@ import {ModalModule, PaginationModule, TimepickerModule} from 'ngx-bootstrap';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MyDatePickerModule} from 'mydatepicker';
 import {UIModule} from '../ui/ui.module';
+import {MotivoTurnoComponent} from './component/motivo-turno/motivo-turno.component';
 
 @NgModule({
   imports: [
@@ -46,7 +47,8 @@ import {UIModule} from '../ui/ui.module';
     ProfesionalesComponent,
     EspecialidadBusquedaComponent,
     ProfesionalBusquedaComponent,
-    TurnoBusquedaComponent
+    TurnoBusquedaComponent,
+    MotivoTurnoComponent
   ],
   providers: [
     Store,

@@ -24,6 +24,8 @@
         <module>../microservices/higea-profesional-microservice</module>
         <module>../microservices/higea-turnos-microservice</module>
         <module>../microservices/higea-metadata-microservice</module>
+        <module>../microservices/higea-paciente-microservice</module>
+
     </modules>
 
 </project>

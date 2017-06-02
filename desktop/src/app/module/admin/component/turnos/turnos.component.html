@@ -167,7 +167,6 @@
 
           <select type="text" class="form-control" [formControl]="form.controls['tipoTurno']"
                   (change)="handleTipoTurnoClick(form.value.tipoTurno)">
-            <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
             <option [ngValue]="tipo" *ngFor="let tipo of tiposDeTurnos">{{tipo.descripcion}}</option>
           </select>
 
@@ -184,9 +183,7 @@
 
           <select type="text" class="form-control" [formControl]="form.controls['motivoTurno']"
                   (change)="handleMotivoTurnoClick(form.value.motivoTurno)">
-            <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
-            <option [ngValue]="motivo" *ngFor="let motivo of motivosTurno">{{motivo.descripcion}}
-            </option>
+            <option [ngValue]="motivo" *ngFor="let motivo of motivosTurno">{{motivo.descripcion}}</option>
           </select>
 
 

@@ -54,7 +54,7 @@ public class Turno implements Serializable {
     @JoinColumn(name = "plan_id")
     private Plan plan;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "motivo_turno_id")
     private MotivoTurno motivoTurno;
 

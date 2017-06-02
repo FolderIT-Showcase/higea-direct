@@ -1,6 +1,7 @@
 package net.folderit.service;
 
 import net.folderit.domain.core.*;
+import net.folderit.domain.core.enums.EstadoCivil;
 import net.folderit.domain.higea.*;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
@@ -170,6 +171,31 @@ public class MetadataService {
         });
 
         return localidades;
+    }
+
+    public List<EstadoCivil> findEstadoCiviles(String codigo) {
+        ResponseEntity<LoginResultHigea> loginResultDTO = login();
+        // URI (URL) parameters
+        Map<String, String> uriParams = new HashMap<>();
+        uriParams.put("cliente", codigo);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+        headers.set("Authorization", loginResultDTO.getBody().getToken());
+        HttpEntity<?> entity = new HttpEntity<>(headers);
+
+        String url = "http://higea.folderit.net/api/{cliente}/estadoCiviles";
+        ResponseEntity<Result<EstadoCivilHigea>> result = restTemplate.exchange(url, HttpMethod.GET, entity,
+                new ParameterizedTypeReference<Result<EstadoCivilHigea>>() {
+                }, uriParams);
+
+        List<EstadoCivil> estadosCiviles = new ArrayList<>();
+
+        result.getBody().getData().getRows().forEach(estadoCivilHigea -> {
+            estadosCiviles.add(estadoCivilHigea.convert());
+        });
+
+        return estadosCiviles;
     }
 
 }

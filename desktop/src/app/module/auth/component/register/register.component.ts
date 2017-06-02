@@ -13,6 +13,7 @@ import {MetadataService} from '../../../../service/metadata.service';
 import {Contacto} from '../../../../domain/contacto';
 import {ObraSocial} from '../../../../domain/obra-social';
 import {Plan} from '../../../../domain/plan';
+import {EstadosCiviles} from '../../../../domain/enums/estado-civil';
 
 @Component({
   selector: 'app-register',
@@ -29,7 +30,7 @@ export class RegisterComponent implements OnInit {
   @Input()
   plan: Plan;
   tipoDocumentos: string[] = TipoDocumentos.build();
-  generos: string[] = Generos.build();
+  generos: string[];
   captcha = null;
   selectUndefined: any;
   @Input()
@@ -72,6 +73,10 @@ export class RegisterComponent implements OnInit {
     });
     this.metadataService.getObrasSociales().then((data: any) => {
       this.obras_sociales = data;
+    });
+
+    this.metadataService.getAllEstadoCiviles().then((data: any) => {
+      this.generos = data;
     });
   }
 
