@@ -22,9 +22,10 @@ public class FilterDto implements Serializable {
     Especialidad especialidad;
     Profesional profesional;
 
-
     public String getFilterParameters() {
         String query = "";
+
+
         if (getFecha() != null && !getFecha().isEmpty()) {
             query += "turno_fecha=" + getFecha() + "&";
         }
@@ -34,6 +35,9 @@ public class FilterDto implements Serializable {
         if (getProfesional() != null) {
             query += "profesional_id=" + getProfesional().getId();
         }
+
         return query;
     }
+
+
 }

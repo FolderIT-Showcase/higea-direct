@@ -58,11 +58,8 @@ public class SimpleFilter extends ZuulFilter {
     public Object run() {
         // logging the interception of the query
         log.debug("query interception");
-
         // retrieving the Zuul request context
         RequestContext ctx = RequestContext.getCurrentContext();
-
-
         return null;
     }
 

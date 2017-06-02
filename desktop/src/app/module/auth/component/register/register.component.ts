@@ -13,7 +13,6 @@ import {MetadataService} from '../../../../service/metadata.service';
 import {Contacto} from '../../../../domain/contacto';
 import {ObraSocial} from '../../../../domain/obra-social';
 import {Plan} from '../../../../domain/plan';
-import {EstadosCiviles} from '../../../../domain/enums/estado-civil';
 
 @Component({
   selector: 'app-register',
@@ -148,10 +147,9 @@ export class RegisterComponent implements OnInit {
   savePersona(persona: Persona) {
     this.personaService.create(persona)
       .then(() => {
-        this.router.navigate(['/login'])
-          .then(() => {
-            this.alertService.success('Registro Exitoso, chequee su cuenta de email para activar el usuario');
-          });
+        this.router.navigate(['/login']).then(() => {
+          this.alertService.success('Registro Exitoso, chequee su cuenta de email para activar el usuario');
+        });
       });
   }
 

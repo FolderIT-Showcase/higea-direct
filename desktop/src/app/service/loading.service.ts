@@ -7,6 +7,7 @@ import {Observable} from 'rxjs/Observable';
 export class LoadingService {
 
   private subject = new Subject<any>();
+  private promises: Promise<any>[] = [];
 
   constructor(private router: Router) {
     router.events.subscribe(event => {
@@ -29,10 +30,12 @@ export class LoadingService {
   }
 
   setLoading(promise: Promise<any>) {
+
     this.start();
-    const promises = [];
-    promises.push(promise);
-    Promise.all(promises)
+
+    this.promises.push(promise);
+
+    Promise.all(this.promises)
       .catch(() => this.finish())
       .then(() => {
         setTimeout(() => {

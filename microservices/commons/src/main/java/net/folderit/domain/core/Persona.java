@@ -4,12 +4,11 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import net.folderit.domain.core.enums.TipoContacto;
-import net.folderit.domain.core.enums.TipoDocumento;
-import net.folderit.dto.PacienteDTO;
 import net.folderit.domain.core.enums.EstadoCivil;
 import net.folderit.domain.core.enums.Genero;
-
+import net.folderit.domain.core.enums.TipoContacto;
+import net.folderit.domain.core.enums.TipoDocumento;
+import net.folderit.domain.higea.PacienteHigea;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -94,28 +93,28 @@ public class Persona implements Serializable {
     }
 
 
-    public PacienteDTO convertToPacienteHigeaDTO() {
+    public PacienteHigea convertToPacienteHigeaDTO() {
 
-        PacienteDTO pacienteDTO = new PacienteDTO();
+        PacienteHigea pacienteDTO = new PacienteHigea();
         pacienteDTO.setPaciente_id(this.getId());
         pacienteDTO.setPlan_os_id_1(getPlan() != null ? getPlan().getId() : null);
         pacienteDTO.setPais_id(getDomicilio() != null && getDomicilio().getLocalidad() != null && getDomicilio().getLocalidad().getProvincia() != null
                 && getDomicilio().getLocalidad().getProvincia().getPais() != null ? getDomicilio().getLocalidad().getProvincia().getPais().getId() : null);
         pacienteDTO.setProvincia_id(getDomicilio() != null && getDomicilio().getLocalidad() != null && getDomicilio().getLocalidad().getProvincia() != null ? getDomicilio().getLocalidad().getProvincia().getId() : null);
         pacienteDTO.setLocalidad_id(getDomicilio() != null && getDomicilio().getLocalidad() != null ? getDomicilio().getLocalidad().getId() : null);
-       // pacienteDTO.setEstado_civil_id(getEstadoCivil() != null ? getEstadoCivil().equals(EstadoCivil.Casado):null);
+        // pacienteDTO.setEstado_civil_id(getEstadoCivil() != null ? getEstadoCivil().equals(EstadoCivil.Casado):null);
         pacienteDTO.setDocumento_id(getTipoDocID(getDocumento().getTipoDocumento()));
         pacienteDTO.setPersona_apellido(getApellido());
         pacienteDTO.setPersona_nombres(getNombre());
-        pacienteDTO.setPersona_fecha_nacimiento(getFechaNacimiento()!=null ? getFechaNacimiento().toString():null);
+        pacienteDTO.setPersona_fecha_nacimiento(getFechaNacimiento() != null ? getFechaNacimiento().toString() : null);
         // pacienteDTO.setPersona_sexo(getGenero());
-        pacienteDTO.setPersona_documento_nro(getDocumento() != null ? getDocumento().getNumero().toString():"");
+        pacienteDTO.setPersona_documento_nro(getDocumento() != null ? getDocumento().getNumero().toString() : "");
         pacienteDTO.setPersona_telefono_part_nro(getTipoContaco(TipoContacto.telefono));
         pacienteDTO.setPersona_telefono_cel_nro(getTipoContaco(TipoContacto.celular));
         pacienteDTO.setPersona_telefono_lab_nro(null);
         pacienteDTO.setPersona_calle_nro(getDomicilio() != null ? getDomicilio().getCalle() : null);
         pacienteDTO.setPersona_calle_texto(getDomicilio() != null ? getDomicilio().getCalle() : null);
-      // pacienteDTO.setPersona_departamento_nro();
+        // pacienteDTO.setPersona_departamento_nro();
         pacienteDTO.setPersona_piso_nro(getDomicilio() != null ? getDomicilio().getPiso().toString() : null);
         pacienteDTO.setPersona_email(getTipoContaco(TipoContacto.mail));
         pacienteDTO.setPaciente_os_afiliado1_nro(getNroAfiliado().toString());
@@ -138,17 +137,17 @@ public class Persona implements Serializable {
     }
 
     public Long getTipoDocID(TipoDocumento tipoDocumento) {
-        if(tipoDocumento.equals(TipoDocumento.dni)){
+        if (tipoDocumento.equals(TipoDocumento.dni)) {
             return 1L;
-        }else if(tipoDocumento.equals(TipoDocumento.cedulaIdentidad)){
-            return  7L;
-        }else if(tipoDocumento.equals(TipoDocumento.documentoExtranjero)){
-           return  99L;
-        }else if(tipoDocumento.equals(TipoDocumento.libretaEnrolamiento)){
+        } else if (tipoDocumento.equals(TipoDocumento.cedulaIdentidad)) {
+            return 7L;
+        } else if (tipoDocumento.equals(TipoDocumento.documentoExtranjero)) {
+            return 99L;
+        } else if (tipoDocumento.equals(TipoDocumento.libretaEnrolamiento)) {
             return 12L;
-        }else if(tipoDocumento.equals(TipoDocumento.pasaporte)){
+        } else if (tipoDocumento.equals(TipoDocumento.pasaporte)) {
             return 13L;
-        }else return 13L;
+        } else return 13L;
     }
 
 
