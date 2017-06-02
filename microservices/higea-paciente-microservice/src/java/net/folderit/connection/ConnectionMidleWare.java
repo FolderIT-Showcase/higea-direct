@@ -1,9 +1,9 @@
 package net.folderit.connection;
 
 import net.folderit.domain.core.Persona;
-import net.folderit.dto.LoginDTO;
-import net.folderit.dto.LoginResultDTO;
-import net.folderit.dto.PacienteDTO;
+import net.folderit.domain.higea.LoginHigea;
+import net.folderit.domain.higea.LoginResultHigea;
+import net.folderit.domain.higea.PacienteHigea;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -23,19 +23,18 @@ public class ConnectionMidleWare {
     private final String uriPaciente = "http://higea.folderit.net/api/{cliente}/pacientes";
     private RestTemplate restTemplate = new RestTemplate();
 
-    private ResponseEntity<LoginResultDTO> login() {
-        LoginDTO loginDTO = new LoginDTO("turneroweb", "WroteScientistFarmerCarbon");
+    private ResponseEntity<LoginResultHigea> login() {
+        LoginHigea loginDTO = new LoginHigea("turneroweb", "WroteScientistFarmerCarbon");
         // send request and parse result
-        LoginResultDTO result = restTemplate.postForObject(uriLogin, loginDTO, LoginResultDTO.class);
+        LoginResultHigea result = restTemplate.postForObject(uriLogin, loginDTO, LoginResultHigea.class);
         return ResponseEntity.ok(result);
     }
 
+    public PacienteHigea savePaciente(String codigo, Persona persona) {
 
-    public ResponseEntity<PacienteDTO> savePaciente(String codigo, Persona persona) {
+        PacienteHigea dto = persona.convertToPacienteHigeaDTO();
 
-        PacienteDTO dto = persona.convertToPacienteHigeaDTO();
-
-        ResponseEntity<LoginResultDTO> loginResultDTO = login();
+        ResponseEntity<LoginResultHigea> loginResultDTO = login();
 
         MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
         headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
@@ -49,9 +48,9 @@ public class ConnectionMidleWare {
         Map<String, String> uriParams = new HashMap<>();
         uriParams.put("cliente", codigo);
 
-        restTemplate.postForObject(uriPaciente, request, PacienteDTO.class, uriParams);
+        ResponseEntity<PacienteHigea> result = restTemplate.postForEntity(uriPaciente, request, PacienteHigea.class, uriParams);
 
-        return null;
+        return result.getBody();
     }
 
 

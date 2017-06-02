@@ -1,16 +1,13 @@
-package net.folderit.dto;
+package net.folderit.domain.higea;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * Created by luis on 01/06/17.
- */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PacienteDTO {
+public class PacienteHigea {
 
     private Long paciente_id;
     private Long plan_os_id_1;

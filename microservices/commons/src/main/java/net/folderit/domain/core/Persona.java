@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import net.folderit.domain.core.enums.TipoContacto;
-import net.folderit.dto.PacienteDTO;
+import net.folderit.domain.higea.PacienteHigea;
 import net.folderit.domain.core.enums.EstadoCivil;
 import net.folderit.domain.core.enums.Genero;
 
@@ -92,9 +92,9 @@ public class Persona implements Serializable {
     }
 
 
-    public PacienteDTO convertToPacienteHigeaDTO() {
+    public PacienteHigea convertToPacienteHigeaDTO() {
 
-        PacienteDTO pacienteDTO = new PacienteDTO();
+        PacienteHigea pacienteDTO = new PacienteHigea();
         pacienteDTO.setPaciente_id(this.getId());
         pacienteDTO.setPlan_os_id_1(getPlan() != null ? getPlan().getId() : null);
         pacienteDTO.setPais_id(getDomicilio() != null && getDomicilio().getLocalidad() != null && getDomicilio().getLocalidad().getProvincia() != null
