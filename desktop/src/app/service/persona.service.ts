@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ApiService} from './api.service';
 import {Persona} from '../domain/persona';
-import {TipoDocumentos} from '../domain/enums/tipo-documento';
 import {StoreService} from './store.service';
 import {User} from '../domain/user';
 
@@ -16,44 +15,31 @@ export class PersonaService {
   uriRegistration = `${this.basePathCore}users/registration`;
   externalUriRegistration = `${this.basePathHigea}paciente/${this.client}`;
 
-  public static convertTipoDocumento(tipo: string): string {
-    const tipoRtn = TipoDocumentos.export().find(x => x.label === tipo);
-    if (tipoRtn) {
-      return tipoRtn.id;
-    } else {
-      return tipo;
-    }
-  }
-
   constructor(private api: ApiService, private storeService: StoreService) {
-
   }
 
   create(persona: Persona) {
 
-    const coreRequest = this.api.post(this.uriRegistration, persona, false);
-    const externalRequest = this.api.post(this.externalUriRegistration, persona, false);
+    let promises;
 
     if (this.license === 'core') {
-      return coreRequest;
+      promises = [
+        this.api.post(this.uriRegistration, persona, false)
+      ];
     } else {
-      return coreRequest
-        .then(() => {
-          return externalRequest
-        })
-        .then(() => {
-
-        });
+      promises = [
+        this.api.post(this.uriRegistration, persona, false),
+        this.api.post(this.externalUriRegistration, persona, false)
+      ];
     }
+
+    // serialize and return
+    return promises.reduce((m, p: any) => m.then(v => Promise.all([...v, p()])), Promise.resolve([]));
 
   }
 
   validateDni(dto: any) {
-    const path = this.basePathCore + 'persona/afip' +
-      '?documento=' + dto.documento +
-      '&nombre=' + dto.nombre +
-      '&apellido=' + dto.apellido +
-      '&genero=' + dto.genero;
+    const path = `${this.basePathCore}persona/afip?documento=${dto.documento}&nombre=${dto.nombre}&apellido=${dto.apellido}&genero=${dto.genero}`;
 
     return this.api.get(path, false);
   }
@@ -65,7 +51,7 @@ export class PersonaService {
       return;
     }
 
-    const path = this.basePathCore + 'persona/email?email=' + this.user.email;
+    const path = `${this.basePathCore}persona/email?email=${this.user.email}`;
 
     return this.api.get(path)
       .then((data) => {
@@ -98,7 +84,7 @@ export class PersonaService {
   }
 
   activateUser(token) {
-    const path = this.basePathCore + 'users/regitrationConfirm?token=' + token;
+    const path = `${this.basePathCore}users/regitrationConfirm?token=${token}`;
     return this.api.get(path);
   }
 
