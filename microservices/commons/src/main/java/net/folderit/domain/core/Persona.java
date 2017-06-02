@@ -4,11 +4,11 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import net.folderit.domain.core.enums.TipoContacto;
-import net.folderit.domain.higea.PacienteHigea;
 import net.folderit.domain.core.enums.EstadoCivil;
 import net.folderit.domain.core.enums.Genero;
-
+import net.folderit.domain.core.enums.TipoContacto;
+import net.folderit.domain.core.enums.TipoDocumento;
+import net.folderit.domain.higea.PacienteHigea;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -54,6 +54,7 @@ public class Persona implements Serializable {
     @JoinColumn(name = "plan_id")
     private Plan plan;
 
+    private Integer nroAfiliado;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "domicilio_id")
@@ -101,22 +102,23 @@ public class Persona implements Serializable {
                 && getDomicilio().getLocalidad().getProvincia().getPais() != null ? getDomicilio().getLocalidad().getProvincia().getPais().getId() : null);
         pacienteDTO.setProvincia_id(getDomicilio() != null && getDomicilio().getLocalidad() != null && getDomicilio().getLocalidad().getProvincia() != null ? getDomicilio().getLocalidad().getProvincia().getId() : null);
         pacienteDTO.setLocalidad_id(getDomicilio() != null && getDomicilio().getLocalidad() != null ? getDomicilio().getLocalidad().getId() : null);
-       // pacienteDTO.setEstado_civil_id(getEstadoCivil() != null ? getEstadoCivil().equals(EstadoCivil.Casado):null);
-        pacienteDTO.setDocumento_id(getDocumento() != null ? getDocumento().getId():null);
+        // pacienteDTO.setEstado_civil_id(getEstadoCivil() != null ? getEstadoCivil().equals(EstadoCivil.Casado):null);
+        pacienteDTO.setDocumento_id(getTipoDocID(getDocumento().getTipoDocumento()));
         pacienteDTO.setPersona_apellido(getApellido());
         pacienteDTO.setPersona_nombres(getNombre());
-        pacienteDTO.setPersona_fecha_nacimiento(getFechaNacimiento()!=null ? getFechaNacimiento().toString():null);
+        pacienteDTO.setPersona_fecha_nacimiento(getFechaNacimiento() != null ? getFechaNacimiento().toString() : null);
         // pacienteDTO.setPersona_sexo(getGenero());
-        pacienteDTO.setPersona_documento_nro(getDocumento() != null ? getDocumento().getNumero().toString():"");
+        pacienteDTO.setPersona_documento_nro(getDocumento() != null ? getDocumento().getNumero().toString() : "");
         pacienteDTO.setPersona_telefono_part_nro(getTipoContaco(TipoContacto.telefono));
         pacienteDTO.setPersona_telefono_cel_nro(getTipoContaco(TipoContacto.celular));
         pacienteDTO.setPersona_telefono_lab_nro(null);
         pacienteDTO.setPersona_calle_nro(getDomicilio() != null ? getDomicilio().getCalle() : null);
         pacienteDTO.setPersona_calle_texto(getDomicilio() != null ? getDomicilio().getCalle() : null);
-      // pacienteDTO.setPersona_departamento_nro();
+        // pacienteDTO.setPersona_departamento_nro();
         pacienteDTO.setPersona_piso_nro(getDomicilio() != null ? getDomicilio().getPiso().toString() : null);
         pacienteDTO.setPersona_email(getTipoContaco(TipoContacto.mail));
-        // pacienteDTO.setPaciente_os_afiliado1_nro(getPlan().);
+        pacienteDTO.setPaciente_os_afiliado1_nro(getNroAfiliado().toString());
+        pacienteDTO.setLocalidad_id(1L);
 
         return pacienteDTO;
 
@@ -132,6 +134,20 @@ public class Persona implements Serializable {
         }
 
         return numeroTelefono;
+    }
+
+    public Long getTipoDocID(TipoDocumento tipoDocumento) {
+        if (tipoDocumento.equals(TipoDocumento.dni)) {
+            return 1L;
+        } else if (tipoDocumento.equals(TipoDocumento.cedulaIdentidad)) {
+            return 7L;
+        } else if (tipoDocumento.equals(TipoDocumento.documentoExtranjero)) {
+            return 99L;
+        } else if (tipoDocumento.equals(TipoDocumento.libretaEnrolamiento)) {
+            return 12L;
+        } else if (tipoDocumento.equals(TipoDocumento.pasaporte)) {
+            return 13L;
+        } else return 13L;
     }
 
 

@@ -25,6 +25,7 @@ public class FilterDto implements Serializable {
     public String getFilterParameters() {
         String query = "";
 
+
         if (getFecha() != null && !getFecha().isEmpty()) {
             query += "turno_fecha=" + getFecha() + "&";
         }
@@ -37,5 +38,6 @@ public class FilterDto implements Serializable {
 
         return query;
     }
+
 
 }
