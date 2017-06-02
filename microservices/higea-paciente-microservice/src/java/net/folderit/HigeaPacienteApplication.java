@@ -31,8 +31,4 @@ public class HigeaPacienteApplication {
         return ResponseEntity.ok(connectionMidleWare.savePaciente(codigo, persona));
     }
 
-    @GetMapping("/{cliente}")
-    public ResponseEntity<?> hola() {
-        return ResponseEntity.ok("hola");
-    }
 }

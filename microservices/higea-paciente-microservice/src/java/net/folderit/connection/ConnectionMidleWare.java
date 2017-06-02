@@ -33,7 +33,6 @@ public class ConnectionMidleWare {
     public PacienteHigea savePaciente(String codigo, Persona persona) {
 
         PacienteHigea dto = persona.convertToPacienteHigeaDTO();
-
         ResponseEntity<LoginResultHigea> loginResultDTO = login();
 
         MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
@@ -41,7 +40,7 @@ public class ConnectionMidleWare {
         headers.set("Authorization", loginResultDTO.getBody().getToken());
 
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+        //restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 
         HttpEntity<?> request = new HttpEntity<>(dto, headers);
 
@@ -49,7 +48,6 @@ public class ConnectionMidleWare {
         uriParams.put("cliente", codigo);
 
         ResponseEntity<PacienteHigea> result = restTemplate.postForEntity(uriPaciente, request, PacienteHigea.class, uriParams);
-
         return result.getBody();
     }
 

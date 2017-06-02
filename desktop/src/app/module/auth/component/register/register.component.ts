@@ -30,7 +30,7 @@ export class RegisterComponent implements OnInit {
   @Input()
   plan: Plan;
   tipoDocumentos: string[] = TipoDocumentos.build();
-  generos: string[];
+  generos: string[] = Generos.build();
   captcha = null;
   selectUndefined: any;
   @Input()
@@ -75,9 +75,9 @@ export class RegisterComponent implements OnInit {
       this.obras_sociales = data;
     });
 
-    this.metadataService.getAllEstadoCiviles().then((data: any) => {
+    /*this.metadataService.getAllEstadoCiviles().then((data: any) => {
       this.generos = data;
-    });
+    });*/
   }
 
   private passwordMatch() {

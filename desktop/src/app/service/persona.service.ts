@@ -14,7 +14,7 @@ export class PersonaService {
   basePathCore = 'core/';
   basePathHigea = 'higea/'
   uriRegistration = this.basePathCore + 'users/registration';
-  externalUriRegistration = this.basePathHigea + '/paciente/' + this.client;
+  externalUriRegistration = this.basePathHigea + 'paciente/' + this.client;
 
 
   public static convertTipoDocumento(tipo: string): string {
