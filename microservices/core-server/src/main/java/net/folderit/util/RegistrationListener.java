@@ -1,6 +1,6 @@
 package net.folderit.util;
 
-import net.folderit.domain.User;
+import net.folderit.domain.core.User;
 import net.folderit.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

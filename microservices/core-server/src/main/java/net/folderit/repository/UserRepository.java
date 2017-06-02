@@ -1,6 +1,7 @@
 package net.folderit.repository;
 
-import net.folderit.domain.User;
+
+import net.folderit.domain.core.User;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

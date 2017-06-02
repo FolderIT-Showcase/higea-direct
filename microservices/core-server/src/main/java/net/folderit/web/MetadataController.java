@@ -1,7 +1,7 @@
 package net.folderit.web;
 
-import net.folderit.domain.*;
-import net.folderit.domain.exception.TurneroException;
+import net.folderit.domain.core.*;
+import net.folderit.exception.TurneroException;
 import net.folderit.service.MetadataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;

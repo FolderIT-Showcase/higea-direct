@@ -46,7 +46,7 @@ zuul:
     higea-metadata-microservice:
       path: /higea/**
       url: http://localhost:36004
-    core-server:
+    core:
       path: /core/**
       sensitiveHeaders:
       url: http://localhost:36000

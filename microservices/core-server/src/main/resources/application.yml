@@ -3,7 +3,7 @@ spring:
     chain:
       enabled: true
   application:
-    name: core-server
+    name: core-server-server
 server:
   port: 36000
   tomcat:

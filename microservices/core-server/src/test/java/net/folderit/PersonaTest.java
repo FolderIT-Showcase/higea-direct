@@ -1,7 +1,7 @@
 package net.folderit;
 
-import net.folderit.domain.Roles;
-import net.folderit.domain.User;
+import net.folderit.domain.core.Roles;
+import net.folderit.domain.core.User;
 import net.folderit.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;

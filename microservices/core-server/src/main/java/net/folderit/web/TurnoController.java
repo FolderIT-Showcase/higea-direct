@@ -1,9 +1,9 @@
 package net.folderit.web;
 
-import net.folderit.domain.Persona;
-import net.folderit.domain.Turno;
-import net.folderit.domain.exception.TurneroException;
+import net.folderit.domain.core.Persona;
+import net.folderit.domain.core.Turno;
 import net.folderit.dto.FilterDto;
+import net.folderit.exception.TurneroException;
 import net.folderit.service.PersonaService;
 import net.folderit.service.TurnoService;
 import org.springframework.beans.factory.annotation.Autowired;

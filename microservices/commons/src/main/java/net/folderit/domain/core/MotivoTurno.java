@@ -9,9 +9,6 @@ import javax.persistence.*;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
-/**
- * Created by luis on 24/05/17.
- */
 @Entity
 @Table(name = "motivo_turno")
 @Data

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import net.folderit.domain.higea.TurnoHigea;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -24,10 +24,16 @@ public class Turno implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    //    @JsonFormat(pattern = "EEEE", timezone = "America/Buenos_Aires")
+    @DateTimeFormat(pattern = "EEEE")
     private Date dia;
 
+    /* @JsonFormat(pattern="yyyy-MM-dd",timezone="America/Buenos_Aires")*/
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fecha;
 
+    //@JsonFormat(pattern="HH:mm:ss",timezone="America/Buenos_Aires")
+    @DateTimeFormat(pattern = "HH:mm:ss")
     private Date hora;
 
     private String observaciones;
@@ -64,19 +70,5 @@ public class Turno implements Serializable {
 
     }
 
-    public TurnoHigea convertHigea() {
-        TurnoHigea turnoHigea = new TurnoHigea();
-        turnoHigea.setTurnos_id(id);
-        // TODO ver formato de fecha higea
-        // turnoHigea.setTurno_fecha(new SimpleDateFormat("dd/MM/yyyy").format(fecha));
-        turnoHigea.setTurno_fecha(fecha.toString());
-        turnoHigea.setTurno_hora(hora.toString());
-        turnoHigea.setPersona_observaciones(observaciones);
-        turnoHigea.setEspecialidad_id(especialidad.getId());
-        turnoHigea.setProfesional_id(profesional.getId());
-        turnoHigea.setPlan_os_id(plan.getId());
-        turnoHigea.setServicio_id(motivoTurno.getId());
-        return turnoHigea;
-    }
 
-}
+}//end Turno

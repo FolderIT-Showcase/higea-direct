@@ -1,9 +1,9 @@
 package net.folderit.repository;
 
-import net.folderit.domain.CentroSalud;
-import net.folderit.domain.Especialidad;
-import net.folderit.domain.Profesional;
-import net.folderit.domain.Turno;
+import net.folderit.domain.core.CentroSalud;
+import net.folderit.domain.core.Especialidad;
+import net.folderit.domain.core.Profesional;
+import net.folderit.domain.core.Turno;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Date;

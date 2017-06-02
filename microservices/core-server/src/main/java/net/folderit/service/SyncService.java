@@ -1,8 +1,8 @@
 package net.folderit.service;
 
-import net.folderit.domain.ObraSocial;
-import net.folderit.dto.LoginDTO;
-import net.folderit.dto.LoginResultDTO;
+import net.folderit.domain.core.ObraSocial;
+import net.folderit.domain.higea.LoginHigea;
+import net.folderit.domain.higea.LoginResultHigea;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
@@ -25,11 +25,11 @@ public class SyncService {
         this.metadataService = metadataService;
     }
 
-    private ResponseEntity<LoginResultDTO> login() {
-        LoginDTO loginDTO = new LoginDTO("turneroweb", "WroteScientistFarmerCarbon");
+    private ResponseEntity<LoginResultHigea> login() {
+        LoginHigea loginDTO = new LoginHigea("turneroweb", "WroteScientistFarmerCarbon");
         // send request and parse result
         String url = "http://higea.folderit.net/api/login";
-        LoginResultDTO result = restTemplate.postForObject(url, loginDTO, LoginResultDTO.class);
+        LoginResultHigea result = restTemplate.postForObject(url, loginDTO, LoginResultHigea.class);
         return ResponseEntity.ok(result);
     }
 
@@ -38,7 +38,7 @@ public class SyncService {
 
         String codigo = "BONFANTI";
 
-        ResponseEntity<LoginResultDTO> loginResultDTO = login();
+        ResponseEntity<LoginResultHigea> loginResultDTO = login();
         // URI (URL) parameters
         Map<String, String> uriParams = new HashMap<>();
         uriParams.put("cliente", codigo);

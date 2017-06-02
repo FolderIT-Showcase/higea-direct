@@ -1,8 +1,9 @@
 package net.folderit.web;
 
-import net.folderit.domain.Persona;
-import net.folderit.domain.exception.TurneroException;
+
+import net.folderit.domain.core.Persona;
 import net.folderit.dto.ResultAfipDto;
+import net.folderit.exception.TurneroException;
 import net.folderit.service.PersonaService;
 import net.folderit.service.TurnoService;
 import net.folderit.util.JasperUtil;

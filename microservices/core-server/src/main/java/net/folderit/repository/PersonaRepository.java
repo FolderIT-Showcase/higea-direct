@@ -1,6 +1,6 @@
 package net.folderit.repository;
 
-import net.folderit.domain.Persona;
+import net.folderit.domain.core.Persona;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 

@@ -1,8 +1,8 @@
 package net.folderit.service;
 
-import net.folderit.domain.Turno;
-import net.folderit.domain.exception.TurneroException;
+import net.folderit.domain.core.Turno;
 import net.folderit.dto.FilterDto;
+import net.folderit.exception.TurneroException;
 import net.folderit.repository.TurnoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
