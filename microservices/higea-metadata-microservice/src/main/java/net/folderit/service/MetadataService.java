@@ -97,6 +97,31 @@ public class MetadataService {
         return tiposTurno;
     }
 
+    public List<MotivoTurno> findMotivosTurno(String codigo) {
+        ResponseEntity<LoginResultHigea> loginResultDTO = login();
+        // URI (URL) parameters
+        Map<String, String> uriParams = new HashMap<>();
+        uriParams.put("cliente", codigo);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+        headers.set("Authorization", loginResultDTO.getBody().getToken());
+        HttpEntity<?> entity = new HttpEntity<>(headers);
+
+        String url = "http://higea.folderit.net/api/{cliente}/motivoTurnos";
+        ResponseEntity<Result<MotivoTurnoHigea>> result = restTemplate.exchange(url, HttpMethod.GET, entity,
+                new ParameterizedTypeReference<Result<MotivoTurnoHigea>>() {
+                }, uriParams);
+
+        ArrayList<MotivoTurno> motivosTurno = new ArrayList<>();
+
+        result.getBody().getData().getRows().forEach(motivoTurnoHigea -> motivosTurno.add(motivoTurnoHigea.convert()));
+
+        return motivosTurno;
+    }
+
+
+
     public List<Pais> findPaises(String codigo) {
         ResponseEntity<LoginResultHigea> loginResultDTO = login();
         // URI (URL) parameters

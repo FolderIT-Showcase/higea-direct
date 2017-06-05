@@ -106,12 +106,12 @@ public class Persona implements Serializable {
         pacienteDTO.setDocumento_id(getTipoDocID(getDocumento().getTipoDocumento()));
         pacienteDTO.setPersona_apellido(getApellido());
         pacienteDTO.setPersona_nombres(getNombre());
-        pacienteDTO.setPersona_fecha_nacimiento(getFechaNacimiento() != null ? getFechaNacimiento().toString() : null);
-        // pacienteDTO.setPersona_sexo(getGenero());
+        pacienteDTO.setPersona_fecha_nacimiento(getFechaNacimiento() != null ? getFechaNacimiento().toString() : "");
+        pacienteDTO.setPersona_sexo("S");
         pacienteDTO.setPersona_documento_nro(getDocumento() != null ? getDocumento().getNumero().toString() : "");
         pacienteDTO.setPersona_telefono_part_nro(getTipoContaco(TipoContacto.telefono));
         pacienteDTO.setPersona_telefono_cel_nro(getTipoContaco(TipoContacto.celular));
-        pacienteDTO.setPersona_telefono_lab_nro(null);
+        pacienteDTO.setPersona_telefono_lab_nro("");
         pacienteDTO.setPersona_calle_nro(getDomicilio() != null ? getDomicilio().getCalle() : null);
         pacienteDTO.setPersona_calle_texto(getDomicilio() != null ? getDomicilio().getCalle() : null);
         // pacienteDTO.setPersona_departamento_nro();

@@ -42,6 +42,11 @@ public class HigeaMetadataApplication {
         return ResponseEntity.ok(metadataService.findTiposTurnoFac(codigo));
     }
 
+    @GetMapping("/{cliente}/motivoTurno")
+    public ResponseEntity<List<MotivoTurno>> getMotivosTurno(@PathVariable("cliente") String codigo) {
+        return ResponseEntity.ok(metadataService.findMotivosTurno(codigo));
+    }
+
     @GetMapping("/{cliente}/pais")
     public ResponseEntity<List<Pais>> getPaises(@PathVariable("cliente") String codigo) {
         return ResponseEntity.ok(metadataService.findPaises(codigo));

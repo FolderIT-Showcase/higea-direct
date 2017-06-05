@@ -1,12 +1,9 @@
 package net.folderit.connection;
 
 import net.folderit.domain.core.Persona;
-import net.folderit.domain.higea.LoginHigea;
-import net.folderit.domain.higea.LoginResultHigea;
-import net.folderit.domain.higea.PacienteHigea;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import net.folderit.domain.higea.*;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -28,24 +25,38 @@ public class ConnectionMidleWare {
         return ResponseEntity.ok(result);
     }
 
-    public PacienteHigea savePaciente(String codigo, Persona persona) {
+    public Persona savePaciente(String codigo, Persona persona) {
 
         PacienteHigea dto = persona.convertToPacienteHigeaDTO();
         ResponseEntity<LoginResultHigea> loginResultDTO = login();
 
-        MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
+       /* MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
         headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
-        headers.set("Authorization", loginResultDTO.getBody().getToken());
+        headers.set("Content-Type", MediaType.APPLICATION_JSON_VALUE);
 
-       
-        HttpEntity<?> request = new HttpEntity<>(dto, headers);
+        headers.set("Authorization", loginResultDTO.getBody().getToken());*/
+
+
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+        //headers.set("Content-Type", MediaType.APPLICATION_JSON_VALUE);
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        //headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("Authorization", loginResultDTO.getBody().getToken());
+        HttpEntity<?> entity = new HttpEntity<>(dto,headers);
+
 
         Map<String, String> uriParams = new HashMap<>();
         uriParams.put("cliente", codigo);
 
         String uriPaciente = "http://higea.folderit.net/api/{cliente}/pacientes";
-        ResponseEntity<PacienteHigea> result = restTemplate.postForEntity(uriPaciente, request, PacienteHigea.class, uriParams);
-        return result.getBody();
+        ResponseEntity<PacienteHigea> result = restTemplate.postForEntity(uriPaciente, entity, PacienteHigea.class, uriParams);
+
+        /*ResponseEntity<Result<PacienteHigea>> result = restTemplate.exchange(uriPaciente, HttpMethod.POST, entity,
+                new ParameterizedTypeReference<Result<PacienteHigea>>() {
+                }, uriParams);*/
+        return persona;
     }
 
 
