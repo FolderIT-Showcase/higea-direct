@@ -52,15 +52,15 @@ export class RegisterComponent implements OnInit {
       'nombre': [null, Validators.required],
       'apellido': [null, Validators.required],
       'numeroDocumento': [null, Validators.required],
-      'tipoDocumento': [null, Validators.required],
-      'pais': [null, Validators.required],
-      'genero': [null, Validators.required],
+      'tipoDocumento': ['Tipo de Documento', Validators.required],
+      'pais': [this.paises[0], Validators.required],
+      'genero': [this.generos[0], Validators.required],
       'password1': [null, Validators.required],
       'password2': [null, [Validators.required, this.passwordMatch]],
       'email': [null, Validators.required],
       'telefono': [null, Validators.required],
-      'obraSocial': [null],
-      'plan': [null],
+      'obraSocial': [this.obras_sociales[0]],
+      'plan': [this.planes[0]],
       'nroAfiliado': [null],
     }, {validator: this.passwordMatcher});
 
@@ -148,8 +148,8 @@ export class RegisterComponent implements OnInit {
     this.personaService.create(persona)
       .then(() => {
         this.alertService.success('Registro Exitoso, chequee su cuenta de email para activar el usuario');
+        this.router.navigate(['/login']);
       });
-    this.router.navigate(['/login']);
   }
 
   handleCorrectCaptcha(event) {

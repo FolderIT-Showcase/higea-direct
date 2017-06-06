@@ -107,7 +107,7 @@ public class Persona implements Serializable {
         pacienteDTO.setPersona_apellido(getApellido());
         pacienteDTO.setPersona_nombres(getNombre());
         pacienteDTO.setPersona_fecha_nacimiento(getFechaNacimiento() != null ? getFechaNacimiento().toString() : null);
-        // pacienteDTO.setPersona_sexo(getGenero());
+        pacienteDTO.setPersona_sexo("S");
         pacienteDTO.setPersona_documento_nro(getDocumento() != null ? getDocumento().getNumero().toString() : "");
         pacienteDTO.setPersona_telefono_part_nro(getTipoContaco(TipoContacto.telefono));
         pacienteDTO.setPersona_telefono_cel_nro(getTipoContaco(TipoContacto.celular));

@@ -4,9 +4,9 @@ import net.folderit.domain.core.Profesional;
 import net.folderit.domain.core.Turno;
 import net.folderit.domain.higea.LoginHigea;
 import net.folderit.domain.higea.LoginResultHigea;
+import net.folderit.domain.higea.Result;
 import net.folderit.domain.higea.TurnoHigea;
 import net.folderit.dto.FilterDto;
-import net.folderit.domain.higea.Result;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -31,7 +31,7 @@ public class ConnectionMidleWare {
         return ResponseEntity.ok(result);
     }
 
-    private List<net.folderit.domain.higea.TurnoHigea> turnos(String codigo, FilterDto filterDto) {
+    private List<TurnoHigea> turnos(String codigo, FilterDto filterDto) {
 
         ResponseEntity<LoginResultHigea> loginResultDTO = login();
         // URI (URL) parameters
@@ -76,6 +76,29 @@ public class ConnectionMidleWare {
         List<Profesional> profesionales = getProfesionales(codigo);
 
         turnosHigea.forEach(x -> turnosCore.add(x.convert(profesionales)));
+
+        return turnosCore;
+    }
+
+    public List<Turno> findAllByPersona(String codigo, Integer pacienteId) {
+
+        ResponseEntity<LoginResultHigea> loginResultDTO = login();
+        // URI (URL) parameters
+        Map<String, String> uriParams = new HashMap<>();
+        uriParams.put("cliente", codigo);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+        headers.set("Authorization", loginResultDTO.getBody().getToken());
+        HttpEntity<?> entity = new HttpEntity<>(headers);
+
+        ResponseEntity<ArrayList<TurnoHigea>> result =
+                restTemplate.exchange(uriTurnos + "/" + pacienteId, HttpMethod.GET, entity,
+                        new ParameterizedTypeReference<ArrayList<TurnoHigea>>() {
+                        }, uriParams);
+
+        List<Turno> turnosCore = new ArrayList<>();
+        List<Profesional> profesionales = getProfesionales(codigo);
+        result.getBody().forEach(turno -> turnosCore.add(turno.convert(profesionales)));
 
         return turnosCore;
     }

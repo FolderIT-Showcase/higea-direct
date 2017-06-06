@@ -1,13 +1,17 @@
 package net.folderit.domain.higea;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import net.folderit.domain.core.ObraSocial;
 
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonInclude(NON_NULL)
 public class ObraSocialHigea {
     private int obra_social_id;
     private String empresa_nombre;

@@ -1,7 +1,19 @@
 <div class="col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
 
   <h2 class="app-header text-center">Registro</h2>
-  <form [formGroup]="complexForm" (ngSubmit)="submitForm(complexForm.value)">
+  <form class="float-label" [formGroup]="complexForm" (ngSubmit)="submitForm(complexForm.value)">
+
+    <div class="row">
+      <div class="form-group">
+        <label class="control-label" for="inputNormal">Normal input</label>
+        <input type="text" class="form-control" id="inputNormal" placeholder="Placeholder text"/>
+      </div>
+
+      <div class="form-group has-warning">
+        <label class="control-label" for="inputWarning">Warning input</label>
+        <input type="text" class="form-control" id="inputWarning" placeholder="Placeholder text"/>
+      </div>
+    </div>
 
     <div class="row">
       <div class="col-sm-6">
@@ -81,9 +93,9 @@
 
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-id-card "></i></span>
+            <button class="btn btn-link select-label"> Tipo de Documento</button>
             <select type="text" class="form-control" [formControl]="complexForm.controls['tipoDocumento']">
-              <option value="">Placeholder text..</option>
-              <option [ngValue]="tipoDocumento" *ngFor="let tipoDocumento of tipoDocumentos">{{tipoDocumento}}</option>
+              <option [value]="tipoDocumento.id" *ngFor="let tipoDocumento of tipoDocumentos">{{tipoDocumento}}</option>
             </select>
             <small
               *ngIf="complexForm.controls['tipoDocumento'].hasError('required') && complexForm.controls['tipoDocumento'].touched"
@@ -140,7 +152,7 @@
 
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-intersex"></i></span>
-            <select type="text" class="form-control" [formControl]="complexForm.controls['genero']" p>
+            <select type="text" class="form-control" [formControl]="complexForm.controls['genero']">
               <option disabled selected>Genero</option>
               <option [ngValue]="genero" *ngFor="let genero of generos">{{genero}}</option>
             </select>

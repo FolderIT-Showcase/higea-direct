@@ -12,6 +12,7 @@ export class NavbarComponent implements OnInit {
 
   isAuth = false;
   isIn = false;
+  license = localStorage.getItem('license');
 
   constructor(private auth: AppAuthService,
               private router: Router, private utilsService: UtilsService) {
@@ -21,7 +22,7 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.isAuth = AppAuthService.isAdmin() && this.utilsService.getWidth() >= 900;
+    this.isAuth = AppAuthService.isAdmin() && (this.license === 'core') && this.utilsService.getWidth() >= 900;
   }
 
   toggleState() { // click handler
