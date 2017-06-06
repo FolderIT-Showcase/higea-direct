@@ -94,10 +94,11 @@ export class PersonaService {
       ];
     } else {
       promises = [
-        this.api.post(path, persona).then(() => {
+
+        this.api.post(path, persona, false).then(() => {
           this.buildIntegrantes(persona)
         }),
-        this.api.post(path, persona).then(() => {
+        this.api.post(this.externalUriRegistration, persona, false).then(() => {
           this.buildIntegrantes(persona)
         })
       ];

@@ -40,6 +40,14 @@ public class ConnectionMidleWare {
         String uriPaciente = "http://higea.folderit.net/api/{cliente}/pacientes";
         ResponseEntity<Result<PacienteHigea>> result = restTemplate.exchange(uriPaciente, HttpMethod.POST, entity, new ParameterizedTypeReference<Result<PacienteHigea>>() {
         }, uriParams);
+        if(persona.getIntegrantes().size()>0){
+            for (Persona integrante: persona.getIntegrantes()){
+                PacienteHigea integranteNuevo = integrante.convertToPacienteHigeaDTO();
+                HttpEntity entityIntegrante = new HttpEntity<>(integranteNuevo, headers);
+                restTemplate.exchange(uriPaciente, HttpMethod.POST, entityIntegrante, new ParameterizedTypeReference<Result<PacienteHigea>>() {
+                }, uriParams);
+            }
+        }
         return result.getBody().getData().getRows().get(0);
     }
 
