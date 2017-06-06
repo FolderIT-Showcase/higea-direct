@@ -106,12 +106,12 @@ public class Persona implements Serializable {
         pacienteDTO.setDocumento_id(getTipoDocID(getDocumento().getTipoDocumento()));
         pacienteDTO.setPersona_apellido(getApellido());
         pacienteDTO.setPersona_nombres(getNombre());
-        pacienteDTO.setPersona_fecha_nacimiento(getFechaNacimiento() != null ? getFechaNacimiento().toString() : null);
-        pacienteDTO.setPersona_sexo("S");
-        pacienteDTO.setPersona_documento_nro(getDocumento() != null ? getDocumento().getNumero().toString() : "");
+        pacienteDTO.setPersona_fecha_nacimiento(getFechaNacimiento() != null ? getFechaNacimiento().toString():null);
+        pacienteDTO.setPersona_sexo(getSexo());
+        pacienteDTO.setPersona_documento_nro(getDocumento() != null ? getDocumento().getNumero().toString() :null);
         pacienteDTO.setPersona_telefono_part_nro(getTipoContaco(TipoContacto.telefono));
         pacienteDTO.setPersona_telefono_cel_nro(getTipoContaco(TipoContacto.celular));
-        pacienteDTO.setPersona_telefono_lab_nro(null);
+        pacienteDTO.setPersona_telefono_lab_nro("");
         pacienteDTO.setPersona_calle_nro(getDomicilio() != null ? getDomicilio().getCalle() : null);
         pacienteDTO.setPersona_calle_texto(getDomicilio() != null ? getDomicilio().getCalle() : null);
         // pacienteDTO.setPersona_departamento_nro();
@@ -125,7 +125,7 @@ public class Persona implements Serializable {
     }
 
     public String getTipoContaco(TipoContacto tipoContacto) {
-        String numeroTelefono = "";
+        String numeroTelefono = null;
 
         for (Contacto tipo : getContacto()) {
             if (tipo.getTipoContacto().equals(tipoContacto)) {
@@ -134,6 +134,15 @@ public class Persona implements Serializable {
         }
 
         return numeroTelefono;
+    }
+
+    private String getSexo(){
+        if(getGenero().equals(Genero.MASCULINO)){
+            return "N";
+        }else if(getGenero().equals(Genero.FEMENINO)){
+            return "S";
+        }
+        return null;
     }
 
     public Long getTipoDocID(TipoDocumento tipoDocumento) {
