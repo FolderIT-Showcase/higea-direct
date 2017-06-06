@@ -1,11 +1,12 @@
 package net.folderit.domain.higea;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import net.folderit.domain.core.Localidad;
-import net.folderit.domain.core.Provincia;
 import net.folderit.domain.core.enums.EstadoCivil;
+
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
 /**
  * Creat
@@ -14,6 +15,7 @@ import net.folderit.domain.core.enums.EstadoCivil;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonInclude(NON_NULL)
 public class EstadoCivilHigea {
 
     Long estado_civil_id;

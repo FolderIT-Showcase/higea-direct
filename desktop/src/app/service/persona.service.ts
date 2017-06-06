@@ -77,10 +77,21 @@ export class PersonaService {
 
   updatePersonaUser(persona: Persona) {
     const path = this.basePathCore + 'persona';
-    return this.api.post(path, persona)
-      .then(() => {
-        this.buildIntegrantes(persona);
-      });
+    let promises;
+
+    if (this.license === 'core') {
+      promises = [
+        this.api.post(path, persona).then(() => { this.buildIntegrantes(persona) })
+      ];
+    } else {
+      promises = [
+        this.api.post(path, persona).then(() => { this.buildIntegrantes(persona) }),
+      this.api.post(path, persona).then(() => { this.buildIntegrantes(persona) })
+      ];
+    }
+
+    // serialize and return
+    return promises.reduce((m, p: any) => m.then(v => Promise.all([...v, p()])), Promise.resolve([]));
   }
 
   activateUser(token) {

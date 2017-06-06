@@ -4,28 +4,9 @@
     <p>Acá podes sacar un nuevo turno</p>
   </div>
   <div class="container">
-    <tabset [justified]="true">
-      <tab heading="Busqueda Rápida">
-        <br>
-        <div class="row">
-          <app-turno-busqueda-rapida-external></app-turno-busqueda-rapida-external>
-        </div>
-        <br>
-        <div class="row">
-          <app-turno-resultado-external></app-turno-resultado-external>
-        </div>
-      </tab>
-      <tab heading="Busqueda Avanzada">
-        <br>
-        <div class="row">
-          <app-turno-busqueda-avanzada-external></app-turno-busqueda-avanzada-external>
-        </div>
-        <br>
-        <div class="row">
-          <app-turno-resultado-external></app-turno-resultado-external>
-        </div>
-      </tab>
-    </tabset>
+    <app-turno-busqueda-avanzada-external></app-turno-busqueda-avanzada-external>
+    <br>
+    <app-turno-resultado-external></app-turno-resultado-external>
   </div>
 </div>
 

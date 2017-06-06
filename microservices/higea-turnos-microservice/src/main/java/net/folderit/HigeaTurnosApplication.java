@@ -36,6 +36,14 @@ public class HigeaTurnosApplication {
         return ResponseEntity.ok(turnos);
     }
 
+    @GetMapping("/{cliente}/{personaId}")
+    public ResponseEntity<Collection<Turno>> getAllByPersona(
+            @PathVariable("cliente") String codigo,
+            @PathVariable("personaId") Integer personaId) {
+        List<Turno> turnos = connectionMidleWare.findAllByPersona(codigo, personaId);
+        return ResponseEntity.ok(turnos);
+    }
+
     @PostMapping("/{cliente}")
     public ResponseEntity<?> save(@PathVariable("cliente") String codigo, @RequestBody TurnoHigea turnoDTO) {
         // TurnoDTO turno = connectionMidleWare.save(codigo, turnoDTO, -1);

@@ -15,19 +15,19 @@
 }
 
 .dark-card {
-  background-color: rgba(0,0,0, 0.4);
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 @media (min-width: 490px) {
   .card {
-    margin: 10vw auto;
+    margin: 3vw auto;
   }
 }
 
 @media (min-width: 700px) {
   .card-container {
     width: 100%;
-    height: 50%;
+    //height: 50%;
     max-width: 90vw;
     padding: 1vw;
   }
@@ -36,7 +36,7 @@
 @media (min-width: 1200px) {
   .card-container {
     width: 100%;
-    height: 50%;
+    //height: 50%;
     max-width: 80vw;
     padding: 1em;
   }
@@ -93,6 +93,7 @@
 
 .card .card-action a {
   margin: 0 auto;
+  font-size: 1em;
   transition: color 0.3s ease;
   text-transform: uppercase;
 }

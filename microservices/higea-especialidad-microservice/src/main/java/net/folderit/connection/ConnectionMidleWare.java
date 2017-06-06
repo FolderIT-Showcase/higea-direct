@@ -1,11 +1,8 @@
 package net.folderit.connection;
 
 import net.folderit.domain.core.Especialidad;
-import net.folderit.domain.higea.EspecialidadHigea;
-import net.folderit.domain.higea.LoginHigea;
-import net.folderit.domain.higea.LoginResultHigea;
-import net.folderit.domain.higea.ProfesionalHigea;
-import net.folderit.domain.higea.Result;
+import net.folderit.domain.core.Profesional;
+import net.folderit.domain.higea.*;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -19,15 +16,12 @@ import java.util.Map;
 @Service
 public class ConnectionMidleWare {
 
-
-    final String uriLogin = "http://higea.folderit.net/api/login";
-    final String uriEspecialidad = "http://higea.folderit.net/api/{cliente}/especialidades";
-    final String uriProfesionales = "http://localhost:36001/{cliente}/profesionales";
     private RestTemplate restTemplate = new RestTemplate();
 
-    public ResponseEntity<LoginResultHigea> login() {
+    private ResponseEntity<LoginResultHigea> login() {
         LoginHigea loginDTO = new LoginHigea("turneroweb", "WroteScientistFarmerCarbon");
         // send request and parse result
+        String uriLogin = "http://higea.folderit.net/api/login";
         LoginResultHigea result = restTemplate.postForObject(uriLogin, loginDTO, LoginResultHigea.class);
         return ResponseEntity.ok(result);
     }
@@ -39,11 +33,12 @@ public class ConnectionMidleWare {
         uriParams.put("cliente", codigo);
 
         // send request and parse result
-        ResponseEntity<Result<ProfesionalHigea>> result =
-                restTemplate.exchange(uriProfesionales, HttpMethod.GET, entity, new ParameterizedTypeReference<Result<ProfesionalHigea>>() {
+        String uriProfesionales = "http://localhost:36001/{cliente}/profesionales";
+        ResponseEntity<List<ProfesionalHigea>> result =
+                restTemplate.exchange(uriProfesionales, HttpMethod.GET, entity, new ParameterizedTypeReference<List<ProfesionalHigea>>() {
                 }, uriParams);
 
-        return result.getBody().getData().getRows();
+        return result.getBody();
 
     }
 
@@ -63,6 +58,7 @@ public class ConnectionMidleWare {
 
         List<ProfesionalHigea> profesionales = this.getProfesionales(codigo, entity);
 
+        String uriEspecialidad = "http://higea.folderit.net/api/{cliente}/especialidades";
         ResponseEntity<Result<EspecialidadHigea>> result = restTemplate.exchange(uriEspecialidad, HttpMethod.GET,
                 entity, new ParameterizedTypeReference<Result<EspecialidadHigea>>() {
                 }, uriParams);
@@ -71,18 +67,20 @@ public class ConnectionMidleWare {
 
         List<EspecialidadHigea> mEspecialidades = result.getBody().getData().getRows();
 
-        mEspecialidades.forEach(x -> {
-            Especialidad mEspecialidad = x.convertToEspecialidadCoreDTO();
+        mEspecialidades.forEach(especialidad -> {
+            Especialidad mEspecialidad = especialidad.convert();
+            List<Profesional> profesionalesTmp = new ArrayList<>();
 
-            profesionales.forEach(y -> {
-                if (mEspecialidad.getId().intValue() == y.getEspecialidad_id()) {
-                    if (mEspecialidad.getProfesional() == null) {
-                        mEspecialidad.setProfesional(new ArrayList<>());
+            profesionales.forEach(profesional -> {
+                if (mEspecialidad.getId().intValue() == profesional.getEspecialidad_id()) {
+                    if (mEspecialidad.getProfesional() != null) {
+                        profesionalesTmp.add(profesional.convert());
                     }
-                    mEspecialidad.getProfesional().add(y.convert());
+
                 }
             });
 
+            mEspecialidad.setProfesional(profesionalesTmp);
             especialidades.add(mEspecialidad);
         });
 

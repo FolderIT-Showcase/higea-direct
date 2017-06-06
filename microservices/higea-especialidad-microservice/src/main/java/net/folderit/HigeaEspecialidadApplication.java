@@ -7,6 +7,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,8 +32,8 @@ public class HigeaEspecialidadApplication {
     }
 
     @RequestMapping("/{cliente}")
-    public List<Especialidad> especialidades(@PathVariable("cliente") String codigo) {
-        return connectionMidleWare.especialidades(codigo);
+    public ResponseEntity<List<Especialidad>> especialidades(@PathVariable("cliente") String codigo) {
+        return ResponseEntity.ok(connectionMidleWare.especialidades(codigo));
     }
 
 

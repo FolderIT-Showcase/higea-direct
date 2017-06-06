@@ -211,8 +211,7 @@ public class MetadataService {
 
         String url = "http://higea.folderit.net/api/{cliente}/estadoCiviles";
         ResponseEntity<Result<EstadoCivilHigea>> result = restTemplate.exchange(url, HttpMethod.GET, entity,
-                new ParameterizedTypeReference<Result<EstadoCivilHigea>>() {
-                }, uriParams);
+                new ParameterizedTypeReference<Result<EstadoCivilHigea>>() {}, uriParams);
 
         List<EstadoCivil> estadosCiviles = new ArrayList<>();
 

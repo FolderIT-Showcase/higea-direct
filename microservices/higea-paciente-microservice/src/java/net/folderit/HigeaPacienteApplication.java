@@ -27,7 +27,7 @@ public class HigeaPacienteApplication {
     }
 
     @PostMapping("/{cliente}")
-    public ResponseEntity<Persona> save(@PathVariable("cliente") String codigo, @RequestBody Persona persona) {
+    public ResponseEntity<PacienteHigea> save(@PathVariable("cliente") String codigo, @RequestBody Persona persona) {
         return ResponseEntity.ok(connectionMidleWare.savePaciente(codigo, persona));
     }
 

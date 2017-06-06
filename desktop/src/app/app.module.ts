@@ -23,16 +23,18 @@ import {StoreService} from './service/store.service';
 import {UIModule} from './module/ui/ui.module';
 import {EspecialidadResolveService} from './service/resolve/especialidad-resolve.service';
 import {AdminService} from './service/admin.service';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     CommonModule,
     HttpModule,
     RouterModule,
     UIModule,
-    AppRoutingModule,
+    AppRoutingModule
   ],
   bootstrap: [AppComponent],
   providers: [

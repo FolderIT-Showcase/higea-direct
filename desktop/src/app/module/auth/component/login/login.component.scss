@@ -21,12 +21,16 @@
     font-size: 18px;
   }
 
+  input.form-control {
+    color: white !important;
+  }
+
   .login-form {
     max-width: 350px;
     margin: 0 auto;
   }
 
-  background: #2980b9 url('/assets/img/loop_bg2.png') repeat 0 0;
+  background: #2980b9 url('/assets/img/loop_bg2.jpg') repeat 0 0;
   -webkit-animation: 10s linear 0s normal none infinite animate;
   -moz-animation: 10s linear 0s normal none infinite animate;
   -ms-animation: 10s linear 0s normal none infinite animate;

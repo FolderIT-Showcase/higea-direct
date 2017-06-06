@@ -28,6 +28,12 @@ export class TurnoService {
   }
 
   getCentrosDeSalud() {
+    if (this.license !== 'core') {
+      return new Promise<any>((resolve, reject) => {
+        resolve('OK');
+      });
+    }
+
     const path = this.basePath + 'centroSalud';
     return this.api.get(path)
       .then(data => {
@@ -72,6 +78,11 @@ export class TurnoService {
         this.storeService.update('CentroSalud', centro);
         this.storeService.update('turnos', data);
       });
+  }
+
+  getTurnoByPersonaId(id: number) {
+    const path = `${this.license}/persona/${this.client}/id`;
+    return this.api.get(path);
   }
 
   getProximosTurnos(centro: CentroSalud, especialidad: Especialidad, profesional: Profesional) {

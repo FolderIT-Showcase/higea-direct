@@ -54,7 +54,11 @@ export class MisTurnosComponent implements OnInit, OnDestroy, AfterViewInit {
     this.form = this.fb.group({
       'persona': [this.personas[0]]
     });
-    this.turnos = this.personas[0].turno;
+
+    this.turnoService.getTurnoByPersonaId(this.personas[0].id)
+      .then(data => {
+        this.turnos = data;
+      });
 
     this.turnos.forEach(x => {
       if (x.fecha <= Date.now()) {
@@ -73,7 +77,10 @@ export class MisTurnosComponent implements OnInit, OnDestroy, AfterViewInit {
           return;
         }
         this.persona = data;
-        this.turnos = data.turno;
+        this.turnoService.getTurnoByPersonaId(this.persona.id)
+          .then(turnos => {
+            this.turnos = turnos;
+          });
       }));
   }
 
@@ -92,7 +99,10 @@ export class MisTurnosComponent implements OnInit, OnDestroy, AfterViewInit {
   handlePersonaClick(persona: Persona) {
     this.storeService.update('persona', persona);
     this.persona = persona;
-    this.turnos = persona.turno;
+    this.turnoService.getTurnoByPersonaId(persona.id)
+      .then(data => {
+        this.turnos = data;
+      });
   }
 
   public showModal(turno: Turno) {

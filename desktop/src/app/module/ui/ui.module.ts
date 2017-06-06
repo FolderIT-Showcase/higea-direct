@@ -8,12 +8,13 @@ import {CoreComponent} from './core/core.component';
 import {ModalComponent} from './modal/modal.component';
 import {ModalModule} from 'ngx-bootstrap';
 import {RouterModule} from '@angular/router';
+import {SelectComponent} from './select/select.component';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
-    ModalModule.forRoot(),
+    ModalModule.forRoot()
   ],
   declarations: [
     AlertComponent,
@@ -22,6 +23,7 @@ import {RouterModule} from '@angular/router';
     LoadingComponent,
     ModalComponent,
     NavbarComponent,
+    SelectComponent,
   ],
   exports: [
     AlertComponent,
@@ -29,7 +31,7 @@ import {RouterModule} from '@angular/router';
     HomeComponent,
     LoadingComponent,
     ModalComponent,
-    NavbarComponent,
+    NavbarComponent
   ]
 })
 export class UIModule {

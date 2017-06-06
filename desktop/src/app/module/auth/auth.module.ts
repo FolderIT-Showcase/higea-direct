@@ -12,7 +12,7 @@ import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ReCaptchaModule} from 'angular2-recaptcha';
 import {AuthHomeComponent} from './auth-home.component';
-import {SelectModule} from 'ng-select';
+import {UIModule} from '../ui/ui.module';
 
 @NgModule({
   imports: [
@@ -21,7 +21,7 @@ import {SelectModule} from 'ng-select';
     FormsModule,
     ReactiveFormsModule,
     ReCaptchaModule,
-    SelectModule
+    UIModule
   ],
   declarations: [
     LoginComponent,
