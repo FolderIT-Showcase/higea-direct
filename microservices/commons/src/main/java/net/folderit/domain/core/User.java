@@ -2,6 +2,7 @@ package net.folderit.domain.core;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
+import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY;
 
 @Entity
 @Table(name = "users")
@@ -26,15 +28,17 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-
+    @JsonProperty(access = WRITE_ONLY)
     private String password;
 
     private String firstName;
 
     private String lastName;
-    @JsonIgnore
+
+    @JsonProperty(access = WRITE_ONLY)
     private String externalId;
-    @JsonIgnore
+
+    @JsonProperty(access = WRITE_ONLY)
     private String type;
 
     private String email;

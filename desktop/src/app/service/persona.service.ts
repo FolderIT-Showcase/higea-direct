@@ -38,7 +38,7 @@ export class PersonaService {
         if (p === 'function') {
           Promise.all([...v, p()])
         } else {
-          Promise.all([...v, p])
+          Promise.all([v, p])
         }
       }
     ), Promise.resolve([]));

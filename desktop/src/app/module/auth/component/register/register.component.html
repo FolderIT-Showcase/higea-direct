@@ -273,9 +273,8 @@
     <div class="row">
       <br>
       <div class="col-sm-6">
-        <button type="submit" class="btn btn-primary btn-block"
-                [disabled]="!complexForm.valid || !captcha">Registrarse
-        </button>
+        <!--<button type="submit" class="btn btn-primary btn-block" [disabled]="!complexForm.valid || !captcha">Registrarse </button>-->
+        <button type="submit" class="btn btn-primary btn-block" [disabled]="!complexForm.valid">Registrarse</button>
       </div>
       <div class="col-sm-6">
         <a [routerLink]="['/login']" class="btn btn-block btn-default">Cancelar</a>

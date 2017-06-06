@@ -2,129 +2,72 @@ package net.folderit.connection;
 
 import net.folderit.domain.core.Profesional;
 import net.folderit.domain.core.Turno;
-import net.folderit.domain.higea.LoginHigea;
-import net.folderit.domain.higea.LoginResultHigea;
 import net.folderit.domain.higea.Result;
 import net.folderit.domain.higea.TurnoHigea;
 import net.folderit.dto.FilterDto;
+import net.folderit.service.HigeaApiConnect;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.*;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class ConnectionMidleWare {
 
     private final String uriTurnos = "http://higea.folderit.net/api/{cliente}/turnos";
-    private RestTemplate restTemplate = new RestTemplate();
+    private final HigeaApiConnect higeaApiConnect;
+    private final RestTemplate restTemplate = new RestTemplate();
 
-    public ResponseEntity<LoginResultHigea> login() {
-        LoginHigea loginDTO = new LoginHigea("turneroweb", "WroteScientistFarmerCarbon");
-        // send request and parse result
-        String uriLogin = "http://higea.folderit.net/api/login";
-        LoginResultHigea result = restTemplate.postForObject(uriLogin, loginDTO, LoginResultHigea.class);
-        return ResponseEntity.ok(result);
+    @Autowired
+    public ConnectionMidleWare(HigeaApiConnect higeaApiConnect) {
+        this.higeaApiConnect = higeaApiConnect;
     }
 
     private List<TurnoHigea> turnos(String codigo, FilterDto filterDto) {
-
-        ResponseEntity<LoginResultHigea> loginResultDTO = login();
-        // URI (URL) parameters
-        Map<String, String> uriParams = new HashMap<>();
-        uriParams.put("cliente", codigo);
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
-        headers.set("Authorization", loginResultDTO.getBody().getToken());
-        HttpEntity<?> entity = new HttpEntity<>(headers);
-        ResponseEntity<Result<TurnoHigea>> result = restTemplate.exchange(getFilterURIEspecialidad(filterDto), HttpMethod.GET, entity,
-                new ParameterizedTypeReference<Result<TurnoHigea>>() {
-                }, uriParams);
-
+        ResponseEntity<Result<TurnoHigea>> result = higeaApiConnect.get(getFilterURIEspecialidad(filterDto), new ParameterizedTypeReference<Result<TurnoHigea>>() {
+        });
         return result.getBody().getData().getRows();
     }
 
 
-    private ArrayList<Profesional> getProfesionales(String codigo) {
-
-        ResponseEntity<LoginResultHigea> loginResultDTO = login();
-        // URI (URL) parameters
-        Map<String, String> uriParams = new HashMap<>();
-        uriParams.put("cliente", codigo);
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
-        headers.set("Authorization", loginResultDTO.getBody().getToken());
-        HttpEntity<?> entity = new HttpEntity<>(headers);
+    private List<Profesional> getProfesionales() {
         String uriProfesionales = "http://localhost:36001/{cliente}";
-        ResponseEntity<ArrayList<Profesional>> result =
-                restTemplate.exchange(uriProfesionales, HttpMethod.GET, entity, new ParameterizedTypeReference<ArrayList<Profesional>>() {
-                }, uriParams);
-        ArrayList<Profesional> tmp = new ArrayList<>();
-        tmp.addAll(result.getBody());
-        return tmp;
-
+        ResponseEntity<ArrayList<Profesional>> result = higeaApiConnect.get(uriProfesionales, new ParameterizedTypeReference<ArrayList<Profesional>>() {
+        });
+        return result.getBody();
     }
 
-    public List<Turno> finAllBy(String codigo, FilterDto filter) {
-
+    public List<Turno> findAllBy(String codigo, FilterDto filter) {
         List<TurnoHigea> turnosHigea = turnos(codigo, filter);
         List<Turno> turnosCore = new ArrayList<>(turnosHigea.size());
-        List<Profesional> profesionales = getProfesionales(codigo);
-
+        List<Profesional> profesionales = getProfesionales();
         turnosHigea.forEach(x -> turnosCore.add(x.convert(profesionales)));
-
         return turnosCore;
     }
 
-    public List<Turno> findAllByPersona(String codigo, Integer pacienteId) {
-
-        ResponseEntity<LoginResultHigea> loginResultDTO = login();
-        // URI (URL) parameters
-        Map<String, String> uriParams = new HashMap<>();
-        uriParams.put("cliente", codigo);
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
-        headers.set("Authorization", loginResultDTO.getBody().getToken());
-        HttpEntity<?> entity = new HttpEntity<>(headers);
-
-        ResponseEntity<ArrayList<TurnoHigea>> result =
-                restTemplate.exchange(uriTurnos + "/" + pacienteId, HttpMethod.GET, entity,
-                        new ParameterizedTypeReference<ArrayList<TurnoHigea>>() {
-                        }, uriParams);
-
+    public List<Turno> findAllByPersona(Integer pacienteId) {
+        ResponseEntity<ArrayList<TurnoHigea>> result = higeaApiConnect.get(uriTurnos + "/" + pacienteId, new ParameterizedTypeReference<ArrayList<TurnoHigea>>() { });
         List<Turno> turnosCore = new ArrayList<>();
-        List<Profesional> profesionales = getProfesionales(codigo);
+        List<Profesional> profesionales = getProfesionales();
         result.getBody().forEach(turno -> turnosCore.add(turno.convert(profesionales)));
-
         return turnosCore;
     }
 
-    public String getFilterURIEspecialidad(FilterDto filterDto) {
+    private String getFilterURIEspecialidad(FilterDto filterDto) {
         String filter = uriTurnos;
         filter += "?" + filterDto.getFilterParameters();
         return filter;
     }
 
     public Turno save(String codigo, Turno turno, int pacienteId) {
-
-        ResponseEntity<LoginResultHigea> loginResultDTO = login();
-        // URI (URL) parameters
-        Map<String, String> uriParams = new HashMap<>();
-        uriParams.put("cliente", codigo);
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
-        headers.set("Authorization", loginResultDTO.getBody().getToken());
-        HttpEntity<?> entity = new HttpEntity<>(headers);
-
         TurnoHigea turnoHigea = turno.convertHigea();
         turnoHigea.setPaciente_id((long) pacienteId);
-
-        ResponseEntity<TurnoHigea> result = restTemplate.postForEntity(uriTurnos, turnoHigea, TurnoHigea.class, uriParams);
-        List<Profesional> profesionales = getProfesionales(codigo);
+        ResponseEntity<TurnoHigea> result = higeaApiConnect.post(uriTurnos,new ParameterizedTypeReference<TurnoHigea>() {});
+        List<Profesional> profesionales = getProfesionales();
         return result.getBody().convert(profesionales);
     }
 
