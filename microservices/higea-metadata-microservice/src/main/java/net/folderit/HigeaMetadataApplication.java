@@ -34,37 +34,47 @@ public class HigeaMetadataApplication {
 
     @GetMapping("/{cliente}/obraSocial")
     public ResponseEntity<List<ObraSocial>> getObrasSociales(@PathVariable("cliente") String codigo) {
-        return ResponseEntity.ok(metadataService.findAllObrasSociales(codigo));
+        return ResponseEntity.ok(metadataService.findAllObrasSociales());
     }
 
     @GetMapping("/{cliente}/tipoTurno")
     public ResponseEntity<List<TipoTurno>> getTiposTurnoFac(@PathVariable("cliente") String codigo) {
-        return ResponseEntity.ok(metadataService.findTiposTurnoFac(codigo));
+        return ResponseEntity.ok(metadataService.findTiposTurnoFac());
     }
 
     @GetMapping("/{cliente}/motivoTurno")
     public ResponseEntity<List<MotivoTurno>> getMotivosTurno(@PathVariable("cliente") String codigo) {
-        return ResponseEntity.ok(metadataService.findMotivosTurno(codigo));
+        return ResponseEntity.ok(metadataService.findMotivosTurno());
     }
 
     @GetMapping("/{cliente}/pais")
     public ResponseEntity<List<Pais>> getPaises(@PathVariable("cliente") String codigo) {
-        return ResponseEntity.ok(metadataService.findPaises(codigo));
+        return ResponseEntity.ok(metadataService.findPaises());
     }
 
     @GetMapping("/{cliente}/provincia")
     public ResponseEntity<List<Provincia>> getProvincias(@PathVariable("cliente") String codigo) {
-        return ResponseEntity.ok(metadataService.findProvincias(codigo));
+        return ResponseEntity.ok(metadataService.findProvincias());
     }
 
     @GetMapping("/{cliente}/localidad")
     public ResponseEntity<List<Localidad>> getLocalidades(@PathVariable("cliente") String codigo) {
-        return ResponseEntity.ok(metadataService.findLocalidades(codigo));
+        return ResponseEntity.ok(metadataService.findLocalidades());
     }
 
     @GetMapping("/{cliente}/estadoCivil")
     public ResponseEntity<List<EstadoCivil>> getEstadoCiviles(@PathVariable("cliente") String codigo) {
-        return ResponseEntity.ok(metadataService.findEstadoCiviles(codigo));
+        return ResponseEntity.ok(metadataService.findEstadoCiviles());
+    }
+
+    @GetMapping("/{cliente}/especialidad")
+    public ResponseEntity<List<Especialidad>> getEspecialidades(@PathVariable("cliente") String codigo) {
+        return ResponseEntity.ok(metadataService.findEspecialidades());
+    }
+
+    @GetMapping("/{cliente}/profesional")
+    public ResponseEntity<List<Profesional>> getProfesionales(@PathVariable("cliente") String codigo) {
+        return ResponseEntity.ok(metadataService.findProfesionales());
     }
 
 }

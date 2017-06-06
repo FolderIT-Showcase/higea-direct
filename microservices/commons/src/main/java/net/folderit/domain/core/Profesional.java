@@ -19,13 +19,9 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 public class Profesional implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     private String apellido;
-
     private String nombre;
-
 
     public void finalize() throws Throwable {
 

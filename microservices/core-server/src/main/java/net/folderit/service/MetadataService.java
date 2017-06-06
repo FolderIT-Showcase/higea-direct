@@ -79,6 +79,14 @@ public class MetadataService {
         return obraSocialRepository.findAllByOrderByNombreAsc();
     }
 
+    public List<Especialidad> getAllEspecialidades() {
+        return especialidadRepository.findAllByOrderByNombreAsc();
+    }
+
+    public List<Profesional> getAllProfesionales() {
+        return profesionalRepository.findAllByOrderByApellidoAsc();
+    }
+
     public void clearObrasSociales() {
         obraSocialRepository.deleteAll();
     }
@@ -101,6 +109,14 @@ public class MetadataService {
 
     public void saveAllObraSocial(List<ObraSocial> obrasSociales) {
         obraSocialRepository.save(obrasSociales);
+    }
+
+    public void saveAllEspecialidades(List<Especialidad> especialidades) {
+        especialidadRepository.save(especialidades);
+    }
+
+    public void saveAllProfesionales(List<Profesional> profesionales) {
+        profesionalRepository.save(profesionales);
     }
 
     public void saveAllPaises(List<Pais> paises) {

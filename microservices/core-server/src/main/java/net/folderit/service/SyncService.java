@@ -1,9 +1,6 @@
 package net.folderit.service;
 
-import net.folderit.domain.core.Localidad;
-import net.folderit.domain.core.ObraSocial;
-import net.folderit.domain.core.Pais;
-import net.folderit.domain.core.Provincia;
+import net.folderit.domain.core.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.ResponseEntity;
@@ -29,14 +26,32 @@ public class SyncService {
     }
 
     public void syncAll(){
+        syncProfesionales();
+        syncEspecialidades();
         syncPaises();
         syncProvincias();
         syncLocalidades();
         syncObrasSociales();
     }
 
+    private void syncEspecialidades() {
+        String url = "http://localhost:36004/{cliente}/especialidad";
+        ResponseEntity<List<Especialidad>> result = higeaApiConnect.get(url, new ParameterizedTypeReference<List<Especialidad>>(){});
+        List<Especialidad> listOld = metadataService.getAllEspecialidades();
+        List<Especialidad> listNew = result.getBody();
+        metadataService.saveAllEspecialidades(listDiff(listOld, listNew));
+    }
+
+    private void syncProfesionales() {
+        String url = "http://localhost:36004/{cliente}/profesional";
+        ResponseEntity<List<Profesional>> result = higeaApiConnect.get(url, new ParameterizedTypeReference<List<Profesional>>(){});
+        List<Profesional> listOld = metadataService.getAllProfesionales();
+        List<Profesional> listNew = result.getBody();
+        metadataService.saveAllProfesionales(listDiff(listOld, listNew));
+    }
+
     // @Scheduled(fixedRate = 35000)
-    public void syncObrasSociales() {
+    private void syncObrasSociales() {
         String url = "http://localhost:36004/{cliente}/obraSocial";
         ResponseEntity<List<ObraSocial>> result = higeaApiConnect.get(url, new ParameterizedTypeReference<List<ObraSocial>>(){});
         List<ObraSocial> obrasSocialesOld = metadataService.getAllObrasSociales();
@@ -44,7 +59,7 @@ public class SyncService {
         metadataService.saveAllObraSocial(listDiff(obrasSocialesOld, obrasSocialesNew));
     }
 
-    public void syncPaises() {
+    private void syncPaises() {
         String url = "http://localhost:36004/{cliente}/pais";
         ResponseEntity<List<Pais>> result = higeaApiConnect.get(url, new ParameterizedTypeReference<List<Pais>>(){});
         List<Pais> listOld = metadataService.findAllPais();
@@ -52,7 +67,7 @@ public class SyncService {
         metadataService.saveAllPaises(listDiff(listOld, listNew));
     }
 
-    public void syncProvincias() {
+    private void syncProvincias() {
         String url = "http://localhost:36004/{cliente}/provincia";
         ResponseEntity<List<Provincia>> result = higeaApiConnect.get(url, new ParameterizedTypeReference<List<Provincia>>(){});
         List<Provincia> listOld = metadataService.findAllProvincia();
@@ -60,7 +75,7 @@ public class SyncService {
         metadataService.saveAllProvincias(listDiff(listOld, listNew));
     }
 
-    public void syncLocalidades() {
+    private void syncLocalidades() {
         String url = "http://localhost:36004/{cliente}/localidad";
         ResponseEntity<List<Localidad>> result = higeaApiConnect.get(url, new ParameterizedTypeReference<List<Localidad>>(){});
         List<Localidad> listOld = metadataService.findAllLocalidad();

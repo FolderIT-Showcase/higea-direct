@@ -34,7 +34,14 @@ export class PersonaService {
     }
 
     // serialize and return
-    return promises.reduce((m, p: any) => m.then(v => Promise.all([...v, p()])), Promise.resolve([]));
+    return promises.reduce((m, p: any) => m.then(v => {
+        if (p === 'function') {
+          Promise.all([...v, p()])
+        } else {
+          Promise.all([...v, p])
+        }
+      }
+    ), Promise.resolve([]));
 
   }
 
@@ -81,12 +88,18 @@ export class PersonaService {
 
     if (this.license === 'core') {
       promises = [
-        this.api.post(path, persona).then(() => { this.buildIntegrantes(persona) })
+        this.api.post(path, persona).then(() => {
+          this.buildIntegrantes(persona)
+        })
       ];
     } else {
       promises = [
-        this.api.post(path, persona).then(() => { this.buildIntegrantes(persona) }),
-      this.api.post(path, persona).then(() => { this.buildIntegrantes(persona) })
+        this.api.post(path, persona).then(() => {
+          this.buildIntegrantes(persona)
+        }),
+        this.api.post(path, persona).then(() => {
+          this.buildIntegrantes(persona)
+        })
       ];
     }
 

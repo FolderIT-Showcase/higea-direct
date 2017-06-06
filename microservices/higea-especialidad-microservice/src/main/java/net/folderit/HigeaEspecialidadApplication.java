@@ -33,7 +33,7 @@ public class HigeaEspecialidadApplication {
 
     @RequestMapping("/{cliente}")
     public ResponseEntity<List<Especialidad>> especialidades(@PathVariable("cliente") String codigo) {
-        return ResponseEntity.ok(connectionMidleWare.especialidades(codigo));
+        return ResponseEntity.ok(connectionMidleWare.especialidades());
     }
 
 

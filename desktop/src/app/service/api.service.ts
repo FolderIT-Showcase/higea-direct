@@ -47,10 +47,12 @@ export class ApiService {
     }
   }
 
-  catchException(exception: AppException) {
-    let mException = exception;
-    if (mException.error) {
-    } else {
+  catchException(exception: any) {
+    if (!exception || exception.json !== 'function') {
+      return;
+    }
+    let mException = exception.json();
+    if (!mException.error) {
       mException = new AppException();
     }
     this.alertService.error(mException.error);
@@ -84,7 +86,7 @@ export class ApiService {
     this.mPromise = this.http.get(`${this.baseURL}${path}`, {headers: this.headers})
       .map(this.filterError)
       .map(ApiService.getJson)
-      .first().toPromise().catch(error => this.catchException(error.json()));
+      .first().toPromise().catch(error => this.catchException(error));
     this.loadingService.setLoading(this.mPromise);
     return this.mPromise;
   }
@@ -116,7 +118,7 @@ export class ApiService {
       .post(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
       .map(this.filterError)
       .map(ApiService.getJson)
-      .first().toPromise().catch(error => this.catchException(error.json()));
+      .first().toPromise().catch(error => this.catchException(error));
     this.loadingService.setLoading(this.mPromise);
     return this.mPromise;
   }
@@ -127,7 +129,7 @@ export class ApiService {
       .put(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
       .map(this.filterError)
       .map(ApiService.getJson)
-      .first().toPromise().catch(error => this.catchException(error.json()));
+      .first().toPromise().catch(error => this.catchException(error));
     this.loadingService.setLoading(this.mPromise);
     return this.mPromise;
   }
@@ -137,7 +139,7 @@ export class ApiService {
     this.mPromise = this.http
       .patch(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
       .map(this.filterError)
-      .first().toPromise().catch(error => this.catchException(error.json()));
+      .first().toPromise().catch(error => this.catchException(error));
     this.loadingService.setLoading(this.mPromise);
     return this.mPromise;
   }
@@ -146,7 +148,7 @@ export class ApiService {
     this.isAuthNecessary(isAuthNecessary);
     this.mPromise = this.http.delete(`${this.baseURL}${path}`, {headers: this.headers})
       .map(this.filterError)
-      .first().toPromise().catch(error => this.catchException(error.json()));
+      .first().toPromise().catch(error => this.catchException(error));
     this.loadingService.setLoading(this.mPromise);
     return this.mPromise;
   }

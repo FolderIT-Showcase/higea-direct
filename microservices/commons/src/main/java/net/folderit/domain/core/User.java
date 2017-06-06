@@ -1,5 +1,6 @@
 package net.folderit.domain.core;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,16 +26,15 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String username;
-
+    @JsonIgnore
     private String password;
 
     private String firstName;
 
     private String lastName;
-
+    @JsonIgnore
     private String externalId;
-
+    @JsonIgnore
     private String type;
 
     private String email;

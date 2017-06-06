@@ -19,7 +19,6 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 @JsonInclude(NON_NULL)
 public class Especialidad implements Serializable {
 
-
     @ManyToMany
     @JoinTable
             (
@@ -29,7 +28,6 @@ public class Especialidad implements Serializable {
             )
     public List<Profesional> profesional;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String nombre;
 
