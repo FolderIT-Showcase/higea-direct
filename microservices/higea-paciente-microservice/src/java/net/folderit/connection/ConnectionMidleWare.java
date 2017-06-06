@@ -30,19 +30,9 @@ public class ConnectionMidleWare {
         PacienteHigea dto = persona.convertToPacienteHigeaDTO();
         ResponseEntity<LoginResultHigea> loginResultDTO = login();
 
-       /* MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
-        headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
-        headers.set("Content-Type", MediaType.APPLICATION_JSON_VALUE);
-
-        headers.set("Authorization", loginResultDTO.getBody().getToken());*/
-
-
-
         HttpHeaders headers = new HttpHeaders();
         headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
-        //headers.set("Content-Type", MediaType.APPLICATION_JSON_VALUE);
         headers.setContentType(MediaType.APPLICATION_JSON);
-        //headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("Authorization", loginResultDTO.getBody().getToken());
         HttpEntity<?> entity = new HttpEntity<>(dto,headers);
 
@@ -51,11 +41,10 @@ public class ConnectionMidleWare {
         uriParams.put("cliente", codigo);
 
         String uriPaciente = "http://higea.folderit.net/api/{cliente}/pacientes";
-        ResponseEntity<PacienteHigea> result = restTemplate.postForEntity(uriPaciente, entity, PacienteHigea.class, uriParams);
 
-        /*ResponseEntity<Result<PacienteHigea>> result = restTemplate.exchange(uriPaciente, HttpMethod.POST, entity,
+        ResponseEntity<Result<PacienteHigea>> result = restTemplate.exchange(uriPaciente, HttpMethod.POST, entity,
                 new ParameterizedTypeReference<Result<PacienteHigea>>() {
-                }, uriParams);*/
+                }, uriParams);
         return persona;
     }
 
