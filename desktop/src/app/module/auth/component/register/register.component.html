@@ -81,19 +81,11 @@
 
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-id-card "></i></span>
-       <!--     <select type="text" class="form-control" [formControl]="complexForm.controls['tipoDocumento']">
+            <select type="text" class="form-control" [formControl]="complexForm.controls['tipoDocumento']">
               <option value="" selected disabled>Placeholder text..</option>
               <option [ngValue]="tipoDocumento" *ngFor="let tipoDocumento of tipoDocumentos">{{tipoDocumento}}</option>
-            </select>-->
-            <ng-select
-              [formControl]="complexForm.controls['tipoDocumento']"
-              [data]="tipoDocumento"
-              [multiple]="false"
-              [items]="tipoDocumentos"
-             [placeholder]="'No Dept Selected'">
+            </select>
 
-
-            </ng-select>
             <small
               *ngIf="complexForm.controls['tipoDocumento'].hasError('required') && complexForm.controls['tipoDocumento'].touched"
               class="help-block">Ingrese su Tipo de Documento
