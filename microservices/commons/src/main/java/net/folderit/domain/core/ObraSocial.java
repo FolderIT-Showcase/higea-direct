@@ -29,7 +29,7 @@ public class ObraSocial {
 
     private int codigo;
 
-    @OneToMany()
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinTable
             (
                     name = "os_plan",

@@ -79,6 +79,10 @@ public class MetadataService {
         return obraSocialRepository.findAllByOrderByNombreAsc();
     }
 
+    public void clearObrasSociales() {
+        obraSocialRepository.deleteAll();
+    }
+
     public List<TipoTurno> getAllTiposTurnos() {
         return tipoTurnoRepository.findAllByOrderByDescripcionAsc();
     }
@@ -93,6 +97,10 @@ public class MetadataService {
 
     public ObraSocial saveObraSocial(ObraSocial obraSocial) {
         return obraSocialRepository.save(obraSocial);
+    }
+
+    public void saveAllObraSocial(List<ObraSocial> obrasSociales) {
+        obraSocialRepository.save(obrasSociales);
     }
 
     public void deleteProfesional(Long id) {

@@ -20,6 +20,7 @@ public class ObraSocialHigea {
         ObraSocial obraSocial = new ObraSocial();
         obraSocial.setId(((long) this.obra_social_id));
         obraSocial.setNombre(this.empresa_nombre);
+        obraSocial.setCodigo(obra_social_id);
         return obraSocial;
     }
 }

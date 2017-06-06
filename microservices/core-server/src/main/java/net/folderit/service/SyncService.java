@@ -1,84 +1,42 @@
 package net.folderit.service;
 
 import net.folderit.domain.core.ObraSocial;
-import net.folderit.domain.higea.LoginHigea;
-import net.folderit.domain.higea.LoginResultHigea;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.*;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class SyncService {
 
     private final MetadataService metadataService;
-
-    private RestTemplate restTemplate = new RestTemplate();
+    private final HigeaApiConnect higeaApiConnect;
 
     @Autowired
-    public SyncService(MetadataService metadataService) {
+    public SyncService(MetadataService metadataService, HigeaApiConnect higeaApiConnect) {
         this.metadataService = metadataService;
+        this.higeaApiConnect = higeaApiConnect;
     }
 
-    private ResponseEntity<LoginResultHigea> login() {
-        LoginHigea loginDTO = new LoginHigea("turneroweb", "WroteScientistFarmerCarbon");
-        // send request and parse result
-        String url = "http://higea.folderit.net/api/login";
-        LoginResultHigea result = restTemplate.postForObject(url, loginDTO, LoginResultHigea.class);
-        return ResponseEntity.ok(result);
+    public void clearMetadata() {
+        metadataService.clearObrasSociales();
     }
 
     // @Scheduled(fixedRate = 35000)
-    public String SyncObrasSociales() {
+    public void syncObrasSociales() {
+        String url = "http://localhost:36004/{cliente}/obraSocial";
+        ResponseEntity<List<ObraSocial>> result = higeaApiConnect.get(url, new ParameterizedTypeReference<List<ObraSocial>>(){});
+        List<ObraSocial> obrasSocialesOld = metadataService.getAllObrasSociales();
+        List<ObraSocial> obrasSocialesNew = result.getBody();
+        metadataService.saveAllObraSocial(listDiff(obrasSocialesOld, obrasSocialesNew));
+    }
 
-        String codigo = "BONFANTI";
-
-        ResponseEntity<LoginResultHigea> loginResultDTO = login();
-        // URI (URL) parameters
-        Map<String, String> uriParams = new HashMap<>();
-        uriParams.put("cliente", codigo);
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
-        headers.set("Authorization", loginResultDTO.getBody().getToken());
-        HttpEntity<?> entity = new HttpEntity<>(headers);
-
-        String url = "http://localhost:36004/{cliente}/obrasSociales";
-        ResponseEntity<List<ObraSocial>> result = restTemplate.exchange(url, HttpMethod.GET, entity,
-                new ParameterizedTypeReference<List<ObraSocial>>() {
-                }, uriParams);
-
-        System.out.println(result);
-
-        List<ObraSocial> obrasSociales = this.metadataService.getAllObrasSociales();
-        List<ObraSocial> obrasSocialesHigea = result.getBody();
-
-        if (obrasSociales.isEmpty()) {
-
-            obrasSocialesHigea.forEach(o -> {
-                System.out.println(o);
-                // metadataService.saveObraSocial(obrasSocialesHigea.get(i));
-            });
-
-        } else {
-
-            if (obrasSociales.get(obrasSociales.size() - 1).getId() >= obrasSocialesHigea.get(obrasSocialesHigea.size() - 1).getId()) {
-                return "";
-            }
-
-            for (int i = obrasSociales.size() + 1; i > obrasSocialesHigea.size(); i++) {
-                System.out.println(obrasSocialesHigea.get(i));
-                // metadataService.saveObraSocial(obrasSocialesHigea.get(i));
-            }
-        }
-
-        return "";
-
+    private <T> List<T> listDiff(List<T> oldList, List<T> newList) {
+        newList.removeAll(oldList);
+        return (!newList.isEmpty() || oldList.size() == newList.size()) ? newList : new ArrayList<>();
     }
 
 }

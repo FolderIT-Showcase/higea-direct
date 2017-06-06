@@ -46,6 +46,9 @@ zuul:
     higea-paciente-microservice:
       path: /higea/paciente/**
       url: http://localhost:36005
+    higea-metadata-microservice:
+      path: /higea/**
+      url: http://localhost:36004
     core:
       path: /core/**
       sensitiveHeaders:

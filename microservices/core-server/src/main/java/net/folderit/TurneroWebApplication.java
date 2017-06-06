@@ -39,7 +39,14 @@ public class TurneroWebApplication {
 
     @GetMapping("/test/sync")
     public ResponseEntity<?> sync() {
-        return ResponseEntity.ok(syncService.SyncObrasSociales());
+        syncService.syncObrasSociales();
+        return ResponseEntity.ok("");
+    }
+
+    @GetMapping("/test/clear")
+    public ResponseEntity<?> clear() {
+        syncService.clearMetadata();
+        return ResponseEntity.ok("");
     }
 
 }

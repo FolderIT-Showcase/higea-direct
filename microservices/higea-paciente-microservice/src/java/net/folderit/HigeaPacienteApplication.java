@@ -2,6 +2,7 @@ package net.folderit;
 
 import net.folderit.connection.ConnectionMidleWare;
 import net.folderit.domain.core.Persona;
+import net.folderit.domain.higea.PacienteHigea;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -26,7 +27,7 @@ public class HigeaPacienteApplication {
     }
 
     @PostMapping("/{cliente}")
-    public ResponseEntity<Persona> save(@PathVariable("cliente") String codigo, @RequestBody Persona persona) {
+    public ResponseEntity<PacienteHigea> save(@PathVariable("cliente") String codigo, @RequestBody Persona persona) {
         return ResponseEntity.ok(connectionMidleWare.savePaciente(codigo, persona));
     }
 
