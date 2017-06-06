@@ -85,6 +85,7 @@
               <option disabled selected="selected" value="">Tipo Documento</option>
               <option [ngValue]="tipoDocumento" *ngFor="let tipoDocumento of tipoDocumentos">{{tipoDocumento}}</option>
             </select>
+
             <small
               *ngIf="complexForm.controls['tipoDocumento'].hasError('required') && complexForm.controls['tipoDocumento'].touched"
               class="help-block">Ingrese su Tipo de Documento
