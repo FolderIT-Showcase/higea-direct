@@ -20,7 +20,6 @@ public class Pais implements Serializable {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String nombre;
     private Integer codigo;

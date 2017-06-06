@@ -39,7 +39,7 @@ public class TurneroWebApplication {
 
     @GetMapping("/test/sync")
     public ResponseEntity<?> sync() {
-        syncService.syncObrasSociales();
+        syncService.syncAll();
         return ResponseEntity.ok("");
     }
 

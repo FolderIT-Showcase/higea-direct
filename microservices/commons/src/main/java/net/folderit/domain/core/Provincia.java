@@ -22,7 +22,6 @@ public class Provincia implements Serializable {
     @JoinColumn(name = "pais_id")
     public Pais pais;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String nombre;
     private Integer codigo;

@@ -47,15 +47,15 @@ public class MetadataService {
     }
 
 
-    public Iterable<Pais> findAllPais() {
+    public List<Pais> findAllPais() {
         return paisRepository.findAllByOrderByNombreAsc();
     }
 
-    public Iterable<Provincia> findAllProvincia() {
+    public List<Provincia> findAllProvincia() {
         return provinciaRepository.findAllByOrderByNombreAsc();
     }
 
-    public Iterable<Localidad> findAllLocalidad() {
+    public List<Localidad> findAllLocalidad() {
         return localidadRepository.findAllByOrderByNombreAsc();
     }
 
@@ -101,6 +101,18 @@ public class MetadataService {
 
     public void saveAllObraSocial(List<ObraSocial> obrasSociales) {
         obraSocialRepository.save(obrasSociales);
+    }
+
+    public void saveAllPaises(List<Pais> paises) {
+        paisRepository.save(paises);
+    }
+
+    public void saveAllProvincias(List<Provincia> provincias) {
+        provinciaRepository.save(provincias);
+    }
+
+    public void saveAllLocalidad(List<Localidad> localidades) {
+        localidadRepository.save(localidades);
     }
 
     public void deleteProfesional(Long id) {
