@@ -27,7 +27,9 @@ public class LocalidadHigea {
         localidad.setProvincia(provincia);
         localidad.setId((long) localidad_id);
         localidad.setNombre(localidad_nombre);
-        localidad.setCodPostal(Integer.parseInt(localidad_codigo_postal));
+        if (localidad_codigo_postal != null) {
+            localidad.setCodPostal(Integer.parseInt(localidad_codigo_postal));
+        }
         return localidad;
     }
 

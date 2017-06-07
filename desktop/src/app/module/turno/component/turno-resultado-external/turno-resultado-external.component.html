@@ -15,7 +15,6 @@
         <label><strong>Día: </strong>{{turno.dia | date: 'EEEE'}}</label><br>
         <label><strong>Fecha: </strong>{{turno.fecha | date: 'dd/MM/yyyy'}}</label><br>
         <label><strong>Hora: </strong>{{turno.hora | date: 'HH:mm'}}</label><br>
-        <label><strong>Centro de Salud: </strong>{{turno.centroSalud.nombre}}</label><br>
         <label><strong>Especialidad: </strong>{{turno.especialidad.nombre}}</label><br>
         <label><strong>Profesional: </strong>{{turno.profesional.nombre}}</label><br>
         <label><strong>Observaciones: </strong>{{turno.observaciones}}</label>
@@ -37,7 +36,6 @@
     </h4>
     <div class="list-group">
       <a class="list-group-item">
-        <h4 class="list-group-item-heading">{{centro.nombre}}</h4>
         <p class="list-group-item-text"> {{turnos.length}} turnos disponibles a partir del {{turnos[0].fecha | date:
           'dd/MM/yyyy'}}</p>
       </a>
@@ -48,7 +46,6 @@
             <th>Día</th>
             <th>Fecha</th>
             <th>Hora</th>
-            <th>Centro de Salud</th>
             <th>Especialidad</th>
             <th>Profesional</th>
             <th>Observaciones</th>
@@ -60,7 +57,6 @@
             <td>{{turno.dia | date: 'EEEE'}}</td>
             <td>{{turno.fecha | date: 'dd/MM/yyyy'}}</td>
             <td>{{turno.hora | date: 'HH:mm'}}</td>
-            <td>{{centro.nombre}}</td>
             <td>{{turno.especialidad.nombre}}</td>
             <td>{{turno.profesional.nombre}}</td>
             <td>{{turno.observaciones}}</td>
@@ -82,7 +78,7 @@
   <label>Para el dia <strong>{{turno.dia | date: 'dd/MM/yyyy'}}</strong> en el horario <strong>{{turno.hora|
     date:'HH:mm'}}</strong></label><br>
   <label>Para la especialidad <strong>{{turno.especialidad.nombre}}</strong> atendido por <strong>{{turno.profesional.nombre}}</strong></label><br>
-  <label>En el <strong>{{turno.centroSalud.nombre}}</strong></label><br>
+  <!--<label>En el <strong>{{turno.centroSalud.nombre}}</strong></label><br>-->
   <div *ngIf="false">
     <sebm-google-map [latitude]="lat" [longitude]="lng">
       <sebm-google-map-marker [latitude]="lat" [longitude]="lng"></sebm-google-map-marker>
