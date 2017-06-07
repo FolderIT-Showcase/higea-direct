@@ -1,16 +1,14 @@
 package net.folderit.connection;
 
 import net.folderit.domain.core.Persona;
-import net.folderit.domain.higea.LoginHigea;
-import net.folderit.domain.higea.LoginResultHigea;
-import net.folderit.domain.higea.PacienteHigea;
-import net.folderit.domain.higea.Result;
+import net.folderit.domain.higea.*;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -27,7 +25,7 @@ public class ConnectionMidleWare {
         return ResponseEntity.ok(result);
     }
 
-    public PacienteHigea savePaciente(String codigo, Persona persona) {
+    public Persona savePaciente(String codigo, Persona persona) {
         PacienteHigea dto = persona.convertToPacienteHigeaDTO();
         ResponseEntity<LoginResultHigea> loginResultDTO = login();
         HttpHeaders headers = new HttpHeaders();
@@ -40,15 +38,9 @@ public class ConnectionMidleWare {
         String uriPaciente = "http://higea.folderit.net/api/{cliente}/pacientes";
         ResponseEntity<Result<PacienteHigea>> result = restTemplate.exchange(uriPaciente, HttpMethod.POST, entity, new ParameterizedTypeReference<Result<PacienteHigea>>() {
         }, uriParams);
-        if(persona.getIntegrantes().size()>0){
-            for (Persona integrante: persona.getIntegrantes()){
-                PacienteHigea integranteNuevo = integrante.convertToPacienteHigeaDTO();
-                HttpEntity entityIntegrante = new HttpEntity<>(integranteNuevo, headers);
-                restTemplate.exchange(uriPaciente, HttpMethod.POST, entityIntegrante, new ParameterizedTypeReference<Result<PacienteHigea>>() {
-                }, uriParams);
-            }
-        }
-        return result.getBody().getData().getRows().get(0);
+        PacienteHigea pacienteResultHigea = result.getBody().getData().getRows().get(0);
+        persona.setExternalId(pacienteResultHigea.getPaciente_id());
+        return persona;
     }
 
 

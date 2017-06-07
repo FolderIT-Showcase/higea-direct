@@ -20,4 +20,7 @@ export class Persona {
   turno?: Turno[] = [];
   plan?: Plan;
   nroAfiliado?: number;
+  externalId?: number;
+
+
 }

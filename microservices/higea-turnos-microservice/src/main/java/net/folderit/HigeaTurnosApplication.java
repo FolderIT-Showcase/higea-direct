@@ -40,7 +40,7 @@ public class HigeaTurnosApplication {
     public ResponseEntity<Collection<Turno>> getAllByPersona(
             @PathVariable("cliente") String codigo,
             @PathVariable("personaId") Integer personaId) {
-        List<Turno> turnos = connectionMidleWare.findAllByPersona(codigo, personaId);
+        List<Turno> turnos = connectionMidleWare.findAllByPersona(personaId);
         return ResponseEntity.ok(turnos);
     }
 

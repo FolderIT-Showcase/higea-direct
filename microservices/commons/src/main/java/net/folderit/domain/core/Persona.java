@@ -87,6 +87,7 @@ public class Persona implements Serializable {
             )
     private List<Turno> turno;
 
+    private Long externalId;
 
     public void finalize() throws Throwable {
 
@@ -96,17 +97,20 @@ public class Persona implements Serializable {
     public PacienteHigea convertToPacienteHigeaDTO() {
 
         PacienteHigea pacienteDTO = new PacienteHigea();
-        pacienteDTO.setPaciente_id(this.getId());
+        if(this.getExternalId()!=null){
+            pacienteDTO.setPaciente_id(this.getExternalId());
+        }
+
         pacienteDTO.setPlan_os_id_1(getPlan() != null ? getPlan().getId() : null);
-        pacienteDTO.setPais_id(getDomicilio() != null && getDomicilio().getLocalidad() != null && getDomicilio().getLocalidad().getProvincia() != null
+        /*pacienteDTO.setPais_id(getDomicilio() != null && getDomicilio().getLocalidad() != null && getDomicilio().getLocalidad().getProvincia() != null
                 && getDomicilio().getLocalidad().getProvincia().getPais() != null ? getDomicilio().getLocalidad().getProvincia().getPais().getId() : null);
-        pacienteDTO.setProvincia_id(getDomicilio() != null && getDomicilio().getLocalidad() != null && getDomicilio().getLocalidad().getProvincia() != null ? getDomicilio().getLocalidad().getProvincia().getId() : null);
+        pacienteDTO.setProvincia_id(getDomicilio() != null && getDomicilio().getLocalidad() != null && getDomicilio().getLocalidad().getProvincia() != null ? getDomicilio().getLocalidad().getProvincia().getId() : null);*/
         pacienteDTO.setLocalidad_id(getDomicilio() != null && getDomicilio().getLocalidad() != null ? getDomicilio().getLocalidad().getId() : null);
         // pacienteDTO.setEstado_civil_id(getEstadoCivil() != null ? getEstadoCivil().equals(EstadoCivil.Casado):null);
         pacienteDTO.setDocumento_id(getTipoDocID(getDocumento().getTipoDocumento()));
         pacienteDTO.setPersona_apellido(getApellido());
         pacienteDTO.setPersona_nombres(getNombre());
-        pacienteDTO.setPersona_fecha_nacimiento(getFechaNacimiento() != null ? getFechaNacimiento().toString():null);
+        //pacienteDTO.setPersona_fecha_nacimiento(getFechaNacimiento() != null ? getFechaNacimiento().toString():null);
         pacienteDTO.setPersona_sexo(getSexo());
         pacienteDTO.setPersona_documento_nro(getDocumento() != null ? getDocumento().getNumero().toString() :null);
         pacienteDTO.setPersona_telefono_part_nro(getTipoContaco(TipoContacto.telefono));
@@ -115,9 +119,10 @@ public class Persona implements Serializable {
         pacienteDTO.setPersona_calle_nro(getDomicilio() != null ? getDomicilio().getCalle() : null);
         pacienteDTO.setPersona_calle_texto(getDomicilio() != null ? getDomicilio().getCalle() : null);
         // pacienteDTO.setPersona_departamento_nro();
-        pacienteDTO.setPersona_piso_nro(getDomicilio() != null ? getDomicilio().getPiso().toString() : null);
+        pacienteDTO.setPersona_piso_nro(getDomicilio() != null &&  getDomicilio().getPiso()!=null ? getDomicilio().getPiso().toString() : null);
         pacienteDTO.setPersona_email(getTipoContaco(TipoContacto.mail));
-        pacienteDTO.setPaciente_os_afiliado1_nro(getNroAfiliado().toString());
+        pacienteDTO.setPaciente_os_afiliado1_nro(getNroAfiliado()!=null ? getNroAfiliado().toString():null);
+
         pacienteDTO.setLocalidad_id(1L);
 
         return pacienteDTO;
@@ -128,7 +133,7 @@ public class Persona implements Serializable {
         String numeroTelefono = null;
 
         for (Contacto tipo : getContacto()) {
-            if (tipo.getTipoContacto().equals(tipoContacto)) {
+            if (tipo.getTipoContacto().equals(tipoContacto) && tipo.getDato()!=null) {
                 numeroTelefono = tipo.getDato().toString();
             }
         }

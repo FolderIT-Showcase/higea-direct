@@ -134,7 +134,7 @@
                [ngClass]="{'has-error':!mForm.controls['genero'].valid && mForm.controls['genero'].touched}">
             <label for="genero" class="control-label">Género</label>
             <select
-              type="text"
+              type="text"Email
               class="form-control"
               [formControl]="mForm.controls['genero']"
               name="genero" id="genero">
@@ -302,9 +302,9 @@
 
       <div class="row">
         <div class="col-sm-4">
-          <div class="form-group"
+          <div class="form-group required"
                [ngClass]="{'has-error':!mForm.controls['obraSocial'].valid && mForm.controls['obraSocial'].touched}">
-            <label>Obra Social</label>
+            <label class="control-label">Obra Social</label>
 
             <select type="text" class="form-control" [formControl]="mForm.controls['obraSocial']"
                     (change)="handleObraSocialClick(mForm.value.obraSocial)">
@@ -318,9 +318,10 @@
           </div>
         </div>
         <div class="col-sm-4">
-          <div class="form-group"
+
+          <div class="form-group required"
                [ngClass]="{'has-error':!mForm.controls['plan'].valid && mForm.controls['plan'].touched}">
-            <label>Plan</label>
+            <label class="control-label">Plan</label>
 
             <select type="text" class="form-control" [formControl]="mForm.controls['plan']">
               <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
@@ -342,6 +343,31 @@
             </div>
           </div>
         </div>
+      </div>
+
+      <div class="row">
+
+        <div class="col-sm-4">
+          <div class="form-group"
+               [ngClass]="{'has-error':!mForm.controls['nroAfiliado'].valid && mForm.controls['nroAfiliado'].touched}">
+
+            <div class="input-group">
+              <div class="col-sm-12 no-padding-horizontal">
+                <label class="control-label">Nro Afiliado</label>
+              </div>
+              <!--<span class="input-group-addon"><i class="fa fa-handshake-o"></i></span>-->
+              <input class="form-control" type="text" placeholder="Numero Afiliado"
+                     [formControl]="mForm.controls['nroAfiliado']">
+              <small
+                *ngIf="mForm.controls['nroAfiliado'].hasError('required') && mForm.controls['nroAfiliado'].touched"
+                class="help-block">Debes incluir su numero afiliado.
+              </small>
+            </div>
+
+
+          </div>
+        </div>
+
       </div>
 
       <div class="row">

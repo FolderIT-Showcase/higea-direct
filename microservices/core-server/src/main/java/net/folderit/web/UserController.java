@@ -103,7 +103,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(persona);
     }
 
-    @RequestMapping(value = "/users/regitrationConfirm", method = RequestMethod.GET)
+    @RequestMapping(value = "/auth/regitrationConfirm", method = RequestMethod.GET)
     public ResponseEntity confirmRegistration
             (WebRequest request, Model model, @RequestParam("token") String token) {
 
