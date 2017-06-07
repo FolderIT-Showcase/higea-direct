@@ -81,7 +81,7 @@ export class TurnoService {
   }
 
   getTurnoByPersonaId(id: number) {
-    const path = `${this.license}/persona/${this.client}/id`;
+    const path = `${this.license}/turnos/${this.client}/persona/${id}`;
     return this.api.get(path);
   }
 

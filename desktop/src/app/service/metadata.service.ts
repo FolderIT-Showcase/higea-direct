@@ -7,7 +7,8 @@ import {Store} from './store';
 import {ObraSocial} from '../domain/obra-social';
 import {TipoTurno} from '../domain/tipo-turno';
 import {EstadosCiviles} from '../domain/enums/estado-civil';
-import {Generos} from '../domain/enums/genero';
+import {Especialidad} from '../domain/especialidad';
+import {Profesional} from '../domain/profesional';
 
 @Injectable()
 export class MetadataService {
@@ -15,12 +16,15 @@ export class MetadataService {
   paises: Pais[] = [];
   provincias: Provincia[] = [];
   localidades: Localidad[] = [];
+  especialidades: Especialidad[] = [];
+  profesionales: Profesional[] = [];
   obras_sociales: ObraSocial[] = [];
   tipos_turnos: TipoTurno[] = [];
   estados_civil: EstadosCiviles[] = [];
   license = localStorage.getItem('license');
   client = localStorage.getItem('client');
-  basePath = `${this.license}/${this.client}/`;
+  // basePath = `${this.license}/${this.client}/`;
+  basePath = 'core/';
 
   constructor(private api: ApiService,
               private store: Store) {
@@ -119,7 +123,9 @@ export class MetadataService {
       return (a.nombre > b.nombre) ? 1 : ((b.nombre > a.nombre) ? -1 : 0);
     });
     this.store.db.setItem('localidades', this.localidades);
-  }uriRegistration = this.basePath + 'users/registration';
+  }
+
+  uriRegistration = this.basePath + 'users/registration';
 
   getObrasSociales(): Promise<any> {
     return this.store.db.getItem('obras_sociales')
@@ -163,7 +169,7 @@ export class MetadataService {
       })
       .then(data => {
         this.setTipoTurnos(data);
-         return new Promise<any>((resolve, reject) => {
+        return new Promise<any>((resolve, reject) => {
           resolve(data);
         });
       });
@@ -194,7 +200,7 @@ export class MetadataService {
       })
       .then(data => {
         this.setEstadoCivil(data);
-         return new Promise<any>((resolve, reject) => {
+        return new Promise<any>((resolve, reject) => {
           resolve(data);
         });
       });
@@ -210,6 +216,66 @@ export class MetadataService {
       return (a.nombre > b.nombre) ? 1 : ((b.nombre > a.nombre) ? -1 : 0);
     });
     this.store.db.setItem('estado_civil', this.estados_civil);
+  }
+
+  getEspecialidades(): Promise<any> {
+    return this.store.db.getItem('especialidades')
+      .then((data: any) => {
+        if (data && data[0]) {
+          return new Promise<any>((resolve, reject) => {
+            resolve(data);
+          });
+        }
+        return this.requestEspecialidades();
+      })
+      .then(data => {
+        this.setEspecialidades(data);
+        return new Promise<any>((resolve, reject) => {
+          resolve(data);
+        });
+      });
+  }
+
+  requestEspecialidades() {
+    const path = this.basePath + 'especialidad';
+    return this.api.get(path);
+  }
+
+  setEspecialidades(especialidades) {
+    this.especialidades = especialidades.sort((a, b) => {
+      return (a.nombre > b.nombre) ? 1 : ((b.nombre > a.nombre) ? -1 : 0);
+    });
+    this.store.db.setItem('especialidades', this.especialidades);
+  }
+
+  getProfesionales(): Promise<any> {
+    return this.store.db.getItem('profesionales')
+      .then((data: any) => {
+        if (data && data[0]) {
+          return new Promise<any>((resolve, reject) => {
+            resolve(data);
+          });
+        }
+        return this.requestProfesionales();
+      })
+      .then(data => {
+        this.setProfesionales(data);
+        return new Promise<any>((resolve, reject) => {
+          resolve(data);
+        });
+      });
+  }
+
+  requestProfesionales() {
+    const path = this.basePath + 'profesional';
+    return this.api.get(path);
+  }
+
+  setProfesionales(especialidades) {
+    this.especialidades = especialidades.sort((a, b) => {
+      return (a.nombre > b.nombre) ? 1 : ((b.nombre > a.nombre) ? -1 : 0);
+    });
+    this.store.db.setItem('profesionales', this.especialidades);
   }
 
 }

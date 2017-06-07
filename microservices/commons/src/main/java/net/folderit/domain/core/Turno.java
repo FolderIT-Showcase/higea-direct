@@ -75,7 +75,6 @@ public class Turno implements Serializable {
         TurnoHigea turnoHigea = new TurnoHigea();
         turnoHigea.setTurnos_id(id);
         // TODO ver formato de fecha higea
-        // turnoHigea.setTurno_fecha(new SimpleDateFormat("dd/MM/yyyy").format(fecha));
         turnoHigea.setTurno_fecha(fecha.toString());
         turnoHigea.setTurno_hora(hora.toString());
         turnoHigea.setPersona_observaciones(observaciones);

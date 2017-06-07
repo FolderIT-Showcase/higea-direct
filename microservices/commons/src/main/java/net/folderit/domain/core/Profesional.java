@@ -22,6 +22,8 @@ public class Profesional implements Serializable {
     private Long id;
     private String apellido;
     private String nombre;
+    @Transient
+    private Long especialidadId;
 
     public void finalize() throws Throwable {
 

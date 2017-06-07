@@ -47,7 +47,7 @@
 
           <select type="text" class="form-control" [formControl]="form.controls['profesional']">
             <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
-            <option [ngValue]="profesional" *ngFor="let profesional of profesionales">{{profesional.nombre}}</option>
+            <option [ngValue]="profesional" *ngFor="let profesional of filteredProfesionales">{{profesional.nombre}}</option>
           </select>
 
         </div>

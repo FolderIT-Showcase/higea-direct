@@ -9,7 +9,6 @@ export class ProfesionalResolveService implements Resolve<any> {
   }
 
   resolve(): Promise<any> {
-
     return this.adminService.getProfesionales();
   }
 

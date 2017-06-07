@@ -17,7 +17,10 @@
       "prefix": "app",
       "styles": [
         "styles/styles.scss",
-        "styles/card.scss"
+        "styles/card.scss",
+        "../node_modules/bootstrap-social/bootstrap-social.css",
+        "../node_modules/font-awesome/css/font-awesome.css"
+
       ],
       "scripts": [
         "assets/js/platform.js",

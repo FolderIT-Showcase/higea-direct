@@ -7,10 +7,12 @@ import net.folderit.domain.higea.TurnoHigea;
 import net.folderit.dto.FilterDto;
 import net.folderit.service.HigeaApiConnect;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +23,8 @@ public class ConnectionMidleWare {
     private final String uriTurnos = "http://higea.folderit.net/api/{cliente}/turnos";
     private final HigeaApiConnect higeaApiConnect;
     private final RestTemplate restTemplate = new RestTemplate();
+    @Value("${turnero.client.label}")
+    private String cliente;
 
     @Autowired
     public ConnectionMidleWare(HigeaApiConnect higeaApiConnect) {
@@ -50,10 +54,16 @@ public class ConnectionMidleWare {
     }
 
     public List<Turno> findAllByPersona(Integer pacienteId) {
-        ResponseEntity<ArrayList<TurnoHigea>> result = higeaApiConnect.get(uriTurnos + "/" + pacienteId, new ParameterizedTypeReference<ArrayList<TurnoHigea>>() { });
+        String url = "http://higea.folderit.net/api/" + cliente + "/turnos";
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
+                .queryParam("paciente_id", pacienteId);
+
+        ResponseEntity<Result<TurnoHigea>> result = higeaApiConnect.get(builder.build().encode().toUri().toString(),
+                new ParameterizedTypeReference<Result<TurnoHigea>>() {
+                });
         List<Turno> turnosCore = new ArrayList<>();
         List<Profesional> profesionales = getProfesionales();
-        result.getBody().forEach(turno -> turnosCore.add(turno.convert(profesionales)));
+        result.getBody().getData().getRows().forEach(turno -> turnosCore.add(turno.convert(profesionales)));
         return turnosCore;
     }
 
@@ -66,9 +76,50 @@ public class ConnectionMidleWare {
     public Turno save(String codigo, Turno turno, int pacienteId) {
         TurnoHigea turnoHigea = turno.convertHigea();
         turnoHigea.setPaciente_id((long) pacienteId);
-        ResponseEntity<TurnoHigea> result = higeaApiConnect.post(uriTurnos,new ParameterizedTypeReference<TurnoHigea>() {});
+        ResponseEntity<TurnoHigea> result = higeaApiConnect.post(uriTurnos, new ParameterizedTypeReference<TurnoHigea>() {
+        });
         List<Profesional> profesionales = getProfesionales();
         return result.getBody().convert(profesionales);
+    }
+
+    private List<TurnoHigea> findTurnos(Integer profesionalId, Integer servicioId, Integer planId, String fecha) {
+
+        String url = "http://higea.folderit.net/api/" + cliente + "/agendas";
+
+        if (profesionalId == null || fecha == null) {
+            return new ArrayList<>();
+        }
+
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
+                .queryParam("profesional_id", profesionalId)
+                .queryParam("agenda_fecha", fecha);
+
+        if (servicioId != null) {
+            builder.queryParam("servicio_id", servicioId);
+        }
+
+        if (planId != null) {
+            builder.queryParam("plan_os_id", planId);
+        }
+
+        ResponseEntity<Result<TurnoHigea>> result = higeaApiConnect.get(builder.build().encode().toUri().toString(),
+                new ParameterizedTypeReference<Result<TurnoHigea>>() {
+                });
+
+        return result.getBody().getData().getRows();
+    }
+
+    public List<Turno> findTurnosLibres(Integer profesionalId, Integer servicioId, Integer planId, String fecha) {
+        List<TurnoHigea> turnosHigea = findTurnos(profesionalId, servicioId, planId, fecha);
+        List<Turno> turnosCoreLibres = new ArrayList<>();
+        List<Profesional> profesionales = getProfesionales();
+
+        turnosHigea
+                .stream()
+                .filter(turnoHigea -> turnoHigea.getPaciente_id() != null)
+                .forEach(turnoHigea -> turnosCoreLibres.add(turnoHigea.convert(profesionales)));
+
+        return turnosCoreLibres;
     }
 
 }
