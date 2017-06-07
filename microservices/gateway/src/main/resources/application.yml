@@ -34,8 +34,8 @@ hystrix:
 
 zuul:
   host:
-    connect-timeout-millis: 9000
-    socket-timeout-millis: 10000
+    connect-timeout-millis: 9000000
+    socket-timeout-millis: 1000000
   add-host-header: true
   routes:
     higea-profesionales:
