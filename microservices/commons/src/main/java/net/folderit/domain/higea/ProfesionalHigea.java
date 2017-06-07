@@ -28,6 +28,7 @@ public class ProfesionalHigea implements Serializable {
         profesional.setApellido(getPersona_apellido());
         profesional.setId((long) getProfesional_id());
         profesional.setNombre(getPersona_nombres());
+        profesional.setEspecialidadId((long) especialidad_id);
         return profesional;
     }
 }

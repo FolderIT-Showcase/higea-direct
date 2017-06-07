@@ -3,4 +3,5 @@ export class Profesional {
   apellido: string;
   nombre: string;
   seleccionado = false;
+  especialidadId: number;
 }

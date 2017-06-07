@@ -24,6 +24,29 @@ import {UIModule} from './module/ui/ui.module';
 import {EspecialidadResolveService} from './service/resolve/especialidad-resolve.service';
 import {AdminService} from './service/admin.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {ProfesionalResolveService} from './service/resolve/profesionales-resolve.service';
+
+const providers = [
+  {provide: LOCALE_ID, useValue: 'es-AR'},
+  Store,
+  StoreService,
+  MetadataService,
+  AuthGuard,
+  AdminGuard,
+  AlertService,
+  PersonaService,
+  ApiService,
+  AppAuthService,
+  CentrosSaludResolveService,
+  IntegrantesResolveService,
+  LocalidadesResolveService,
+  EspecialidadResolveService,
+  ProfesionalResolveService,
+  AdminService,
+  LoadingService,
+  TurnoService,
+  UtilsService
+];
 
 @NgModule({
   declarations: [AppComponent],
@@ -37,26 +60,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     AppRoutingModule
   ],
   bootstrap: [AppComponent],
-  providers: [
-    {provide: LOCALE_ID, useValue: 'es-AR'},
-    Store,
-    StoreService,
-    MetadataService,
-    AuthGuard,
-    AdminGuard,
-    AlertService,
-    PersonaService,
-    ApiService,
-    AppAuthService,
-    CentrosSaludResolveService,
-    IntegrantesResolveService,
-    LocalidadesResolveService,
-    EspecialidadResolveService,
-    AdminService,
-    LoadingService,
-    TurnoService,
-    UtilsService
-  ]
+  providers: providers
 })
 export class AppModule {
 }

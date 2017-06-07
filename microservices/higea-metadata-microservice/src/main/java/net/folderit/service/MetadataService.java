@@ -138,7 +138,6 @@ public class MetadataService {
 
     public List<Profesional> findProfesionales() {
         List<ProfesionalHigea> profesionalesHigea = getProfesionales();
-        System.out.println(profesionalesHigea);
         List<Profesional> profesionales = new ArrayList<>();
         profesionalesHigea.forEach(x -> profesionales.add(x.convert()));
         return profesionales;

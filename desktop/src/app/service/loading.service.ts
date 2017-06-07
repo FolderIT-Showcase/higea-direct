@@ -17,11 +17,11 @@ export class LoadingService {
     });
   }
 
-  private start() {
+  public start() {
     this.subject.next(true);
   }
 
-  private finish() {
+  public finish() {
     this.subject.next(false);
   }
 

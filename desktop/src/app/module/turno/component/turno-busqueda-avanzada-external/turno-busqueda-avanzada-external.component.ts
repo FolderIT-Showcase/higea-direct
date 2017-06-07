@@ -8,6 +8,8 @@ import {TurnoService} from '../../../../service/turno.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {IMyOptions} from 'mydatepicker';
 import {DatePipe} from '@angular/common';
+import {LoadingService} from '../../../../service/loading.service';
+import {MetadataService} from '../../../../service/metadata.service';
 
 class Data {
   persona: Persona;
@@ -25,9 +27,9 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
 
   datePipe = new DatePipe('es-AR');
   model: Data = new Data();
-  // centrosSalud: CentroSalud[] = [];
   especialidades: Especialidad[] = [];
   profesionales: Profesional[] = [];
+  filteredProfesionales: Profesional[] = [];
   personas: Persona[] = [];
   selectUndefined: any;
   form: FormGroup;
@@ -39,23 +41,54 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
   };
 
   constructor(private storeService: StoreService,
+              private metadataService: MetadataService,
+              private loading: LoadingService,
               private turnoService: TurnoService,
               private fb: FormBuilder) {
   }
 
   ngOnInit(): void {
+    this.loading.start();
+    console.log(('start'));
+
     this.personas = this.storeService.get('integrantes');
-    // this.centrosSalud = this.storeService.get('centrosSalud');
 
     this.form = this.fb.group({
-      'persona': [null],
-      'centro': [Validators.required],
-      'fecha': [null],
+      'persona': [this.personas[0], Validators.required],
+      'fecha': [null, Validators.required],
       'especialidad': [null],
-      'profesional': [null]
+      'profesional': [null, Validators.required]
     });
     this.form.value.fechaDesde = new Date();
-    this.especialidades = this.storeService.get('especialidades');
+
+    this.metadataService.getEspecialidades()
+      .then(data => {
+        this.especialidades = data;
+        return this.metadataService.getProfesionales();
+      })
+      .then(data => {
+        this.profesionales = data;
+
+        let especialidadesTmp = [];
+
+        for (let i in this.profesionales) {
+          for (let j in this.especialidades) {
+            if (this.profesionales[i].especialidadId == this.especialidades[j].id) {
+              this.especialidades[j].profesional.push(this.profesionales[i]);
+            }
+          }
+        }
+
+        for (let j in this.especialidades) {
+          if (this.especialidades[j].profesional.length !== 0) {
+            especialidadesTmp.push(this.especialidades[j]);
+          }
+        }
+
+        this.especialidades = Object.assign([], especialidadesTmp);
+
+      });
+
   }
 
   ngOnDestroy() {
@@ -71,7 +104,7 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
     if (!persona) {
       return;
     }
-    return (persona.nombre + ' ' + persona.apellido).toUpperCase();
+    return (`${persona.nombre} ${persona.apellido}`).toUpperCase();
   }
 
   handleCentroSaludClick(centroSalud: CentroSalud) {
@@ -79,10 +112,11 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
   }
 
   handleEspecialidadClick(especialidad: Especialidad) {
-    this.profesionales = especialidad.profesional;
+    this.filteredProfesionales = especialidad.profesional;
   }
 
   submitForm(form) {
+    // TODO validar fecha
     form.fecha = this.timeStampToDate(form.fecha.epoc);
     this.turnoService.getTurnos(form.centro, form.especialidad, form.profesional, form.fecha);
   }

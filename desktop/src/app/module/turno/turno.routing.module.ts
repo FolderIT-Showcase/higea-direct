@@ -6,6 +6,7 @@ import {CentrosSaludResolveService} from '../../service/resolve/centros-salud-re
 import {EspecialidadResolveService} from '../../service/resolve/especialidad-resolve.service';
 import {MisTurnosComponent} from './component/mis-turnos/mis-turnos.component';
 import {TurnoHomeComponent} from './turno-home.component';
+import {ProfesionalResolveService} from '../../service/resolve/profesionales-resolve.service';
 
 const routes: Routes = [
   {
@@ -17,8 +18,7 @@ const routes: Routes = [
         component: SwitchTurnoComponent,
         resolve: {
           integrantes: IntegrantesResolveService,
-          centrosSalud: CentrosSaludResolveService,
-          especialidades: EspecialidadResolveService
+          centrosSalud: CentrosSaludResolveService
         }
       },
       {

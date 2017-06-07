@@ -2,7 +2,6 @@ package net.folderit;
 
 import net.folderit.connection.ConnectionMidleWare;
 import net.folderit.domain.core.Turno;
-import net.folderit.domain.higea.TurnoHigea;
 import net.folderit.dto.FilterDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -30,7 +29,7 @@ public class HigeaTurnosApplication {
         SpringApplication.run(HigeaTurnosApplication.class, args);
     }
 
-    @GetMapping("/{cliente}")
+    @PostMapping("/{cliente}")
     public ResponseEntity<Collection<Turno>> getAll(@PathVariable("cliente") String codigo, @RequestBody FilterDto filterDto) {
         List<Turno> turnos = connectionMidleWare.findAllBy(codigo, filterDto);
         return ResponseEntity.ok(turnos);
@@ -45,21 +44,30 @@ public class HigeaTurnosApplication {
     }
 
     @PostMapping("/{cliente}")
-    public ResponseEntity<?> save(@PathVariable("cliente") String codigo, @RequestBody TurnoHigea turnoDTO) {
+    public ResponseEntity<?> save(@PathVariable("cliente") String codigo, @RequestBody FilterDto filterDto) {
         // TurnoDTO turno = connectionMidleWare.save(codigo, turnoDTO, -1);
         return ResponseEntity.ok("Deprecated endpoint");
     }
 
-    @PostMapping("/{cliente}/persona/{personaId}/turno")
+
+    @PostMapping("/{cliente}/persona/{personaId}")
     public ResponseEntity<?> saveTurno(@PathVariable("cliente") String codigo,
                                        @PathVariable("personaId") Integer personaId,
                                        @RequestBody Turno turno) {
         return ResponseEntity.ok(connectionMidleWare.save(codigo, turno, personaId));
     }
 
-    @GetMapping("/{cliente}/persona/{personaId}/turno")
-    public ResponseEntity<?> getTurnos(@PathVariable("personaId") Integer personaId) {
+    @GetMapping("/{cliente}/persona/{personaId}")
+    public ResponseEntity<List<Turno>> getTurnosByPersona(@PathVariable("personaId") Integer personaId) {
         return ResponseEntity.ok(connectionMidleWare.findAllByPersona(personaId));
+    }
+
+    @GetMapping("/{cliente}/agendas")
+    public ResponseEntity<?> getTurnosLibres(@RequestParam("profesional_id") Integer profesionalId,
+                                             @RequestParam(name = "servicio_id", required = false) Integer servicioId,
+                                             @RequestParam(name = "plan_os_id", required = false) Integer planId,
+                                             @RequestParam("agenda_fecha") String fecha) {
+        return ResponseEntity.ok(connectionMidleWare.findTurnosLibres(profesionalId, servicioId, planId, fecha));
     }
 
 }

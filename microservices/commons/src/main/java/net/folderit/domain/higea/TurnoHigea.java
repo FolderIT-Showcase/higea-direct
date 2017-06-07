@@ -94,13 +94,13 @@ public class TurnoHigea {
     }
 
     private LocalDate getTime(String date) {
-        DateTimeFormatter formatter = org.joda.time.format.DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.S'Z'")
+        DateTimeFormatter formatter = org.joda.time.format.DateTimeFormat.forPattern("yyyy-MM-dd")
                 .withLocale(Locale.UK);
         return formatter.parseLocalDate(date);
     }
 
     private DateTime getHour(String hora) {
-        DateTimeFormatter formatter = org.joda.time.format.DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.S'Z'")
+        DateTimeFormatter formatter = org.joda.time.format.DateTimeFormat.forPattern("HH:mm:ss")
                 .withLocale(Locale.UK);
         return formatter.parseDateTime(hora);
     }
