@@ -43,12 +43,6 @@ public class HigeaTurnosApplication {
         return ResponseEntity.ok(turnos);
     }
 
-    @PostMapping("/{cliente}")
-    public ResponseEntity<?> save(@PathVariable("cliente") String codigo, @RequestBody FilterDto filterDto) {
-        // TurnoDTO turno = connectionMidleWare.save(codigo, turnoDTO, -1);
-        return ResponseEntity.ok("Deprecated endpoint");
-    }
-
 
     @PostMapping("/{cliente}/persona/{personaId}")
     public ResponseEntity<?> saveTurno(@PathVariable("cliente") String codigo,

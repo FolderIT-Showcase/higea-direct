@@ -20,8 +20,6 @@ export class PersonaService {
 
   create(persona: Persona) {
 
-    let promises;
-
     if (this.license === 'core') {
 
       return this.api.post(this.uriRegistration, persona, false)
