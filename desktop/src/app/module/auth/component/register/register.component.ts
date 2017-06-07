@@ -60,7 +60,7 @@ export class RegisterComponent implements OnInit {
       'email': [null, Validators.required],
       'telefono': [null, Validators.required],
       'obraSocial': [this.obras_sociales[0]],
-      'plan': [this.planes[0]],
+      'plan': [this.planes[0], Validators.required],
       'nroAfiliado': [null],
     }, {validator: this.passwordMatcher});
 

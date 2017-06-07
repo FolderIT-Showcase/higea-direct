@@ -106,8 +106,9 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
       'telefono': [''],
       'celular': [''],
       'email': [''],
-      'obraSocial': [null],
-      'plan': [null, this.validatorPlan]
+      'obraSocial': [null, Validators.required],
+      'plan': [null, Validators.required],
+      'nroAfiliado': [null],
     });
 
     // Popular listas
@@ -258,7 +259,7 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
 
     this.currentPersona.integrantes = _.merge([], integrantes);
 
-    this.personaService.updatePersonaUser(this.currentPersona)
+    this.personaService.delete(this.currentPersona)
       .then(() => {
         this.alertService.success('Integrante removido correctamente.');
       })
@@ -313,6 +314,8 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
     integrante.domicilio.localidad.provincia.id = form.provincia;
     integrante.domicilio.localidad.provincia.pais = new Pais();
     integrante.domicilio.localidad.provincia.pais.id = form.pais;
+    integrante.plan =  form.plan;
+    integrante.nroAfiliado = form.nroAfiliado;
 
     return integrante;
   }

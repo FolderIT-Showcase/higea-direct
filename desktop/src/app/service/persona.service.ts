@@ -23,27 +23,21 @@ export class PersonaService {
     let promises;
 
     if (this.license === 'core') {
-      promises = [
-        this.api.post(this.uriRegistration, persona, false)
-      ];
+
+      return this.api.post(this.uriRegistration, persona, false)
+
     } else {
-      promises = [
-        this.api.post(this.uriRegistration, persona, false),
-        this.api.post(this.externalUriRegistration, persona, false)
-      ];
-    }
 
-    // serialize and return
-    return promises.reduce((m, p: any) => m.then(v => {
-        if (p === 'function') {
-          Promise.all([...v, p()])
-        } else {
-          Promise.all([v, p])
+      return this.api.post(this.externalUriRegistration, persona, false).then((data) => {
+        if (persona) {
+          persona.externalId = data.externalId;
         }
-      }
-    ), Promise.resolve([]));
+        this.api.post(this.uriRegistration, persona, false)
+      })
 
+    }
   }
+
 
   validateDni(dto: any) {
     const path = `${this.basePathCore}persona/afip?documento=${dto.documento}&nombre=${dto.nombre}&apellido=${dto.apellido}&genero=${dto.genero}`;
@@ -93,20 +87,31 @@ export class PersonaService {
         })
       ];
     } else {
-      promises = [
-
+      const integrante: Persona = persona.integrantes.find(x => !x.externalId);
+      const index = persona.integrantes.findIndex(x => !x.externalId);
+      return this.api.post(this.externalUriRegistration, integrante, false).then((data) => {
+        if (integrante) {
+          persona.integrantes[index].externalId = data.externalId;
+        }
         this.api.post(path, persona, false).then(() => {
-          this.buildIntegrantes(persona)
-        }),
-        this.api.post(this.externalUriRegistration, persona, false).then(() => {
-          this.buildIntegrantes(persona)
-        })
-      ];
+
+        }).then(() => this.getIntegrantes());
+      })
+
     }
 
     // serialize and return
-    return promises.reduce((m, p: any) => m.then(v => Promise.all([...v, p()])), Promise.resolve([]));
+    // return promises.reduce((m, p: any) => m.then(v => Promise.all([...v, p()])), Promise.resolve([]));
   }
+
+  delete(persona: Persona) {
+    const path = this.basePathCore + 'persona';
+
+    return this.api.post(path, persona).then(() => {
+      this.buildIntegrantes(persona)
+    })
+  }
+
 
   activateUser(token) {
     const path = `${this.basePathCore}users/regitrationConfirm?token=${token}`;
