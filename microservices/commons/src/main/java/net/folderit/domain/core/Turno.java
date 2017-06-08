@@ -71,7 +71,7 @@ public class Turno implements Serializable {
 
     }
 
-    public TurnoHigea convertHigea() {
+    public TurnoHigea convertHigea(Long estado) {
         TurnoHigea turnoHigea = new TurnoHigea();
         turnoHigea.setTurnos_id(id);
         // TODO ver formato de fecha higea
@@ -82,6 +82,7 @@ public class Turno implements Serializable {
         turnoHigea.setProfesional_id(profesional.getId());
         turnoHigea.setPlan_os_id(plan.getId());
         turnoHigea.setServicio_id(motivoTurno.getId());
+        turnoHigea.setEstado_turno_id(estado);
         return turnoHigea;
     }
 

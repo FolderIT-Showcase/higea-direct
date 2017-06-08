@@ -45,10 +45,10 @@ public class HigeaTurnosApplication {
 
 
     @PostMapping("/{cliente}/persona/{personaId}")
-    public ResponseEntity<?> saveTurno(@PathVariable("cliente") String codigo,
+    public ResponseEntity<?> otorgarTurno(@PathVariable("cliente") String codigo,
                                        @PathVariable("personaId") Integer personaId,
                                        @RequestBody Turno turno) {
-        return ResponseEntity.ok(connectionMidleWare.save(codigo, turno, personaId));
+        return ResponseEntity.ok(connectionMidleWare.otorgarTurno(codigo, turno, personaId));
     }
 
     @GetMapping("/{cliente}/persona/{personaId}")
@@ -62,6 +62,11 @@ public class HigeaTurnosApplication {
                                              @RequestParam(name = "plan_os_id", required = false) Integer planId,
                                              @RequestParam("agenda_fecha") String fecha) {
         return ResponseEntity.ok(connectionMidleWare.findTurnosLibres(profesionalId, servicioId, planId, fecha));
+    }
+
+    @GetMapping("/{cliente}/estadosTurnos")
+    public ResponseEntity<?> getEstadosTurnos(@PathVariable("cliente") String codigo) {
+        return ResponseEntity.ok(connectionMidleWare.findEstadosTurnos(codigo));
     }
 
 }

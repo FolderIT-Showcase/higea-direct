@@ -2,6 +2,7 @@ package net.folderit.connection;
 
 import net.folderit.domain.core.Profesional;
 import net.folderit.domain.core.Turno;
+import net.folderit.domain.higea.EstadoTurnosHigea;
 import net.folderit.domain.higea.Result;
 import net.folderit.domain.higea.TurnoHigea;
 import net.folderit.dto.FilterDto;
@@ -73,14 +74,28 @@ public class ConnectionMidleWare {
         return filter;
     }
 
-    public Turno save(String codigo, Turno turno, int pacienteId) {
-        TurnoHigea turnoHigea = turno.convertHigea();
+    public Turno otorgarTurno(String codigo, Turno turno, int pacienteId) {
+
+        TurnoHigea turnoHigea = turno.convertHigea(getOtorgado(codigo));
         turnoHigea.setPaciente_id((long) pacienteId);
         ResponseEntity<TurnoHigea> result = higeaApiConnect.post(uriTurnos, new ParameterizedTypeReference<TurnoHigea>() {
         });
         List<Profesional> profesionales = getProfesionales();
         return result.getBody().convert(profesionales);
     }
+
+    private Long getOtorgado(String codigo) {
+        List<EstadoTurnosHigea> estados = findEstadosTurnos(codigo);
+        Long id = null;
+        for (EstadoTurnosHigea estado : estados) {
+            if (estado.getEstado_turno_nombre().equals("Otorgado")) {
+                return estado.getEstado_turno_id();
+            }
+        }
+
+        return null;
+    }
+
 
     private List<TurnoHigea> findTurnos(Integer profesionalId, Integer servicioId, Integer planId, String fecha) {
 
@@ -120,6 +135,16 @@ public class ConnectionMidleWare {
                 .forEach(turnoHigea -> turnosCoreLibres.add(turnoHigea.convert(profesionales)));
 
         return turnosCoreLibres;
+    }
+
+    public List<EstadoTurnosHigea> findEstadosTurnos(String codigo){
+
+        String url = "http://higea.folderit.net/api/" + cliente + "/estadoTurnos";
+
+        ResponseEntity<Result<EstadoTurnosHigea>> result = higeaApiConnect.get(url,
+                new ParameterizedTypeReference<Result<EstadoTurnosHigea>>() {
+                });
+       return result.getBody().getData().getRows();
     }
 
 }
