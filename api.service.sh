@@ -10,6 +10,8 @@ function startServices {
     /usr/bin/java $JAVA_OPTS -jar /opt/api/higea-especialidad-microservice.jar < /dev/null &> /dev/null &
     /usr/bin/java $JAVA_OPTS -jar /opt/api/higea-profesional-microservice.jar < /dev/null &> /dev/null &
     /usr/bin/java $JAVA_OPTS -jar /opt/api/higea-turnos-microservice.jar < /dev/null &> /dev/null &
+    /usr/bin/java $JAVA_OPTS -jar /opt/api/higea-metadata-microservice.jar < /dev/null &> /dev/null &
+    /usr/bin/java $JAVA_OPTS -jar /opt/api/higea-paciente-microservice.jar < /dev/null &> /dev/null &
 
     JAVA_OPTS="-server -Xms64m -Xmx64m -XX:MaxMetaspaceSize=96m -Xmn32m -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+UseCMSInitiatingOccupancyOnly -XX:+ScavengeBeforeFullGC -XX:+CMSScavengeBeforeRemark -Djava.security.egd=file:/dev/urandom"
     /usr/bin/java $JAVA_OPTS -jar /opt/api/core-server.jar < /dev/null &> /dev/null &
@@ -24,6 +26,8 @@ function stopServices {
     /usr/bin/kill -9 `jps -v |grep -w higea-especialidad-microservice.jar|cut -f1 -d " "`
     /usr/bin/kill -9 `jps -v |grep -w higea-profesional-microservice.jar|cut -f1 -d " "`
     /usr/bin/kill -9 `jps -v |grep -w higea-turnos-microservice.jar|cut -f1 -d " "`
+    /usr/bin/kill -9 `jps -v |grep -w higea-metadata-microservice.jar|cut -f1 -d " "`
+    /usr/bin/kill -9 `jps -v |grep -w higea-paciente-microservice.jar|cut -f1 -d " "`
 
 }
 
