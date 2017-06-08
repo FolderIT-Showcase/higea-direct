@@ -25,15 +25,14 @@ public class FilterDto implements Serializable {
     public String getFilterParameters() {
         String query = "";
 
-
-        if (getFecha() != null && !getFecha().isEmpty()) {
-            query += "turno_fecha=" + getFecha() + "&";
+        if (fecha != null && !fecha.isEmpty()) {
+            query += "agenda_fecha=" + getFecha() + "&";
         }
-        if (getEspecialidad() != null) {
-            query += "especialidad_id=" + getEspecialidad().getId() + "&";
+        if (especialidad != null) {
+//            query += "especialidad_id=" + especialidad.getId() + "&";
         }
         if (getProfesional() != null) {
-            query += "profesional_id=" + getProfesional().getId();
+            query += "profesional_id=" + profesional.getId();
         }
 
         return query;

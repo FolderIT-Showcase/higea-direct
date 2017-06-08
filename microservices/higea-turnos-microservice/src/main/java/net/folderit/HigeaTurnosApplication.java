@@ -29,12 +29,6 @@ public class HigeaTurnosApplication {
         SpringApplication.run(HigeaTurnosApplication.class, args);
     }
 
-    @PostMapping("/{cliente}")
-    public ResponseEntity<Collection<Turno>> getAll(@PathVariable("cliente") String codigo, @RequestBody FilterDto filterDto) {
-        List<Turno> turnos = connectionMidleWare.findAllBy(codigo, filterDto);
-        return ResponseEntity.ok(turnos);
-    }
-
     @GetMapping("/{cliente}/{personaId}")
     public ResponseEntity<Collection<Turno>> getAllByPersona(
             @PathVariable("cliente") String codigo,
@@ -42,8 +36,7 @@ public class HigeaTurnosApplication {
         List<Turno> turnos = connectionMidleWare.findAllByPersona(personaId);
         return ResponseEntity.ok(turnos);
     }
-
-
+    
     @PostMapping("/{cliente}/persona/{personaId}")
     public ResponseEntity<?> otorgarTurno(@PathVariable("cliente") String codigo,
                                        @PathVariable("personaId") Integer personaId,
@@ -56,12 +49,9 @@ public class HigeaTurnosApplication {
         return ResponseEntity.ok(connectionMidleWare.findAllByPersona(personaId));
     }
 
-    @GetMapping("/{cliente}/agendas")
-    public ResponseEntity<?> getTurnosLibres(@RequestParam("profesional_id") Integer profesionalId,
-                                             @RequestParam(name = "servicio_id", required = false) Integer servicioId,
-                                             @RequestParam(name = "plan_os_id", required = false) Integer planId,
-                                             @RequestParam("agenda_fecha") String fecha) {
-        return ResponseEntity.ok(connectionMidleWare.findTurnosLibres(profesionalId, servicioId, planId, fecha));
+    @PostMapping("/{cliente}")
+    public ResponseEntity<?> getTurnosLibres(@RequestBody FilterDto filterDto) {
+        return ResponseEntity.ok(connectionMidleWare.findTurnosLibres(filterDto));
     }
 
     @GetMapping("/{cliente}/estadosTurnos")

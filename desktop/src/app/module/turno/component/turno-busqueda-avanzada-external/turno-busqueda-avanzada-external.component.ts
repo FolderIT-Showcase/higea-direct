@@ -10,6 +10,7 @@ import {IMyOptions} from 'mydatepicker';
 import {DatePipe} from '@angular/common';
 import {LoadingService} from '../../../../service/loading.service';
 import {MetadataService} from '../../../../service/metadata.service';
+import {AlertService} from '../../../../service/alert.service';
 
 class Data {
   persona: Persona;
@@ -42,6 +43,7 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
 
   constructor(private storeService: StoreService,
               private metadataService: MetadataService,
+              private alertService: AlertService,
               private loading: LoadingService,
               private turnoService: TurnoService,
               private fb: FormBuilder) {
@@ -116,8 +118,24 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
   }
 
   submitForm(form) {
-    // TODO validar fecha
+    if (!form.fecha || !form.fecha.epoc) {
+      return;
+    }
+
+    const fechaDesde = form.fecha.epoc * 1000;
+
+    const ahora = new Date().setHours(0, 0, 0, 0);
+    const fechaTurno = new Date(fechaDesde).setHours(0, 0, 0, 0);
+
+    if (!(fechaTurno >= ahora)) {
+      this.alertService.error('No puede sacar un turno con fecha invalida, verifique');
+      return;
+    }
+
     form.fecha = this.timeStampToDate(form.fecha.epoc);
+    const especialidad: Especialidad = Object.assign({}, form.especialidad);
+    especialidad.profesional = null;
+    form.especialidad = Object.assign({}, especialidad);
     this.turnoService.getTurnos(form.centro, form.especialidad, form.profesional, form.fecha);
   }
 

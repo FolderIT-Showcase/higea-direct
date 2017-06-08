@@ -33,7 +33,9 @@ public class ConnectionMidleWare {
     }
 
     private List<TurnoHigea> turnos(String codigo, FilterDto filterDto) {
-        ResponseEntity<Result<TurnoHigea>> result = higeaApiConnect.get(getFilterURIEspecialidad(filterDto), new ParameterizedTypeReference<Result<TurnoHigea>>() {
+        String url = getFilterURIEspecialidad(filterDto);
+        System.out.println(url);
+        ResponseEntity<Result<TurnoHigea>> result = higeaApiConnect.get(url, new ParameterizedTypeReference<Result<TurnoHigea>>() {
         });
         return result.getBody().getData().getRows();
     }
@@ -84,6 +86,7 @@ public class ConnectionMidleWare {
         return result.getBody().convert(profesionales);
     }
 
+
     private Long getOtorgado(String codigo) {
         List<EstadoTurnosHigea> estados = findEstadosTurnos(codigo);
         Long id = null;
@@ -97,7 +100,7 @@ public class ConnectionMidleWare {
     }
 
 
-    private List<TurnoHigea> findTurnos(Integer profesionalId, Integer servicioId, Integer planId, String fecha) {
+    private List<TurnoHigea> findTurnos(Long profesionalId, String fecha) {
 
         String url = "http://higea.folderit.net/api/" + cliente + "/agendas";
 
@@ -109,13 +112,13 @@ public class ConnectionMidleWare {
                 .queryParam("profesional_id", profesionalId)
                 .queryParam("agenda_fecha", fecha);
 
-        if (servicioId != null) {
-            builder.queryParam("servicio_id", servicioId);
-        }
-
-        if (planId != null) {
-            builder.queryParam("plan_os_id", planId);
-        }
+//        if (servicioId != null) {
+//            builder.queryParam("servicio_id", servicioId);
+//        }
+//
+//        if (planId != null) {
+//            builder.queryParam("plan_os_id", planId);
+//        }
 
         ResponseEntity<Result<TurnoHigea>> result = higeaApiConnect.get(builder.build().encode().toUri().toString(),
                 new ParameterizedTypeReference<Result<TurnoHigea>>() {
@@ -124,15 +127,16 @@ public class ConnectionMidleWare {
         return result.getBody().getData().getRows();
     }
 
-    public List<Turno> findTurnosLibres(Integer profesionalId, Integer servicioId, Integer planId, String fecha) {
-        List<TurnoHigea> turnosHigea = findTurnos(profesionalId, servicioId, planId, fecha);
+    public List<Turno> findTurnosLibres(FilterDto filterDto) {
+        List<TurnoHigea> turnosHigea = findTurnos(filterDto.getProfesional().getId(), filterDto.getFecha());
         List<Turno> turnosCoreLibres = new ArrayList<>();
         List<Profesional> profesionales = getProfesionales();
 
-        turnosHigea
-                .stream()
-                .filter(turnoHigea -> turnoHigea.getPaciente_id() != null)
-                .forEach(turnoHigea -> turnosCoreLibres.add(turnoHigea.convert(profesionales)));
+        turnosHigea.forEach(turnoHigea -> {
+            if (turnoHigea.getPaciente_id() == null) {
+                turnosCoreLibres.add(turnoHigea.convert(profesionales));
+            }
+        });
 
         return turnosCoreLibres;
     }
