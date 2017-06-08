@@ -82,14 +82,6 @@ public class ConnectionMidleWare {
         TurnoHigea turnoHigea = turno.convertHigea(getOtorgado(codigo), (long) pacienteId);
         turnoHigea.setPaciente_id((long) pacienteId);
 
-//        ObjectMapper mapper = new ObjectMapper();
-//        try {
-//            String jsonInString = mapper.writeValueAsString(turnoHigea);
-//            System.out.println(jsonInString);
-//        } catch (JsonProcessingException e) {
-//            e.printStackTrace();
-//        }
-
         ResponseEntity<Result<TurnoHigea>> result = higeaApiConnect.post(uriTurnos, new ParameterizedTypeReference<Result<TurnoHigea>>() {
         }, turnoHigea);
         List<Profesional> profesionales = getProfesionales();
