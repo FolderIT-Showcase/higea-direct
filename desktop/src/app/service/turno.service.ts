@@ -13,11 +13,11 @@ export class TurnoService {
 
   license = localStorage.getItem('license');
   client = localStorage.getItem('client');
-  pathTurno = this.license + '/turnos/' + this.client;
-  pathCentroSalud = this.license + '/centroSalud/' + this.client;
-  pathPersona = this.license + '/persona/' + this.client;
+  pathTurno = `${this.license}/turnos/${this.client}`;
+  pathCentroSalud = `${this.license}/centroSalud/${this.client}`;
+  pathPersona = `${this.license}/persona/${this.client}`;
 
-  basePath = 'core/';
+  basePath = `${this.license}/`;
 
   constructor(private api: ApiService, private storeService: StoreService) {
     if (this.license === 'core') {
@@ -49,7 +49,7 @@ export class TurnoService {
       });
   }
 
-  getTurnos(centro: CentroSalud, especialidad: Especialidad, profesional: Profesional, fecha: Date) {
+  getTurnos(centro: CentroSalud, especialidad: Especialidad, profesional: Profesional, fecha) {
 
     const path = this.pathTurno;
     const filtro = new FiltroTurno;
@@ -117,9 +117,9 @@ export class TurnoService {
       });
   }
 
-  reservarTurno(persona: Persona) {
-    const path = this.basePath + 'persona';
-    return this.api.post(path, persona);
+  reservarTurno(turno: Turno, persona: Persona) {
+    const path = `${this.pathTurno}/persona/${persona.externalId}`;
+    return this.api.post(path, turno);
   }
 
   generarPDF(persona: Persona) {

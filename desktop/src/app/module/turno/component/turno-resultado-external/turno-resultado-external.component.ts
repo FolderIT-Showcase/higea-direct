@@ -1,6 +1,5 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ModalDirective} from 'ngx-bootstrap';
-import {CentroSalud} from '../../../../domain/centro-salud';
 import {Store} from '../../../../service/store';
 import {Subscription} from 'rxjs/Subscription';
 import {TurnoService} from '../../../../service/turno.service';
@@ -10,6 +9,8 @@ import {Especialidad} from '../../../../domain/especialidad';
 import {Profesional} from '../../../../domain/profesional';
 import {UtilsService} from '../../../../service/utils.service';
 import {Turno} from '../../../../domain/turno';
+import {MotivoTurno} from '../../../../domain/motivo-turno';
+import {MetadataService} from '../../../../service/metadata.service';
 
 @Component({
   selector: 'app-turno-resultado-external',
@@ -20,7 +21,6 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
   @ViewChild('autoShownModal') public autoShownModal: ModalDirective;
   @ViewChild('infoModal') public infoModal: ModalDirective;
 
-  centro: CentroSalud = new CentroSalud();
   turnos: Turno[] = [];
   turno: Turno = new Turno();
   subs: Subscription[] = [];
@@ -28,6 +28,8 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
 
   lat = -31.623357;
   lng = -60.704956;
+  motivos: MotivoTurno[] = [];
+  motivoTurno: MotivoTurno = new MotivoTurno();
   emptyResponse = undefined;
 
   turnoModal: ModalDirective;
@@ -36,12 +38,11 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
 
   constructor(private store: Store,
               private utilsService: UtilsService,
+              private metadataService: MetadataService,
               private turnoService: TurnoService,
               private storeService: StoreService) {
     this.turno.especialidad = new Especialidad;
     this.turno.especialidad.nombre = '';
-    this.turno.centroSalud = new CentroSalud;
-    this.turno.centroSalud.nombre = '';
     this.turno.profesional = new Profesional();
     this.turno.profesional.nombre = '';
 
@@ -52,11 +53,7 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.desktopMode = (this.utilsService.getWidth()) >= 1000;
-    this.subs.push(
-      this.store.changes.pluck('CentroSalud').subscribe(
-        (data: any) => {
-          this.centro = data;
-        }));
+    this.metadataService.getMotivosTurno().then((data: any) => this.motivos = data);
     this.subs.push(
       this.store.changes.pluck('turnos').subscribe(
         (data: any) => {
@@ -90,8 +87,10 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
     }
 
     turno.tomado = true;
+    turno.motivoTurno = this.motivoTurno;
+    turno.plan = this.persona.plan;
     this.persona.turno.push(turno);
-    this.turnoService.reservarTurno(this.persona)
+    this.turnoService.reservarTurno(turno, this.persona)
       .then(() => {
         this.successModal.show();
       })

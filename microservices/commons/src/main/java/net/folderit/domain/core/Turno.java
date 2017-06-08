@@ -9,6 +9,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
@@ -30,7 +32,7 @@ public class Turno implements Serializable {
     private Date dia;
 
     /* @JsonFormat(pattern="yyyy-MM-dd",timezone="America/Buenos_Aires")*/
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.S'Z'")
     private Date fecha;
 
     //@JsonFormat(pattern="HH:mm:ss",timezone="America/Buenos_Aires")
@@ -67,22 +69,38 @@ public class Turno implements Serializable {
 
     private String codigo;
 
+    @Transient
+    private int duracion;
+
+    @Transient
+    private int tipoTurno;
+
+    @Transient
+    private int servicio;
+
     public void finalize() throws Throwable {
 
     }
 
-    public TurnoHigea convertHigea(Long estado) {
+    public TurnoHigea convertHigea(Long estado, Long pacienteId) {
         TurnoHigea turnoHigea = new TurnoHigea();
         turnoHigea.setTurnos_id(id);
-        // TODO ver formato de fecha higea
-        turnoHigea.setTurno_fecha(fecha.toString());
-        turnoHigea.setTurno_hora(hora.toString());
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        turnoHigea.setTurno_fecha(df.format(fecha));
+        df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        turnoHigea.setTurno_hora(df.format(hora));
         turnoHigea.setPersona_observaciones(observaciones);
         turnoHigea.setEspecialidad_id(especialidad.getId());
         turnoHigea.setProfesional_id(profesional.getId());
         turnoHigea.setPlan_os_id(plan.getId());
-        turnoHigea.setServicio_id(motivoTurno.getId());
         turnoHigea.setEstado_turno_id(estado);
+        turnoHigea.setTurno_duracion(duracion);
+        // TODO asignado estatico como 'otros'
+        turnoHigea.setTipo_turno_fac_id((long) 3);
+        turnoHigea.setTot_id((long) 1);
+        turnoHigea.setTurno_tipo_turno(motivoTurno.getId());
+        turnoHigea.setServicio_id((long) servicio);
+        turnoHigea.setPaciente_id(pacienteId);
         return turnoHigea;
     }
 

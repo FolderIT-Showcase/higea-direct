@@ -4,18 +4,12 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import net.folderit.domain.core.CentroSalud;
-import net.folderit.domain.core.Especialidad;
-import net.folderit.domain.core.Profesional;
-import net.folderit.domain.core.Turno;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeFieldType;
-import org.joda.time.LocalDate;
-import org.joda.time.format.DateTimeFormatter;
+import net.folderit.domain.core.*;
 
-import java.util.GregorianCalendar;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
@@ -71,13 +65,9 @@ public class TurnoHigea {
         // TODO: ver formato fecha y hora
         String dateStr = this.getTurno_fecha();
         String horaStr = this.getTurno_hora();
-        LocalDate cal = getTime(dateStr);
-        DateTime hour = getHour(horaStr);
-        mTurno.setDia(new GregorianCalendar(cal.getYear(), cal.getMonthOfYear(), cal.getDayOfMonth()).getTime());
-        mTurno.setFecha(new GregorianCalendar(cal.getYear(), cal.getMonthOfYear(), cal.getDayOfMonth()).getTime());
-        mTurno.setHora(
-                new GregorianCalendar(cal.getYear(), cal.getMonthOfYear(), cal.getDayOfMonth(),
-                        hour.get(DateTimeFieldType.hourOfDay()), hour.get(DateTimeFieldType.minuteOfHour())).getTime());
+        mTurno.setDia(getTime(dateStr));
+        mTurno.setFecha(getTime(dateStr));
+        mTurno.setHora(getHour(horaStr));
         mTurno.setObservaciones(getEspecialidad_observaciones());
         mTurno.setCentroSalud(getCentroSalud());
         mTurno.setEspecialidad(getEspecialidad());
@@ -90,19 +80,46 @@ public class TurnoHigea {
 
         mTurno.setEnabled(true);
         mTurno.setTomado(false);
+        MotivoTurno motivoTurno = new MotivoTurno();
+        motivoTurno.setId(tipo_turno_fac_id);
+        mTurno.setMotivoTurno(motivoTurno);
+        mTurno.setDuracion(turno_duracion);
+        mTurno.setServicio(Math.toIntExact(servicio_id));
         return mTurno;
     }
 
-    private LocalDate getTime(String date) {
-        DateTimeFormatter formatter = org.joda.time.format.DateTimeFormat.forPattern("yyyy-MM-dd")
-                .withLocale(Locale.UK);
-        return formatter.parseLocalDate(date);
+    private Date getTime(String date) {
+        Date mDate = null;
+        SimpleDateFormat simpleDateFormat = null;
+        if (date.length() <= 10) {
+            simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        } else {
+            simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.S'Z'");
+        }
+
+        try {
+            mDate = simpleDateFormat.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return mDate;
     }
 
-    private DateTime getHour(String hora) {
-        DateTimeFormatter formatter = org.joda.time.format.DateTimeFormat.forPattern("HH:mm:ss")
-                .withLocale(Locale.UK);
-        return formatter.parseDateTime(hora);
+    private Date getHour(String hour) {
+        Date mDate = null;
+        SimpleDateFormat simpleDateFormat = null;
+        if (hour.length() <= 10) {
+            simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
+        } else {
+            simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.S'Z'");
+        }
+
+        try {
+            mDate = simpleDateFormat.parse(hour);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return mDate;
     }
 
     private CentroSalud getCentroSalud() {

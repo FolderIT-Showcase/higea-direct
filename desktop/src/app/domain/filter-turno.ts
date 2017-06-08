@@ -5,5 +5,5 @@ export class FiltroTurno {
   centroSalud: CentroSalud;
   especialidad: Especialidad;
   profesional: Profesional;
-  fecha: Date;
+  fecha;
 }

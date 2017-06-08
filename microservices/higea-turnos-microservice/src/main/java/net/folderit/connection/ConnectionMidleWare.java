@@ -15,7 +15,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -77,13 +79,21 @@ public class ConnectionMidleWare {
     }
 
     public Turno otorgarTurno(String codigo, Turno turno, int pacienteId) {
-
-        TurnoHigea turnoHigea = turno.convertHigea(getOtorgado(codigo));
+        TurnoHigea turnoHigea = turno.convertHigea(getOtorgado(codigo), (long) pacienteId);
         turnoHigea.setPaciente_id((long) pacienteId);
-        ResponseEntity<TurnoHigea> result = higeaApiConnect.post(uriTurnos, new ParameterizedTypeReference<TurnoHigea>() {
-        });
+
+//        ObjectMapper mapper = new ObjectMapper();
+//        try {
+//            String jsonInString = mapper.writeValueAsString(turnoHigea);
+//            System.out.println(jsonInString);
+//        } catch (JsonProcessingException e) {
+//            e.printStackTrace();
+//        }
+
+        ResponseEntity<Result<TurnoHigea>> result = higeaApiConnect.post(uriTurnos, new ParameterizedTypeReference<Result<TurnoHigea>>() {
+        }, turnoHigea);
         List<Profesional> profesionales = getProfesionales();
-        return result.getBody().convert(profesionales);
+        return result.getBody().getData().getRows().get(0).convert(profesionales);
     }
 
 
@@ -95,12 +105,11 @@ public class ConnectionMidleWare {
                 return estado.getEstado_turno_id();
             }
         }
-
         return null;
     }
 
 
-    private List<TurnoHigea> findTurnos(Long profesionalId, String fecha) {
+    private List<TurnoHigea> findTurnos(Long profesionalId, Date fecha) {
 
         String url = "http://higea.folderit.net/api/" + cliente + "/agendas";
 
@@ -108,17 +117,14 @@ public class ConnectionMidleWare {
             return new ArrayList<>();
         }
 
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String fechaStr = simpleDateFormat.format(fecha);
+
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("profesional_id", profesionalId)
-                .queryParam("agenda_fecha", fecha);
+                .queryParam("agenda_fecha", fechaStr);
 
-//        if (servicioId != null) {
-//            builder.queryParam("servicio_id", servicioId);
-//        }
-//
-//        if (planId != null) {
-//            builder.queryParam("plan_os_id", planId);
-//        }
+        System.out.println(builder.build().encode().toUri().toString());
 
         ResponseEntity<Result<TurnoHigea>> result = higeaApiConnect.get(builder.build().encode().toUri().toString(),
                 new ParameterizedTypeReference<Result<TurnoHigea>>() {
@@ -141,14 +147,14 @@ public class ConnectionMidleWare {
         return turnosCoreLibres;
     }
 
-    public List<EstadoTurnosHigea> findEstadosTurnos(String codigo){
+    public List<EstadoTurnosHigea> findEstadosTurnos(String codigo) {
 
         String url = "http://higea.folderit.net/api/" + cliente + "/estadoTurnos";
 
         ResponseEntity<Result<EstadoTurnosHigea>> result = higeaApiConnect.get(url,
                 new ParameterizedTypeReference<Result<EstadoTurnosHigea>>() {
                 });
-       return result.getBody().getData().getRows();
+        return result.getBody().getData().getRows();
     }
 
 }

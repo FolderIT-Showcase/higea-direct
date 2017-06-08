@@ -8,10 +8,6 @@ import net.folderit.domain.core.enums.EstadoCivil;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
-/**
- * Creat
- * ed by luis on 02/06/17.
- */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

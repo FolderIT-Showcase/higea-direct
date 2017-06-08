@@ -40,7 +40,15 @@ public class HigeaApiConnect {
         return restTemplate.exchange(url, HttpMethod.GET, getSession(), responseType, uriParams);
     }
 
-    public <T> ResponseEntity<T> post(String url, ParameterizedTypeReference<T> responseType) {
-        return restTemplate.exchange(url, HttpMethod.POST, getSession(), responseType, uriParams);
+    public <T> ResponseEntity<T> post(String url, ParameterizedTypeReference<T> responseType, Object body) {
+        ResponseEntity<LoginResultHigea> loginResultDTO = login();
+        // URI (URL) parameters
+        uriParams.put("cliente", cliente);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+        headers.set("Authorization", loginResultDTO.getBody().getToken());
+        HttpEntity<?> entity = new  HttpEntity<>(body, headers);
+
+        return restTemplate.exchange(url, HttpMethod.POST, entity, responseType, uriParams);
     }
 }

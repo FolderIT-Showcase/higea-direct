@@ -93,6 +93,20 @@ function server_dev_mode
 	fi
     sudo cp -f $WORKSPACE/microservices/higea-turnos-microservice/target/higea-turnos-microservice-0.0.1-SNAPSHOT.jar /opt/api/higea-turnos-microservice.jar
 
+    cd $WORKSPACE/microservices/higea-metadata-microservice
+	if [ -f /opt/api/higea-metadata-microservice.jar ]; then
+	    sudo cp -f /opt/api/higea-metadata-microservice.jar /opt/api/higea-metadata-microservice-last.jar
+	fi
+    sudo cp -f $WORKSPACE/microservices/higea-metadata-microservice/target/higea-metadata-microservice-0.0.1-SNAPSHOT.jar /opt/api/higea-metadata-microservice.jar
+
+    cd $WORKSPACE/microservices/higea-paciente-microservice
+	if [ -f /opt/api/higea-paciente-microservice.jar ]; then
+	    sudo cp -f /opt/api/higea-paciente-microservice.jar /opt/api/higea-paciente-microservice-last.jar
+	fi
+    sudo cp -f $WORKSPACE/microservices/higea-paciente-microservice/target/higea-paciente-microservice-0.0.1-SNAPSHOT.jar /opt/api/higea-paciente-microservice.jar
+
+
+
     # Deploy commands
     sudo systemctl restart api.service
     

@@ -183,7 +183,7 @@
 
           <select type="text" class="form-control" [formControl]="form.controls['motivoTurno']"
                   (change)="handleMotivoTurnoClick(form.value.motivoTurno)">
-            <option [ngValue]="motivo" *ngFor="let motivo of motivosTurno">{{motivo.descripcion}}</option>
+            <option [ngValue]="motivo" *ngFor="let motivo of motivos">{{motivo.descripcion}}</option>
           </select>
 
 

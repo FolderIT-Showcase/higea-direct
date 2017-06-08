@@ -26,6 +26,7 @@ public class SyncService {
     }
 
     public void syncAll(){
+        syncMotivosTurno();
         syncProfesionales();
         syncEspecialidades();
         syncPaises();
@@ -81,6 +82,14 @@ public class SyncService {
         List<Localidad> listOld = metadataService.findAllLocalidad();
         List<Localidad> listNew = result.getBody();
         metadataService.saveAllLocalidad(listDiff(listOld, listNew));
+    }
+
+    private void syncMotivosTurno() {
+        String url = "http://localhost:36004/{cliente}/motivoTurno";
+        ResponseEntity<List<MotivoTurno>> result = higeaApiConnect.get(url, new ParameterizedTypeReference<List<MotivoTurno>>(){});
+        List<MotivoTurno> listOld = metadataService.findAllMotivosTurno();
+        List<MotivoTurno> listNew = result.getBody();
+        metadataService.saveAllMotivosTurno(listDiff(listOld, listNew));
     }
 
     private <T> List<T> listDiff(List<T> oldList, List<T> newList) {

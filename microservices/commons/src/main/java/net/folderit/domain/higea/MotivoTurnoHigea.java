@@ -1,17 +1,17 @@
 package net.folderit.domain.higea;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import net.folderit.domain.core.MotivoTurno;
-import net.folderit.domain.core.TipoTurno;
 
-/**
- * Created by luis on 05/06/17.
- */
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonInclude(NON_NULL)
 public class MotivoTurnoHigea {
 
     private Long tipo_consulta_id;

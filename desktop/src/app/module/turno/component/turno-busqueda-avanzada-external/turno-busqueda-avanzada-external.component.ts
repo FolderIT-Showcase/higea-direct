@@ -44,14 +44,11 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
   constructor(private storeService: StoreService,
               private metadataService: MetadataService,
               private alertService: AlertService,
-              private loading: LoadingService,
               private turnoService: TurnoService,
               private fb: FormBuilder) {
   }
 
   ngOnInit(): void {
-    this.loading.start();
-    console.log(('start'));
 
     this.personas = this.storeService.get('integrantes');
 
@@ -132,16 +129,16 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
       return;
     }
 
-    form.fecha = this.timeStampToDate(form.fecha.epoc);
+    // form.fecha = this.timeStampToDate(form.fecha.epoc);
     const especialidad: Especialidad = Object.assign({}, form.especialidad);
     especialidad.profesional = null;
     form.especialidad = Object.assign({}, especialidad);
-    this.turnoService.getTurnos(form.centro, form.especialidad, form.profesional, form.fecha);
+    this.turnoService.getTurnos(form.centro, form.especialidad, form.profesional, form.fecha.epoc*1000);
   }
 
   timeStampToDate(timestamp) {
     let date: any = new Date(timestamp * 1000);
-    date = this.datePipe.transform(date, 'yyyy-MM-dd');
+    date = this.datePipe.transform(date, "yyyy-MM-dd'T'HH:mm:ss.S'Z'");
     return date;
   }
 

@@ -9,6 +9,7 @@ import {TipoTurno} from '../domain/tipo-turno';
 import {EstadosCiviles} from '../domain/enums/estado-civil';
 import {Especialidad} from '../domain/especialidad';
 import {Profesional} from '../domain/profesional';
+import {MotivoTurno} from '../domain/motivo-turno';
 
 @Injectable()
 export class MetadataService {
@@ -21,6 +22,7 @@ export class MetadataService {
   obras_sociales: ObraSocial[] = [];
   tipos_turnos: TipoTurno[] = [];
   estados_civil: EstadosCiviles[] = [];
+  motivos: MotivoTurno[] = [];
   license = localStorage.getItem('license');
   client = localStorage.getItem('client');
   // basePath = `${this.license}/${this.client}/`;
@@ -276,6 +278,36 @@ export class MetadataService {
       return (a.nombre > b.nombre) ? 1 : ((b.nombre > a.nombre) ? -1 : 0);
     });
     this.store.db.setItem('profesionales', this.especialidades);
+  }
+
+  getMotivosTurno(): Promise<any> {
+    return this.store.db.getItem('motivos')
+      .then((data: any) => {
+        if (data && data[0]) {
+          return new Promise<any>((resolve, reject) => {
+            resolve(data);
+          });
+        }
+        return this.requestMotivosTurno();
+      })
+      .then(data => {
+        this.setMotivosTurno(data);
+        return new Promise<any>((resolve, reject) => {
+          resolve(data);
+        });
+      });
+  }
+
+  requestMotivosTurno() {
+    const path = this.basePath + 'motivoTurno';
+    return this.api.get(path);
+  }
+
+  setMotivosTurno(motivos) {
+    this.motivos = motivos.sort((a, b) => {
+      return (a.nombre > b.nombre) ? 1 : ((b.nombre > a.nombre) ? -1 : 0);
+    });
+    this.store.db.setItem('motivos', this.motivos);
   }
 
 }

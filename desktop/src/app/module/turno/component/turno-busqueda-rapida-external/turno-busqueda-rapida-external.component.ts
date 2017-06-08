@@ -89,7 +89,7 @@ export class TurnoBusquedaRapidaExternalComponent implements OnInit, OnDestroy {
 
   timeStampToDate(timestamp) {
     let date: any = new Date(timestamp * 1000);
-    date = this.datePipe.transform(date, 'yyyy-MM-dd');
+    date = this.datePipe.transform(date, "yyyy-MM-dd'T'HH:mm:ss.S'Z'");
     return date;
   }
 

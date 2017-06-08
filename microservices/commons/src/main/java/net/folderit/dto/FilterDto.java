@@ -10,14 +10,15 @@ import net.folderit.domain.core.Profesional;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class FilterDto implements Serializable {
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "America/Buenos_Aires")
-    @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE_TIME)
-    String fecha;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.S'Z'", timezone = "America/Buenos_Aires")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.S'Z'", iso = DateTimeFormat.ISO.DATE_TIME)
+    Date fecha;
     CentroSalud centroSalud;
     Especialidad especialidad;
     Profesional profesional;
@@ -25,11 +26,8 @@ public class FilterDto implements Serializable {
     public String getFilterParameters() {
         String query = "";
 
-        if (fecha != null && !fecha.isEmpty()) {
+        if (fecha != null) {
             query += "agenda_fecha=" + getFecha() + "&";
-        }
-        if (especialidad != null) {
-//            query += "especialidad_id=" + especialidad.getId() + "&";
         }
         if (getProfesional() != null) {
             query += "profesional_id=" + profesional.getId();

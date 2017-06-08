@@ -97,7 +97,7 @@ export class TurnoResultadoComponent implements OnInit, OnDestroy, AfterViewInit
 
     turno.tomado = true;
     this.persona.turno.push(turno);
-    this.turnoService.reservarTurno(this.persona)
+    this.turnoService.reservarTurno(turno, this.persona)
       .then(() => {
         this.storeService.update('turnos', []);
         this.successModal.show();

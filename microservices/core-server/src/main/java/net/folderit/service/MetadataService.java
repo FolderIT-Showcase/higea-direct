@@ -10,21 +10,15 @@ import java.util.List;
 @Service
 public class MetadataService {
 
-    private PaisRepository paisRepository;
-
-    private ProvinciaRepository provinciaRepository;
-
-    private LocalidadRepository localidadRepository;
-
-    private CentroSaludRepository centroSaludRepository;
-
-    private EspecialidadRepository especialidadRepository;
-
-    private ProfesionalRepository profesionalRepository;
-
-    private ObraSocialRepository obraSocialRepository;
-
-    private TipoTurnoRepository tipoTurnoRepository;
+    private final PaisRepository paisRepository;
+    private final ProvinciaRepository provinciaRepository;
+    private final LocalidadRepository localidadRepository;
+    private final CentroSaludRepository centroSaludRepository;
+    private final EspecialidadRepository especialidadRepository;
+    private final ProfesionalRepository profesionalRepository;
+    private final ObraSocialRepository obraSocialRepository;
+    private final TipoTurnoRepository tipoTurnoRepository;
+    private final MotivoTurnoRepository motivoTurnoRepository;
 
     @Autowired
     public MetadataService(PaisRepository paisRepository,
@@ -34,8 +28,8 @@ public class MetadataService {
                            EspecialidadRepository especialidadRepository,
                            ProfesionalRepository profesionalRepository,
                            ObraSocialRepository obraSocialRepository,
-                           TipoTurnoRepository tipoTurnoRepository
-    ) {
+                           TipoTurnoRepository tipoTurnoRepository,
+                           MotivoTurnoRepository motivoTurnoRepository) {
         this.paisRepository = paisRepository;
         this.provinciaRepository = provinciaRepository;
         this.localidadRepository = localidadRepository;
@@ -44,6 +38,7 @@ public class MetadataService {
         this.profesionalRepository = profesionalRepository;
         this.obraSocialRepository = obraSocialRepository;
         this.tipoTurnoRepository = tipoTurnoRepository;
+        this.motivoTurnoRepository = motivoTurnoRepository;
     }
 
 
@@ -57,6 +52,10 @@ public class MetadataService {
 
     public List<Localidad> findAllLocalidad() {
         return localidadRepository.findAllByOrderByNombreAsc();
+    }
+
+    public List<MotivoTurno> findAllMotivosTurno() {
+        return motivoTurnoRepository.findAllByOrderByDescripcionAsc();
     }
 
     public List<CentroSalud> findAllCentroSalud() {
@@ -95,6 +94,10 @@ public class MetadataService {
         return tipoTurnoRepository.findAllByOrderByDescripcionAsc();
     }
 
+    public List<MotivoTurno> getAllmotivosTurno() {
+        return motivoTurnoRepository.findAllByOrderByDescripcionAsc();
+    }
+
     public CentroSalud saveCentroSalud(CentroSalud centroSalud) {
         return centroSaludRepository.save(centroSalud);
     }
@@ -129,6 +132,10 @@ public class MetadataService {
 
     public void saveAllLocalidad(List<Localidad> localidades) {
         localidadRepository.save(localidades);
+    }
+
+    public void saveAllMotivosTurno(List<MotivoTurno> motivoTurnos) {
+        motivoTurnoRepository.save(motivoTurnos);
     }
 
     public void deleteProfesional(Long id) {

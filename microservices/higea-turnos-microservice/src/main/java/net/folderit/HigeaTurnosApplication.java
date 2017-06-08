@@ -36,7 +36,7 @@ public class HigeaTurnosApplication {
         List<Turno> turnos = connectionMidleWare.findAllByPersona(personaId);
         return ResponseEntity.ok(turnos);
     }
-    
+
     @PostMapping("/{cliente}/persona/{personaId}")
     public ResponseEntity<?> otorgarTurno(@PathVariable("cliente") String codigo,
                                        @PathVariable("personaId") Integer personaId,

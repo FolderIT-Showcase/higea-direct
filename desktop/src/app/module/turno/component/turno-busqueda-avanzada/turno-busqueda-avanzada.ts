@@ -88,13 +88,13 @@ export class TurnoBusquedaAvanzadaComponent implements OnInit, OnDestroy {
       return;
     }
 
-    form.fecha = this.timeStampToDate(form.fecha.epoc);
+    // form.fecha = this.timeStampToDate(form.fecha.epoc);
     this.turnoService.getTurnos(form.centro, form.especialidad, form.profesional, form.fecha);
   }
 
   timeStampToDate(timestamp) {
     let date: any = new Date(timestamp * 1000);
-    date = this.datePipe.transform(date, 'yyyy-MM-dd');
+    date = this.datePipe.transform(date, "yyyy-MM-dd'T'HH:mm:ss.S'Z'");
     return date;
   }
 

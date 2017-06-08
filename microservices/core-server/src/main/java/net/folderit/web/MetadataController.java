@@ -139,4 +139,9 @@ public class MetadataController {
     public ResponseEntity<Collection<TipoTurno>> getAllTiposTurnos() {
         return new ResponseEntity<>((Collection<TipoTurno>) metadataService.getAllTiposTurnos(), HttpStatus.OK);
     }
+
+    @GetMapping("/motivoTurno")
+    public ResponseEntity<Collection<MotivoTurno>> getAllMotivosTurno() {
+        return ResponseEntity.ok(metadataService.getAllmotivosTurno());
+    }
 }

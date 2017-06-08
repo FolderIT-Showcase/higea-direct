@@ -55,19 +55,6 @@ export class MisTurnosComponent implements OnInit, OnDestroy, AfterViewInit {
       'persona': [this.personas[0]]
     });
 
-    this.turnoService.getTurnoByPersonaId(this.personas[0].id)
-      .then(data => {
-        this.turnos = data;
-      });
-
-    this.turnos.forEach(x => {
-      if (x.fecha <= Date.now()) {
-        this.turnosHistorial.push(x);
-      } else {
-        this.turnosProximos.push(x);
-      }
-    });
-
     this.persona = this.personas[0];
     this.storeService.update('persona', this.personas[0]);
 
@@ -77,9 +64,16 @@ export class MisTurnosComponent implements OnInit, OnDestroy, AfterViewInit {
           return;
         }
         this.persona = data;
-        this.turnoService.getTurnoByPersonaId(this.persona.id)
+        this.turnoService.getTurnoByPersonaId(this.persona.externalId)
           .then(turnos => {
             this.turnos = turnos;
+            this.turnos.forEach(x => {
+              if (x.fecha <= Date.now()) {
+                this.turnosHistorial.push(x);
+              } else {
+                this.turnosProximos.push(x);
+              }
+            });
           });
       }));
   }
@@ -99,7 +93,7 @@ export class MisTurnosComponent implements OnInit, OnDestroy, AfterViewInit {
   handlePersonaClick(persona: Persona) {
     this.storeService.update('persona', persona);
     this.persona = persona;
-    this.turnoService.getTurnoByPersonaId(persona.id)
+    this.turnoService.getTurnoByPersonaId(persona.externalId)
       .then(data => {
         this.turnos = data;
       });
