@@ -44,9 +44,8 @@ public class ConnectionMidleWare {
 
 
     private List<Profesional> getProfesionales() {
-        String uriProfesionales = "http://localhost:36001/{cliente}";
-        ResponseEntity<ArrayList<Profesional>> result = higeaApiConnect.get(uriProfesionales, new ParameterizedTypeReference<ArrayList<Profesional>>() {
-        });
+        String uriProfesionales = "http://localhost:36000/profesional";
+        ResponseEntity<ArrayList<Profesional>> result = higeaApiConnect.get(uriProfesionales, new ParameterizedTypeReference<ArrayList<Profesional>>() {});
         return result.getBody();
     }
 

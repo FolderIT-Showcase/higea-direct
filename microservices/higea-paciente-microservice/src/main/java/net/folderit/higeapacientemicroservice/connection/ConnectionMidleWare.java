@@ -2,7 +2,7 @@ package net.folderit.higeapacientemicroservice.connection;
 
 import net.folderit.domain.core.Persona;
 import net.folderit.domain.higea.LoginHigea;
-import net.folderit.domain.higea.LoginResultHigea;
+import net.folderit.domain.higea.LoginResult;
 import net.folderit.domain.higea.PacienteHigea;
 import net.folderit.domain.higea.Result;
 import org.springframework.core.ParameterizedTypeReference;
@@ -19,17 +19,17 @@ public class ConnectionMidleWare {
     private final String uriPaciente = "http://higea.folderit.net/api/{cliente}/pacientes";
     private RestTemplate restTemplate = new RestTemplate();
 
-    private ResponseEntity<LoginResultHigea> login() {
+    private ResponseEntity<LoginResult> login() {
         LoginHigea loginDTO = new LoginHigea("turneroweb", "WroteScientistFarmerCarbon");
         // send request and parse result
         String uriLogin = "http://higea.folderit.net/api/login";
-        LoginResultHigea result = restTemplate.postForObject(uriLogin, loginDTO, LoginResultHigea.class);
+        LoginResult result = restTemplate.postForObject(uriLogin, loginDTO, LoginResult.class);
         return ResponseEntity.ok(result);
     }
 
     public Persona savePaciente(String codigo, Persona persona) {
         PacienteHigea dto = persona.convertToPacienteHigeaDTO();
-        ResponseEntity<LoginResultHigea> loginResultDTO = login();
+        ResponseEntity<LoginResult> loginResultDTO = login();
         HttpHeaders headers = new HttpHeaders();
         headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
         headers.setContentType(MediaType.APPLICATION_JSON);

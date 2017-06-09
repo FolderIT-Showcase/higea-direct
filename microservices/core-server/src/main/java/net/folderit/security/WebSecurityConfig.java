@@ -77,7 +77,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                                 "and U.email = ?")
                 .rolePrefix("ROLE_");
 // TODO: solo para testing o backup, cambiar o mejorar
-        auth.inMemoryAuthentication().withUser("admin").password("admin").roles("ADMIN");
+        auth.inMemoryAuthentication().withUser("HigeaDirect").password("alagrandelepusecuca2017").roles("ADMIN");
     }
 
 

@@ -1,8 +1,7 @@
 package net.folderit.service;
 
-import net.folderit.domain.higea.LoginHigea;
+import net.folderit.domain.core.Login;
 import net.folderit.domain.higea.LoginResult;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -12,18 +11,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class HigeaApiConnect {
-    @Value("${turnero.client.label}")
+public class CoreApiConnect {
     private String cliente;
     private RestTemplate restTemplate = new RestTemplate();
     private Map<String, String> uriParams = new HashMap<>();
 
     private ResponseEntity<LoginResult> login() {
-        LoginHigea loginDTO = new LoginHigea("turneroweb", "WroteScientistFarmerCarbon");
+        Login login = new Login("HigeaDirect", "alagrandelepusecuca2017");
         // send request and parse result
-        String url = "http://higea.folderit.net/api/login";
-        LoginResult result = restTemplate.postForObject(url, loginDTO, LoginResult.class);
-        return ResponseEntity.ok(result);
+        String url = "http://localhost:8080/api/core/login";
+        ResponseEntity<Object> result = restTemplate.postForEntity(url, login, Object.class);
+        LoginResult loginResult = new LoginResult();
+        String token = result.getHeaders().get("Authorization").get(0);
+        loginResult.setToken(token);
+        return ResponseEntity.ok(loginResult);
     }
 
     private HttpEntity<?> getSession() {
