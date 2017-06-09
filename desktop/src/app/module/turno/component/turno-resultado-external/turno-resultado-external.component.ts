@@ -107,4 +107,14 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
     this.successModal = event;
   }
 
+  generarPDF() {
+    this.turnoService.generarPDF(this.persona)
+      .then(data => {
+        // window.open(data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+
 }
