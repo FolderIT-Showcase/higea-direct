@@ -12,6 +12,19 @@ export class UtilsService {
     this.innerWidth = window.innerWidth;
   }
 
+  public static throttle(callback: () => void, limit: number) {
+  let wait = false;
+  return () => {
+    if (!wait) {
+      callback();
+      wait = true;
+      setTimeout(() => {
+        wait = false;
+      }, limit);
+    }
+  }
+}
+
   public getWidth() {
     return window.innerWidth;
   }

@@ -67,6 +67,8 @@ export class MisTurnosComponent implements OnInit, OnDestroy, AfterViewInit {
         this.turnoService.getTurnoByPersonaId(this.persona.externalId)
           .then(turnos => {
             this.turnos = turnos;
+            this.turnosHistorial = [];
+            this.turnosProximos = [];
             this.turnos.forEach(x => {
               if (x.fecha <= Date.now()) {
                 this.turnosHistorial.push(x);
