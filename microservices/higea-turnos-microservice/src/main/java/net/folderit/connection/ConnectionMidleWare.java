@@ -6,13 +6,13 @@ import net.folderit.domain.higea.EstadoTurnosHigea;
 import net.folderit.domain.higea.Result;
 import net.folderit.domain.higea.TurnoHigea;
 import net.folderit.dto.FilterDto;
+import net.folderit.service.CoreApiConnect;
 import net.folderit.service.HigeaApiConnect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.text.SimpleDateFormat;
@@ -25,13 +25,14 @@ public class ConnectionMidleWare {
 
     private final String uriTurnos = "http://higea.folderit.net/api/{cliente}/turnos";
     private final HigeaApiConnect higeaApiConnect;
-    private final RestTemplate restTemplate = new RestTemplate();
+    private final CoreApiConnect coreApiConnect;
     @Value("${turnero.client.label}")
     private String cliente;
 
     @Autowired
-    public ConnectionMidleWare(HigeaApiConnect higeaApiConnect) {
+    public ConnectionMidleWare(HigeaApiConnect higeaApiConnect, CoreApiConnect coreApiConnect) {
         this.higeaApiConnect = higeaApiConnect;
+        this.coreApiConnect = coreApiConnect;
     }
 
     private List<TurnoHigea> turnos(String codigo, FilterDto filterDto) {
@@ -44,9 +45,8 @@ public class ConnectionMidleWare {
 
 
     private List<Profesional> getProfesionales() {
-        String uriProfesionales = "http://localhost:36001/{cliente}";
-        ResponseEntity<ArrayList<Profesional>> result = higeaApiConnect.get(uriProfesionales, new ParameterizedTypeReference<ArrayList<Profesional>>() {
-        });
+        String uriProfesionales = "http://localhost:36000/profesional";
+        ResponseEntity<ArrayList<Profesional>> result = coreApiConnect.get(uriProfesionales, new ParameterizedTypeReference<ArrayList<Profesional>>() {});
         return result.getBody();
     }
 

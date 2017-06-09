@@ -1,7 +1,7 @@
 package net.folderit.service;
 
 import net.folderit.domain.higea.LoginHigea;
-import net.folderit.domain.higea.LoginResultHigea;
+import net.folderit.domain.higea.LoginResult;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
@@ -18,16 +18,16 @@ public class HigeaApiConnect {
     private RestTemplate restTemplate = new RestTemplate();
     private Map<String, String> uriParams = new HashMap<>();
 
-    private ResponseEntity<LoginResultHigea> login() {
+    private ResponseEntity<LoginResult> login() {
         LoginHigea loginDTO = new LoginHigea("turneroweb", "WroteScientistFarmerCarbon");
         // send request and parse result
         String url = "http://higea.folderit.net/api/login";
-        LoginResultHigea result = restTemplate.postForObject(url, loginDTO, LoginResultHigea.class);
+        LoginResult result = restTemplate.postForObject(url, loginDTO, LoginResult.class);
         return ResponseEntity.ok(result);
     }
 
     private HttpEntity<?> getSession() {
-        ResponseEntity<LoginResultHigea> loginResultDTO = login();
+        ResponseEntity<LoginResult> loginResultDTO = login();
         // URI (URL) parameters
         uriParams.put("cliente", cliente);
         HttpHeaders headers = new HttpHeaders();
@@ -41,7 +41,7 @@ public class HigeaApiConnect {
     }
 
     public <T> ResponseEntity<T> post(String url, ParameterizedTypeReference<T> responseType, Object body) {
-        ResponseEntity<LoginResultHigea> loginResultDTO = login();
+        ResponseEntity<LoginResult> loginResultDTO = login();
         // URI (URL) parameters
         uriParams.put("cliente", cliente);
         HttpHeaders headers = new HttpHeaders();

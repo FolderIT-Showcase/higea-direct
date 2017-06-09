@@ -2,7 +2,7 @@ package net.folderit.connection;
 
 import net.folderit.domain.core.Profesional;
 import net.folderit.domain.higea.LoginHigea;
-import net.folderit.domain.higea.LoginResultHigea;
+import net.folderit.domain.higea.LoginResult;
 import net.folderit.domain.higea.ProfesionalHigea;
 import net.folderit.domain.higea.Result;
 import org.springframework.core.ParameterizedTypeReference;
@@ -20,10 +20,10 @@ public class ConnectionMidleWare {
 
     private RestTemplate restTemplate = new RestTemplate();
 
-    private ResponseEntity<LoginResultHigea> login() {
+    private ResponseEntity<LoginResult> login() {
         LoginHigea loginDTO = new LoginHigea("turneroweb", "WroteScientistFarmerCarbon");
         String uriLogin = "http://higea.folderit.net/api/login";
-        LoginResultHigea result = restTemplate.postForObject(uriLogin, loginDTO, LoginResultHigea.class);
+        LoginResult result = restTemplate.postForObject(uriLogin, loginDTO, LoginResult.class);
         return ResponseEntity.ok(result);
     }
 
@@ -36,7 +36,7 @@ public class ConnectionMidleWare {
 
     public List<ProfesionalHigea> getProfesionalesHigea(String codigo) {
 
-        ResponseEntity<LoginResultHigea> loginResultDTO = login();
+        ResponseEntity<LoginResult> loginResultDTO = login();
 
         // URI (URL) parameters
         Map<String, String> uriParams = new HashMap<>();

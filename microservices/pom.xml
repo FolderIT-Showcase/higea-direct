@@ -20,7 +20,6 @@
         <module>../microservices/core-server</module>
         <module>../microservices/eureka-server</module>
         <module>../microservices/gateway</module>
-        <module>../microservices/higea-especialidad-microservice</module>
         <module>../microservices/higea-profesional-microservice</module>
         <module>../microservices/higea-turnos-microservice</module>
         <module>../microservices/higea-metadata-microservice</module>

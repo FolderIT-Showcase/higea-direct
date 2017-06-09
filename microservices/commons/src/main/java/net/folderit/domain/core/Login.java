@@ -1,4 +1,4 @@
-package net.folderit.domain.higea;
+package net.folderit.domain.core;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
@@ -11,8 +11,7 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(NON_NULL)
-public class LoginResultHigea {
-    private Boolean result;
-    private String token;
-    private String err;
+public class Login {
+    private String email;
+    private String password;
 }
