@@ -19,7 +19,7 @@ public class MotivoTurno {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "preparacion_id")
-    Preparacgit ion preparacion;
+    Preparacion preparacion;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
