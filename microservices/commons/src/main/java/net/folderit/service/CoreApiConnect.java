@@ -12,15 +12,15 @@ import java.util.Map;
 
 @Service
 public class CoreApiConnect {
-    private String cliente;
+
     private RestTemplate restTemplate = new RestTemplate();
     private Map<String, String> uriParams = new HashMap<>();
 
     private ResponseEntity<LoginResult> login() {
         Login login = new Login("HigeaDirect", "alagrandelepusecuca2017");
         // send request and parse result
-        String url = "http://localhost:8080/api/core/login";
-        ResponseEntity<Object> result = restTemplate.postForEntity(url, login, Object.class);
+        String url = "http://localhost:36000/login";
+        ResponseEntity<Void> result = restTemplate.postForEntity(url, login, Void.class);
         LoginResult loginResult = new LoginResult();
         String token = result.getHeaders().get("Authorization").get(0);
         loginResult.setToken(token);
@@ -30,7 +30,6 @@ public class CoreApiConnect {
     private HttpEntity<?> getSession() {
         ResponseEntity<LoginResult> loginResultDTO = login();
         // URI (URL) parameters
-        uriParams.put("cliente", cliente);
         HttpHeaders headers = new HttpHeaders();
         headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
         headers.set("Authorization", loginResultDTO.getBody().getToken());
@@ -44,7 +43,6 @@ public class CoreApiConnect {
     public <T> ResponseEntity<T> post(String url, ParameterizedTypeReference<T> responseType, Object body) {
         ResponseEntity<LoginResult> loginResultDTO = login();
         // URI (URL) parameters
-        uriParams.put("cliente", cliente);
         HttpHeaders headers = new HttpHeaders();
         headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
         headers.set("Authorization", loginResultDTO.getBody().getToken());
