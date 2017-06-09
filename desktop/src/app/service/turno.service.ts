@@ -123,7 +123,7 @@ export class TurnoService {
   }
 
   generarPDF(persona: Persona) {
-    const path = this.basePath + 'persona/pdf';
+    const path = 'core/' + 'persona/pdf';
     return this.api.getFile(path, 'application/pdf', 'tmp', persona);
   }
 

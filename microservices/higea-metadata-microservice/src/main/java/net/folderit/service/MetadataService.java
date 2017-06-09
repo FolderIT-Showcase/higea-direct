@@ -76,7 +76,8 @@ public class MetadataService {
         ResponseEntity<Result<MotivoTurnoHigea>> result = higeaApiConnect.get(url, new ParameterizedTypeReference<Result<MotivoTurnoHigea>>() {
         });
         ArrayList<MotivoTurno> motivosTurno = new ArrayList<>();
-        result.getBody().getData().getRows().forEach(motivoTurnoHigea -> motivosTurno.add(motivoTurnoHigea.convert()));
+        Preparacion preparacion = getPreparacion();
+        result.getBody().getData().getRows().forEach(motivoTurnoHigea -> motivosTurno.add(motivoTurnoHigea.convert(preparacion)));
         return motivosTurno;
     }
 
@@ -165,4 +166,14 @@ public class MetadataService {
         return especialidades;
     }
 
+
+    private Preparacion getPreparacion(){
+
+        String strPreparacion = "Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas \"Letraset\", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.";
+
+        Preparacion preparacion = new Preparacion();
+        preparacion.setDescripcion(strPreparacion);
+
+        return preparacion;
+    }
 }

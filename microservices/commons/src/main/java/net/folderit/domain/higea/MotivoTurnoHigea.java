@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import net.folderit.domain.core.MotivoTurno;
+import net.folderit.domain.core.Preparacion;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
@@ -25,12 +26,12 @@ public class MotivoTurnoHigea {
     private String tipo_consulta_usa_equipo;
 
 
-    public MotivoTurno convert() {
+    public MotivoTurno convert(Preparacion preparacion) {
         MotivoTurno motivoTurno = new MotivoTurno();
         motivoTurno.setId((long) this.tcg_id );
         motivoTurno.setDescripcion(this.tipo_consulta_nombre);
         motivoTurno.setCodigo(this.tcg_id.intValue());
-        motivoTurno.setPreparacion(null);
+        motivoTurno.setPreparacion(preparacion);
         motivoTurno.setCoseguro(0D);
         return motivoTurno;
     }

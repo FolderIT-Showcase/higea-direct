@@ -21,5 +21,6 @@ public class Preparacion {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(columnDefinition="TEXT" ,length = 65535)
     private String descripcion;
 }
