@@ -112,7 +112,7 @@ export class PersonaService {
 
 
   activateUser(token) {
-    const path = `${this.basePathCore}users/regitrationConfirm?token=${token}`;
+    const path = `${this.basePathCore}auth/regitrationConfirm?token=${token}`;
     return this.api.get(path);
   }
 
