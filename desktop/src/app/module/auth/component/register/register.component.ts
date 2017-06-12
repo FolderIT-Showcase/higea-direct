@@ -94,7 +94,7 @@ export class RegisterComponent implements OnInit {
   buildPersonaUser(data) {
     const user: User = new User();
     user.password = data.password1;
-    user.email = data.email;
+    user.email = data.email.trim();
 
     const persona: Persona = new Persona();
     persona.userAsociado = user;

@@ -99,6 +99,8 @@ public class UserController {
             TurneroException.getInstance().getMessage(TurneroException.MESSAGE_ERROR_GENERIC, null);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(TurneroException.getInstance());
         }
+        //habilito la persona
+        persona.setEnabled(Boolean.TRUE);
         personaService.save(persona);
         return ResponseEntity.status(HttpStatus.OK).body(persona);
     }

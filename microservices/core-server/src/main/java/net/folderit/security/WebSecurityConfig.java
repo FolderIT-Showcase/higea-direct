@@ -45,7 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
                 .antMatchers(HttpMethod.GET, "/users/external").permitAll()
                 .antMatchers(HttpMethod.POST, "/users/registration").permitAll()
-                .antMatchers(HttpMethod.GET, "/users/regitrationConfirm").permitAll()
+                .antMatchers(HttpMethod.GET, "/auth/regitrationConfirm").permitAll()
                 .antMatchers(HttpMethod.GET, "/pais").permitAll()
                 .antMatchers(HttpMethod.GET, "/persona/afip").permitAll()
                 .antMatchers(HttpMethod.GET, "/obraSocial").permitAll()
@@ -74,6 +74,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                                 "from authorities A, users U, users_roles UR " +
                                 "where U.id = UR.users_id " +
                                 "and A.id = UR.roles_id " +
+                                "and true = U.enabled " +
                                 "and U.email = ?")
                 .rolePrefix("ROLE_");
 // TODO: solo para testing o backup, cambiar o mejorar
