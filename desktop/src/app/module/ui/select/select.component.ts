@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 @Component({
   selector: 'app-select',
@@ -12,6 +12,20 @@ export class SelectComponent {
   @Input() list;
   @Input() displayProp = null;
   @Output() change = new EventEmitter<any>();
+
+  mModel: any = null;
+
+  @Output() ngModel = new EventEmitter<any>();
+
+  @Input()
+  set setModel(item) {
+    this.mModel = item;
+  }
+
+  handleChange(item) {
+    console.log(item);
+    this.ngModel.emit(item);
+  }
 
   label(item) {
     if (this.displayProp) {
