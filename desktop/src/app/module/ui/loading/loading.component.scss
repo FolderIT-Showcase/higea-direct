@@ -1,4 +1,4 @@
-$accentColor: #BCDEFF;
+$accentColor: #2095F2;
 
 .loading-wrapper {
   z-index: 1000;
@@ -42,7 +42,7 @@ $accentColor: #BCDEFF;
 .loader:before {
   width: 50%;
   height: 50%;
-  background: #BCDEFF;
+  background: $accentColor;
   border-radius: 100% 0 0 0;
   position: absolute;
   top: 0;
@@ -51,7 +51,7 @@ $accentColor: #BCDEFF;
 }
 
 .loader:after {
-  background: #2095F2;
+  background: white;
   width: 75%;
   height: 75%;
   border-radius: 50%;
