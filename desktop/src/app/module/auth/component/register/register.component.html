@@ -81,11 +81,12 @@
 
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-id-card "></i></span>
-            <select type="text" class="form-control" [formControl]="complexForm.controls['tipoDocumento']">
-              <option disabled selected="selected" value="">Tipo Documento</option>
-              <option [ngValue]="tipoDocumento" *ngFor="let tipoDocumento of tipoDocumentos">{{tipoDocumento}}</option>
-            </select>
-
+            <app-select
+              ngDefaultControl
+              [placeHolder]="'Tipo Documento'"
+              [formControl]="complexForm.controls['tipoDocumento']"
+              [list]="tipoDocumentos"
+            ></app-select>
             <small
               *ngIf="complexForm.controls['tipoDocumento'].hasError('required') && complexForm.controls['tipoDocumento'].touched"
               class="help-block">Ingrese su Tipo de Documento
@@ -121,10 +122,18 @@
 
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-globe"></i></span>
-            <select type="text" class="form-control" [formControl]="complexForm.controls['pais']">
-              <option disabled selected>Pais</option>
-              <option [ngValue]="pais" *ngFor="let pais of paises">{{pais.nombre}}</option>
-            </select>
+            <!--<select type="text" class="form-control" [formControl]="complexForm.controls['pais']">-->
+              <!--<option disabled selected>Pais</option>-->
+              <!--<option [ngValue]="pais" *ngFor="let pais of paises">{{pais.nombre}}</option>-->
+            <!--</select>-->
+
+            <app-select
+              ngDefaultControl
+              [placeHolder]="'Pais'"
+              [formControl]="complexForm.controls['pais']"
+              [list]="paises"
+              [displayProp]="'nombre'"
+            ></app-select>
 
             <small *ngIf="complexForm.controls['pais'].hasError('required') && complexForm.controls['pais'].touched"
                    class="help-block">Debes incluir tu País de origen
@@ -141,10 +150,17 @@
 
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-intersex"></i></span>
-            <select type="text" class="form-control" [formControl]="complexForm.controls['genero']" p>
-              <option disabled selected>Genero</option>
-              <option [ngValue]="genero" *ngFor="let genero of generos">{{genero}}</option>
-            </select>
+            <!--<select type="text" class="form-control" [formControl]="complexForm.controls['genero']">-->
+              <!--<option disabled selected>Genero</option>-->
+              <!--<option [ngValue]="genero" *ngFor="let genero of generos">{{genero}}</option>-->
+            <!--</select>-->
+
+            <app-select
+              ngDefaultControl
+              [placeHolder]="'Género'"
+              [formControl]="complexForm.controls['genero']"
+              [list]="generos"
+            ></app-select>
 
             <small *ngIf="complexForm.controls['genero'].hasError('required') && complexForm.controls['genero'].touched"
                    class="help-block">Ingrese su Género
@@ -160,10 +176,6 @@
       <div class="col-sm-6">
         <div class="form-group "
              [ngClass]="{'has-error':!complexForm.controls['email'].valid && complexForm.controls['email'].touched}">
-          <!--<label>Correo Electrónico</label>-->
-
-          <!--  <input class="form-group" type="email" placeholder="E-mail"
-                   [formControl]="complexForm.controls['email']">-->
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-envelope-o"></i></span>
             <input class="form-control" type="email" placeholder="Correo"
@@ -198,16 +210,16 @@
     <div class="row">
       <div class="col-sm-6">
         <div class="form-group">
-
-
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-heartbeat"></i></span>
-            <select type="text" class="form-control" [formControl]="complexForm.controls['obraSocial']"
-                    (change)="handleObraSocialClick(complexForm.value.obraSocial)">
-              <option disabled selected>Obra Social</option>
-              <option [ngValue]="obraSocial" *ngFor="let obraSocial of obras_sociales">{{obraSocial.nombre}}
-              </option>
-            </select>
+            <app-select
+              ngDefaultControl
+              [placeHolder]="'Obra Social'"
+              [formControl]="complexForm.controls['obraSocial']"
+              [list]="obras_sociales"
+              [displayProp]="'nombre'"
+              (change)="handleObraSocialClick(complexForm.value.obraSocial)"
+            ></app-select>
           </div>
         </div>
       </div>
@@ -218,22 +230,26 @@
 
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-heartbeat"></i></span>
-            <select type="text" class="form-control" [formControl]="complexForm.controls['plan']">
-              <option disabled selected>Plan</option>
-              <option [ngValue]="plan" *ngFor="let plan of planes">{{plan.razon_social}}</option>
-            </select>
+            <!--<select type="text" class="form-control" [formControl]="complexForm.controls['plan']">-->
+              <!--<option disabled selected>Plan</option>-->
+              <!--<option [ngValue]="plan" *ngFor="let plan of planes">{{plan.razon_social}}</option>-->
+            <!--</select>-->
+
+            <app-select
+              ngDefaultControl
+              [placeHolder]="'Plan'"
+              [formControl]="complexForm.controls['plan']"
+              [list]="planes"
+              [displayProp]="'razon_social'"
+            ></app-select>
+
             <small
               *ngIf="complexForm.value.obraSocial && !complexForm.value.plan &&
-
              complexForm.controls['plan'].touched" class="help-block">
               Ingrese su Plan.
             </small>
           </div>
 
-
-          <!--<small *ngIf="complexForm.controls['plan'].hasError('required') && complexForm.controls['plan'].touched"
-                 class="help-block">Ingrese su Plan
-          </small>-->
         </div>
       </div>
     </div>
@@ -252,12 +268,9 @@
               class="help-block">Debes incluir su numero afiliado.
             </small>
           </div>
-
-
         </div>
       </div>
     </div>
-
 
     <div class="row">
       <div class="col-sm-12"

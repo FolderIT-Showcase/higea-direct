@@ -27,7 +27,6 @@ const routes: Routes = [
       {
         path: 'register-social',
         component: RegisterSocialComponent,
-        loadChildren: 'app/module/auth/auth.module#AuthModule',
       },
       {
         path: 'regitrationConfirm',

@@ -9,12 +9,17 @@ import {ModalComponent} from './modal/modal.component';
 import {ModalModule} from 'ngx-bootstrap';
 import {RouterModule} from '@angular/router';
 import {SelectComponent} from './select/select.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { BsDropdownModule } from 'ngx-bootstrap';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
-    ModalModule.forRoot()
+    FormsModule,
+    ReactiveFormsModule,
+    ModalModule.forRoot(),
+    BsDropdownModule.forRoot()
   ],
   declarations: [
     AlertComponent,
@@ -31,7 +36,8 @@ import {SelectComponent} from './select/select.component';
     HomeComponent,
     LoadingComponent,
     ModalComponent,
-    NavbarComponent
+    NavbarComponent,
+    SelectComponent
   ]
 })
 export class UIModule {

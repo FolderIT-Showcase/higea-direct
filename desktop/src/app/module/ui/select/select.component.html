@@ -1,1 +1,9 @@
-<span></span>
+<label class="control-label" *ngIf="!formControl.value" for="app-select">{{placeHolder}}</label>
+<select
+  class="form-control"
+  id="app-select"
+  [formControl]="formControl"
+  (change)="change">
+  <option [ngValue]="item" *ngFor="let item of list">{{label(item)}}</option>
+</select>
+

@@ -42,24 +42,20 @@ const routes: Routes = [
       },
       {
         path: 'turno',
-        // loadChildren: 'module/turno/turno.module#TurnoModule',
         loadChildren: loadTurnoModule,
       },
       {
         path: 'grupo-familiar',
-        // loadChildren: 'module/grupo-familiar/grupo-familiar.module#GrupoFamiliarModule',
         loadChildren: loadGrupoFamiliarModule,
       },
       {
         path: 'admin',
-        // loadChildren: 'module/admin/admin.module#AdminModule',
         loadChildren: loadAdminModule,
       },
     ]
   },
   {
     path: 'auth',
-    // loadChildren: 'module/auth/auth.module#AuthModule',
     loadChildren: loadAuthModule,
   },
 
