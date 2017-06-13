@@ -88,6 +88,7 @@ export class MisTurnosComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy(): void {
+    this.subs.forEach(x => x.unsubscribe());
     this.storeService.update('persona', null);
     this.storeService.update('turnos', []);
   }

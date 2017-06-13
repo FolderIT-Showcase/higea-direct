@@ -52,15 +52,15 @@ export class RegisterComponent implements OnInit {
       'nombre': [null, Validators.required],
       'apellido': [null, Validators.required],
       'numeroDocumento': [null, Validators.required],
-      'tipoDocumento': ['Tipo de Documento', Validators.required],
-      'pais': [this.paises[0], Validators.required],
-      'genero': [this.generos[0], Validators.required],
+      'tipoDocumento': [null, Validators.required],
+      'pais': [null, Validators.required],
+      'genero': [null, Validators.required],
       'password1': [null, Validators.required],
       'password2': [null, [Validators.required, this.passwordMatch]],
       'email': [null, Validators.required],
       'telefono': [null, Validators.required],
-      'obraSocial': [this.obras_sociales[0]],
-      'plan': [this.planes[0], Validators.required],
+      'obraSocial': [null],
+      'plan': [null, Validators.required],
       'nroAfiliado': [null],
     }, {validator: this.passwordMatcher});
 
@@ -73,10 +73,6 @@ export class RegisterComponent implements OnInit {
     this.metadataService.getObrasSociales().then((data: any) => {
       this.obras_sociales = data;
     });
-
-    /*this.metadataService.getAllEstadoCiviles().then((data: any) => {
-     this.generos = data;
-     });*/
   }
 
   private passwordMatch() {
@@ -120,9 +116,9 @@ export class RegisterComponent implements OnInit {
 
     const persona: Persona = this.buildPersonaUser(data);
 
-    if (!this.captcha) {
-      return;
-    }
+    // if (!this.captcha) {
+    //   return;
+    // }
 
     if (persona.documento.tipoDocumento === 'dni') {
 
@@ -158,7 +154,6 @@ export class RegisterComponent implements OnInit {
 
   handleObraSocialClick(obra_social: ObraSocial) {
     this.planes = obra_social.planes;
-
     this.complexForm = this.fb.group({
       'nombre': [this.complexForm.value.nombre, Validators.required],
       'apellido': [this.complexForm.value.apellido, Validators.required],

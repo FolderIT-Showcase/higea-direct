@@ -1,1 +1,12 @@
-<span></span>
+<label class="control-label" *ngIf="formControl && !formControl.value">{{placeHolder}}</label>
+<select *ngIf="formControl"
+  class="form-control"
+  [formControl]="formControl"
+  (change)="change && handleChange(item)">
+  <option [ngValue]="item" *ngFor="let item of list">{{label(item)}}</option>
+</select>
+<select *ngIf="!formControl"
+  class="form-control">
+  <option value="item.id" *ngFor="let item of list" (click)="handleChange(item)">{{label(item)}}</option>
+</select>
+

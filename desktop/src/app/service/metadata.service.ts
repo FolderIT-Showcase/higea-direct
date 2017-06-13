@@ -57,7 +57,7 @@ export class MetadataService {
 
   requestPaises() {
     const path = this.basePath + 'pais';
-    return this.api.get(path);
+    return this.api.get(path, false);
   }
 
   setPaises(mPaises) {
@@ -149,7 +149,7 @@ export class MetadataService {
 
   requestObrasSociales() {
     const path = this.basePath + 'obraSocial';
-    return this.api.get(path);
+    return this.api.get(path, false);
   }
 
   setObrasSociales(mOS) {

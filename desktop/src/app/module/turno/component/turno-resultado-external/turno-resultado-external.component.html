@@ -93,6 +93,11 @@
   </div>
   <div class="row">
     <div class="col-sm-12">
+      <!--<app-select-->
+        <!--[displayProp]="'descripcion'"-->
+        <!--(getModel)="motivoTurno"-->
+        <!--[list]="motivos">-->
+      <!--</app-select>-->
       <select [(ngModel)]="motivoTurno">
         <option [ngValue]="motivo" *ngFor="let motivo of motivos">{{motivo.descripcion}}</option>
       </select>
@@ -100,11 +105,9 @@
   </div>
   <div class="row">
     <div class="col-sm-12 text-right">
-      <div class="form-control">
         <button (click)="reservarTurno(turno)" [disabled]="!motivoTurno || !motivoTurno.id" class="btn btn-primary">SI
         </button>
         <button (click)="turnoModal.hide()" class="btn btn-default">NO</button>
-      </div>
     </div>
   </div>
 </app-modal>

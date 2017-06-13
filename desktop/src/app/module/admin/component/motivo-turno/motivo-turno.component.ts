@@ -5,8 +5,6 @@ import {Component, OnInit} from '@angular/core';
   templateUrl: './motivo-turno.component.html'
 })
 
-export class MotivoTurnoComponent implements OnInit {
-  ngOnInit() {
-
-  }
+export class MotivoTurnoComponent {
+  profesionales = []
 }

@@ -1,4 +1,4 @@
-import {LOCALE_ID, NgModule} from '@angular/core';
+import {Compiler, LOCALE_ID, NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app.routing.module';
 import {BrowserModule} from '@angular/platform-browser';
@@ -23,7 +23,6 @@ import {StoreService} from './service/store.service';
 import {UIModule} from './module/ui/ui.module';
 import {EspecialidadResolveService} from './service/resolve/especialidad-resolve.service';
 import {AdminService} from './service/admin.service';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ProfesionalResolveService} from './service/resolve/profesionales-resolve.service';
 
 const providers = [
@@ -52,7 +51,6 @@ const providers = [
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,
     CommonModule,
     HttpModule,
     RouterModule,

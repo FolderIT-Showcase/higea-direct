@@ -8,6 +8,7 @@ export class LoadingService {
 
   private subject = new Subject<any>();
   private promises: Promise<any>[] = [];
+  private promiseCount = 0;
 
   constructor(private router: Router) {
     router.events.subscribe(event => {
@@ -18,11 +19,13 @@ export class LoadingService {
   }
 
   public start() {
-    this.subject.next(true);
+    this.promiseCount++;
+    this.subject.next(this.promiseCount);
   }
 
   public finish() {
-    this.subject.next(false);
+    this.promiseCount--;
+    this.subject.next(this.promiseCount);
   }
 
   getMessage(): Observable<any> {
@@ -30,18 +33,9 @@ export class LoadingService {
   }
 
   setLoading(promise: Promise<any>) {
-
     this.start();
-
     this.promises.push(promise);
-
-    Promise.all(this.promises)
-      .catch(() => this.finish())
-      .then(() => {
-        setTimeout(() => {
-          this.finish();
-        }, 300);
-      });
+    Promise.all(this.promises).catch(() => this.finish()).then(() => this.finish());
 
   }
 

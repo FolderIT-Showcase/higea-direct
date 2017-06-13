@@ -15,30 +15,16 @@
 }
 
 .navbar-item {
-  .active1 {
-    color: #ffffff;
-    background-color: transparent;
-  }
 
   .active {
-    color: black;
-    text-align: center;
-    display: inline-block;
-    padding: 0 20px;
-    background-color: #bcdeff;
-    line-height: 28px;
-    border-radius: 28px;
-    margin: 18px 0;
+    font-weight: bold;
+    color: white;
+    //background-color: #88c4f2;
+    background: linear-gradient(180deg, transparent 92%, white 8%);
   }
 
 }
 
 .navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a:focus {
-  text-align: center;
-  display: inline-block;
-  padding: 0 20px;
   background-color: #88c4f2;
-  line-height: 28px;
-  border-radius: 28px;
-  margin: 18px 0;
 }
