@@ -81,6 +81,8 @@ public class TurnoHigea {
         mTurno.setEnabled(true);
         mTurno.setTomado(false);
         MotivoTurno motivoTurno = new MotivoTurno();
+        Preparacion preparacion = new Preparacion();
+        motivoTurno.setPreparacion(preparacion);
         motivoTurno.setId(tipo_turno_fac_id);
         mTurno.setMotivoTurno(motivoTurno);
         mTurno.setDuracion(turno_duracion);
