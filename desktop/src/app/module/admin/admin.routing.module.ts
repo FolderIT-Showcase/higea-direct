@@ -5,7 +5,7 @@ import {AdminGuard} from '../../service/guard/admin.guard';
 import {CentrosSaludResolveService} from '../../service/resolve/centros-salud-resolve.service';
 import {TurnoResolveService} from '../../service/resolve/turno-resolve.service';
 import {TipoTurnoResolveService} from '../../service/resolve/tipo-turno-resolve.service';
-import {EspecialidadResolveService} from '../../service/resolve/especialidad-resolve.service';
+import {MetadataResolveService} from '../../service/resolve/metadata-resolve.service';
 import {ProfesionalResolveService} from '../../service/resolve/profesionales-resolve.service';
 import {ProfesionalesComponent} from './component/profesionales/profesionales.component';
 import {CentrosSaludComponent} from './component/centros-salud/centros-salud.component';
@@ -36,7 +36,7 @@ const routes: Routes = [
         path: 'especialidad',
         component: EspecialidadesComponent,
         resolve: {
-          especialidades: EspecialidadResolveService,
+          especialidades: MetadataResolveService,
           profesionales: ProfesionalResolveService
         }
       },
@@ -45,7 +45,7 @@ const routes: Routes = [
         component: CentrosSaludComponent,
         resolve: {
           centrosSalud: CentrosSaludResolveService,
-          especialidades: EspecialidadResolveService
+          especialidades: MetadataResolveService
         }
       },
       {

@@ -48,7 +48,6 @@ export class CentrosSaludComponent implements OnInit {
               private store: Store,
               private  pagerService: PagerService,
               private storeService: StoreService,
-              private turnoService: TurnoService,
               private alertService: AlertService,
               private adminService: AdminService) {
 

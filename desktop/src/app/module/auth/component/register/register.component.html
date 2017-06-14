@@ -1,82 +1,102 @@
-<div class="col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+<div class="col-sm-12 col-md-8 col-md-offset-2">
 
   <h2 class="app-header text-center">Registro</h2>
   <form [formGroup]="complexForm" (ngSubmit)="submitForm(complexForm.value)">
 
     <div class="row">
-      <div class="col-sm-6">
+      <div class="col-sm-4">
         <div class="form-group"
              [ngClass]="{'has-error':!complexForm.controls['nombre'].valid && complexForm.controls['nombre'].touched}">
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-user"></i></span>
             <input class="form-control" type="text" placeholder="Nombre" [formControl]="complexForm.controls['nombre']">
-            <small *ngIf="complexForm.controls['nombre'].hasError('required') && complexForm.controls['nombre'].touched"
-                   class="help-block">Debes incluir tu nombre.
-            </small>
           </div>
-
+          <small *ngIf="complexForm.controls['nombre'].hasError('required') && complexForm.controls['nombre'].touched"
+                 class="help-block">Debes incluir tu nombre.
+          </small>
         </div>
       </div>
-      <div class="col-sm-6">
+      <div class="col-sm-4">
         <div class="form-group"
              [ngClass]="{'has-error':!complexForm.controls['apellido'].valid && complexForm.controls['apellido'].touched}">
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-user"></i></span>
             <input class="form-control" type="text" placeholder="Apellido"
                    [formControl]="complexForm.controls['apellido']">
-            <small
-              *ngIf="complexForm.controls['apellido'].hasError('required') && complexForm.controls['apellido'].touched"
-              class="help-block">Debes incluir tu apellido.
-            </small>
           </div>
-
+          <small
+            *ngIf="complexForm.controls['apellido'].hasError('required') && complexForm.controls['apellido'].touched"
+            class="help-block">Debes incluir tu apellido.
+          </small>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group "
+             [ngClass]="{'has-error':!complexForm.controls['email'].valid && complexForm.controls['email'].touched}">
+          <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-envelope-o"></i></span>
+            <input class="form-control" type="email" placeholder="Correo electrónico"
+                   [formControl]="complexForm.controls['email']">
+          </div>
+          <small *ngIf="complexForm.controls['email'].hasError('required') && complexForm.controls['email'].touched"
+                 class="help-block">Debes incluir un correo electrónico.
+          </small>
         </div>
       </div>
     </div>
 
 
     <div class="row">
-      <div class="col-sm-6">
+      <div class="col-sm-4">
+        <div class="form-group"
+             [ngClass]="{'has-error':!complexForm.controls['telefono'].valid && complexForm.controls['telefono'].touched}">
+          <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+            <input class="form-control" type="tel" placeholder="Número de teléfono"
+                   [formControl]="complexForm.controls['telefono']">
+          </div>
+          <small
+            *ngIf="complexForm.controls['telefono'].hasError('required') && complexForm.controls['telefono'].touched"
+            class="help-block">Debes incluir un Teléfono.
+          </small>
+        </div>
+      </div>
+      <div class="col-sm-4">
         <div class="form-group"
              [ngClass]="{'has-error':!complexForm.controls['password1'].valid && complexForm.controls['password1'].touched}">
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
-            <input class="form-control" type="password" placeholder="Una contraseña larga"
+            <input class="form-control" type="password" placeholder="Contraseña"
                    [formControl]="complexForm.controls['password1']">
-            <small
-              *ngIf="complexForm.controls['password1'].hasError('required') && complexForm.controls['password1'].touched"
-              class="help-block">Debes incluir una contraseña.
-            </small>
           </div>
-
-
+          <small
+            *ngIf="complexForm.controls['password1'].hasError('required') && complexForm.controls['password1'].touched"
+            class="help-block">Debes incluir una contraseña.
+          </small>
         </div>
       </div>
-      <div class="col-sm-6">
+      <div class="col-sm-4">
         <div class="form-group"
              [ngClass]="{'has-error':complexForm.value.password1 !== complexForm.value.password2 || !complexForm.controls['password2'].valid && complexForm.controls['password2'].touched}">
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
-            <input class="form-control" type="password" placeholder="La misma contraseña larga"
+            <input class="form-control" type="password" placeholder="Repita su Contraseña"
                    [formControl]="complexForm.controls['password2']">
-            <small
-              *ngIf="complexForm.value.password1 !== complexForm.value.password2 ||
+          </div>
+          <small
+            *ngIf="complexForm.value.password1 !== complexForm.value.password2 ||
                    complexForm.controls['password2'].hasError('required') &&
                    complexForm.controls['password2'].touched" class="help-block">
-              Debes repetir la misma contraseña anterior.
-            </small>
-          </div>
-
-
+            Debes repetir la misma contraseña anterior.
+          </small>
         </div>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-sm-6">
+      <div class="col-sm-4">
         <div class="form-group"
              [ngClass]="{'has-error':!complexForm.controls['tipoDocumento'].valid && complexForm.controls['tipoDocumento'].touched}">
-
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-id-card "></i></span>
             <app-select
@@ -85,109 +105,87 @@
               [formControl]="complexForm.controls['tipoDocumento']"
               [list]="tipoDocumentos"
             ></app-select>
-            <small
-              *ngIf="complexForm.controls['tipoDocumento'].hasError('required') && complexForm.controls['tipoDocumento'].touched"
-              class="help-block">Ingrese su Tipo de Documento
-            </small>
           </div>
-
-
+          <small
+            *ngIf="complexForm.controls['tipoDocumento'].hasError('required') && complexForm.controls['tipoDocumento'].touched"
+            class="help-block">Ingrese su Tipo de Documento
+          </small>
         </div>
       </div>
-      <div class="col-sm-6">
+      <div class="col-sm-4">
         <div class="form-group"
              [ngClass]="{'has-error':!complexForm.controls['numeroDocumento'].valid && complexForm.controls['numeroDocumento'].touched}">
-
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-address-card-o"></i></span>
             <input class="form-control" type="number" placeholder="Número de documento"
                    [formControl]="complexForm.controls['numeroDocumento']">
-            <small
-              *ngIf="complexForm.controls['numeroDocumento'].hasError('required') && complexForm.controls['numeroDocumento'].touched"
-              class="help-block">Debes incluir tu número de documento
-            </small>
           </div>
-
-
+          <small
+            *ngIf="complexForm.controls['numeroDocumento'].hasError('required') && complexForm.controls['numeroDocumento'].touched"
+            class="help-block">Debes incluir tu número de documento
+          </small>
         </div>
       </div>
     </div>
 
+    <!--<div class="row">-->
+    <!--<div class="col-sm-6">-->
+    <!--<div class="form-group"-->
+    <!--[ngClass]="{'has-error':!complexForm.controls['pais'].valid && complexForm.controls['pais'].touched}">-->
+
+    <!--<div class="input-group">-->
+    <!--<span class="input-group-addon"><i class="fa fa-globe"></i></span>-->
+    <!--<app-select-->
+    <!--ngDefaultControl-->
+    <!--[placeHolder]="'País'"-->
+    <!--[formControl]="complexForm.controls['pais']"-->
+    <!--[list]="paises"-->
+    <!--[displayProp]="['nombre']"></app-select>-->
+
+    <!--<small *ngIf="complexForm.controls['pais'].hasError('required') && complexForm.controls['pais'].touched"-->
+    <!--class="help-block">Debes incluir tu País de origen-->
+    <!--</small>-->
+    <!--</div>-->
+
+
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="col-sm-6">-->
+    <!--<div class="form-group"-->
+    <!--[ngClass]="{'has-error':!complexForm.controls['genero'].valid && complexForm.controls['genero'].touched}">-->
+
+
+    <!--<div class="input-group">-->
+    <!--<span class="input-group-addon"><i class="fa fa-intersex"></i></span>-->
+    <!--<app-select-->
+    <!--ngDefaultControl-->
+    <!--[placeHolder]="'Género'"-->
+    <!--[formControl]="complexForm.controls['genero']"-->
+    <!--[list]="generos"-->
+    <!--&gt;</app-select>-->
+    <!--<small *ngIf="complexForm.controls['genero'].hasError('required') && complexForm.controls['genero'].touched"-->
+    <!--class="help-block">Ingrese su Género-->
+    <!--</small>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+
+    <!-- Rounded switch -->
     <div class="row">
-      <div class="col-sm-6">
-        <div class="form-group"
-             [ngClass]="{'has-error':!complexForm.controls['pais'].valid && complexForm.controls['pais'].touched}">
-
-          <div class="input-group">
-            <span class="input-group-addon"><i class="fa fa-globe"></i></span>
-            <app-select
-              ngDefaultControl
-              [placeHolder]="'País'"
-              [formControl]="complexForm.controls['pais']"
-              [list]="paises"
-              [displayProp]="'nombre'"></app-select>
-
-            <small *ngIf="complexForm.controls['pais'].hasError('required') && complexForm.controls['pais'].touched"
-                   class="help-block">Debes incluir tu País de origen
-            </small>
-          </div>
-
-
-        </div>
+      <br>
+      <div class="col-sm-4 col-sm-offset-4">
+        <label class="switch">
+          <input type="checkbox" [(ngModel)]="tieneObraSocial" [ngModelOptions]="{standalone: true}">
+          ¿ Tiene Obra social ?
+        </label>
       </div>
-      <div class="col-sm-6">
-        <div class="form-group"
-             [ngClass]="{'has-error':!complexForm.controls['genero'].valid && complexForm.controls['genero'].touched}">
-
-
-          <div class="input-group">
-            <span class="input-group-addon"><i class="fa fa-intersex"></i></span>
-            <app-select
-              ngDefaultControl
-              [placeHolder]="'Género'"
-              [formControl]="complexForm.controls['genero']"
-              [list]="generos"
-            ></app-select>
-            <small *ngIf="complexForm.controls['genero'].hasError('required') && complexForm.controls['genero'].touched"
-                   class="help-block">Ingrese su Género
-            </small>
-          </div>
-        </div>
-      </div>
+      <br>
+      <br>
     </div>
 
-    <div class="row">
-      <div class="col-sm-6">
-        <div class="form-group "
-             [ngClass]="{'has-error':!complexForm.controls['email'].valid && complexForm.controls['email'].touched}">
-          <div class="input-group">
-            <span class="input-group-addon"><i class="fa fa-envelope-o"></i></span>
-            <input class="form-control" type="email" placeholder="Correo electrónico"
-                   [formControl]="complexForm.controls['email']">
-            <small *ngIf="complexForm.controls['email'].hasError('required') && complexForm.controls['email'].touched"
-                   class="help-block">Debes incluir un correo electrónico.
-            </small>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-6">
-        <div class="form-group"
-             [ngClass]="{'has-error':!complexForm.controls['telefono'].valid && complexForm.controls['telefono'].touched}">
-          <div class="input-group">
-            <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-            <input class="form-control" type="tel" placeholder="Número de teléfono"
-                   [formControl]="complexForm.controls['telefono']">
-            <small
-              *ngIf="complexForm.controls['telefono'].hasError('required') && complexForm.controls['telefono'].touched"
-              class="help-block">Debes incluir un Teléfono.
-            </small>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-sm-6">
+    <div class="row" *ngIf="tieneObraSocial">
+      <div class="col-sm-4">
         <div class="form-group">
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-heartbeat"></i></span>
@@ -196,16 +194,15 @@
               [placeHolder]="'Obra social'"
               [formControl]="complexForm.controls['obraSocial']"
               [list]="obras_sociales"
-              [displayProp]="'nombre'"
+              [displayProp]="['nombre']"
               (change)="handleObraSocialClick(complexForm.value.obraSocial)"
             ></app-select>
           </div>
         </div>
       </div>
-      <div class="col-sm-6">
+      <div class="col-sm-4">
         <div class="form-group"
              [ngClass]="{'has-error':complexForm.value.obraSocial && !complexForm.value.plan  && complexForm.controls['plan'].touched}">
-
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-heartbeat"></i></span>
             <app-select
@@ -213,32 +210,27 @@
               [placeHolder]="'Plan'"
               [formControl]="complexForm.controls['plan']"
               [list]="planes"
-              [displayProp]="'razon_social'"></app-select>
-            <small
-              *ngIf="complexForm.value.obraSocial && !complexForm.value.plan &&
-             complexForm.controls['plan'].touched" class="help-block">
-              Ingrese su Plan.
-            </small>
+              [displayProp]="['razon_social']"></app-select>
           </div>
-
+          <small
+            *ngIf="complexForm.value.obraSocial && !complexForm.value.plan &&
+             complexForm.controls['plan'].touched" class="help-block">
+            Ingrese su Plan.
+          </small>
         </div>
       </div>
-    </div>
-
-    <div class="row">
-      <div class="col-sm-6">
+      <div class="col-sm-4">
         <div class="form-group"
              [ngClass]="{'has-error':!complexForm.controls['nroAfiliado'].valid && complexForm.controls['nroAfiliado'].touched}">
-
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-handshake-o"></i></span>
             <input class="form-control" type="text" placeholder="Número de afiliado"
                    [formControl]="complexForm.controls['nroAfiliado']">
-            <small
-              *ngIf="complexForm.controls['nroAfiliado'].hasError('required') && complexForm.controls['nroAfiliado'].touched"
-              class="help-block">Debes incluir su numero afiliado.
-            </small>
           </div>
+          <small
+            *ngIf="complexForm.controls['nroAfiliado'].hasError('required') && complexForm.controls['nroAfiliado'].touched"
+            class="help-block">Debes incluir su numero afiliado.
+          </small>
         </div>
       </div>
     </div>
@@ -256,15 +248,16 @@
 
     <div class="row">
       <br>
-      <div class="col-sm-6">
+      <div class="col-sm-6 col-md-4 col-md-offset-2 col-lg-2 col-lg-offset-4 ">
         <!--<button type="submit" class="btn btn-primary btn-block" [disabled]="!complexForm.valid || !captcha">Registrarse </button>-->
         <button type="submit" class="btn btn-primary btn-block" [disabled]="!complexForm.valid">Registrarse</button>
       </div>
-      <div class="col-sm-6">
+      <div class="col-sm-6 col-md-4 col-lg-2">
         <a [routerLink]="['/login']" class="btn btn-block btn-default">Cancelar</a>
       </div>
     </div>
 
   </form>
-
+  <br>
+  <br>
 </div>

@@ -7,11 +7,14 @@
              [ngClass]="{'has-error':!form.controls['persona'].valid && form.controls['persona'].touched}">
           <small>Nuevo Turno para</small>
 
-          <select type="text" class="form-control" [formControl]="form.controls['persona']"
-                  (change)="handlePersonaClick(form.value.persona)">
-            <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
-            <option [ngValue]="persona" *ngFor="let persona of personas">{{labelPersona(persona)}}</option>
-          </select>
+          <app-select
+            ngDefaultControl
+            [placeHolder]="'Nuevo Turno para'"
+            (change)="handlePersonaClick(form.value.persona)"
+            [formControl]="form.controls['persona']"
+            [list]="personas"
+            [displayProp]="['nombre', 'apellido']"
+          ></app-select>
 
           <small *ngIf="form.controls['persona'].hasError('required') && form.controls['persona'].touched"
                  class="help-block">Ingrese para quien es el turno
@@ -23,11 +26,14 @@
              [ngClass]="{'has-error':!form.controls['persona'].valid && form.controls['persona'].touched}">
           <small>Centro de Salud</small>
 
-          <select type="text" class="form-control" [formControl]="form.controls['centro']"
-                  (change)="handleCentroSaludClick(form.value.centro)">
-            <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
-            <option [ngValue]="centro" *ngFor="let centro of centrosSalud">{{centro.nombre || ''}}</option>
-          </select>
+          <app-select
+            ngDefaultControl
+            [placeHolder]="'Centro de Salud'"
+            [formControl]="form.controls['centro']"
+            (change)="handleCentroSaludClick(form.value.centro)"
+            [list]="centrosSalud"
+            [displayProp]="['nombre']"
+          ></app-select>
 
           <small *ngIf="form.controls['centro'].hasError('required') && form.controls['centro'].touched"
                  class="help-block">Ingrese su Centro de Salud
@@ -41,12 +47,14 @@
         <div class="form-group">
           <small>Especialidad</small>
 
-          <select type="text" class="form-control" [formControl]="form.controls['especialidad']"
-                  (change)="handleEspecialidadClick(form.value.especialidad)">
-            <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
-            <option [ngValue]="especialidad" *ngFor="let especialidad of especialidades">{{especialidad.nombre}}
-            </option>
-          </select>
+          <app-select
+            ngDefaultControl
+            [placeHolder]="'Especialidad'"
+            [formControl]="form.controls['especialidad']"
+            (change)="handleEspecialidadClick(form.value.especialidad)"
+            [list]="especialidades"
+            [displayProp]="['nombre']"
+          ></app-select>
 
         </div>
       </div>
@@ -54,10 +62,13 @@
         <div class="form-group">
           <small>Profesional</small>
 
-          <select type="text" class="form-control" [formControl]="form.controls['profesional']">
-            <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
-            <option [ngValue]="profesional" *ngFor="let profesional of profesionales">{{profesional.nombre}}</option>
-          </select>
+          <app-select
+            ngDefaultControl
+            [placeHolder]="'Profesional'"
+            [formControl]="form.controls['profesional']"
+            [list]="profesionales"
+            [displayProp]="['nombre']"
+          ></app-select>
 
         </div>
       </div>

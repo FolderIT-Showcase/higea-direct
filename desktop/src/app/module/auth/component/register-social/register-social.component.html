@@ -34,9 +34,12 @@
              [ngClass]="{'has-error':!complexForm.controls['tipoDocumento'].valid && complexForm.controls['tipoDocumento'].touched}">
           <label>Tipo de Documento</label>
 
-          <select type="text" class="form-control" [formControl]="complexForm.controls['tipoDocumento']">
-            <option [ngValue]="tipoDocumento" *ngFor="let tipoDocumento of tipoDocumentos">{{tipoDocumento}}</option>
-          </select>
+          <app-select
+            ngDefaultControl
+            [placeHolder]="'Tipo de Documento'"
+            [formControl]="complexForm.controls['tipoDocumento']"
+            [list]="tipoDocumentos"
+          ></app-select>
 
           <small
             *ngIf="complexForm.controls['tipoDocumento'].hasError('required') && complexForm.controls['tipoDocumento'].touched"
@@ -64,9 +67,13 @@
              [ngClass]="{'has-error':!complexForm.controls['pais'].valid && complexForm.controls['pais'].touched}">
           <label>País de origen</label>
 
-          <select type="text" class="form-control" [formControl]="complexForm.controls['pais']">
-            <option [ngValue]="pais" *ngFor="let pais of paises">{{pais.nombre}}</option>
-          </select>
+          <app-select
+            ngDefaultControl
+            [placeHolder]="'País de origen'"
+            [formControl]="complexForm.controls['pais']"
+            [list]="paises"
+            [displayProp]="['nombre']"
+          ></app-select>
 
           <small *ngIf="complexForm.controls['pais'].hasError('required') && complexForm.controls['pais'].touched"
                  class="help-block">Debes incluir tu País de origen
@@ -78,9 +85,12 @@
              [ngClass]="{'has-error':!complexForm.controls['genero'].valid && complexForm.controls['genero'].touched}">
           <label>Género</label>
 
-          <select type="text" class="form-control" [formControl]="complexForm.controls['genero']">
-            <option [ngValue]="genero" *ngFor="let genero of generos">{{genero}}</option>
-          </select>
+          <app-select
+            ngDefaultControl
+            [placeHolder]="'Género'"
+            [formControl]="complexForm.controls['genero']"
+            [list]="generos"
+          ></app-select>
 
           <small *ngIf="complexForm.controls['genero'].hasError('required') && complexForm.controls['genero'].touched"
                  class="help-block">Ingrese su Género

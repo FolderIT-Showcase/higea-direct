@@ -34,6 +34,7 @@ export class RegisterComponent implements OnInit {
   selectUndefined: any;
   @Input()
   validatorPlan: any [] = [];
+  tieneObraSocial = false;
 
   passwordMatcher = (control: AbstractControl): { [key: string]: boolean } => {
     const password1 = control.get('password1');
@@ -52,8 +53,8 @@ export class RegisterComponent implements OnInit {
       'nombre': [null, Validators.required],
       'apellido': [null, Validators.required],
       'numeroDocumento': [null, Validators.required],
-      'tipoDocumento': [null, Validators.required],
-      'pais': [null, Validators.required],
+      'tipoDocumento': [this.tipoDocumentos.find(x => x.toLowerCase() === 'dni'), Validators.required],
+      'pais': [this.paises.find(x => x.nombre.toLowerCase() === 'argentina'), Validators.required],
       'genero': [null, Validators.required],
       'password1': [null, Validators.required],
       'password2': [null, [Validators.required, this.passwordMatch]],

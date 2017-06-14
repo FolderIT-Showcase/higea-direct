@@ -21,10 +21,10 @@ import {Subscription} from 'rxjs/Subscription';
 import * as _ from 'lodash';
 import {IMyOptions} from 'mydatepicker';
 import {DatePipe} from '@angular/common';
-import {MetadataService} from '../../../../service/metadata.service';
 import {UtilsService} from '../../../../service/utils.service';
 import {ObraSocial} from '../../../../domain/obra-social';
 import {Plan} from '../../../../domain/plan';
+import {Metadata} from '../../../../domain/metadata';
 
 @Component({
   selector: 'app-lista-integrantes',
@@ -35,7 +35,6 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
   private currentUser = JSON.parse(localStorage.getItem('currentUser'));
   public currentPersona: Persona;
   public modalAction = 'none';
-  public selectUndefined: any;
   public integrantes: Persona[] = [];
   public lists = {
     'generos': Generos.export(),
@@ -72,10 +71,37 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
   constructor(private fb: FormBuilder,
               private utilsService: UtilsService,
               private store: Store,
-              private metadataService: MetadataService,
               private personaService: PersonaService,
               private alertService: AlertService,
               private storeHelper: StoreService) {
+
+    this.getMetadata();
+
+    const defaultTipoDocumento = this.lists.tipoDocumentos.find(x => x.id.toLowerCase() === 'dni');
+    const defaultPais = this.lists.paises.find(x => x.nombre.toLowerCase() === 'argentina');
+    const defaultProvincia = this.lists.provincias.find(x => x.nombre.toLowerCase() === 'santa fe');
+
+    console.log(defaultTipoDocumento);
+
+    this.mForm = this.fb.group({
+      'nombre': [null, Validators.required],
+      'apellido': [null, Validators.required],
+      'genero': [null, Validators.required],
+      'tipoDocumento': [defaultTipoDocumento, Validators.required],
+      'numeroDocumento': [null, Validators.required],
+      'fechaNacimiento': [null, Validators.required],
+      'pais': [defaultPais, Validators.required],
+      'provincia': [defaultProvincia, Validators.required],
+      'localidad': [null, Validators.required],
+      'calle': [null],
+      'telefono': [null],
+      'celular': [null],
+      'email': [null],
+      'obraSocial': [null, Validators.required],
+      'plan': [null, Validators.required],
+      'nroAfiliado': [null],
+    });
+
   }
 
   planMatcher = (control: AbstractControl): { [key: string]: boolean } => {
@@ -85,37 +111,17 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
     return (os && plan) ? null : {nomatch: true};
   };
 
-  ngOnInit(): void {
+  private getMetadata() {
+    const metadata: Metadata = this.storeHelper.get('metadata');
+    this.lists.paises = metadata.paises;
+    this.provincias = metadata.provincias;
+    this.localidades = metadata.localidades;
+    this.obras_sociales = metadata.obrasSociales;
+  }
 
-    this.mForm = this.fb.group({
-      'nombre': ['', Validators.required],
-      'apellido': ['', Validators.required],
-      'genero': ['', Validators.required],
-      'tipoDocumento': [0, Validators.required],
-      'numeroDocumento': [null, Validators.required],
-      'fechaNacimiento': [null, Validators.required],
-      'tipoContacto': [''],
-      'dato': [''],
-      'estadoCivil': [''],
-      'pais': [0, Validators.required],
-      'provincia': [null, Validators.required],
-      'localidad': [null, Validators.required],
-      'calle': [''],
-      'piso': [''],
-      'departamento': [''],
-      'telefono': [''],
-      'celular': [''],
-      'email': [''],
-      'obraSocial': [null, Validators.required],
-      'plan': [null, Validators.required],
-      'nroAfiliado': [null],
-    });
+  ngOnInit() {
 
-    // Popular listas
-    this.metadataService.getPaises().then((data: any) => this.lists.paises = data);
-    this.metadataService.getProvincias().then((data: any) => this.provincias = data);
-    this.metadataService.getLocalidades().then((data: any) => this.localidades = data);
-    this.metadataService.getObrasSociales().then((data: any) => this.obras_sociales = data);
+    console.log(this.mForm.value)
 
     this.subs.push(
       this.store.changes.pluck('integrantes').subscribe(
@@ -158,7 +164,8 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
     }
   };
 
-  rebuildProvinceList(paisID) {
+  rebuildProvinceList(pais) {
+    const paisID = pais.id;
     if (!paisID) {
       return;
     }
@@ -170,7 +177,8 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
     }
   }
 
-  rebuildLocationList(provinciaID) {
+  rebuildLocationList(provincia) {
+    const provinciaID = provincia.id;
     if (!provinciaID) {
       return;
     }
@@ -314,7 +322,7 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
     integrante.domicilio.localidad.provincia.id = form.provincia;
     integrante.domicilio.localidad.provincia.pais = new Pais();
     integrante.domicilio.localidad.provincia.pais.id = form.pais;
-    integrante.plan =  form.plan;
+    integrante.plan = form.plan;
     integrante.nroAfiliado = form.nroAfiliado;
 
     return integrante;

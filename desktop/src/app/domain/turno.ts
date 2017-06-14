@@ -7,13 +7,14 @@ export class Turno {
   id: number;
   dia: number;
   fecha: number;
-  hora: Date;
+  hora: any;
   observaciones = '';
   centroSalud: CentroSalud;
   especialidad: Especialidad;
   profesional: Profesional;
   motivoTurno: MotivoTurno;
   plan: Plan;
-  enabled = true;
+  enabled = false;
   tomado = false;
+  duracion: number;
 }

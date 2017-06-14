@@ -11,6 +11,7 @@ import {UtilsService} from '../../../../service/utils.service';
 import {Turno} from '../../../../domain/turno';
 import {MotivoTurno} from '../../../../domain/motivo-turno';
 import {MetadataService} from '../../../../service/metadata.service';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-turno-resultado-external',
@@ -34,10 +35,10 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
 
   turnoModal: ModalDirective;
   successModal: ModalDirective;
-  desktopMode = true;
+  timeline: Turno[] = [];
+  clickCounter = 0;
 
   constructor(private store: Store,
-              private utilsService: UtilsService,
               private metadataService: MetadataService,
               private turnoService: TurnoService,
               private storeService: StoreService) {
@@ -45,24 +46,21 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
     this.turno.especialidad.nombre = '';
     this.turno.profesional = new Profesional();
     this.turno.profesional.nombre = '';
-
-    this.subs.push(this.utilsService.getWidthResizeEvent().subscribe(data => {
-      this.desktopMode = data >= 1000;
-    }));
   }
 
   ngOnInit(): void {
-    this.desktopMode = (this.utilsService.getWidth()) >= 1000;
     this.metadataService.getMotivosTurno().then((data: any) => this.motivos = data);
     this.subs.push(
       this.store.changes.pluck('turnos').subscribe(
         (data: any) => {
-          if (!data) {
-            this.emptyResponse = true;
+          this.clickCounter++;
+          console.log(this.clickCounter);
+          if (!data[0]) {
+            this.buildTimeline([]);
             return;
           }
-          this.emptyResponse = false;
           this.turnos = data;
+          this.buildTimeline(this.turnos);
         }
       ));
   }
@@ -72,7 +70,59 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
     this.storeService.update('turnos', []);
   }
 
+  buildTimeline(turnos: Turno[]) {
+
+    // duracion en minutos
+    let duracion = 30;
+    this.timeline = [];
+    if (turnos && turnos[0] && turnos[0].duracion) {
+      duracion = turnos[0].duracion;
+    }
+
+    const baseMin = 0;
+    const minHour = 8;
+    const maxHour = 20;
+
+    for (let i = minHour; i < maxHour; i++) {
+
+      let date = new Date().setHours(i, baseMin, 0, 0);
+      let turno = new Turno();
+      turno.hora = date;
+      this.timeline.push(turno);
+
+      for (let j = duracion; j !== 0; j = (j + duracion) % 60) {
+
+        let date = new Date().setHours(i, j, 0, 0);
+        let turno = new Turno();
+        turno = new Turno();
+        turno.hora = date;
+
+        for (let turnoEnabled of this.turnos) {
+          const dateTimeline = new Date(turno.hora);
+          const date = new Date(turnoEnabled.hora);
+          if (dateTimeline.getHours() === date.getHours() &&
+            dateTimeline.getMinutes() === date.getMinutes()) {
+            turnoEnabled.enabled = true;
+            turno = turnoEnabled;
+            console.log(turno);
+            console.log(`${date.getHours()}:${date.getMinutes()}`);
+          }
+        }
+        this.timeline.push(turno);
+      }
+    }
+
+    let date = new Date().setHours(maxHour, baseMin, 0, 0);
+    let turno = new Turno();
+    turno.hora = date;
+    this.timeline.push(turno);
+
+  }
+
   public showTurnoModal(turno: Turno) {
+    if (!turno.enabled) {
+      return;
+    }
     this.turno = turno;
     this.turnoModal.show();
     this.persona = this.storeService.get('persona');
@@ -115,6 +165,10 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
       .catch(error => {
         console.error(error);
       });
+  }
+
+  handleMotivo(motivo) {
+    this.motivoTurno = motivo;
   }
 
 }

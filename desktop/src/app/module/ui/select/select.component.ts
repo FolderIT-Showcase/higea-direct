@@ -5,36 +5,76 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
   templateUrl: './select.component.html',
   styleUrls: ['./select.component.scss']
 })
+/*
+  Componente <select> reusable para Angular
+  permite usarse con Reactive Forms y Model Driven Forms
+ */
 export class SelectComponent {
 
+  @Input() isDisabled = false;
+  // form reactivo
   @Input() formControl;
-  @Input() placeHolder;
+  // placeholder a mostrar dentro del select
+  @Input() placeHolder = '';
+  // lista de elementos a iterar
   @Input() list;
-  @Input() displayProp = null;
+  // lista de propiedades a mostrar como option
+  @Input() displayProp = [];
+  // onChange Event callback
   @Output() change = new EventEmitter<any>();
 
   mModel: any = null;
+  item = null;
 
-  @Output() ngModel = new EventEmitter<any>();
+
+  // onChange para model driven form
+  @Output() onChange = new EventEmitter<any>();
 
   @Input()
   set setModel(item) {
     this.mModel = item;
   }
 
+  // event emitter para onChange callback
   handleChange(item) {
-    console.log(item);
-    this.ngModel.emit(item);
+    this.item = item;
+    if(!this.formControl){
+      this.onChange.emit(item)
+    }
   }
 
   label(item) {
-    if (this.displayProp) {
-      return item[this.displayProp]
+    let str = '';
+
+    // si no existe retorna
+    if (!item) {
+      return str;
     }
+
+    // si tenemos un array de propiedades, las recorremos y las concatenamos con un espacio
+    if (this.displayProp && this.displayProp.length) {
+
+      this.displayProp.forEach(x => {
+        if (item[x]) {
+          str += item[x] + ' ';
+        }
+      });
+      return str.toUpperCase();
+    }
+
+    // si no hay propiedades suponemos que el item es el string a mostrar
     if (item) {
-      return item;
+      str = item;
     }
-    return '';
+    // devolvemos en mayuscula
+    return str.toUpperCase();
+  }
+
+  showPlaceholder(){
+    if(!this.formControl){
+      return !this.item;
+    }
+    return !this.formControl.value;
   }
 
 }

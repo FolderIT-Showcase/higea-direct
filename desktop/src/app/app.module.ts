@@ -21,7 +21,7 @@ import {ApiService} from './service/api.service';
 import {Store} from 'app/service/store';
 import {StoreService} from './service/store.service';
 import {UIModule} from './module/ui/ui.module';
-import {EspecialidadResolveService} from './service/resolve/especialidad-resolve.service';
+import {MetadataResolveService} from './service/resolve/metadata-resolve.service';
 import {AdminService} from './service/admin.service';
 import {ProfesionalResolveService} from './service/resolve/profesionales-resolve.service';
 
@@ -39,7 +39,7 @@ const providers = [
   CentrosSaludResolveService,
   IntegrantesResolveService,
   LocalidadesResolveService,
-  EspecialidadResolveService,
+  MetadataResolveService,
   ProfesionalResolveService,
   AdminService,
   LoadingService,

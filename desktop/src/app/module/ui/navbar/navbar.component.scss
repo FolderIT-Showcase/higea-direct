@@ -7,11 +7,15 @@
 
 .navbar-toggle {
   padding: 0;
-  margin-top: 20px;
+  margin-top: 13px;
 }
 
 .navbar-inverse .navbar-brand {
   color: white;
+}
+
+li {
+  font-size: 1.2em;
 }
 
 .navbar-item {
@@ -19,12 +23,11 @@
   .active {
     font-weight: bold;
     color: white;
-    //background-color: #88c4f2;
     background: linear-gradient(180deg, transparent 92%, white 8%);
   }
 
 }
 
 .navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a:focus {
-  background-color: #88c4f2;
+  background: linear-gradient(180deg, transparent 92%, #e5efff 8%);
 }

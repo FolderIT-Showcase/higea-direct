@@ -1,73 +1,32 @@
 <br>
-<div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2" *ngIf="emptyResponse === true">
-  <a class="list-group-item">
-    <h4 class="list-group-item-heading">No hay resultados</h4>
-    <p class="list-group-item-text">No hay resultados para tu busqueda, por favor cambie las opciones e intente
-      nuevamente</p>
-  </a>
-</div>
-
-<div *ngIf="turnos[0] && !desktopMode">
-
-  <div *ngFor="let turno of turnos" class="text-center">
-    <div class="card">
-      <div class="card-content text-left">
-        <label><strong>Día: </strong>{{turno.dia | date: 'EEEE'}}</label><br>
-        <label><strong>Fecha: </strong>{{turno.fecha | date: 'dd/MM/yyyy'}}</label><br>
-        <label><strong>Hora: </strong>{{turno.hora | date: 'HH:mm'}}</label><br>
-        <label><strong>Especialidad: </strong>{{turno.especialidad.nombre}}</label><br>
-        <label><strong>Profesional: </strong>{{turno.profesional.nombre}}</label><br>
-        <label><strong>Observaciones: </strong>{{turno.observaciones}}</label>
-      </div>
-      <div class="card-action">
-        <div class="btn-group btn-group-justified">
-          <a (click)="showTurnoModal(turno)" class="btn btn-success btn-block">Sacar</a>
+<div class="list-group app-scroll-70">
+  <div class="table-responsive">
+    <div *ngIf="!turnos[0] && clickCounter > 1" class="app-container-row" style="position: absolute; z-index: 100;">
+      <a class="list-group-item app-no-data">
+        <div class="text-center">
+          <h4> No hay turnos disponibles </h4>
+          <h4> por favor busque nuevamente </h4>
         </div>
-      </div>
-    </div>
-  </div>
-
-</div>
-
-<div *ngIf="turnos[0] && desktopMode">
-  <div class="container">
-    <h4>
-      Seleccione un turno
-    </h4>
-    <div class="list-group">
-      <a class="list-group-item">
-        <p class="list-group-item-text"> {{turnos.length}} turnos disponibles a partir del {{turnos[0].fecha | date:
-          'dd/MM/yyyy'}}</p>
       </a>
-      <div class="table-responsive">
-        <table class="table table-striped">
-          <thead>
-          <tr>
-            <th>Día</th>
-            <th>Fecha</th>
-            <th>Hora</th>
-            <th>Profesional</th>
-            <th>Motivo</th>
-            <th width="1em"></th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let turno of turnos">
-            <td>{{turno.dia | date: 'EEEE'}}</td>
-            <td>{{turno.fecha | date: 'dd/MM/yyyy'}}</td>
-            <td>{{turno.hora | date: 'HH:mm'}}</td>
-            <td>{{turno.profesional.nombre}}</td>
-            <td>{{turno.motivoTurno.descripcion}}</td>
-            <td>
-              <a (click)="showTurnoModal(turno)" class="btn btn-success btn-block">
-                SACAR TURNO
-              </a>
-            </td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
     </div>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Hora</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let turno of timeline"
+          [ngClass]="{'app-selectable-row': turno.enabled, 'app-timeline-marker': !turno.enabled}"
+          (click)="showTurnoModal(turno)">
+        <td>{{turno.hora | date: 'HH:mm'}}</td>
+        <td class="text-right">
+          {{turno.enabled ? 'RESERVAR TURNO' : ''}}
+        </td>
+      </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 
@@ -93,21 +52,20 @@
   </div>
   <div class="row">
     <div class="col-sm-12">
-      <!--<app-select-->
-        <!--[displayProp]="'descripcion'"-->
-        <!--(getModel)="motivoTurno"-->
-        <!--[list]="motivos">-->
-      <!--</app-select>-->
-      <select [(ngModel)]="motivoTurno">
-        <option [ngValue]="motivo" *ngFor="let motivo of motivos">{{motivo.descripcion}}</option>
-      </select>
+      <app-select
+        ngDefaultControl
+        [placeHolder]="'Motivo del turno'"
+        (onChange)="handleMotivo($event)"
+        [list]="motivos"
+        [displayProp]="['descripcion']"
+      ></app-select>
     </div>
   </div>
   <div class="row">
     <div class="col-sm-12 text-right">
-        <button (click)="reservarTurno(turno)" [disabled]="!motivoTurno || !motivoTurno.id" class="btn btn-primary">SI
-        </button>
-        <button (click)="turnoModal.hide()" class="btn btn-default">NO</button>
+      <button (click)="reservarTurno(turno)" [disabled]="!motivoTurno || !motivoTurno.id" class="btn btn-primary">SI
+      </button>
+      <button (click)="turnoModal.hide()" class="btn btn-default">NO</button>
     </div>
   </div>
 </app-modal>

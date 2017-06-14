@@ -8,6 +8,7 @@ import {TurnoModule} from './module/turno/turno.module';
 import {GrupoFamiliarModule} from './module/grupo-familiar/grupo-familiar.module';
 import {AdminModule} from './module/admin/admin.module';
 import {AuthModule} from './module/auth/auth.module';
+import {MetadataResolveService} from './service/resolve/metadata-resolve.service';
 
 export function loadTurnoModule() {
   return TurnoModule
@@ -47,6 +48,9 @@ const routes: Routes = [
       {
         path: 'grupo-familiar',
         loadChildren: loadGrupoFamiliarModule,
+        resolve: {
+          metadata: MetadataResolveService,
+        }
       },
       {
         path: 'admin',

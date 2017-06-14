@@ -3,7 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {SwitchTurnoComponent} from './component/switch-turno/switch-turno.component';
 import {IntegrantesResolveService} from '../../service/resolve/integrantes-resolve.service';
 import {CentrosSaludResolveService} from '../../service/resolve/centros-salud-resolve.service';
-import {EspecialidadResolveService} from '../../service/resolve/especialidad-resolve.service';
+import {MetadataResolveService} from '../../service/resolve/metadata-resolve.service';
 import {MisTurnosComponent} from './component/mis-turnos/mis-turnos.component';
 import {TurnoHomeComponent} from './turno-home.component';
 import {ProfesionalResolveService} from '../../service/resolve/profesionales-resolve.service';

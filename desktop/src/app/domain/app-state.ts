@@ -4,13 +4,13 @@ import {Turno} from './turno';
 import {Provincia} from './provincia';
 import {Localidad} from './localidad';
 import {Pais} from './pais';
+import {Metadata} from './metadata';
 export class AppState {
   integrantes: Persona[] = [];
   persona: Persona = null;
   centroSalud: CentroSalud = null;
   centrosSalud: CentroSalud[] = [];
   turnos: Turno[] = [];
-  paises: Pais[] = [];
-  provincias: Provincia[] = [];
-  localidades: Localidad[] = [];
+  metadata: Metadata;
+
 }

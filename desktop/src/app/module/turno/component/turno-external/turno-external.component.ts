@@ -5,5 +5,4 @@ import {Component} from '@angular/core';
   templateUrl: './turno-external.component.html'
 })
 export class TurnoExternalComponent {
-  licencia = localStorage.getItem('license');
 }

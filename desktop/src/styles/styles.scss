@@ -224,3 +224,61 @@ select {
 fieldset {
   border: 0 solid transparent !important;
 }
+
+.table > thead > tr > th, .table > thead > tr > td, .table > tbody > tr > th, .table > tbody > tr > td, .table > tfoot > tr > th, .table > tfoot > tr > td {
+  padding: 0.3em !important;
+  vertical-align: middle !important;
+}
+
+.app-container {
+  display: flex; /* establish flex container */
+  flex-direction: row; /* make main axis horizontal (default value) */
+  justify-content: center; /* center items horizontally, in this case */
+  align-items: center; /* center items vertically, in this case */
+  margin: 0 !important;
+  height: auto !important;
+}
+
+.app-container-row {
+  display: flex; /* establish flex container */
+  flex-direction: row-reverse; /* make main axis horizontal (default value) */
+  justify-content: center; /* center items horizontally, in this case */
+  align-items: center; /* center items vertically, in this case */
+  margin: 0 !important;
+  height: 70vh !important;
+  width: 100% !important;
+  background-color: rgba(0, 0, 0, 0.21);
+}
+
+.app-selectable-row {
+  height: 2.5em;
+  color: white !important;
+  font-weight: bold;
+  background-color: $green !important;
+  cursor: pointer;
+}
+
+.app-timeline-marker {
+  //font-size: 0.85em;
+}
+
+.app-scroll-70 {
+  max-height: 70vh !important;
+  overflow-y: scroll !important;
+}
+
+div.selector.inlinedp{
+  width: 100% !important;
+  max-width: 35vh !important;
+  height: 35vh !important;
+
+}
+
+.mydp .tablesingleday, .mydp .tablesinglemonth, .mydp .tablesingleyear {
+  font-size: 1.2em;
+}
+
+.app-no-data{
+  color: $gray-5;
+  background-color: $gray-2;
+}

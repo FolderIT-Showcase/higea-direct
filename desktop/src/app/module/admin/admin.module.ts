@@ -7,7 +7,7 @@ import {ApiService} from '../../service/api.service';
 import {LoadingService} from '../../service/loading.service';
 import {PagerService} from '../../service/pager.service';
 import {CentrosSaludResolveService} from '../../service/resolve/centros-salud-resolve.service';
-import {EspecialidadResolveService} from '../../service/resolve/especialidad-resolve.service';
+import {MetadataResolveService} from '../../service/resolve/metadata-resolve.service';
 import {SidebarComponent} from '../ui/sidebar/sidebar.component';
 import {TurnosComponent} from './component/turnos/turnos.component';
 import {EspecialidadesComponent} from './component/especialidades/especialidades.component';
@@ -56,7 +56,7 @@ import {MotivoTurnoComponent} from './component/motivo-turno/motivo-turno.compon
     ApiService,
     ProfesionalResolveService,
     CentrosSaludResolveService,
-    EspecialidadResolveService,
+    MetadataResolveService,
     TipoTurnoResolveService,
     LoadingService,
     PagerService,

@@ -43,6 +43,7 @@
     "@types/core-js": "^0.9.41",
     "@types/gapi": "0.0.33",
     "@types/gapi.auth2": "0.0.39",
+    "@types/localforage": "^0.0.34",
     "@types/lodash": "^4.14.65",
     "@types/node": "~7.0.29",
     "codelyzer": "~3.0.1",

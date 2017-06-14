@@ -37,22 +37,13 @@ export class MetadataService {
 
   }
 
-  getPaises() {
-    return this.store.db.getItem('paises')
-      .then(data => {
-        if (data && data[0]) {
-          return new Promise<any>((resolve, reject) => {
-            resolve(data);
-          });
-        }
-        return this.requestPaises();
-      })
-      .then(data => {
-        this.setPaises(data);
-        return new Promise<any>((resolve, reject) => {
-          resolve(data);
-        });
-      });
+  async getPaises() {
+    let list = await this.store.get('paises');
+    if (!list) {
+      list = await this.requestPaises();
+      this.setPaises(list);
+    }
+    return list;
   }
 
   requestPaises() {
@@ -67,22 +58,13 @@ export class MetadataService {
     this.store.db.setItem('paises', this.paises);
   }
 
-  getProvincias() {
-    return this.store.db.getItem('provincias')
-      .then(data => {
-        if (data && data[0]) {
-          return new Promise<any>((resolve, reject) => {
-            resolve(data);
-          });
-        }
-        return this.requestProvincias();
-      })
-      .then(data => {
-        this.setProvincias(data);
-        return new Promise<any>((resolve, reject) => {
-          resolve(data);
-        });
-      });
+  async getProvincias() {
+    let list = await this.store.get('provincias');
+    if (!list) {
+      list = await this.requestProvincias();
+      this.setProvincias(list);
+    }
+    return list;
   }
 
   requestProvincias() {
@@ -97,22 +79,13 @@ export class MetadataService {
     this.store.db.setItem('provincias', this.provincias);
   }
 
-  getLocalidades(): Promise<any> {
-    return this.store.db.getItem('localidades')
-      .then((data: any) => {
-        if (data && data[0]) {
-          return new Promise<any>((resolve, reject) => {
-            resolve(data);
-          });
-        }
-        return this.requestLocalidades();
-      })
-      .then(data => {
-        this.setLocalidades(data);
-        return new Promise<any>((resolve, reject) => {
-          resolve(data);
-        });
-      });
+  async getLocalidades(): Promise<any> {
+    let list = await this.store.get('localidades');
+    if (!list) {
+      list = await this.requestLocalidades();
+      this.setLocalidades(list);
+    }
+    return list;
   }
 
   requestLocalidades() {
@@ -129,22 +102,13 @@ export class MetadataService {
 
   uriRegistration = this.basePath + 'users/registration';
 
-  getObrasSociales(): Promise<any> {
-    return this.store.db.getItem('obras_sociales')
-      .then((data: any) => {
-        if (data && data[0]) {
-          return new Promise<any>((resolve, reject) => {
-            resolve(data);
-          });
-        }
-        return this.requestObrasSociales();
-      })
-      .then(data => {
-        this.setObrasSociales(data);
-        return new Promise<any>((resolve, reject) => {
-          resolve(data);
-        });
-      });
+  async getObrasSociales() {
+    let list = await this.store.get('obras_sociales');
+    if (!list) {
+      list = await this.requestObrasSociales();
+      this.setObrasSociales(list);
+    }
+    return list;
   }
 
   requestObrasSociales() {
@@ -159,22 +123,13 @@ export class MetadataService {
     this.store.db.setItem('obras_sociales', this.obras_sociales);
   }
 
-  getAllTiposTurnos(): Promise<any> {
-    return this.store.db.getItem('tipos_turnos')
-      .then((data: any) => {
-        if (data && data[0]) {
-          return new Promise<any>((resolve, reject) => {
-            resolve(data);
-          });
-        }
-        return this.requestTiposTurnos();
-      })
-      .then(data => {
-        this.setTipoTurnos(data);
-        return new Promise<any>((resolve, reject) => {
-          resolve(data);
-        });
-      });
+  async getAllTiposTurnos(): Promise<any> {
+    let list = await this.store.get('tipos_turnos');
+    if (!list) {
+      list = await this.requestTiposTurnos();
+      this.setTipoTurnos(list);
+    }
+    return list;
   }
 
   requestTiposTurnos() {
@@ -189,23 +144,13 @@ export class MetadataService {
     this.store.db.setItem('tipos_turnos', this.tipos_turnos);
   }
 
-  getAllEstadoCiviles(): Promise<any> {
-    //if(this.license==='core') return new Promise<any> (Generos.build());
-    return this.store.db.getItem('estado_civil')
-      .then((data: any) => {
-        if (data && data[0]) {
-          return new Promise<any>((resolve, reject) => {
-            resolve(data);
-          });
-        }
-        return this.requestEstadoCivil();
-      })
-      .then(data => {
-        this.setEstadoCivil(data);
-        return new Promise<any>((resolve, reject) => {
-          resolve(data);
-        });
-      });
+  async getAllEstadoCiviles(): Promise<any> {
+    let list = await this.store.get('estado_civil');
+    if (!list) {
+      list = await this.requestEstadoCivil();
+      this.setEstadoCivil(list);
+    }
+    return list;
   }
 
   requestEstadoCivil() {
@@ -220,22 +165,13 @@ export class MetadataService {
     this.store.db.setItem('estado_civil', this.estados_civil);
   }
 
-  getEspecialidades(): Promise<any> {
-    return this.store.db.getItem('especialidades')
-      .then((data: any) => {
-        if (data && data[0]) {
-          return new Promise<any>((resolve, reject) => {
-            resolve(data);
-          });
-        }
-        return this.requestEspecialidades();
-      })
-      .then(data => {
-        this.setEspecialidades(data);
-        return new Promise<any>((resolve, reject) => {
-          resolve(data);
-        });
-      });
+  async getEspecialidades(): Promise<any> {
+    let list = await this.store.get('especialidades');
+    if (!list) {
+      list = await this.requestEspecialidades();
+      this.setEspecialidades(list);
+    }
+    return list;
   }
 
   requestEspecialidades() {
@@ -250,22 +186,13 @@ export class MetadataService {
     this.store.db.setItem('especialidades', this.especialidades);
   }
 
-  getProfesionales(): Promise<any> {
-    return this.store.db.getItem('profesionales')
-      .then((data: any) => {
-        if (data && data[0]) {
-          return new Promise<any>((resolve, reject) => {
-            resolve(data);
-          });
-        }
-        return this.requestProfesionales();
-      })
-      .then(data => {
-        this.setProfesionales(data);
-        return new Promise<any>((resolve, reject) => {
-          resolve(data);
-        });
-      });
+  async getProfesionales(): Promise<any> {
+    let list = await this.store.get('profesionales');
+    if (!list) {
+      list = await this.requestProfesionales();
+      this.setProfesionales(list);
+    }
+    return list;
   }
 
   requestProfesionales() {
@@ -280,22 +207,13 @@ export class MetadataService {
     this.store.db.setItem('profesionales', this.especialidades);
   }
 
-  getMotivosTurno(): Promise<any> {
-    return this.store.db.getItem('motivos')
-      .then((data: any) => {
-        if (data && data[0]) {
-          return new Promise<any>((resolve, reject) => {
-            resolve(data);
-          });
-        }
-        return this.requestMotivosTurno();
-      })
-      .then(data => {
-        this.setMotivosTurno(data);
-        return new Promise<any>((resolve, reject) => {
-          resolve(data);
-        });
-      });
+  async getMotivosTurno(): Promise<any> {
+    let list = await this.store.get('motivos');
+    if (!list) {
+      list = await this.requestMotivosTurno();
+      this.setMotivosTurno(list);
+    }
+    return list;
   }
 
   requestMotivosTurno() {

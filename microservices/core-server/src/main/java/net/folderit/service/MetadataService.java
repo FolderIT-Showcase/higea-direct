@@ -90,6 +90,15 @@ public class MetadataService {
         obraSocialRepository.deleteAll();
     }
 
+    public void clearProfesionales() {
+        profesionalRepository.deleteAll();
+    }
+
+    public void clearEspecialidades() {
+        especialidadRepository.deleteAll();
+    }
+
+
     public List<TipoTurno> getAllTiposTurnos() {
         return tipoTurnoRepository.findAllByOrderByDescripcionAsc();
     }

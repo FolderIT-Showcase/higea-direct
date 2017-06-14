@@ -12,10 +12,14 @@
         <form [formGroup]="form">
           <div class="form-group">
             <label class="control-label">Turnos de</label>
-            <select type="text" class="form-control" [formControl]="form.controls['persona']"
-                    (change)="handlePersonaClick(form.value.persona)">
-              <option [ngValue]="persona" *ngFor="let persona of personas">{{labelPersona(persona)}}</option>
-            </select>
+            <app-select
+              ngDefaultControl
+              [placeHolder]="'Turnos de'"
+              [formControl]="form.controls['persona']"
+              [list]="personas"
+              [displayProp]="['nombre', 'apellido']"
+              (change)="handlePersonaClick(form.value.persona)"
+            ></app-select>
           </div>
         </form>
       </div>
@@ -23,7 +27,7 @@
         <br>
         <label><strong>No sacaste ningun turno</strong></label>
         <a [routerLink]="['/turno/nuevo']" class="btn btn-block btn-primary">
-          SACAR UN TURNO
+          RESERVAR UN TURNO
         </a>
       </div>
     </div>

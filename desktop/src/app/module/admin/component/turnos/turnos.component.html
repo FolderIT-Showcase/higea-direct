@@ -71,11 +71,14 @@
              [ngClass]="{'has-error' : !form.controls['centro'].valid && form.controls['centro'].touched}">
           <label class="control-label required">Centro de Salud</label>
 
-          <select type="text" class="form-control" [formControl]="form.controls['centro']"
-                  (change)="handleCentroSaludClick(form.value.centro)">
-            <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
-            <option [ngValue]="centro" *ngFor="let centro of centrosSalud">{{centro.nombre}}</option>
-          </select>
+          <app-select
+            ngDefaultControl
+            [placeHolder]="'Centro de Salud'"
+            [formControl]="form.controls['centro']"
+            (change)="handleCentroSaludClick(form.value.centro)"
+            [list]="centrosSalud"
+            [displayProp]="['nombre']"
+          ></app-select>
 
           <small *ngIf="form.controls['centro'].hasError('required') && form.controls['centro'].touched"
                  class="help-block">Debes incluir el centro de Salud.
@@ -88,13 +91,14 @@
 
           <label class="control-label required">Especialidad</label>
 
-          <select type="text" class="form-control" [formControl]="form.controls['especialidad']"
-                  (change)="handleEspecialidadClick(form.value.especialidad)">
-            <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
-            <option [ngValue]="especialidad" *ngFor="let especialidad of especialidades">{{especialidad.nombre}}
-            </option>
-          </select>
-
+          <app-select
+            ngDefaultControl
+            [placeHolder]="'Especialidad'"
+            [formControl]="form.controls['especialidad']"
+            (change)="handleEspecialidadClick(form.value.especialidad)"
+            [list]="especialidades"
+            [displayProp]="['nombre']"
+          ></app-select>
 
           <small *ngIf="form.controls['especialidad'].hasError('required') && form.controls['especialidad'].touched"
                  class="help-block">Debes incluir la especialidad.
@@ -110,11 +114,14 @@
 
           <label class="control-label required">Profesional</label>
 
-          <select type="text" class="form-control" [formControl]="form.controls['profesional']"
-                  (change)="handleProfesionalClick(form.value.profesional)">
-            <option disabled hidden [value]="selectUndefined">-- Seleccionar --</option>
-            <option [ngValue]="profesional" *ngFor="let profesional of profesionales">{{profesional.nombre}}</option>
-          </select>
+          <app-select
+            ngDefaultControl
+            [placeHolder]="'Profesional'"
+            [formControl]="form.controls['profesional']"
+            (change)="handleProfesionalClick(form.value.profesional)"
+            [list]="profesionales"
+            [displayProp]="['nombre']"
+          ></app-select>
 
           <small *ngIf="form.controls['profesional'].hasError('required') && form.controls['profesional'].touched"
                  class="help-block">Debes incluir un profesional.
@@ -165,10 +172,14 @@
              [ngClass]="{'has-error' : !form.controls['tipoTurno'].valid && form.controls['tipoTurno'].touched}">
           <label class="control-label required">Tipo Turno</label>
 
-          <select type="text" class="form-control" [formControl]="form.controls['tipoTurno']"
-                  (change)="handleTipoTurnoClick(form.value.tipoTurno)">
-            <option [ngValue]="tipo" *ngFor="let tipo of tiposDeTurnos">{{tipo.descripcion}}</option>
-          </select>
+          <app-select
+            ngDefaultControl
+            [placeHolder]="'Tipo Turno'"
+            [formControl]="form.controls['tipoTurno']"
+            (change)="handleTipoTurnoClick(form.value.tipoTurno)"
+            [list]="tiposDeTurnos"
+            [displayProp]="['descripcion']"
+          ></app-select>
 
           <small *ngIf="form.controls['tipoTurno'].hasError('required') && form.controls['tipoTurno'].touched"
                  class="help-block">Debes incluir el tipo de Turno.
@@ -181,11 +192,14 @@
 
           <label class="control-label required">Motivo Turno</label>
 
-          <select type="text" class="form-control" [formControl]="form.controls['motivoTurno']"
-                  (change)="handleMotivoTurnoClick(form.value.motivoTurno)">
-            <option [ngValue]="motivo" *ngFor="let motivo of motivosTurno">{{motivo.descripcion}}</option>
-          </select>
-
+          <app-select
+            ngDefaultControl
+            [placeHolder]="'Motivo Turno'"
+            [formControl]="form.controls['motivoTurno']"
+            (change)="handleMotivoTurnoClick(form.value.motivoTurno)"
+            [list]="motivosTurno"
+            [displayProp]="['descripcion']"
+          ></app-select>
 
           <small *ngIf="form.controls['motivoTurno'].hasError('required') && form.controls['motivoTurno'].touched"
                  class="help-block">Debes incluir el motivo del turno.

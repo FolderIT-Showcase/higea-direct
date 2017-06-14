@@ -8,9 +8,9 @@ import {TurnoService} from '../../../../service/turno.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {IMyOptions} from 'mydatepicker';
 import {DatePipe} from '@angular/common';
-import {LoadingService} from '../../../../service/loading.service';
 import {MetadataService} from '../../../../service/metadata.service';
 import {AlertService} from '../../../../service/alert.service';
+import {Subscription} from 'rxjs/Subscription';
 
 class Data {
   persona: Persona;
@@ -32,13 +32,15 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
   profesionales: Profesional[] = [];
   filteredProfesionales: Profesional[] = [];
   personas: Persona[] = [];
-  selectUndefined: any;
   form: FormGroup;
   fechaDesde: Date = new Date();
   centroSalud: string = localStorage.getItem('client');
+  subs: Subscription[] = [];
 
   myDatePickerOptions: IMyOptions = {
     dateFormat: 'dd/mm/yyyy',
+    showTodayBtn: false,
+    inline: true
   };
 
   constructor(private storeService: StoreService,
@@ -51,7 +53,7 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
   ngOnInit(): void {
 
     this.personas = this.storeService.get('integrantes');
-
+    const date = new Date();
     this.form = this.fb.group({
       'persona': [this.personas[0], Validators.required],
       'fecha': [null, Validators.required],
@@ -88,11 +90,20 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
 
       });
 
+    this.subs.push(
+      this.form.valueChanges.subscribe(data => {
+        if(data && data.fecha && this.form.valid){
+          this.submitForm(this.form.value);
+        }
+      })
+    );
+
   }
 
   ngOnDestroy() {
     this.storeService.update('CentroSalud', null);
     this.storeService.update('turnos', []);
+    this.subs.forEach(x => x.unsubscribe());
   }
 
   handlePersonaClick(persona: Persona) {
@@ -111,7 +122,9 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
   }
 
   handleEspecialidadClick(especialidad: Especialidad) {
-    this.filteredProfesionales = especialidad.profesional;
+    this.filteredProfesionales = especialidad.profesional.sort((a, b) => {
+      return (a.nombre+a.apellido > b.nombre+b.apellido) ? 1 : ((b.nombre+b.apellido > a.nombre+a.apellido) ? -1 : 0);
+    });
   }
 
   submitForm(form) {
@@ -133,7 +146,7 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
     const especialidad: Especialidad = Object.assign({}, form.especialidad);
     especialidad.profesional = null;
     form.especialidad = Object.assign({}, especialidad);
-    this.turnoService.getTurnos(form.centro, form.especialidad, form.profesional, form.fecha.epoc*1000);
+    this.turnoService.getTurnos(form.centro, form.especialidad, form.profesional, form.fecha.epoc * 1000);
   }
 
   timeStampToDate(timestamp) {

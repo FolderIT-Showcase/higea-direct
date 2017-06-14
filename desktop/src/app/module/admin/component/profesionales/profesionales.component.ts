@@ -45,7 +45,6 @@ export class ProfesionalesComponent implements OnInit {
               private store: Store,
               private storeService: StoreService,
               private alertService: AlertService,
-              private router: Router,
               private  pagerService: PagerService,
               private adminService: AdminService) {
 

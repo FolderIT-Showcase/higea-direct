@@ -56,6 +56,7 @@ export class ApiService {
   }
 
   isAuthNecessary(isAuthNecessary: boolean) {
+    this.headers.set('Accept', 'application/json');
     if (!isAuthNecessary) {
       return;
     }

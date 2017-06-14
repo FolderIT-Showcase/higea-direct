@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class SyncService {
@@ -22,7 +23,8 @@ public class SyncService {
     }
 
     public void clearMetadata() {
-        metadataService.clearObrasSociales();
+        metadataService.clearEspecialidades();
+        metadataService.clearProfesionales();
     }
 
     public void syncAll(){
@@ -33,6 +35,55 @@ public class SyncService {
         syncProvincias();
         syncLocalidades();
         syncObrasSociales();
+    }
+
+    private List<Profesional> nameProfesionals(List<Profesional> profesionals){
+
+        List<String> names = new ArrayList<>();
+        List<String> surnames = new ArrayList<>();
+        Random random = new Random();
+
+        names.add("José");
+        names.add("Roberto");
+        names.add("Jorge");
+        names.add("Luis");
+        names.add("Ignacio");
+        names.add("Antonio");
+        names.add("Andres");
+        names.add("Lucas");
+        names.add("Emiliano");
+        names.add("Esteban");
+        names.add("Fernando");
+        names.add("Cesar");
+        names.add("Miguel");
+        names.add("Matias");
+        names.add("Tomás");
+        names.add("Lucia");
+        names.add("Laura");
+        names.add("Josefina");
+        names.add("Maria");
+        names.add("Milagros");
+        names.add("Rocio");
+        names.add("Juliana");
+        names.add("Julieta");
+        names.add("Maria José");
+
+        surnames.add("Perez");
+        surnames.add("Ramirez");
+        surnames.add("Gonzales");
+        surnames.add("Aguirre");
+        surnames.add("Romero");
+        surnames.add("Fernandez");
+        surnames.add("Garcia");
+        surnames.add("Berardo");
+        surnames.add("Berardo");
+
+        profesionals.forEach(profesional -> {
+            profesional.setNombre(names.get(random.nextInt(names.size())));
+            profesional.setApellido(surnames.get(random.nextInt(surnames.size())));
+        });
+
+        return profesionals;
     }
 
     private void syncEspecialidades() {
@@ -48,6 +99,10 @@ public class SyncService {
         ResponseEntity<List<Profesional>> result = higeaApiConnect.get(url, new ParameterizedTypeReference<List<Profesional>>(){});
         List<Profesional> listOld = metadataService.getAllProfesionales();
         List<Profesional> listNew = result.getBody();
+
+        // TODO: test filter, sacar despues de la demo
+        listNew = nameProfesionals(listNew);
+
         metadataService.saveAllProfesionales(listDiff(listOld, listNew));
     }
 
