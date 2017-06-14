@@ -72,6 +72,8 @@ export class PersonaService {
     localStorage.setItem('currentUser', JSON.stringify(userPersona.userAsociado));
     this.storeService.update('integrantes', personas);
     this.storeService.update('persona', userPersona);
+    console.log("persona");
+    console.log(userPersona);
   }
 
   updatePersonaUser(persona: Persona) {

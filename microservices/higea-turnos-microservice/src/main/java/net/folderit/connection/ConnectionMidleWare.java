@@ -1,5 +1,6 @@
 package net.folderit.connection;
 
+import net.folderit.domain.core.MotivoTurno;
 import net.folderit.domain.core.Profesional;
 import net.folderit.domain.core.Turno;
 import net.folderit.domain.higea.EstadoTurnosHigea;
@@ -54,7 +55,12 @@ public class ConnectionMidleWare {
         List<TurnoHigea> turnosHigea = turnos(codigo, filter);
         List<Turno> turnosCore = new ArrayList<>(turnosHigea.size());
         List<Profesional> profesionales = getProfesionales();
-        turnosHigea.forEach(x -> turnosCore.add(x.convert(profesionales)));
+
+        for (TurnoHigea turnoHigea : turnosHigea) {
+            MotivoTurno motivoTurno = getMotivoTurno(turnoHigea.getTurno_tipo_turno());
+            turnosCore.add(turnoHigea.convert(profesionales,motivoTurno));
+        }
+
         return turnosCore;
     }
 
@@ -68,8 +74,20 @@ public class ConnectionMidleWare {
                 });
         List<Turno> turnosCore = new ArrayList<>();
         List<Profesional> profesionales = getProfesionales();
-        result.getBody().getData().getRows().forEach(turno -> turnosCore.add(turno.convert(profesionales)));
+
+        for (TurnoHigea turnoHigea : result.getBody().getData().getRows()) {
+            MotivoTurno motivoTurno = getMotivoTurno(turnoHigea.getTurno_tipo_turno());
+            turnosCore.add(turnoHigea.convert(profesionales,motivoTurno));
+        }
+
         return turnosCore;
+    }
+
+    private MotivoTurno getMotivoTurno(Long motivoTurnoHigeaId) {
+        if(motivoTurnoHigeaId==null)return null;
+        String uriProfesionales = "http://localhost:36000/motivoTurno/" + motivoTurnoHigeaId;
+        ResponseEntity<MotivoTurno> result = coreApiConnect.get(uriProfesionales, new ParameterizedTypeReference<MotivoTurno>() {});
+        return result.getBody();
     }
 
     private String getFilterURIEspecialidad(FilterDto filterDto) {
@@ -85,7 +103,10 @@ public class ConnectionMidleWare {
         ResponseEntity<Result<TurnoHigea>> result = higeaApiConnect.post(uriTurnos, new ParameterizedTypeReference<Result<TurnoHigea>>() {
         }, turnoHigea);
         List<Profesional> profesionales = getProfesionales();
-        return result.getBody().getData().getRows().get(0).convert(profesionales);
+
+        MotivoTurno motivoTurno = getMotivoTurno(result.getBody().getData().getRows().get(0).getTurno_tipo_turno());
+
+        return result.getBody().getData().getRows().get(0).convert(profesionales,motivoTurno);
     }
 
 
@@ -132,7 +153,8 @@ public class ConnectionMidleWare {
 
         turnosHigea.forEach(turnoHigea -> {
             if (turnoHigea.getPaciente_id() == null) {
-                turnosCoreLibres.add(turnoHigea.convert(profesionales));
+                MotivoTurno motivoTurno = getMotivoTurno(turnoHigea.getTurno_tipo_turno());
+                turnosCoreLibres.add(turnoHigea.convert(profesionales,motivoTurno));
             }
         });
 

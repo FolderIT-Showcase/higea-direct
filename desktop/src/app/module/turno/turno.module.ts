@@ -21,6 +21,7 @@ import {TurnoExternalComponent} from './component/turno-external/turno-external.
 import {TurnoRoutingModule} from './turno.routing.module';
 import {TurnoHomeComponent} from './turno-home.component';
 import {UIModule} from '../ui/ui.module';
+import {PreparacionComponent} from './component/preparacion/preparacion.component';
 
 @NgModule({
   imports: [
@@ -52,7 +53,8 @@ import {UIModule} from '../ui/ui.module';
     TurnoExternalComponent,
     TurnoBusquedaAvanzadaExternalComponent,
     TurnoResultadoExternalComponent,
-    TurnoBusquedaRapidaExternalComponent
+    TurnoBusquedaRapidaExternalComponent,
+    PreparacionComponent
   ]
 })
 export class TurnoModule {

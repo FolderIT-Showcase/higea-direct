@@ -133,6 +133,7 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
 
     this.integrantes = this.storeHelper.get('integrantes');
     this.currentPersona = this.storeHelper.get('persona');
+    console.log(this.currentPersona);
 
     // Reordenar las listas para permitir una edición rápida
     for (const list in this.lists) {

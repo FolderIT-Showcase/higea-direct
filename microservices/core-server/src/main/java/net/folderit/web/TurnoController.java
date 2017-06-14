@@ -6,6 +6,7 @@ import net.folderit.dto.FilterDto;
 import net.folderit.exception.TurneroException;
 import net.folderit.service.PersonaService;
 import net.folderit.service.TurnoService;
+import net.folderit.util.JasperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
@@ -109,6 +110,16 @@ public class TurnoController {
         }
 
         return new ResponseEntity<>((Persona) result, HttpStatus.OK);
+    }
+
+
+    @PostMapping(value = "/turno/pdf")
+    public ResponseEntity getPDfTurno(@RequestBody Turno turno) throws Exception {
+
+        JasperUtil jasperUtil = new JasperUtil();
+
+        return ResponseEntity.ok(jasperUtil.buildReportTurnoByturno(turno));
+
     }
 
 
