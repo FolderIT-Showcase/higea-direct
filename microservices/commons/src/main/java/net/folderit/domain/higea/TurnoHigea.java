@@ -59,7 +59,7 @@ public class TurnoHigea {
     private String paciente_nro_tel;
     private String paciente_nro_afil;
 
-    public Turno convert(List<Profesional> profesionales) {
+    public Turno convert(List<Profesional> profesionales,MotivoTurno motivoTurno) {
         Turno mTurno = new Turno();
         mTurno.setId(this.getTurnos_id());
         // TODO: ver formato fecha y hora
@@ -80,10 +80,13 @@ public class TurnoHigea {
 
         mTurno.setEnabled(true);
         mTurno.setTomado(false);
-        MotivoTurno motivoTurno = new MotivoTurno();
-        Preparacion preparacion = new Preparacion();
-        motivoTurno.setPreparacion(preparacion);
-        motivoTurno.setId(tipo_turno_fac_id);
+        if(motivoTurno==null) {
+            motivoTurno = new MotivoTurno();
+            Preparacion preparacion = new Preparacion();
+            motivoTurno.setPreparacion(preparacion);
+            motivoTurno.setId(tipo_turno_fac_id);
+        }
+        mTurno.setMotivoTurno(motivoTurno);
         mTurno.setMotivoTurno(motivoTurno);
         mTurno.setDuracion(turno_duracion);
         mTurno.setServicio(Math.toIntExact(servicio_id));

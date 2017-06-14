@@ -124,7 +124,12 @@ export class TurnoService {
 
   generarPDF(persona: Persona) {
     const path = 'core/' + 'persona/pdf';
-    return this.api.getFile(path, 'application/pdf', 'tmp', persona);
+    return this.api.getFile(path, 'application/pdf', 'preparacion', persona);
+  }
+
+  generarTurnoPDF(turno: Turno) {
+    const path = 'core/' + 'turno/pdf';
+    return this.api.getFile(path, 'application/pdf', 'preparacion', turno);
   }
 
   cancelarTurno(turno: Turno, persona: Persona) {

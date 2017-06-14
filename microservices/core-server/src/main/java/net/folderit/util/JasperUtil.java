@@ -16,8 +16,12 @@ import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
+import javax.xml.transform.Templates;
 import java.awt.*;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -25,19 +29,65 @@ public class JasperUtil {
 
     public byte[] buildReportTurno(List<Turno> turnos) throws Exception {
 
-        String pattern = "MM/dd/yyyy";
-        SimpleDateFormat format = new SimpleDateFormat(pattern);
-        SimpleDateFormat formatHour = new SimpleDateFormat(pattern);
-
         DynamicReportBuilder drb = new DynamicReportBuilder();
+        DynamicReport dr =
+                drb.addColumn(getFechaTurno())
+                        .addColumn(getHourTurno())
+                        .addColumn(getCentro())
+                        .addColumn(getProfesional())
+                        .addColumn(getDescripcion())
+                        .setTitle("Preparacion para su turno")
+                        .setDefaultStyles(getTitleStyle(), getSubtitleStyle(), getHeaderStyle(), null)
+                        .setPrintBackgroundOnOddRows(true)
+                        .setUseFullPageWidth(true)
+                       // .setTemplateFile(JasperUtil.class.getResourceAsStream("StylesReport.jrxml").toString())
+                        .build();
+
+
+
+        JRDataSource ds = new JRBeanCollectionDataSource(turnos);
+        JasperPrint jp = DynamicJasperHelper.generateJasperPrint(dr, new ClassicLayoutManager(), ds);
+        byte[] report = JasperExportManager.exportReportToPdf(jp);
+        return report;
+    }
+
+
+
+    public byte[] buildReportTurnoByturno(Turno turno) throws Exception {
+        DynamicReportBuilder drb = new DynamicReportBuilder();
+        DynamicReport dr =
+                drb.addColumn(getFechaTurno())
+                        .addColumn(getHourTurno())
+                        .addColumn(getCentro())
+                        .addColumn(getProfesional())
+                        .addColumn(getDescripcion())
+                        .setTitle("Preparacion para su turno")
+                        .setDefaultStyles(getTitleStyle(), getSubtitleStyle(), getHeaderStyle(), null)
+                        .setPrintBackgroundOnOddRows(true)
+                        .setUseFullPageWidth(true)
+                        //.setTemplateFile("./report/StylesReport.jrxml")
+                        .build();
+
+
+        Collection<Turno> turnos = new ArrayList<>();
+        turnos.add(turno);
+        JRDataSource ds = new JRBeanCollectionDataSource(turnos);
+        JasperPrint jp = DynamicJasperHelper.generateJasperPrint(dr, new ClassicLayoutManager(), ds);
+        byte[] report = JasperExportManager.exportReportToPdf(jp);
+        return report;
+    }
+
+    private Style getTitleStyle(){
         /**
          * "titleStyle" exists in the template .jrxml file
          * The title should be seen in a big font size, violet foreground and light green background
          */
         Style titleStyle = new Style("titleStyle");
         titleStyle.setFont(Font.ARIAL_BIG);
+        return titleStyle;
+    }
 
-
+    private Style getSubtitleStyle(){
         /**
          * "subtitleStyleParent" is meant to be used as a parent style, while
          * "subtitleStyle" is the child.
@@ -49,9 +99,10 @@ public class JasperUtil {
         Style subtitleStyle = Style.createBlankStyle("subtitleStyle", "subtitleParent");
         subtitleStyle.setFont(Font.GEORGIA_SMALL_BOLD);
 
-        Style amountStyle = new Style();
-        amountStyle.setHorizontalAlign(HorizontalAlign.RIGHT);
+        return  subtitleStyle;
+    }
 
+    private Style getHeaderStyle(){
         Style headerStyle = new Style();
 
         headerStyle.setBackgroundColor(new Color(230, 230, 230));
@@ -59,24 +110,7 @@ public class JasperUtil {
         headerStyle.setHorizontalAlign(HorizontalAlign.CENTER);
         headerStyle.setTransparency(ar.com.fdvs.dj.domain.constants.Transparency.OPAQUE);
 
-        DynamicReport dr =
-                drb.addColumn(getFechaTurno())
-                        .addColumn(getHourTurno())
-                        .addColumn(getCentro())
-                        .addColumn(getProfesional())
-                        .addColumn(getDescripcion())
-                        .setTitle("Preparacion para su turno")
-                        .setDefaultStyles(titleStyle, subtitleStyle, headerStyle, null)
-                        .addStyle(subtitleStyleParent)
-                        .setPrintBackgroundOnOddRows(true)
-                        .setUseFullPageWidth(true)
-                        .build();
-
-
-        JRDataSource ds = new JRBeanCollectionDataSource(turnos);
-        JasperPrint jp = DynamicJasperHelper.generateJasperPrint(dr, new ClassicLayoutManager(), ds);
-        byte[] report = JasperExportManager.exportReportToPdf(jp);
-        return report;
+        return  headerStyle;
     }
 
     private AbstractColumn getHourTurno() {

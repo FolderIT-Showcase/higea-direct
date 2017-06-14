@@ -98,6 +98,9 @@ public class MetadataService {
         return motivoTurnoRepository.findAllByOrderByDescripcionAsc();
     }
 
+    public MotivoTurno getMotivoTurnoById(Integer id) {
+        return motivoTurnoRepository.findOne(id.longValue());
+    }
     public CentroSalud saveCentroSalud(CentroSalud centroSalud) {
         return centroSaludRepository.save(centroSalud);
     }

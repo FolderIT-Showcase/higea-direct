@@ -2,6 +2,7 @@ package net.folderit.web;
 
 
 import net.folderit.domain.core.Persona;
+import net.folderit.domain.core.Turno;
 import net.folderit.dto.ResultAfipDto;
 import net.folderit.exception.TurneroException;
 import net.folderit.service.PersonaService;
@@ -54,6 +55,7 @@ public class PersonaController {
         return ResponseEntity.ok(jasperUtil.buildReportTurno(persona.getTurno()));
 
     }
+
 
     @DeleteMapping("/persona")
     public ResponseEntity<Long> deleteLogical(@RequestBody Persona persona) {

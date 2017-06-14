@@ -144,4 +144,9 @@ public class MetadataController {
     public ResponseEntity<Collection<MotivoTurno>> getAllMotivosTurno() {
         return ResponseEntity.ok(metadataService.getAllmotivosTurno());
     }
+
+    @GetMapping("/motivoTurno/{id}")
+    public ResponseEntity<MotivoTurno> getMotivosTurnoById(@PathVariable("id") Integer personaId) {
+        return ResponseEntity.ok(metadataService.getMotivoTurnoById(personaId));
+    }
 }

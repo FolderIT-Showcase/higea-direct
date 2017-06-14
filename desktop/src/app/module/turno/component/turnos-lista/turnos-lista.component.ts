@@ -51,7 +51,7 @@ export class TurnosListaComponent implements OnInit {
   }
 
   generarPDF() {
-    this.turnoService.generarPDF(this.persona)
+    this.turnoService.generarTurnoPDF(this.turno)
       .then(data => {
         // window.open(data);
       })
