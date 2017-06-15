@@ -34,7 +34,7 @@ export class RegisterComponent implements OnInit {
   selectUndefined: any;
   @Input()
   validatorPlan: any [] = [];
-  tieneObraSocial = false;
+  tieneObraSocial = true;
 
   passwordMatcher = (control: AbstractControl): { [key: string]: boolean } => {
     const password1 = control.get('password1');

@@ -1,6 +1,8 @@
 <div class="col-sm-12 col-md-8 col-md-offset-2">
-
+  <br>
   <h2 class="app-header text-center">Registro</h2>
+  <br>
+  <br>
   <form [formGroup]="complexForm" (ngSubmit)="submitForm(complexForm.value)">
 
     <div class="row">
@@ -105,10 +107,10 @@
               [formControl]="complexForm.controls['genero']"
               [list]="generos"
             ></app-select>
-            <small *ngIf="complexForm.controls['genero'].hasError('required') && complexForm.controls['genero'].touched"
-                   class="help-block">Ingrese su Género
-            </small>
           </div>
+          <small *ngIf="complexForm.controls['genero'].hasError('required') && complexForm.controls['genero'].touched"
+                 class="help-block">Ingrese su Género
+          </small>
         </div>
       </div>
       <div class="col-sm-4">
@@ -196,7 +198,7 @@
       <br>
       <div class="col-sm-4 col-sm-offset-4">
         <label class="switch">
-          <input type="checkbox" [(ngModel)]="tieneObraSocial" [ngModelOptions]="{standalone: true}">
+          <input type="checkbox" [(ngModel)]="tieneObraSocial" [ngModelOptions]="{standalone: true}" disabled>
           ¿ Tiene Obra social ?
         </label>
       </div>

@@ -24,6 +24,7 @@ export class TurnosListaComponent implements OnInit {
 
   ngOnInit(): void {
     this.persona = this.storeService.get('persona');
+    console.log(this.turnos)
   }
 
   handleModalConfirmacion(event) {

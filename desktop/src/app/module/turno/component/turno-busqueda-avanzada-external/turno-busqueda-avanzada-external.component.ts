@@ -39,6 +39,7 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
 
   myDatePickerOptions: IMyOptions = {
     dateFormat: 'dd/mm/yyyy',
+    sunHighlight: true,
     showTodayBtn: false,
     inline: true
   };

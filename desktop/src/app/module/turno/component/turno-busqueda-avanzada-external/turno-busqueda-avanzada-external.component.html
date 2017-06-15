@@ -36,8 +36,17 @@
     ></app-select>
   </div>
   <br>
-  <div class="form-group app-container">
-    <my-date-picker id="fecha" [options]="myDatePickerOptions" [locale]="'es'" [formControl]="form.controls['fecha']"
-    ></my-date-picker>
+
+  <div class="col-sm-12" style="padding: 0; margin: 0;">
+    <div class="app-container">
+      <div class="dummy"></div>
+      <div class="app-cal-container">
+        <my-date-picker id="fecha" [options]="myDatePickerOptions" [locale]="'es'" [formControl]="form.controls['fecha']"
+        ></my-date-picker>
+      </div>
+    </div>
   </div>
+
+
+
 </form>
