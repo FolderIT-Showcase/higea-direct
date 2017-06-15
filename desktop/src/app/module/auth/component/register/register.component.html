@@ -96,6 +96,23 @@
     <div class="row">
       <div class="col-sm-4">
         <div class="form-group"
+             [ngClass]="{'has-error':!complexForm.controls['genero'].valid && complexForm.controls['genero'].touched}">
+          <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-intersex"></i></span>
+            <app-select
+              ngDefaultControl
+              [placeHolder]="'Género'"
+              [formControl]="complexForm.controls['genero']"
+              [list]="generos"
+            ></app-select>
+            <small *ngIf="complexForm.controls['genero'].hasError('required') && complexForm.controls['genero'].touched"
+                   class="help-block">Ingrese su Género
+            </small>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group"
              [ngClass]="{'has-error':!complexForm.controls['tipoDocumento'].valid && complexForm.controls['tipoDocumento'].touched}">
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-id-card "></i></span>
@@ -128,48 +145,51 @@
       </div>
     </div>
 
+    <!---->
+
     <!--<div class="row">-->
-    <!--<div class="col-sm-6">-->
-    <!--<div class="form-group"-->
-    <!--[ngClass]="{'has-error':!complexForm.controls['pais'].valid && complexForm.controls['pais'].touched}">-->
+      <!--<div class="col-sm-6">-->
+        <!--<div class="form-group"-->
+             <!--[ngClass]="{'has-error':!complexForm.controls['pais'].valid && complexForm.controls['pais'].touched}">-->
 
-    <!--<div class="input-group">-->
-    <!--<span class="input-group-addon"><i class="fa fa-globe"></i></span>-->
-    <!--<app-select-->
-    <!--ngDefaultControl-->
-    <!--[placeHolder]="'País'"-->
-    <!--[formControl]="complexForm.controls['pais']"-->
-    <!--[list]="paises"-->
-    <!--[displayProp]="['nombre']"></app-select>-->
+          <!--<div class="input-group">-->
+            <!--<span class="input-group-addon"><i class="fa fa-globe"></i></span>-->
+            <!--<app-select-->
+              <!--ngDefaultControl-->
+              <!--[placeHolder]="'País'"-->
+              <!--[formControl]="complexForm.controls['pais']"-->
+              <!--[list]="paises"-->
+              <!--[displayProp]="['nombre']"></app-select>-->
 
-    <!--<small *ngIf="complexForm.controls['pais'].hasError('required') && complexForm.controls['pais'].touched"-->
-    <!--class="help-block">Debes incluir tu País de origen-->
-    <!--</small>-->
-    <!--</div>-->
-
-
-    <!--</div>-->
-    <!--</div>-->
-    <!--<div class="col-sm-6">-->
-    <!--<div class="form-group"-->
-    <!--[ngClass]="{'has-error':!complexForm.controls['genero'].valid && complexForm.controls['genero'].touched}">-->
+            <!--<small *ngIf="complexForm.controls['pais'].hasError('required') && complexForm.controls['pais'].touched"-->
+                   <!--class="help-block">Debes incluir tu País de origen-->
+            <!--</small>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--<div class="col-sm-6">-->
+        <!--<div class="form-group"-->
+             <!--[ngClass]="{'has-error':!complexForm.controls['genero'].valid && complexForm.controls['genero'].touched}">-->
 
 
-    <!--<div class="input-group">-->
-    <!--<span class="input-group-addon"><i class="fa fa-intersex"></i></span>-->
-    <!--<app-select-->
-    <!--ngDefaultControl-->
-    <!--[placeHolder]="'Género'"-->
-    <!--[formControl]="complexForm.controls['genero']"-->
-    <!--[list]="generos"-->
-    <!--&gt;</app-select>-->
-    <!--<small *ngIf="complexForm.controls['genero'].hasError('required') && complexForm.controls['genero'].touched"-->
-    <!--class="help-block">Ingrese su Género-->
-    <!--</small>-->
+          <!--<div class="input-group">-->
+            <!--<span class="input-group-addon"><i class="fa fa-intersex"></i></span>-->
+            <!--<app-select-->
+              <!--ngDefaultControl-->
+              <!--[placeHolder]="'Género'"-->
+              <!--[formControl]="complexForm.controls['genero']"-->
+              <!--[list]="generos"-->
+            <!--&gt;</app-select>-->
+            <!--<small *ngIf="complexForm.controls['genero'].hasError('required') && complexForm.controls['genero'].touched"-->
+                   <!--class="help-block">Ingrese su Género-->
+            <!--</small>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
     <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
+
+
+    <!---->
 
     <!-- Rounded switch -->
     <div class="row">

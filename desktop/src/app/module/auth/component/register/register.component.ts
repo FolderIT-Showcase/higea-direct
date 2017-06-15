@@ -29,7 +29,7 @@ export class RegisterComponent implements OnInit {
   @Input()
   plan: Plan;
   tipoDocumentos: string[] = TipoDocumentos.build();
-  // generos: string[] = Generos.build();
+  generos: string[] = Generos.build();
   captcha = null;
   selectUndefined: any;
   @Input()
@@ -59,7 +59,7 @@ export class RegisterComponent implements OnInit {
       'tipoDocumento': [this.tipoDocumentos.find(x => x.toLowerCase() === 'dni'), Validators.required],
       'numeroDocumento': [null, Validators.required],
       // 'pais': [this.paises.find(x => x.nombre.toLowerCase() === 'argentina'), Validators.required],
-      // 'genero': [null, Validators.required],
+      'genero': [null, Validators.required],
       'obraSocial': [null],
       'plan': [null],
       'nroAfiliado': [null],
@@ -95,7 +95,7 @@ export class RegisterComponent implements OnInit {
 
     const persona: Persona = new Persona();
     persona.userAsociado = user;
-    // persona.genero = data.genero.toUpperCase();
+    persona.genero = data.genero.toUpperCase();
     persona.documento = new Documento();
     persona.documento.id = null;
     persona.documento.numero = data.numeroDocumento;
@@ -127,7 +127,7 @@ export class RegisterComponent implements OnInit {
         documento: persona.documento.numero,
         nombre: persona.nombre,
         apellido: persona.apellido,
-        // genero: persona.genero.slice(0, 1)
+        genero: persona.genero.slice(0, 1)
       };
       this.personaService.validateDni(doc)
         .then(() => {
@@ -161,7 +161,7 @@ export class RegisterComponent implements OnInit {
       'numeroDocumento': [this.complexForm.value.numeroDocumento, Validators.required],
       'tipoDocumento': [this.complexForm.value.tipoDocumento, Validators.required],
       // 'pais': [this.complexForm.value.pais, Validators.required],
-      // 'genero': [this.complexForm.value.genero, Validators.required],
+      'genero': [this.complexForm.value.genero, Validators.required],
       'password1': [this.complexForm.value.password1, Validators.required],
       'password2': [this.complexForm.value.password2, [Validators.required, this.passwordMatch]],
       'email': [this.complexForm.value.email, Validators.required],
