@@ -41,7 +41,12 @@
     <div class="app-container">
       <div class="dummy"></div>
       <div class="app-cal-container">
-        <my-date-picker id="fecha" [options]="myDatePickerOptions" [locale]="'es'" [formControl]="form.controls['fecha']"
+        <my-date-picker
+          id="fecha"
+          [options]="myDatePickerOptions"
+          [locale]="'es'"
+          [formControl]="form.controls['fecha']"
+          [markedDays]="markedDays"
         ></my-date-picker>
       </div>
     </div>

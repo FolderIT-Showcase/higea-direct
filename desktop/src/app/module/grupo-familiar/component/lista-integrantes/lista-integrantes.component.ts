@@ -17,14 +17,13 @@ import {Domicilio} from '../../../../domain/domicilio';
 import {Pais} from '../../../../domain/pais';
 import {Store} from '../../../../service/store';
 import {Subscription} from 'rxjs/Subscription';
-
 import * as _ from 'lodash';
-import {IMyOptions} from 'mydatepicker';
 import {DatePipe} from '@angular/common';
 import {UtilsService} from '../../../../service/utils.service';
 import {ObraSocial} from '../../../../domain/obra-social';
 import {Plan} from '../../../../domain/plan';
 import {Metadata} from '../../../../domain/metadata';
+import {IMyOptions} from '../../../my-date-picker/interfaces/my-options.interface';
 
 @Component({
   selector: 'app-lista-integrantes',

@@ -10,7 +10,6 @@ import {RouterModule} from '@angular/router';
 import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 import {MisTurnosComponent} from './component/mis-turnos/mis-turnos.component';
 import {ModalModule, TabsModule, TimepickerModule} from 'ngx-bootstrap';
-import {MyDatePickerModule} from 'mydatepicker';
 import {SwitchTurnoComponent} from './component/switch-turno/switch-turno.component';
 import {TurnosListaComponent} from './component/turnos-lista/turnos-lista.component';
 import {TurnoBusquedaRapidaComponent} from './component/turno-busqueda-rapida/turno-busqueda-rapida.component';
@@ -22,6 +21,7 @@ import {TurnoRoutingModule} from './turno.routing.module';
 import {TurnoHomeComponent} from './turno-home.component';
 import {UIModule} from '../ui/ui.module';
 import {PreparacionComponent} from './component/preparacion/preparacion.component';
+import {MyDatePickerModule} from '../my-date-picker/my-date-picker.module';
 
 @NgModule({
   imports: [

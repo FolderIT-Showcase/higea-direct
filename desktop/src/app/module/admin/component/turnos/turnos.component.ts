@@ -12,11 +12,11 @@ import {Subscription} from 'rxjs/Subscription';
 import {PagerService} from '../../../../service/pager.service';
 import {Store} from '../../../../service/store';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {IMyOptions} from 'mydatepicker';
 import {TipoTurno} from '../../../../domain/tipo-turno';
 import {MotivoTurno} from '../../../../domain/motivo-turno';
 import {MetadataService} from '../../../../service/metadata.service';
 import {Preparacion} from '../../../../domain/preparacion';
+import {IMyOptions} from '../../../my-date-picker/interfaces/my-options.interface';
 
 class Data {
 

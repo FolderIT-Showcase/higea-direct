@@ -4,9 +4,9 @@ import {Especialidad} from '../../../../domain/especialidad';
 import {Persona} from '../../../../domain/persona';
 import {Profesional} from '../../../../domain/profesional';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {IMyOptions} from 'mydatepicker';
 import {StoreService} from '../../../../service/store.service';
 import {TurnoService} from '../../../../service/turno.service';
+import {IMyOptions} from '../../../my-date-picker/interfaces/my-options.interface';
 
 @Component({
   selector: 'app-turno-busqueda-rapida',

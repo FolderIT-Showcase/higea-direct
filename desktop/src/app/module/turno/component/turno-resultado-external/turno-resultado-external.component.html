@@ -14,18 +14,14 @@
       <tr>
         <th width="1em">Hora</th>
         <th></th>
-        <th width="3em"></th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let turno of timeline" [ngClass]="{'app-selectable-row': turno.enabled}" (click)="showTurnoModal(turno)">
         <td>{{turno.hora | date: 'HH:mm'}}</td>
         <td>
-          <div [ngClass]="{'circle': turno.enabled}"></div>
-          <div [ngClass]="{'app-selectable-line': turno.enabled, 'app-timeline-marker': !turno.enabled}" ></div>
-        </td>
-        <td class="text-right app-reserva-label" >
-          {{turno.enabled ? 'RESERVAR' : ''}}
+          <div [ngClass]="{'app-disabled-line': !turno.enabled}" ></div>
+          <div class="text-right" *ngIf="turno.enabled">{{turno.enabled ? 'RESERVAR' : ''}}</div>
         </td>
       </tr>
       </tbody>

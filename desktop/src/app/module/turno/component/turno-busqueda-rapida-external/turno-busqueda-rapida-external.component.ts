@@ -3,11 +3,11 @@ import {DatePipe} from '@angular/common';
 import {Especialidad} from '../../../../domain/especialidad';
 import {Profesional} from '../../../../domain/profesional';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {IMyOptions} from 'mydatepicker';
 import {StoreService} from '../../../../service/store.service';
 import {TurnoService} from '../../../../service/turno.service';
 import {CentroSalud} from '../../../../domain/centro-salud';
 import {Persona} from '../../../../domain/persona';
+import {IMyOptions} from '../../../my-date-picker/interfaces/my-options.interface';
 
 class Data {
   persona: Persona;

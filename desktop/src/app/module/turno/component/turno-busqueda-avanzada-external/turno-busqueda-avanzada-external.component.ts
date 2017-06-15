@@ -6,11 +6,11 @@ import {Persona} from '../../../../domain/persona';
 import {StoreService} from '../../../../service/store.service';
 import {TurnoService} from '../../../../service/turno.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {IMyOptions} from 'mydatepicker';
 import {DatePipe} from '@angular/common';
 import {MetadataService} from '../../../../service/metadata.service';
 import {AlertService} from '../../../../service/alert.service';
 import {Subscription} from 'rxjs/Subscription';
+import {IMyOptions} from '../../../my-date-picker/interfaces/my-options.interface';
 
 class Data {
   persona: Persona;
@@ -36,6 +36,8 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
   fechaDesde: Date = new Date();
   centroSalud: string = localStorage.getItem('client');
   subs: Subscription[] = [];
+
+  markedDays = [23,24,26,27,29,30];
 
   myDatePickerOptions: IMyOptions = {
     dateFormat: 'dd/mm/yyyy',

@@ -22,9 +22,9 @@ import {CommonModule} from '@angular/common';
 import {AdminRoutingModule} from './admin.routing.module';
 import {ModalModule, PaginationModule, TimepickerModule} from 'ngx-bootstrap';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MyDatePickerModule} from 'mydatepicker';
 import {UIModule} from '../ui/ui.module';
 import {MotivoTurnoComponent} from './component/motivo-turno/motivo-turno.component';
+import {MyDatePickerModule} from '../my-date-picker/my-date-picker.module';
 
 @NgModule({
   imports: [

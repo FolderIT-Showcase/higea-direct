@@ -6,9 +6,9 @@ import {Persona} from '../../../../domain/persona';
 import {StoreService} from '../../../../service/store.service';
 import {TurnoService} from '../../../../service/turno.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {IMyOptions} from 'mydatepicker';
 import {DatePipe} from '@angular/common';
 import {AlertService} from '../../../../service/alert.service';
+import {IMyOptions} from '../../../my-date-picker/interfaces/my-options.interface';
 
 @Component({
   selector: 'app-turno-busqueda-avanzada',

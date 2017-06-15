@@ -11,11 +11,11 @@ $gray-4: #aab2bd;
 $gray-5: #666d78;
 $gray-6: #444a54;
 $black: #353b44;
-$green: #3fb67e;
+$green: #9bd68e;
 $red: #ec3924;
 $yellow: #ffd00f;
 $light-blue: #ecf6fc;
-$medium-light-blue: #9dcede;
+$medium-light-blue: #7494de;
 
 html,
 body {
@@ -241,10 +241,10 @@ fieldset {
 }
 
 .app-container-row {
-  display: flex; /* establish flex container */
-  flex-direction: row-reverse; /* make main axis horizontal (default value) */
-  justify-content: center; /* center items horizontally, in this case */
-  align-items: center; /* center items vertically, in this case */
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  align-items: center;
   margin: 0 !important;
   height: 70vh !important;
   width: 100% !important;
@@ -263,14 +263,15 @@ td {
 .app-timeline {
   .app-selectable-row {
     font-weight: bold;
-    cursor: pointer;
+    cursor: pointer !important;
+    background-color: $green !important;
   }
 
-  .app-selectable-line {
-    top: -54%;
+  .app-disabled-line {
+    top: 0;
     left: 0;
-    border-bottom: 3px solid #3fb67e;
-    color: #199f50;
+    border-bottom: 3px solid $gray-3;
+    color: $gray-4;
     width: 100%;
     z-index: 100;
     position: relative;
@@ -290,9 +291,6 @@ td {
     color: $black;
   }
 
-  .app-timeline-marker {
-    //font-size: 0.85em;
-  }
   td {
     height: 3em !important;
     line-height: 3em;
@@ -313,15 +311,6 @@ td {
 div.selector.inlinedp {
   width: 100% !important;
   height: 100% !important;
-}
-
-.mydp {
-  width: 100% !important;
-  height: 100% !important;
-}
-
-.mydp .tablesingleday, .mydp .tablesinglemonth, .mydp .tablesingleyear {
-  font-size: 1.2em;
 }
 
 .dummy {
