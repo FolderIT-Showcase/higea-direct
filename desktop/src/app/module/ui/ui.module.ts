@@ -6,11 +6,10 @@ import {NavbarComponent} from './navbar/navbar.component';
 import {LoadingComponent} from './loading/loading.component';
 import {CoreComponent} from './core/core.component';
 import {ModalComponent} from './modal/modal.component';
-import {ModalModule} from 'ngx-bootstrap';
+import {BsDropdownModule, ModalModule} from 'ngx-bootstrap';
 import {RouterModule} from '@angular/router';
 import {SelectComponent} from './select/select.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { BsDropdownModule } from 'ngx-bootstrap';
 
 @NgModule({
   imports: [

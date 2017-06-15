@@ -71,8 +71,8 @@
 </app-modal>
 
 
-<div style="max-height:50px!important; overflow-y:scroll;" >
-  <app-modal [title]="'Confirmación'"  (outModal)="handleSuccessModal($event)">
+<div style="max-height:50px!important; overflow-y:scroll;">
+  <app-modal [title]="'Confirmación'" (outModal)="handleSuccessModal($event)">
     <label>El turno ha sido tomado con éxito</label><br>
     <label><strong>Podés revisar tus turnos tomados accediendo al menu Mis Turnos</strong></label>
     <app-preparacion [persona]="persona"></app-preparacion>

@@ -22,7 +22,6 @@ export class PreparacionComponent implements OnInit, OnDestroy {
     this.turnos = this.persona.turno;
   }
 
-
   ngOnDestroy(): void {
 
   }

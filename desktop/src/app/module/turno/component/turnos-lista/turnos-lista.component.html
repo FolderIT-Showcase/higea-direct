@@ -82,8 +82,8 @@
   </div>
 </app-modal>
 
-<div style="max-height:50px!important; overflow-y:scroll;" >
-  <app-modal [title]="'Preparación'"  (outModal)="handleSuccessModal($event)">
+<div style="max-height:50px!important; overflow-y:scroll;">
+  <app-modal [title]="'Preparación'" (outModal)="handleSuccessModal($event)">
     <div class="card">
       <div class="card-content text-left">
         <label *ngIf="turno.dia"><strong>Día: </strong>{{turno.dia | date: 'EEEE'}}</label><br>
@@ -92,7 +92,8 @@
         <label *ngIf="turno.centroSalud"><strong>Centro de Salud: </strong>{{turno.centroSalud.nombre}}</label><br>
         <label *ngIf="turno.especialidad"><strong>Especialidad: </strong>{{turno.especialidad.nombre}}</label><br>
         <label *ngIf="turno.profesional"><strong>Profesional: </strong>{{turno.profesional.nombre}}</label><br>
-        <label *ngIf="turno.motivoTurno"><strong>Preparacion: </strong>{{turno.motivoTurno.preparacion.descripcion}}</label>
+        <label
+          *ngIf="turno.motivoTurno"><strong>Preparacion: </strong>{{turno.motivoTurno.preparacion.descripcion}}</label>
       </div>
     </div>
     <div class="row">

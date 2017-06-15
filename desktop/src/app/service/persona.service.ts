@@ -36,7 +36,6 @@ export class PersonaService {
     }
   }
 
-
   validateDni(dto: any) {
     const path = `${this.basePathCore}persona/afip?documento=${dto.documento}&nombre=${dto.nombre}&apellido=${dto.apellido}&genero=${dto.genero}`;
 
@@ -111,7 +110,6 @@ export class PersonaService {
       this.buildIntegrantes(persona)
     })
   }
-
 
   activateUser(token) {
     const path = `${this.basePathCore}auth/regitrationConfirm?token=${token}`;

@@ -92,7 +92,7 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
 
     this.subs.push(
       this.form.valueChanges.subscribe(data => {
-        if(data && data.fecha && this.form.valid){
+        if (data && data.fecha && this.form.valid) {
           this.submitForm(this.form.value);
         }
       })
@@ -123,7 +123,7 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
 
   handleEspecialidadClick(especialidad: Especialidad) {
     this.filteredProfesionales = especialidad.profesional.sort((a, b) => {
-      return (a.nombre+a.apellido > b.nombre+b.apellido) ? 1 : ((b.nombre+b.apellido > a.nombre+a.apellido) ? -1 : 0);
+      return (a.nombre + a.apellido > b.nombre + b.apellido) ? 1 : ((b.nombre + b.apellido > a.nombre + a.apellido) ? -1 : 0);
     });
   }
 

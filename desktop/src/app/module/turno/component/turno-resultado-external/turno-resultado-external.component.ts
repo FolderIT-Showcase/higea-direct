@@ -7,11 +7,9 @@ import {StoreService} from '../../../../service/store.service';
 import {Persona} from '../../../../domain/persona';
 import {Especialidad} from '../../../../domain/especialidad';
 import {Profesional} from '../../../../domain/profesional';
-import {UtilsService} from '../../../../service/utils.service';
 import {Turno} from '../../../../domain/turno';
 import {MotivoTurno} from '../../../../domain/motivo-turno';
 import {MetadataService} from '../../../../service/metadata.service';
-import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-turno-resultado-external',
