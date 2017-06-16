@@ -4,24 +4,7 @@ import {CoreComponent} from './module/ui/core/core.component';
 import {AuthGuard} from './service/guard/auth.guard';
 import {HomeComponent} from './module/ui/home/home.component';
 import {IntegrantesResolveService} from './service/resolve/integrantes-resolve.service';
-import {TurnoModule} from './module/turno/turno.module';
-import {GrupoFamiliarModule} from './module/grupo-familiar/grupo-familiar.module';
-import {AdminModule} from './module/admin/admin.module';
-import {AuthModule} from './module/auth/auth.module';
 import {MetadataResolveService} from './service/resolve/metadata-resolve.service';
-
-export function loadTurnoModule() {
-  return TurnoModule
-}
-export function loadGrupoFamiliarModule() {
-  return GrupoFamiliarModule
-}
-export function loadAdminModule() {
-  return AdminModule
-}
-export function loadAuthModule() {
-  return AuthModule
-}
 
 const routes: Routes = [
   {
@@ -43,24 +26,24 @@ const routes: Routes = [
       },
       {
         path: 'turno',
-        loadChildren: loadTurnoModule,
+        loadChildren: './module/turno/turno.module#TurnoModule',
       },
       {
         path: 'grupo-familiar',
-        loadChildren: loadGrupoFamiliarModule,
+        loadChildren: './module/grupo-familiar/grupo-familiar.module#GrupoFamiliarModule',
         resolve: {
           metadata: MetadataResolveService,
         }
       },
       {
         path: 'admin',
-        loadChildren: loadAdminModule,
+        loadChildren: './module/admin/admin.module#AdminModule',
       },
     ]
   },
   {
     path: 'auth',
-    loadChildren: loadAuthModule,
+    loadChildren: './module/auth/auth.module#AuthModule',
   },
 
   // otherwise redirect to home
