@@ -11,11 +11,11 @@ $gray-4: #aab2bd;
 $gray-5: #666d78;
 $gray-6: #444a54;
 $black: #353b44;
-$green: #49c179;
+$green: #9bd68e;
 $red: #ec3924;
 $yellow: #ffd00f;
 $light-blue: #ecf6fc;
-$medium-light-blue: #9dcede;
+$medium-light-blue: #7494de;
 
 html,
 body {
@@ -29,7 +29,7 @@ body {
 }
 
 .app {
-  padding-top: 70px
+  padding-top: 53px
 }
 
 div.well {
@@ -107,6 +107,10 @@ div.well {
 
 .app-header {
   margin-top: 0.75em;
+  h2 {
+    //margin: 1em;
+    //margin-bottom: 0.3em;
+  }
 }
 
 .text-xs-center {
@@ -226,7 +230,6 @@ fieldset {
 }
 
 .table > thead > tr > th, .table > thead > tr > td, .table > tbody > tr > th, .table > tbody > tr > td, .table > tfoot > tr > th, .table > tfoot > tr > td {
-  padding: 0.3em !important;
   vertical-align: middle !important;
 }
 
@@ -235,50 +238,114 @@ fieldset {
   flex-direction: row; /* make main axis horizontal (default value) */
   justify-content: center; /* center items horizontally, in this case */
   align-items: center; /* center items vertically, in this case */
-  margin: 0 !important;
-  height: auto !important;
 }
 
 .app-container-row {
-  display: flex; /* establish flex container */
-  flex-direction: row-reverse; /* make main axis horizontal (default value) */
-  justify-content: center; /* center items horizontally, in this case */
-  align-items: center; /* center items vertically, in this case */
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  align-items: center;
   margin: 0 !important;
   height: 70vh !important;
   width: 100% !important;
   background-color: rgba(0, 0, 0, 0.21);
 }
 
-.app-selectable-row {
-  height: 2.5em;
-  color: white !important;
-  font-weight: bold;
-  background-color: $green !important;
-  cursor: pointer;
+td {
+  height: 2em !important;
+  line-height: 2em;
 }
 
-.app-timeline-marker {
-  //font-size: 0.85em;
+.table > thead > tr > th, .table > thead > tr > td, .table > tbody > tr > th, .table > tbody > tr > td, .table > tfoot > tr > th, .table > tfoot > tr > td {
+  padding: 4px !important;
 }
 
-.app-scroll-70 {
-  max-height: 70vh !important;
-  overflow-y: scroll !important;
+.app-timeline {
+  .app-selectable-row {
+    font-weight: bold;
+    cursor: pointer !important;
+    background-color: $green !important;
+  }
+
+  .app-disabled-line {
+    top: 0;
+    left: 0;
+    border-bottom: 3px solid $gray-3;
+    color: $gray-4;
+    width: 100%;
+    z-index: 100;
+    position: relative;
+  }
+
+  .circle:before {
+    content: ' \25CF';
+    position: relative;
+    z-index: 110;
+    top: 0px;
+    font-size: 25px;
+    left: 4px;
+    color: #199f50;
+  }
+  .app-reserva-label {
+    font-size: 0.9em;
+    color: $black;
+  }
+
+  td {
+    height: 3em !important;
+    line-height: 3em;
+  }
+
+  .table > thead > tr > th, .table > thead > tr > td, .table > tbody > tr > th, .table > tbody > tr > td, .table > tfoot > tr > th, .table > tfoot > tr > td {
+    padding: 4px !important;
+  }
 }
 
-div.selector.inlinedp{
+@media (min-width: 768px) {
+  .app-scroll-70 {
+    max-height: 70vh !important;
+    overflow-y: scroll !important;
+  }
+}
+
+div.selector.inlinedp {
   width: 100% !important;
-  max-width: 35vh !important;
-  height: 35vh !important;
-
+  height: 100% !important;
 }
 
-.mydp .tablesingleday, .mydp .tablesinglemonth, .mydp .tablesingleyear {
-  font-size: 1.2em;
+.dummy {
+  margin-top: 100%;
 }
 
-.app-no-data{
+.app-cal-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.app-no-data {
   color: $gray-5;
   background-color: $gray-2;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  background-color: white;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  -webkit-box-shadow: inset 0 0 0px rgba(0, 0, 0, .3);
+  background-color: $gray-4;
 }

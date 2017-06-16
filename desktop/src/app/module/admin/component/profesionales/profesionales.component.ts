@@ -5,7 +5,6 @@ import {AlertService} from '../../../../service/alert.service';
 import {AdminService} from '../../../../service/admin.service';
 import {Store} from '../../../../service/store';
 import {PagerService} from '../../../../service/pager.service';
-import {Router} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
 import {ModalDirective} from 'ngx-bootstrap';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';

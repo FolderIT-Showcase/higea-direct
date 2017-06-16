@@ -6,11 +6,11 @@ import {Persona} from '../../../../domain/persona';
 import {StoreService} from '../../../../service/store.service';
 import {TurnoService} from '../../../../service/turno.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {IMyOptions} from 'mydatepicker';
 import {DatePipe} from '@angular/common';
 import {MetadataService} from '../../../../service/metadata.service';
 import {AlertService} from '../../../../service/alert.service';
 import {Subscription} from 'rxjs/Subscription';
+import {IMyOptions} from '../../../my-date-picker/interfaces/my-options.interface';
 
 class Data {
   persona: Persona;
@@ -37,8 +37,11 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
   centroSalud: string = localStorage.getItem('client');
   subs: Subscription[] = [];
 
+  markedDays = [23,24,26,27,29,30];
+
   myDatePickerOptions: IMyOptions = {
     dateFormat: 'dd/mm/yyyy',
+    sunHighlight: true,
     showTodayBtn: false,
     inline: true
   };
@@ -92,7 +95,7 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
 
     this.subs.push(
       this.form.valueChanges.subscribe(data => {
-        if(data && data.fecha && this.form.valid){
+        if (data && data.fecha && this.form.valid) {
           this.submitForm(this.form.value);
         }
       })
@@ -123,7 +126,7 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
 
   handleEspecialidadClick(especialidad: Especialidad) {
     this.filteredProfesionales = especialidad.profesional.sort((a, b) => {
-      return (a.nombre+a.apellido > b.nombre+b.apellido) ? 1 : ((b.nombre+b.apellido > a.nombre+a.apellido) ? -1 : 0);
+      return (a.nombre + a.apellido > b.nombre + b.apellido) ? 1 : ((b.nombre + b.apellido > a.nombre + a.apellido) ? -1 : 0);
     });
   }
 

@@ -6,8 +6,8 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
   styleUrls: ['./select.component.scss']
 })
 /*
-  Componente <select> reusable para Angular
-  permite usarse con Reactive Forms y Model Driven Forms
+ Componente <select> reusable para Angular
+ permite usarse con Reactive Forms y Model Driven Forms
  */
 export class SelectComponent {
 
@@ -26,7 +26,6 @@ export class SelectComponent {
   mModel: any = null;
   item = null;
 
-
   // onChange para model driven form
   @Output() onChange = new EventEmitter<any>();
 
@@ -38,7 +37,7 @@ export class SelectComponent {
   // event emitter para onChange callback
   handleChange(item) {
     this.item = item;
-    if(!this.formControl){
+    if (!this.formControl) {
       this.onChange.emit(item)
     }
   }
@@ -70,8 +69,8 @@ export class SelectComponent {
     return str.toUpperCase();
   }
 
-  showPlaceholder(){
-    if(!this.formControl){
+  showPlaceholder() {
+    if (!this.formControl) {
       return !this.item;
     }
     return !this.formControl.value;

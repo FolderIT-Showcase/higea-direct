@@ -34,7 +34,7 @@ export class RegisterComponent implements OnInit {
   selectUndefined: any;
   @Input()
   validatorPlan: any [] = [];
-  tieneObraSocial = false;
+  tieneObraSocial = true;
 
   passwordMatcher = (control: AbstractControl): { [key: string]: boolean } => {
     const password1 = control.get('password1');
@@ -52,16 +52,16 @@ export class RegisterComponent implements OnInit {
     this.complexForm = fb.group({
       'nombre': [null, Validators.required],
       'apellido': [null, Validators.required],
-      'numeroDocumento': [null, Validators.required],
-      'tipoDocumento': [this.tipoDocumentos.find(x => x.toLowerCase() === 'dni'), Validators.required],
-      'pais': [this.paises.find(x => x.nombre.toLowerCase() === 'argentina'), Validators.required],
-      'genero': [null, Validators.required],
-      'password1': [null, Validators.required],
-      'password2': [null, [Validators.required, this.passwordMatch]],
       'email': [null, Validators.required],
       'telefono': [null, Validators.required],
+      'password1': [null, Validators.required],
+      'password2': [null, [Validators.required, this.passwordMatch]],
+      'tipoDocumento': [this.tipoDocumentos.find(x => x.toLowerCase() === 'dni'), Validators.required],
+      'numeroDocumento': [null, Validators.required],
+      // 'pais': [this.paises.find(x => x.nombre.toLowerCase() === 'argentina'), Validators.required],
+      'genero': [null, Validators.required],
       'obraSocial': [null],
-      'plan': [null, Validators.required],
+      'plan': [null],
       'nroAfiliado': [null],
     }, {validator: this.passwordMatcher});
 
@@ -160,7 +160,7 @@ export class RegisterComponent implements OnInit {
       'apellido': [this.complexForm.value.apellido, Validators.required],
       'numeroDocumento': [this.complexForm.value.numeroDocumento, Validators.required],
       'tipoDocumento': [this.complexForm.value.tipoDocumento, Validators.required],
-      'pais': [this.complexForm.value.pais, Validators.required],
+      // 'pais': [this.complexForm.value.pais, Validators.required],
       'genero': [this.complexForm.value.genero, Validators.required],
       'password1': [this.complexForm.value.password1, Validators.required],
       'password2': [this.complexForm.value.password2, [Validators.required, this.passwordMatch]],

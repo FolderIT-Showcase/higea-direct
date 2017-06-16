@@ -9,20 +9,19 @@
         </div>
       </a>
     </div>
-    <table class="table table-striped">
+    <table class="table table-striped app-timeline">
       <thead>
       <tr>
-        <th>Hora</th>
+        <th width="1em">Hora</th>
         <th></th>
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let turno of timeline"
-          [ngClass]="{'app-selectable-row': turno.enabled, 'app-timeline-marker': !turno.enabled}"
-          (click)="showTurnoModal(turno)">
+      <tr *ngFor="let turno of timeline" [ngClass]="{'app-selectable-row': turno.enabled}" (click)="showTurnoModal(turno)">
         <td>{{turno.hora | date: 'HH:mm'}}</td>
-        <td class="text-right">
-          {{turno.enabled ? 'RESERVAR TURNO' : ''}}
+        <td>
+          <div [ngClass]="{'app-disabled-line': !turno.enabled}" ></div>
+          <div class="text-right" *ngIf="turno.enabled">{{turno.enabled ? 'RESERVAR' : ''}}</div>
         </td>
       </tr>
       </tbody>
@@ -71,8 +70,8 @@
 </app-modal>
 
 
-<div style="max-height:50px!important; overflow-y:scroll;" >
-  <app-modal [title]="'Confirmación'"  (outModal)="handleSuccessModal($event)">
+<div style="max-height:50px!important; overflow-y:scroll;">
+  <app-modal [title]="'Confirmación'" (outModal)="handleSuccessModal($event)">
     <label>El turno ha sido tomado con éxito</label><br>
     <label><strong>Podés revisar tus turnos tomados accediendo al menu Mis Turnos</strong></label>
     <app-preparacion [persona]="persona"></app-preparacion>

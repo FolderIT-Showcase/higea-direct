@@ -16,7 +16,7 @@ export class Store {
     .asObservable()
     .distinctUntilChanged();
 
-  public get(item: string){
+  public get(item: string) {
     return this.db.getItem(item);
   }
 

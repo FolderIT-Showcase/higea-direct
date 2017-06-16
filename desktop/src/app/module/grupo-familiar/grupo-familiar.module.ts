@@ -5,10 +5,10 @@ import {GrupoFamiliarComponent} from './grupo-familiar.component';
 import {ListaIntegrantesComponent} from './component/lista-integrantes/lista-integrantes.component';
 import {ModalModule} from 'ngx-bootstrap/modal';
 import {AgmCoreModule} from 'angular2-google-maps/core';
-import {MyDatePickerModule} from 'mydatepicker';
 import {GrupoFamiliarRoutingModule} from './grupo-familiar.routing.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {UIModule} from '../ui/ui.module';
+import {MyDatePickerModule} from '../my-date-picker/my-date-picker.module';
 
 @NgModule({
   imports: [

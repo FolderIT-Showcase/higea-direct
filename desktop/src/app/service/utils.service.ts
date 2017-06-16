@@ -13,17 +13,17 @@ export class UtilsService {
   }
 
   public static throttle(callback: () => void, limit: number) {
-  let wait = false;
-  return () => {
-    if (!wait) {
-      callback();
-      wait = true;
-      setTimeout(() => {
-        wait = false;
-      }, limit);
+    let wait = false;
+    return () => {
+      if (!wait) {
+        callback();
+        wait = true;
+        setTimeout(() => {
+          wait = false;
+        }, limit);
+      }
     }
   }
-}
 
   public getWidth() {
     return window.innerWidth;

@@ -8,8 +8,10 @@ import {LoadingService} from '../../../service/loading.service';
 })
 export class LoadingComponent implements OnInit {
   loading = false;
+
   constructor(private loadingService: LoadingService) {
   }
+
   ngOnInit() {
     this.loadingService.getMessage().subscribe(promises => {
       this.loading = !!promises;

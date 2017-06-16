@@ -38,7 +38,6 @@ export class PersonaService {
     }
   }
 
-
   validateEmail(email: string) {
 
     const path = `${this.uriValidemail}?email=${email}`;
@@ -120,7 +119,6 @@ export class PersonaService {
       this.buildIntegrantes(persona)
     })
   }
-
 
   activateUser(token) {
     const path = `${this.basePathCore}auth/regitrationConfirm?token=${token}`;

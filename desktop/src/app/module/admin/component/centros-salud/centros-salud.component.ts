@@ -3,7 +3,6 @@ import {CentroSalud} from '../../../../domain/centro-salud';
 import {StoreService} from '../../../../service/store.service';
 import {Profesional} from '../../../../domain/profesional';
 import {Especialidad} from '../../../../domain/especialidad';
-import {TurnoService} from '../../../../service/turno.service';
 import {AlertService} from '../../../../service/alert.service';
 import {AdminService} from '../../../../service/admin.service';
 import {ModalDirective} from 'ngx-bootstrap';
