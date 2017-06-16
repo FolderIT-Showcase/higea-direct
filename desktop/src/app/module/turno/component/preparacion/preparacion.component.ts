@@ -1,7 +1,7 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Turno} from '../../../../domain/turno';
-import {StoreService} from 'app/service/store.service';
 import {Persona} from '../../../../domain/persona';
+import {StoreService} from '../../../../service/store.service';
 
 @Component({
   selector: 'app-preparacion',

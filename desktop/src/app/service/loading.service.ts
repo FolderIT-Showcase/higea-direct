@@ -24,7 +24,9 @@ export class LoadingService {
   }
 
   public finish() {
-    this.promiseCount--;
+    if(this.promiseCount){
+      this.promiseCount--;
+    }
     this.subject.next(this.promiseCount);
   }
 

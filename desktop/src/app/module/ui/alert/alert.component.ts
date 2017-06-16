@@ -18,8 +18,12 @@ export class AlertComponent implements OnInit {
       this.message = message;
       setTimeout(() => {
         this.message = undefined;
-      }, 3000);
+      }, 5000);
     });
+  }
+
+  closeAlert(){
+    this.message = undefined;
   }
 
 }

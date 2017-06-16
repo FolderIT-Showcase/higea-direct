@@ -1,4 +1,6 @@
-<div *ngIf="message" class="alert-label"
-     [ngClass]="{ 'alert': message, 'alert-success': message.type === 'success', 'alert-danger': message.type === 'error' }">
-  <div class="alert-message"><strong>{{message.text}}</strong></div>
+<div *ngIf="message"
+     (click)="closeAlert()"
+     class="app-snackbar"
+     [ngClass]="{ 'alert': message, 'success': message.type === 'success', 'error': message.type === 'error' }"
+>{{message.text}}
 </div>

@@ -6,7 +6,7 @@ import {RegisterSocialComponent} from './component/register-social/register-soci
 import {UserActiveComponent} from './component/user-activate/user.active.component';
 import {AuthHomeComponent} from './auth-home.component';
 import {RecoveryComponent} from './component/recovery/recovery.component';
-import {RecoveryUserComponent} from "app/module/auth/component/recovery-user/recovery.user.component";
+import {RecoveryUserComponent} from './component/recovery-user/recovery.user.component';
 
 const routes: Routes = [
   {
