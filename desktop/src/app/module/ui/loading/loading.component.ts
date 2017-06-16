@@ -14,6 +14,7 @@ export class LoadingComponent implements OnInit {
 
   ngOnInit() {
     this.loadingService.getMessage().subscribe(promises => {
+      console.log(promises);
       this.loading = !!promises;
     });
   }

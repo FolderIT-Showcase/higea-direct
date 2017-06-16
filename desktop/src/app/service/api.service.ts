@@ -82,9 +82,10 @@ export class ApiService {
   get(path: string, isAuthNecessary: boolean = true): Promise<any> {
     this.isAuthNecessary(isAuthNecessary);
     this.mPromise = this.http.get(`${this.baseURL}${path}`, {headers: this.headers})
-      .map(this.filterError)
-      .map(ApiService.getJson)
-      .first().toPromise().catch(error => this.catchException(error));
+      .first().toPromise()
+      .catch(error => this.catchException(error))
+      .then(this.filterError)
+      .then(ApiService.getJson);
     this.loadingService.setLoading(this.mPromise);
     return this.mPromise;
   }
@@ -98,15 +99,16 @@ export class ApiService {
     };
 
     this.mPromise = this.http.post(`${this.baseURL}${path}`, JSON.stringify(obj), options)
-      .map(this.filterError)
-      .map((response: Response) => {
+      .first().toPromise()
+      .catch(error => this.catchException(error))
+      .then(this.filterError)
+      .then((response: Response) => {
         const content: Blob = response.blob();
         const contentDisposition = response.headers.get('Content-Disposition') || '';
-
         FileSaver.saveAs(content, filename);
-
         return response;
-      }).first().toPromise();
+      });
+
     return this.mPromise;
   }
 
@@ -114,9 +116,11 @@ export class ApiService {
     this.isAuthNecessary(isAuthNecessary);
     this.mPromise = this.http
       .post(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
-      .map(this.filterError)
-      .map(ApiService.getJson)
-      .first().toPromise().catch(error => this.catchException(error));
+      .first().toPromise()
+      .catch(error => this.catchException(error))
+      .then(this.filterError)
+      .then(ApiService.getJson);
+
     this.loadingService.setLoading(this.mPromise);
     return this.mPromise;
   }
@@ -125,9 +129,11 @@ export class ApiService {
     this.isAuthNecessary(isAuthNecessary);
     this.mPromise = this.http
       .put(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
-      .map(this.filterError)
-      .map(ApiService.getJson)
-      .first().toPromise().catch(error => this.catchException(error));
+      .first().toPromise()
+      .catch(error => this.catchException(error))
+      .then(this.filterError)
+      .then(ApiService.getJson);
+
     this.loadingService.setLoading(this.mPromise);
     return this.mPromise;
   }
@@ -136,8 +142,10 @@ export class ApiService {
     this.isAuthNecessary(isAuthNecessary);
     this.mPromise = this.http
       .patch(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
-      .map(this.filterError)
-      .first().toPromise().catch(error => this.catchException(error));
+      .first().toPromise()
+      .catch(error => this.catchException(error))
+      .then(this.filterError);
+
     this.loadingService.setLoading(this.mPromise);
     return this.mPromise;
   }
@@ -145,8 +153,10 @@ export class ApiService {
   public delete(path, isAuthNecessary: boolean = true): Promise<any> {
     this.isAuthNecessary(isAuthNecessary);
     this.mPromise = this.http.delete(`${this.baseURL}${path}`, {headers: this.headers})
-      .map(this.filterError)
-      .first().toPromise().catch(error => this.catchException(error));
+      .first().toPromise()
+      .catch(error => this.catchException(error))
+      .then(this.filterError)
+
     this.loadingService.setLoading(this.mPromise);
     return this.mPromise;
   }
@@ -154,15 +164,16 @@ export class ApiService {
   public loginPost(path: string, body): Promise<any> {
     this.mPromise = this.http
       .post(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
-      .map(this.filterError)
-      .map((response: Response) => {
+      .first().toPromise()
+      .then(this.filterError)
+      .then((response: Response) => {
         body.token = response.headers.get('authorization').slice(7);
         if (body && body.token) {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
           localStorage.setItem('currentUser', JSON.stringify(body));
         }
-      })
-      .first().toPromise();
+      });
+
     this.loadingService.setLoading(this.mPromise);
     return this.mPromise;
   }
