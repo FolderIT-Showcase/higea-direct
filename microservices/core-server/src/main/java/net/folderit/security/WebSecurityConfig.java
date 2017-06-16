@@ -27,10 +27,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final DataSource dataSource;
     private final OAuth2ClientContext oAuth2ClientContext;
 
-    @Autowired
-    public WebSecurityConfig(@Qualifier("dataSource") DataSource dataSource, @Qualifier("oauth2ClientContext") OAuth2ClientContext oAuth2ClientContext) {
+   @Autowired
+    public WebSecurityConfig(@Qualifier("dataSource") DataSource dataSource, @Qualifier("oauth2ClientContext") OAuth2ClientContext oAuth2ClientContext)
+     {
         this.dataSource = dataSource;
         this.oAuth2ClientContext = oAuth2ClientContext;
+
     }
 
     @Bean

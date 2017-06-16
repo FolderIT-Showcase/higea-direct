@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.support.ResourceBundleMessageSource;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Locale;
 
@@ -16,7 +17,7 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(NON_NULL)
-public class TurneroException implements Serializable {
+public class TurneroException extends IOException implements Serializable {
 
     public static final String MESSAGE_MAIL_EXIST = "message.mail.exist";
 
