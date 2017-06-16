@@ -13,6 +13,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ReCaptchaModule} from 'angular2-recaptcha';
 import {AuthHomeComponent} from './auth-home.component';
 import {UIModule} from '../ui/ui.module';
+import {RecoveryComponent} from './component/recovery/recovery.component';
+import {RecoveryUserComponent} from './component/recovery-user/recovery.user.component';
 
 @NgModule({
   imports: [
@@ -30,7 +32,9 @@ import {UIModule} from '../ui/ui.module';
     FacebookSigninComponent,
     RegisterSocialComponent,
     UserActiveComponent,
-    AuthHomeComponent
+    AuthHomeComponent,
+    RecoveryComponent,
+    RecoveryUserComponent
   ],
   providers: [
     StoreService,

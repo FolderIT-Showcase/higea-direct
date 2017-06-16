@@ -1,0 +1,58 @@
+<div class="col-sm-12 col-md-8 col-md-offset-2">
+
+  <h2 class="app-header text-center">Restaurar contraseñaa</h2>
+
+  <form [formGroup]="complexForm" (ngSubmit)="submitForm(complexForm.value)">
+
+    <div class="row text-center">
+      <small>Ingresa tu nueva contraseña para la cuenta.</small>
+    </div>
+
+
+    <div class="row">
+      <div class="col-sm-4  col-sm-offset-4">
+        <div class="form-group"
+             [ngClass]="{'has-error':!complexForm.controls['password1'].valid && complexForm.controls['password1'].touched}">
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
+            <input class="form-control" type="password" placeholder="Contraseña"
+                   [formControl]="complexForm.controls['password1']">
+          </div>
+          <small
+            *ngIf="complexForm.controls['password1'].hasError('required') && complexForm.controls['password1'].touched"
+            class="help-block">Debes incluir una contraseña.
+          </small>
+        </div>
+      </div>
+    </div>
+      <div class="row">
+      <div class="col-sm-4  col-sm-offset-4">
+        <div class="form-group"
+             [ngClass]="{'has-error':complexForm.value.password1 !== complexForm.value.password2 || !complexForm.controls['password2'].valid && complexForm.controls['password2'].touched}">
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
+            <input class="form-control" type="password" placeholder="Repita su Contraseña"
+                   [formControl]="complexForm.controls['password2']">
+          </div>
+          <small
+            *ngIf="complexForm.value.password1 !== complexForm.value.password2 ||
+                   complexForm.controls['password2'].hasError('required') &&
+                   complexForm.controls['password2'].touched" class="help-block">
+            Debes repetir la misma contraseña anterior.
+          </small>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6 col-md-4 col-md-offset-2 col-lg-2 col-lg-offset-4 ">
+        <button type="submit" class="btn btn-primary btn-block" [disabled]="!complexForm.valid">Restaurar</button>
+      </div>
+      <div class="col-sm-6 col-md-4 col-lg-2">
+        <a [routerLink]="['/login']" class="btn btn-block btn-default">Cancelar</a>
+      </div>
+    </div>
+
+  </form>
+
+</div>

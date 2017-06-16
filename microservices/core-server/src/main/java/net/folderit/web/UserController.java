@@ -8,6 +8,7 @@ import net.folderit.exception.TurneroException;
 import net.folderit.repository.RoleRepository;
 import net.folderit.service.PersonaService;
 import net.folderit.service.UserService;
+import net.folderit.util.OnRecoveryCompleteEvent;
 import net.folderit.util.OnRegistrationCompleteEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -137,6 +138,58 @@ public class UserController {
         User mUser = userService.finByTypeAndExternalId(externalId, type);
         if (mUser != null) ResponseEntity.ok(mUser.getId());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+    }
+
+    @RequestMapping(value = "users/changePassword", method = RequestMethod.POST)
+    public ResponseEntity changePassword
+            (WebRequest request, Model model, @RequestParam("token") String token, @RequestBody User userPass) {
+
+        VerificationToken verificationToken = userService.getVerificationToken(token);
+        if (verificationToken == null) {
+
+            TurneroException.getInstance().getMessage(TurneroException.MESSAGE_INVALID_TOKEN, null);
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(TurneroException.getInstance());
+        }
+
+        User user = verificationToken.getUser();
+        Calendar cal = Calendar.getInstance();
+        if ((verificationToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
+
+            TurneroException.getInstance().getMessage(TurneroException.MESSAGE_TOKEN_EXPIRED, null);
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(TurneroException.getInstance());
+
+        }
+
+        user.setPassword(passwordEncoder().encode(userPass.getPassword()));
+        userService.saveRegisteredUser(user);
+        return ResponseEntity.ok(user);
+    }
+
+
+
+
+    @GetMapping("/users/validEmail")
+    public ResponseEntity<?> validEmail(WebRequest request,@RequestParam("email") String email) {
+        User user = userService.userExist(email);
+        if (user!=null){
+            try {
+                String appUrl = request.getContextPath();
+                eventPublisher.publishEvent(new OnRecoveryCompleteEvent
+                        (user, request.getLocale(), appUrl));
+            } catch (Exception me) {
+
+                TurneroException.getInstance().getMessage(TurneroException.MESSAGE_ERROR_GENERIC, null);
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(TurneroException.getInstance());
+            }
+            return ResponseEntity.ok(Boolean.TRUE);
+        }
+
+        else{
+            TurneroException.getInstance().getMessage(TurneroException.MESSAGE_INVALID_USER,null);
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(TurneroException.getInstance());
     }
 
 

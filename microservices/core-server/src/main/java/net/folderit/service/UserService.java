@@ -72,12 +72,22 @@ public class UserService {
         tokenRepository.save(myToken);
     }
 
-    private boolean emailExist(String email) {
+    @Transactional
+    public boolean emailExist(String email) {
         User user = userRepository.findByEmail(email);
         if (user != null) {
             return true;
         }
         return false;
+    }
+
+    @Transactional
+    public User userExist(String email) {
+        User user = userRepository.findByEmail(email);
+        if (user != null) {
+            return user;
+        }
+        return null;
     }
 
     @Transactional

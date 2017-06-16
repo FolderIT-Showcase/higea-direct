@@ -13,6 +13,8 @@ export class PersonaService {
   basePathCore = 'core/';
   basePathHigea = `${this.license}/`;
   uriRegistration = `${this.basePathCore}users/registration`;
+  uriValidemail = `${this.basePathCore}users/validEmail`;
+  uriChangePass = `${this.basePathCore}users/changePassword`;
   externalUriRegistration = `${this.basePathHigea}paciente/${this.client}`;
 
   constructor(private api: ApiService, private storeService: StoreService) {
@@ -36,6 +38,13 @@ export class PersonaService {
     }
   }
 
+
+  validateEmail(email: string) {
+
+    const path = `${this.uriValidemail}?email=${email}`;
+    return this.api.get(path, false)
+
+  }
 
   validateDni(dto: any) {
     const path = `${this.basePathCore}persona/afip?documento=${dto.documento}&nombre=${dto.nombre}&apellido=${dto.apellido}&genero=${dto.genero}`;
@@ -116,6 +125,11 @@ export class PersonaService {
   activateUser(token) {
     const path = `${this.basePathCore}auth/regitrationConfirm?token=${token}`;
     return this.api.get(path);
+  }
+
+  changePassword(token, user) {
+    const path = `${this.uriChangePass}?token=${token}`;
+    return this.api.post(path, user, false);
   }
 
 }

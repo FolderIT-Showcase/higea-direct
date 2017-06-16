@@ -36,6 +36,8 @@ public class TurneroException implements Serializable {
 
     public static final String MESSAGE_INVALID_DATE = "message.invalid.date";
 
+    public static final String MESSAGE_INVALID_USER = "message.invalid.user";
+
     public static TurneroException instance;
     private String error;
 
