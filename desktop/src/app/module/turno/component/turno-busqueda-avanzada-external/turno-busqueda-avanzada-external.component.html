@@ -43,6 +43,7 @@
       <div class="app-cal-container">
         <my-date-picker
           id="fecha"
+          (calendarViewChanged)="calendarChange($event)"
           [options]="myDatePickerOptions"
           [locale]="'es'"
           [formControl]="form.controls['fecha']"

@@ -20,8 +20,6 @@
         "styles/card.scss"
       ],
       "scripts": [
-        "assets/js/platform.js",
-        "assets/js/sdk.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

@@ -48,6 +48,9 @@ export class ApiService {
   }
 
   catchException(exception: any) {
+    if(!exception || !exception.json) {
+      return;
+    }
     let mException = exception.json();
     let mensaje;
     if (mException.message) {
