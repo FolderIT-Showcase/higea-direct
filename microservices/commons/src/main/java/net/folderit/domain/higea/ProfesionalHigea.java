@@ -22,6 +22,7 @@ public class ProfesionalHigea implements Serializable {
     private String profesional_clinica;
     private String persona_nombres;
     private int especialidad_id;
+    private int servicio_id;
 
     public Profesional convert() {
         Profesional profesional = new Profesional();
@@ -29,6 +30,7 @@ public class ProfesionalHigea implements Serializable {
         profesional.setId((long) getProfesional_id());
         profesional.setNombre(getPersona_nombres());
         profesional.setEspecialidadId((long) especialidad_id);
+        profesional.setServicioId((long)servicio_id);
         return profesional;
     }
 }
