@@ -49,10 +49,16 @@ export class ApiService {
 
   catchException(exception: any) {
     let mException = exception.json();
+    let mensaje;
+    if (mException.message) {
+      mensaje = mException.message;
+      throw new Error(mensaje);
+    }
     if (!mException.error) {
       mException = new AppException();
     }
-    this.alertService.error(mException.error);
+    mensaje = mException.error;
+    throw new Error(mensaje);
   }
 
   isAuthNecessary(isAuthNecessary: boolean) {
@@ -82,10 +88,9 @@ export class ApiService {
   get(path: string, isAuthNecessary: boolean = true): Promise<any> {
     this.isAuthNecessary(isAuthNecessary);
     this.mPromise = this.http.get(`${this.baseURL}${path}`, {headers: this.headers})
-      .first().toPromise()
-      .catch(error => this.catchException(error))
-      .then(this.filterError)
-      .then(ApiService.getJson);
+      .map(this.filterError)
+      .map(ApiService.getJson)
+      .first().toPromise().catch(error => this.catchException(error));
     this.loadingService.setLoading(this.mPromise);
     return this.mPromise;
   }
@@ -99,16 +104,15 @@ export class ApiService {
     };
 
     this.mPromise = this.http.post(`${this.baseURL}${path}`, JSON.stringify(obj), options)
-      .first().toPromise()
-      .catch(error => this.catchException(error))
-      .then(this.filterError)
-      .then((response: Response) => {
+      .map(this.filterError)
+      .map((response: Response) => {
         const content: Blob = response.blob();
         const contentDisposition = response.headers.get('Content-Disposition') || '';
-        FileSaver.saveAs(content, filename);
-        return response;
-      });
 
+        FileSaver.saveAs(content, filename);
+
+        return response;
+      }).first().toPromise();
     return this.mPromise;
   }
 
@@ -116,11 +120,9 @@ export class ApiService {
     this.isAuthNecessary(isAuthNecessary);
     this.mPromise = this.http
       .post(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
-      .first().toPromise()
-      .catch(error => this.catchException(error))
-      .then(this.filterError)
-      .then(ApiService.getJson);
-
+      .map(this.filterError)
+      .map(ApiService.getJson)
+      .first().toPromise().catch(error => this.catchException(error));
     this.loadingService.setLoading(this.mPromise);
     return this.mPromise;
   }
@@ -129,11 +131,9 @@ export class ApiService {
     this.isAuthNecessary(isAuthNecessary);
     this.mPromise = this.http
       .put(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
-      .first().toPromise()
-      .catch(error => this.catchException(error))
-      .then(this.filterError)
-      .then(ApiService.getJson);
-
+      .map(this.filterError)
+      .map(ApiService.getJson)
+      .first().toPromise().catch(error => this.catchException(error));
     this.loadingService.setLoading(this.mPromise);
     return this.mPromise;
   }
@@ -142,10 +142,8 @@ export class ApiService {
     this.isAuthNecessary(isAuthNecessary);
     this.mPromise = this.http
       .patch(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
-      .first().toPromise()
-      .catch(error => this.catchException(error))
-      .then(this.filterError);
-
+      .map(this.filterError)
+      .first().toPromise().catch(error => this.catchException(error));
     this.loadingService.setLoading(this.mPromise);
     return this.mPromise;
   }
@@ -153,10 +151,8 @@ export class ApiService {
   public delete(path, isAuthNecessary: boolean = true): Promise<any> {
     this.isAuthNecessary(isAuthNecessary);
     this.mPromise = this.http.delete(`${this.baseURL}${path}`, {headers: this.headers})
-      .first().toPromise()
-      .catch(error => this.catchException(error))
-      .then(this.filterError)
-
+      .map(this.filterError)
+      .first().toPromise().catch(error => this.catchException(error));
     this.loadingService.setLoading(this.mPromise);
     return this.mPromise;
   }
@@ -164,16 +160,15 @@ export class ApiService {
   public loginPost(path: string, body): Promise<any> {
     this.mPromise = this.http
       .post(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
-      .first().toPromise()
-      .then(this.filterError)
-      .then((response: Response) => {
+      .map(this.filterError)
+      .map((response: Response) => {
         body.token = response.headers.get('authorization').slice(7);
         if (body && body.token) {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
           localStorage.setItem('currentUser', JSON.stringify(body));
         }
-      });
-
+      })
+      .first().toPromise().catch(error => this.catchException(error));
     this.loadingService.setLoading(this.mPromise);
     return this.mPromise;
   }

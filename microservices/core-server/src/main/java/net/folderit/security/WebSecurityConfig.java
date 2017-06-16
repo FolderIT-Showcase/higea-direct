@@ -26,16 +26,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final DataSource dataSource;
     private final OAuth2ClientContext oAuth2ClientContext;
-    @Autowired
-    private  RESTAuthenticationFailureHandler restAuthenticationFailureHandler;
-
-    @Autowired
-    private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
 
    @Autowired
-    public WebSecurityConfig(@Qualifier("dataSource") DataSource dataSource, @Qualifier("oauth2ClientContext") OAuth2ClientContext oAuth2ClientContext
-
-    ) {
+    public WebSecurityConfig(@Qualifier("dataSource") DataSource dataSource, @Qualifier("oauth2ClientContext") OAuth2ClientContext oAuth2ClientContext)
+     {
         this.dataSource = dataSource;
         this.oAuth2ClientContext = oAuth2ClientContext;
 
@@ -67,10 +61,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // And filter other requests to check the presence of JWT in header
                 .addFilterBefore(new JWTAuthenticationFilter(),
                         UsernamePasswordAuthenticationFilter.class);
-
-        http.exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint);
-        http.formLogin().failureHandler(restAuthenticationFailureHandler);
-
 
 
     }
