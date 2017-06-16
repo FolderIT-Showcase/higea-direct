@@ -59,4 +59,10 @@ public class HigeaTurnosApplication {
         return ResponseEntity.ok(connectionMidleWare.findEstadosTurnos(codigo));
     }
 
+    @GetMapping("/{cliente}/calendarios")
+    public ResponseEntity<?> getCalendarios(@PathVariable("cliente") String codigo, @RequestParam("profesional_id") String profesional_id,
+                                            @RequestParam("servicio_id") String servicio_id, @RequestParam("calendario_fecha") String calendario_fecha) {
+        return ResponseEntity.ok(connectionMidleWare.findCalendarios(codigo,profesional_id,servicio_id,calendario_fecha));
+    }
+
 }

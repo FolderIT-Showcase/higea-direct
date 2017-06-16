@@ -3,9 +3,7 @@ package net.folderit.connection;
 import net.folderit.domain.core.MotivoTurno;
 import net.folderit.domain.core.Profesional;
 import net.folderit.domain.core.Turno;
-import net.folderit.domain.higea.EstadoTurnosHigea;
-import net.folderit.domain.higea.Result;
-import net.folderit.domain.higea.TurnoHigea;
+import net.folderit.domain.higea.*;
 import net.folderit.dto.FilterDto;
 import net.folderit.service.CoreApiConnect;
 import net.folderit.service.HigeaApiConnect;
@@ -170,5 +168,17 @@ public class ConnectionMidleWare {
                 });
         return result.getBody().getData().getRows();
     }
+
+    public List<CalendarioDataHigea> findCalendarios(String codigo, String profesional_id, String servicio_id, String calendario_fecha) {
+
+        String url = "http://higea.folderit.net/api/" + cliente + "/calendario"+ "?" + "profesional_id=" +profesional_id + "&servicio_id="+servicio_id + "&calendario_fecha="+calendario_fecha;
+
+        ResponseEntity<CalendarioHigea> result = higeaApiConnect.get(url,
+                new ParameterizedTypeReference<CalendarioHigea>() {
+                });
+        return result.getBody().getData();
+    }
+
+
 
 }
