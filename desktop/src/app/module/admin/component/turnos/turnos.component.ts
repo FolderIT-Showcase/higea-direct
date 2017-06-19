@@ -97,8 +97,6 @@ export class TurnosComponent implements OnInit, OnDestroy {
 
     this.metadataService.getAllTiposTurnos().then((data: any) => {
       this.tiposDeTurnos = data;
-      console.log(data);
-    }).catch(() => {
     });
 
     this.model.hora = new Date();
@@ -113,10 +111,7 @@ export class TurnosComponent implements OnInit, OnDestroy {
 
     // initialize to page 1
     this.setPage(1);
-
     const tipo = this.storeService.get('tipos_turnos');
-
-    console.log(tipo);
   }
 
   ngOnDestroy() {
@@ -138,15 +133,13 @@ export class TurnosComponent implements OnInit, OnDestroy {
   }
 
   handleTipoTurnoClick(tipo: TipoTurno) {
-    console.log(tipo);
     this.model.tipoTurno = tipo;
     this.motivosTurno = tipo.motivoTurno;
-    console.log(this.motivosTurno);
   }
 
   handleMotivoTurnoClick(motivo: MotivoTurno) {
     this.model.motivoTurno = motivo;
-    console.log(motivo);
+
     if (motivo.preparacion) {
       this.form = this.fb.group({
         'centro': [this.form.value.centro, Validators.required],

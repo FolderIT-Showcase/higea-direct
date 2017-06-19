@@ -39,7 +39,7 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
 
   calendarDate = new Date();
 
-  markedDays = [23, 24, 26, 27, 29, 30];
+  markedDays = [];
 
   myDatePickerOptions: IMyOptions = {
     dateFormat: 'dd/mm/yyyy',
@@ -100,12 +100,7 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
         if (!data) return;
 
         if (data.especialidad && data.profesional && data.profesional.id) {
-          console.log(date);
-          this.turnoService.getCalendario(data.profesional, this.timeStampToDate(this.calendarDate))
-            .then((data: any[]) => {
-              this.markedDays = [];
-              data.forEach(x => this.markedDays.push(this.datetoDay(x.calendario_fecha)));
-            });
+          this.getMarkedDays(data);
         }
         if (data.fecha && this.form.valid) {
           this.submitForm(this.form.value);
@@ -119,6 +114,14 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
     this.storeService.update('CentroSalud', null);
     this.storeService.update('turnos', []);
     this.subs.forEach(x => x.unsubscribe());
+  }
+
+  getMarkedDays(data) {
+    this.turnoService.getCalendario(data.profesional, this.timeStampToDate(this.calendarDate))
+      .then(data => {
+        this.markedDays = [];
+        data.forEach(x => this.markedDays.push(this.datetoDay(x.calendario_fecha)));
+      });
   }
 
   handlePersonaClick(persona: Persona) {
@@ -157,7 +160,6 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
       return;
     }
 
-    // form.fecha = this.timeStampToDate(form.fecha.epoc);
     const especialidad: Especialidad = Object.assign({}, form.especialidad);
     especialidad.profesional = null;
     form.especialidad = Object.assign({}, especialidad);
@@ -171,13 +173,14 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
   }
 
   datetoDay(mDate) {
-    let date: any = new Date(mDate);
+    const strDate = mDate.split('-');
+    let date: any = new Date(strDate[0],strDate[1]-1,strDate[2]);
     date = this.datePipe.transform(date, "dd");
     return date;
   }
 
   calendarChange(event) {
-    console.log(event.month-1);
+
     this.calendarDate.setMonth(event.month);
     if (!this.form || !this.form.value || !this.form.value.profesional) {
       return;

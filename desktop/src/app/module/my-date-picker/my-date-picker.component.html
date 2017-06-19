@@ -110,7 +110,7 @@
           <div class="datevalue"
                [ngClass]="{'prevmonth':d.cmo===prevMonthId,'currmonth':d.cmo===currMonthId,'nextmonth':d.cmo===nextMonthId,'highlight':d.highlight}">
             <span
-              [ngClass]="{'enabled': isEnabled(d.dateObj.day), 'markcurrday':d.currDay&&opts.markCurrentDay, 'dimday': d.highlight && (d.cmo===prevMonthId || d.cmo===nextMonthId || d.disabled)}">{{d.dateObj.day}}</span>
+              [ngClass]="{'enabled': isEnabled(d.dateObj.day) && d.cmo===currMonthId, 'markcurrday':d.currDay&&opts.markCurrentDay, 'dimday': d.highlight && (d.cmo===prevMonthId || d.cmo===nextMonthId || d.disabled)}">{{d.dateObj.day}}</span>
           </div>
         </td>
       </tr>

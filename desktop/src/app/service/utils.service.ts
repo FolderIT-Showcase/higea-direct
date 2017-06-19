@@ -7,26 +7,13 @@ export class UtilsService {
   innerWidth: any;
   widhtResize: EventEmitter<any>;
 
+  public static getWidth() {
+    return window.innerWidth;
+  }
+
   constructor() {
     this.innerHeight = window.innerHeight;
     this.innerWidth = window.innerWidth;
-  }
-
-  public static throttle(callback: () => void, limit: number) {
-    let wait = false;
-    return () => {
-      if (!wait) {
-        callback();
-        wait = true;
-        setTimeout(() => {
-          wait = false;
-        }, limit);
-      }
-    }
-  }
-
-  public getWidth() {
-    return window.innerWidth;
   }
 
   public setWidtEmitter(emitter) {

@@ -8,13 +8,8 @@ import {AlertService} from '../../../../service/alert.service';
 import {Especialidad} from '../../../../domain/especialidad';
 import {CentroSalud} from '../../../../domain/centro-salud';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {Subscription} from 'rxjs/Subscription';
-import {Store} from '../../../../service/store';
 import {UtilsService} from '../../../../service/utils.service';
-
-class Data {
-  persona: Persona;
-}
+import {Subject} from 'rxjs/Subject';
 
 @Component({
   selector: 'app-mis-turnos',
@@ -27,20 +22,19 @@ export class MisTurnosComponent implements OnInit, OnDestroy, AfterViewInit {
   turnosHistorial: Turno[] = [];
   personas: Persona[] = [];
   persona: Persona;
-  model: Data = new Data();
   turno: Turno = new Turno();
 
   modal: ModalDirective;
   form: FormGroup;
-  subs: Subscription[] = [];
   desktopMode = true;
+  private ngUnsubscribe: Subject<void> = new Subject<void>();
 
   constructor(private utilsService: UtilsService,
               private storeService: StoreService,
-              private store: Store,
               private turnoService: TurnoService,
               private fb: FormBuilder,
               private alertService: AlertService) {
+
     this.turno.especialidad = new Especialidad;
     this.turno.especialidad.nombre = '';
     this.turno.centroSalud = new CentroSalud;
@@ -49,57 +43,47 @@ export class MisTurnosComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit() {
-
     this.personas = this.storeService.get('integrantes');
     this.form = this.fb.group({
       'persona': [this.personas[0]]
     });
-
     this.persona = this.personas[0];
     this.storeService.update('persona', this.personas[0]);
-
-    this.subs.push(this.store.changes.pluck('persona').subscribe(
-      (data: any) => {
-        if (!data) {
-          return;
-        }
-        this.persona = data;
-        this.turnoService.getTurnoByPersonaId(this.persona.externalId)
-          .then(turnos => {
-            this.turnos = turnos;
-            this.turnosHistorial = [];
-            this.turnosProximos = [];
-            this.turnos.forEach(x => {
-              if (x.fecha <= Date.now()) {
-                this.turnosHistorial.push(x);
-              } else {
-                this.turnosProximos.push(x);
-              }
-            });
-          });
-      }));
+    this.turnoService.getTurnoByPersonaId(this.persona.externalId).then(turnos => this.buildTurnos(turnos));
   }
 
   ngAfterViewInit(): void {
-    this.desktopMode = (this.utilsService.getWidth()) >= 1000;
-    this.subs.push(this.utilsService.getWidthResizeEvent().subscribe(data => {
-      this.desktopMode = data >= 1000;
-    }));
+    this.desktopMode = (UtilsService.getWidth()) >= 1000;
+    this.utilsService.getWidthResizeEvent()
+      .takeUntil(this.ngUnsubscribe)
+      .subscribe(data => this.desktopMode = data >= 1000);
   }
 
   ngOnDestroy(): void {
-    this.subs.forEach(x => x.unsubscribe());
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
     this.storeService.update('persona', null);
     this.storeService.update('turnos', []);
+  }
+
+  buildTurnos(turnos) {
+    this.turnos = turnos;
+    this.turnosHistorial = [];
+    this.turnosProximos = [];
+    this.turnos.forEach(x => {
+      if (x.fecha <= Date.now()) {
+        this.turnosHistorial.push(x);
+      } else {
+        this.turnosProximos.push(x);
+      }
+    });
   }
 
   handlePersonaClick(persona: Persona) {
     this.storeService.update('persona', persona);
     this.persona = persona;
     this.turnoService.getTurnoByPersonaId(persona.externalId)
-      .then(data => {
-        this.turnos = data;
-      });
+      .then(data => this.turnos = data);
   }
 
   public showModal(turno: Turno) {
@@ -108,20 +92,13 @@ export class MisTurnosComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   labelPersona(persona: Persona) {
-    if (!persona) {
-      return;
-    }
-    return (persona.nombre + ' ' + persona.apellido).toUpperCase();
+    if (!persona) return;
+    return (`${persona.nombre} ${persona.apellido}`).toUpperCase();
   }
 
   public eliminarTurno(turno: Turno) {
     this.turnoService.cancelarTurno(turno, this.persona)
-      .then(() => {
-        this.alertService.success('Turno cancelado exitosamente');
-      })
-      .catch(error => {
-        console.error(error);
-      });
+      .then(() => this.alertService.success('Turno cancelado exitosamente'));
     this.modal.hide();
   }
 

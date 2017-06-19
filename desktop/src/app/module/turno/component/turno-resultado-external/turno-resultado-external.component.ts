@@ -52,8 +52,9 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
       this.store.changes.pluck('turnos').subscribe(
         (data: any) => {
           this.clickCounter++;
-          console.log(this.clickCounter);
-          if (!data[0]) {
+
+          if (!data || !data[0]) {
+            this.turnos = [];
             this.buildTimeline([]);
             return;
           }
@@ -102,8 +103,6 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
             dateTimeline.getMinutes() === date.getMinutes()) {
             turnoEnabled.enabled = true;
             turno = turnoEnabled;
-            console.log(turno);
-            console.log(`${date.getHours()}:${date.getMinutes()}`);
           }
         }
         this.timeline.push(turno);
@@ -138,13 +137,9 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
     turno.motivoTurno = this.motivoTurno;
     turno.plan = this.persona.plan;
     this.persona.turno.push(turno);
-    this.turnoService.reservarTurno(turno, this.persona)
-      .then(() => {
-        this.successModal.show();
-      })
-      .catch(error => {
-        console.error(error);
-      });
+    this.turnoService
+      .reservarTurno(turno, this.persona)
+      .then(() => this.successModal.show());
   }
 
   handleTurnoModal(event) {
@@ -156,13 +151,7 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
   }
 
   generarPDF() {
-    this.turnoService.generarPDF(this.persona)
-      .then(data => {
-        // window.open(data);
-      })
-      .catch(error => {
-        console.error(error);
-      });
+    this.turnoService.generarPDF(this.persona);
   }
 
   handleMotivo(motivo) {

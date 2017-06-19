@@ -22,16 +22,11 @@ export class PersonaService {
 
   create(persona: Persona) {
 
-    if (this.license === 'core') {
+    if (this.license === 'core') return this.api.post(this.uriRegistration, persona, false);
 
-      return this.api.post(this.uriRegistration, persona, false)
-
-    } else {
-
+    else {
       return this.api.post(this.externalUriRegistration, persona, false).then((data) => {
-        if (persona) {
-          persona.externalId = data.externalId;
-        }
+        if (persona) persona.externalId = data.externalId;
         this.api.post(this.uriRegistration, persona, false)
       })
 
@@ -39,10 +34,8 @@ export class PersonaService {
   }
 
   validateEmail(email: string) {
-
     const path = `${this.uriValidemail}?email=${email}`;
     return this.api.get(path, false)
-
   }
 
   validateDni(dto: any) {
@@ -80,8 +73,6 @@ export class PersonaService {
     localStorage.setItem('currentUser', JSON.stringify(userPersona.userAsociado));
     this.storeService.update('integrantes', personas);
     this.storeService.update('persona', userPersona);
-    console.log("persona");
-    console.log(userPersona);
   }
 
   updatePersonaUser(persona: Persona) {
@@ -101,15 +92,13 @@ export class PersonaService {
         if (integrante) {
           persona.integrantes[index].externalId = data.externalId;
         }
-        this.api.post(path, persona, false).then(() => {
-
-        }).then(() => this.getIntegrantes());
+        this.api
+          .post(path, persona, false)
+          .then(() => this.getIntegrantes());
       })
 
     }
 
-    // serialize and return
-    // return promises.reduce((m, p: any) => m.then(v => Promise.all([...v, p()])), Promise.resolve([]));
   }
 
   delete(persona: Persona) {
