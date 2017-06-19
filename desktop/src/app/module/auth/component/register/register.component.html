@@ -120,11 +120,11 @@
             <span class="input-group-addon"><i class="fa fa-id-card "></i></span>
             <app-select
               ngDefaultControl
-              [placeHolder]="'Tipo de documento'"
+              [placeHolder]="'Tipo de doc.'"
               [formControl]="complexForm.controls['tipoDocumento']"
               [list]="tipoDocumentos"
             ></app-select>
-          </div>UserActiveComponent
+          </div>
           <small
             *ngIf="complexForm.controls['tipoDocumento'].hasError('required') && complexForm.controls['tipoDocumento'].touched"
             class="help-block">Ingrese su Tipo de Documento

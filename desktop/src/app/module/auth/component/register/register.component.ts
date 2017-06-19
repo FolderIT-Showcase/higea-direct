@@ -56,7 +56,7 @@ export class RegisterComponent implements OnInit {
       'telefono': [null, Validators.required],
       'password1': [null, Validators.required],
       'password2': [null, [Validators.required, this.passwordMatch]],
-      'tipoDocumento': [this.tipoDocumentos.find(x => x.toLowerCase() === 'dni'), Validators.required],
+      'tipoDocumento': [null, Validators.required],
       'numeroDocumento': [null, Validators.required],
       // 'pais': [this.paises.find(x => x.nombre.toLowerCase() === 'argentina'), Validators.required],
       'genero': [null, Validators.required],
