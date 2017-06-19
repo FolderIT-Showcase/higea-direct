@@ -37,7 +37,9 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
   centroSalud: string = localStorage.getItem('client');
   subs: Subscription[] = [];
 
-  markedDays = [23,24,26,27,29,30];
+  calendarDate = new Date();
+
+  markedDays = [23, 24, 26, 27, 29, 30];
 
   myDatePickerOptions: IMyOptions = {
     dateFormat: 'dd/mm/yyyy',
@@ -95,7 +97,17 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
 
     this.subs.push(
       this.form.valueChanges.subscribe(data => {
-        if (data && data.fecha && this.form.valid) {
+        if (!data) return;
+
+        if (data.especialidad && data.profesional && data.profesional.id) {
+          console.log(date);
+          this.turnoService.getCalendario(data.profesional, this.timeStampToDate(this.calendarDate))
+            .then((data: any[]) => {
+              this.markedDays = [];
+              data.forEach(x => this.markedDays.push(this.datetoDay(x.calendario_fecha)));
+            });
+        }
+        if (data.fecha && this.form.valid) {
           this.submitForm(this.form.value);
         }
       })
@@ -153,9 +165,28 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
   }
 
   timeStampToDate(timestamp) {
-    let date: any = new Date(timestamp * 1000);
-    date = this.datePipe.transform(date, "yyyy-MM-dd'T'HH:mm:ss.S'Z'");
+    let date: any = timestamp;
+    date = this.datePipe.transform(date, "yyyy-MM-dd");
     return date;
+  }
+
+  datetoDay(mDate) {
+    let date: any = new Date(mDate);
+    date = this.datePipe.transform(date, "dd");
+    return date;
+  }
+
+  calendarChange(event) {
+    console.log(event.month-1);
+    this.calendarDate.setMonth(event.month);
+    if (!this.form || !this.form.value || !this.form.value.profesional) {
+      return;
+    }
+    this.turnoService.getCalendario(this.form.value.profesional, this.timeStampToDate(this.calendarDate))
+      .then((data: any[]) => {
+        this.markedDays = [];
+        data.forEach(x => this.markedDays.push(this.datetoDay(x.calendario_fecha)));
+      });
   }
 
 }
