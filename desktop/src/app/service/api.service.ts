@@ -7,6 +7,7 @@ import {Router} from '@angular/router';
 import {LoadingService} from './loading.service';
 import {JwtHelper} from 'angular2-jwt';
 import {Observable} from 'rxjs/Observable';
+import {AlertService} from './alert.service';
 
 declare const require: any;
 const FileSaver: any = require('file-saver');
@@ -34,7 +35,8 @@ export class ApiService {
 
   constructor(private http: Http,
               private router: Router,
-              private loadingService: LoadingService) {
+              private loadingService: LoadingService,
+              private alertService: AlertService) {
 
     this.http.get('assets/license.json')
       .map(res => res.json())
@@ -67,6 +69,7 @@ export class ApiService {
   private catchBadResponse(err: any) {
     // log and handle the exception
     console.log(err.error);
+    this.alertService.error(err.error)
     return new Observable();
   }
 

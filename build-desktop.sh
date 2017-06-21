@@ -17,9 +17,7 @@ function checkout
 
 function prod_mode
 {
-    
     echo 'not implemented yet :('
-    
 }
 
 function dev_mode
