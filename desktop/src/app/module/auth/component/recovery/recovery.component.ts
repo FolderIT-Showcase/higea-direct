@@ -28,7 +28,7 @@ export class RecoveryComponent implements OnInit {
   submitForm(data: any) {
 
     const email = data.email.trim();
-console.log(email);
+
     this.personaService.validateEmail(email)
        .then(() => {
          this.alertService.success('Verifique su cuenta de email para restablecer la contraseña');

@@ -9,6 +9,7 @@ import {AppException} from '../domain/AppException';
 import {LoadingService} from './loading.service';
 import {JwtHelper} from 'angular2-jwt';
 import * as FileSaver from 'file-saver';
+import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class ApiService {
@@ -24,31 +25,37 @@ export class ApiService {
 
   private mPromise: Promise<any>;
 
-  static getJson(response: Response) {
-    return response.json();
+  private static getJson(response: Response) {
+    return response ? response.json() : {};
   }
 
-  constructor(private http: Http,
-              private router: Router,
-              private loadingService: LoadingService,
-              private alertService: AlertService) {
+  private static  checkForError(response: Response): Response | Observable<any> {
+    if (response.status >= 200 && response.status < 300) return response;
 
-    this.http.get('assets/license.json')
-      .map(res => res.json()).first().toPromise()
-      .then((data: any) => {
-        localStorage.setItem('license', this.jwtHelper.decodeToken(data.token).license);
-        localStorage.setItem('client', this.jwtHelper.decodeToken(data.token).client);
-      });
-  }
-
-  filterError(response: Response): Response | any {
-    if (response.status >= 200 && response.status < 300) {
-      return response;
+    else {
+      const error = new Error(response.statusText);
+      error['response'] = response;
+      throw error;
     }
   }
 
-  catchException(exception: any) {
-    if(!exception || !exception.json) {
+  private catchError(err: any) {
+    if (err.status === 401) {
+    }
+    console.log(err);
+    this.alertService.error(err);
+    return Observable.throw(err);
+  }
+
+  //
+
+  private static filterError(response: Response): Response | any {
+    if (response.status >= 200 && response.status < 300) return response;
+    throw new Error(response.statusText);
+  }
+
+  private static catchException(exception: any): Response | any {
+    if (!exception || !exception.json) {
       return;
     }
     let mException = exception.json();
@@ -62,6 +69,19 @@ export class ApiService {
     }
     mensaje = mException.error;
     throw new Error(mensaje);
+  }
+
+  constructor(private http: Http,
+              private router: Router,
+              private loadingService: LoadingService,
+              private alertService: AlertService) {
+
+    this.http.get('assets/license.json')
+      .map(res => res.json()).first().toPromise()
+      .then((data: any) => {
+        localStorage.setItem('license', this.jwtHelper.decodeToken(data.token).license);
+        localStorage.setItem('client', this.jwtHelper.decodeToken(data.token).client);
+      });
   }
 
   isAuthNecessary(isAuthNecessary: boolean) {
@@ -91,9 +111,9 @@ export class ApiService {
   get(path: string, isAuthNecessary: boolean = true): Promise<any> {
     this.isAuthNecessary(isAuthNecessary);
     this.mPromise = this.http.get(`${this.baseURL}${path}`, {headers: this.headers})
-      .map(this.filterError)
+      .map(ApiService.filterError)
       .map(ApiService.getJson)
-      .first().toPromise().catch(error => this.catchException(error));
+      .first().toPromise().catch(error => ApiService.catchException(error));
     this.loadingService.setLoading(this.mPromise);
     return this.mPromise;
   }
@@ -107,7 +127,7 @@ export class ApiService {
     };
 
     this.mPromise = this.http.post(`${this.baseURL}${path}`, JSON.stringify(obj), options)
-      .map(this.filterError)
+      .map(ApiService.filterError)
       .map((response: Response) => {
         const content: Blob = response.blob();
         const contentDisposition = response.headers.get('Content-Disposition') || '';
@@ -123,9 +143,10 @@ export class ApiService {
     this.isAuthNecessary(isAuthNecessary);
     this.mPromise = this.http
       .post(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
-      .map(this.filterError)
+      .map(ApiService.checkForError)
+      .catch(this.catchError.bind(this))
       .map(ApiService.getJson)
-      .first().toPromise().catch(error => this.catchException(error));
+      .first().toPromise();
     this.loadingService.setLoading(this.mPromise);
     return this.mPromise;
   }
@@ -134,9 +155,9 @@ export class ApiService {
     this.isAuthNecessary(isAuthNecessary);
     this.mPromise = this.http
       .put(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
-      .map(this.filterError)
+      .map(ApiService.filterError)
       .map(ApiService.getJson)
-      .first().toPromise().catch(error => this.catchException(error));
+      .first().toPromise().catch(error => ApiService.catchException(error));
     this.loadingService.setLoading(this.mPromise);
     return this.mPromise;
   }
@@ -145,8 +166,8 @@ export class ApiService {
     this.isAuthNecessary(isAuthNecessary);
     this.mPromise = this.http
       .patch(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
-      .map(this.filterError)
-      .first().toPromise().catch(error => this.catchException(error));
+      .map(ApiService.filterError)
+      .first().toPromise().catch(error => ApiService.catchException(error));
     this.loadingService.setLoading(this.mPromise);
     return this.mPromise;
   }
@@ -154,8 +175,8 @@ export class ApiService {
   public delete(path, isAuthNecessary: boolean = true): Promise<any> {
     this.isAuthNecessary(isAuthNecessary);
     this.mPromise = this.http.delete(`${this.baseURL}${path}`, {headers: this.headers})
-      .map(this.filterError)
-      .first().toPromise().catch(error => this.catchException(error));
+      .map(ApiService.filterError)
+      .first().toPromise().catch(error => ApiService.catchException(error));
     this.loadingService.setLoading(this.mPromise);
     return this.mPromise;
   }
@@ -163,7 +184,7 @@ export class ApiService {
   public loginPost(path: string, body): Promise<any> {
     this.mPromise = this.http
       .post(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
-      .map(this.filterError)
+      .map(ApiService.filterError)
       .map((response: Response) => {
         body.token = response.headers.get('authorization').slice(7);
         if (body && body.token) {
@@ -171,7 +192,7 @@ export class ApiService {
           localStorage.setItem('currentUser', JSON.stringify(body));
         }
       })
-      .first().toPromise().catch(error => this.catchException(error));
+      .first().toPromise().catch(error => ApiService.catchException(error));
     this.loadingService.setLoading(this.mPromise);
     return this.mPromise;
   }

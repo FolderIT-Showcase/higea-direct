@@ -6,8 +6,9 @@
     "ng": "ng",
     "start": "ng serve  --port 8083 --proxy-config proxy.conf.json",
     "mstart": "ng serve --proxy-config proxy.conf.json",
-    "build": "ng build --prod --aot=false --verbose=true",
-    "build:prod": "ng build --prod --verbose=true"
+    "build": "ng build --prod --verbose=true",
+    "build:prod": "ng build --prod --verbose=true",
+    "compodoc": "./node_modules/.bin/compodoc -p src/tsconfig.app.json"
   },
   "private": true,
   "dependencies": {

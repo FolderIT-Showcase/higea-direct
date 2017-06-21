@@ -32,11 +32,11 @@ function dev_mode
 
     # build commands
     yarn
-    npm run build
+    npm run build  && \
 
     # Deploy commands
-    sudo rm -rf /var/www/html/turnero.folderit.net/public_html/*
-    cd /home/turnero/turnero-ute/desktop/dist/
+    sudo rm -rf /var/www/html/turnero.folderit.net/public_html/* && \
+    cd /home/turnero/turnero-ute/desktop/dist/ && \
     sudo cp -rf * /var/www/html/turnero.folderit.net/public_html/
 
 }

@@ -70,7 +70,7 @@ export class TurnoResultadoComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   ngAfterViewInit(): void {
-    this.desktopMode = (this.utilsService.getWidth()) >= 1000;
+    this.desktopMode = (UtilsService.getWidth()) >= 1000;
     this.subs.push(this.utilsService.getWidthResizeEvent().subscribe(data => {
       this.desktopMode = data >= 1000;
     }));

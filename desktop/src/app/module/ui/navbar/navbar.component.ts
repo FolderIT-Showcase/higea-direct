@@ -14,28 +14,20 @@ export class NavbarComponent implements OnInit {
   isIn = false;
   license = localStorage.getItem('license');
 
-  constructor(private auth: AppAuthService,
-              private router: Router, private utilsService: UtilsService) {
-    router.events.subscribe((val) => {
-      this.isIn = false;
-    });
+  constructor(private auth: AppAuthService, private router: Router) {
+    router.events.subscribe((data) => this.isIn = false);
   }
 
   ngOnInit(): void {
-    this.isAuth = AppAuthService.isAdmin() && (this.license === 'core') && this.utilsService.getWidth() >= 900;
+    this.isAuth = AppAuthService.isAdmin() && (this.license === 'core') && UtilsService.getWidth() >= 900;
   }
 
-  toggleState() { // click handler
+  toggleState() {
     this.isIn = !this.isIn;
   }
 
   logout() {
-    this.auth.logout()
-      .then(() => {
-      })
-      .catch(error => {
-        console.error(error);
-      });
+    this.auth.logout();
   }
 
 }

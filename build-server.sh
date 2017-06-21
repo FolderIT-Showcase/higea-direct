@@ -31,11 +31,11 @@ function dev_mode
     cd /home/turnero/turnero-ute/server
 
     # build commands
-    mvn clean package -DskipTests
+    mvn clean package -DskipTests && \
 
     # Deploy commands
-    sudo cp -f /opt/api/api.jar /opt/api/api-last.jar
-    sudo cp -f /home/turnero/turnero-ute/server/target/turnero-web-0.0.1-SNAPSHOT.jar /opt/api/api.jar
+    sudo cp -f /opt/api/api.jar /opt/api/api-last.jar && \
+    sudo cp -f /home/turnero/turnero-ute/server/target/turnero-web-0.0.1-SNAPSHOT.jar /opt/api/api.jar && \
     sudo systemctl restart api.service
     
 }

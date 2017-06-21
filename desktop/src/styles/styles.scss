@@ -248,7 +248,7 @@ fieldset {
   margin: 0 !important;
   height: 70vh !important;
   width: 100% !important;
-  background-color: rgba(0, 0, 0, 0.21);
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 td {
@@ -330,7 +330,7 @@ div.selector.inlinedp {
 
 .app-no-data {
   color: $gray-5;
-  background-color: $gray-2;
+  background-color: $gray-1;
 }
 
 ::-webkit-scrollbar-track {

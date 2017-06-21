@@ -76,29 +76,27 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
 
     this.getMetadata();
 
-    const defaultTipoDocumento = this.lists.tipoDocumentos.find(x => x.id.toLowerCase() === 'dni');
-    const defaultPais = this.lists.paises.find(x => x.nombre.toLowerCase() === 'argentina');
-    const defaultProvincia = this.lists.provincias.find(x => x.nombre.toLowerCase() === 'santa fe');
-
-    console.log(defaultTipoDocumento);
+    // const defaultTipoDocumento = this.lists.tipoDocumentos.find(x => x.id.toLowerCase() === 'dni');
+    // const defaultPais = this.lists.paises.find(x => x.nombre.toLowerCase() === 'argentina');
+    // const defaultProvincia = this.lists.provincias.find(x => x.nombre.toLowerCase() === 'santa fe');
 
     this.mForm = this.fb.group({
-      'nombre': [null, Validators.required],
-      'apellido': [null, Validators.required],
-      'genero': [null, Validators.required],
-      'tipoDocumento': [defaultTipoDocumento, Validators.required],
-      'numeroDocumento': [null, Validators.required],
-      'fechaNacimiento': [null, Validators.required],
-      'pais': [defaultPais, Validators.required],
-      'provincia': [defaultProvincia, Validators.required],
-      'localidad': [null, Validators.required],
-      'calle': [null],
-      'telefono': [null],
-      'celular': [null],
-      'email': [null],
-      'obraSocial': [null, Validators.required],
-      'plan': [null, Validators.required],
-      'nroAfiliado': [null],
+      nombre: [null, Validators.required],
+      apellido: [null, Validators.required],
+      genero: [null, Validators.required],
+      tipoDocumento: [null, Validators.required],
+      numeroDocumento: [null, Validators.required],
+      fechaNacimiento: [null, Validators.required],
+      pais: [null, Validators.required],
+      provincia: [null, Validators.required],
+      localidad: [null, Validators.required],
+      calle: [null],
+      telefono: [null],
+      celular: [null],
+      email: [null],
+      obraSocial: [null, Validators.required],
+      plan: [null, Validators.required],
+      nroAfiliado: [null],
     });
 
   }
@@ -120,8 +118,6 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
 
-    console.log(this.mForm.value)
-
     this.subs.push(
       this.store.changes.pluck('integrantes').subscribe(
         (data: any) => {
@@ -132,7 +128,6 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
 
     this.integrantes = this.storeHelper.get('integrantes');
     this.currentPersona = this.storeHelper.get('persona');
-    console.log(this.currentPersona);
 
     // Reordenar las listas para permitir una edición rápida
     for (const list in this.lists) {
@@ -146,42 +141,33 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.desktopMode = (this.utilsService.getWidth()) >= 1000;
+    this.desktopMode = (UtilsService.getWidth()) >= 1000;
     this.subs.push(this.utilsService.getWidthResizeEvent().subscribe(data => {
       this.desktopMode = data >= 1000;
     }));
   }
 
   public label(list, id) {
-    if (!id) {
-      return '';
-    }
+    if (!id) return '';
     const e = this.lists[list].find(x => x.id === id);
-    if (e) {
-      return e.label;
-    } else {
-      return '';
-    }
-  };
+    if (e) return e.label;
+    else return '';
+  }
 
   rebuildProvinceList(pais) {
     const paisID = pais.id;
-    if (!paisID) {
-      return;
-    }
+    if (!paisID) return;
+
     const argentina: Pais = this.lists.paises.find(x => x.nombre.toUpperCase() === 'ARGENTINA');
-    if (Number(paisID) === Number(argentina.id)) {
-      this.lists.provincias = this.provincias
-    } else {
+    if (Number(paisID) === Number(argentina.id)) this.lists.provincias = this.provincias
+    else {
       // TODO: completar otras provincias
     }
   }
 
   rebuildLocationList(provincia) {
     const provinciaID = provincia.id;
-    if (!provinciaID) {
-      return;
-    }
+    if (!provinciaID) return;
     this.lists.localidades = this.localidades.filter(x => Number(x.provincia.id) === Number(provinciaID));
   }
 
@@ -240,6 +226,25 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
         'departamento': departamento
       });
 
+      // this.mForm.setValue({
+      //   'nombre': [integrante.nombre, Validators.required],
+      //   'apellido': [null, Validators.required],
+      //   'genero': [null, Validators.required],
+      //   'tipoDocumento': [null, Validators.required],
+      //   'numeroDocumento': [null, Validators.required],
+      //   'fechaNacimiento': [null, Validators.required],
+      //   'pais': [null, Validators.required],
+      //   'provincia': [null, Validators.required],
+      //   'localidad': [null, Validators.required],
+      //   'calle': [null],
+      //   'telefono': [null],
+      //   'celular': [null],
+      //   'email': [null],
+      //   'obraSocial': [null, Validators.required],
+      //   'plan': [null, Validators.required],
+      //   'nroAfiliado': [null],
+      // })
+
       if (integrante && integrante.domicilio && integrante.domicilio.localidad &&
         integrante.domicilio.localidad.provincia && integrante.domicilio.localidad.provincia.pais) {
         this.rebuildProvinceList(integrante.domicilio.localidad.provincia.pais.id);
@@ -292,10 +297,10 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
     integrante.id = this.integrante.id;
     integrante.nombre = form.nombre;
     integrante.apellido = form.apellido;
-    integrante.genero = form.genero;
+    integrante.genero = form.genero.id;
     integrante.documento = new Documento();
     integrante.documento.id = null;
-    integrante.documento.tipoDocumento = form.tipoDocumento;
+    integrante.documento.tipoDocumento = form.tipoDocumento.id;
     integrante.documento.numero = form.numeroDocumento;
 
     integrante.fechaNacimiento = form.fechaNacimiento.epoc;
@@ -316,12 +321,9 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
     integrante.domicilio.calle = form.calle;
     integrante.domicilio.departamento = form.departamento;
 
-    integrante.domicilio.localidad = new Localidad();
-    integrante.domicilio.localidad.id = form.localidad;
-    integrante.domicilio.localidad.provincia = new Provincia();
-    integrante.domicilio.localidad.provincia.id = form.provincia;
-    integrante.domicilio.localidad.provincia.pais = new Pais();
-    integrante.domicilio.localidad.provincia.pais.id = form.pais;
+    integrante.domicilio.localidad = form.localidad;
+    integrante.domicilio.localidad.provincia = form.provincia;
+    integrante.domicilio.localidad.provincia.pais = form.pais;
     integrante.plan = form.plan;
     integrante.nroAfiliado = form.nroAfiliado;
 

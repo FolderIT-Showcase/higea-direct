@@ -6,13 +6,11 @@ import {UtilsService} from '../utils.service';
 @Injectable()
 export class AdminGuard implements CanActivate {
 
-  constructor(private router: Router, private utilsService: UtilsService) {
+  constructor(private router: Router) {
   }
 
   canActivate(route: ActivatedRouteSnapshot) {
-    if (AppAuthService.isAdmin() && this.utilsService.getWidth() >= 900) {
-      return true;
-    }
+    if (AppAuthService.isAdmin() && UtilsService.getWidth() >= 900) return true;
     this.router.navigate(['/']);
     return false;
   }
