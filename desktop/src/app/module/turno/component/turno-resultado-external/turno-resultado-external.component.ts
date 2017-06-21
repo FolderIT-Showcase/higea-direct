@@ -123,6 +123,13 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
     this.turno = turno;
     this.turnoModal.show();
     this.persona = this.storeService.get('persona');
+    let steps: any[] = this.storeService.get('steps');
+    if(steps &&  steps[2]){
+      steps[2] = {
+        label: steps[2].label,
+        ngClass: 'btn-success'
+      }
+    }
   }
 
   public reservarTurno(turno: Turno) {

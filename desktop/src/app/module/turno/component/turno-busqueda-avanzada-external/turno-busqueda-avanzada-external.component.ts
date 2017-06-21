@@ -101,9 +101,25 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
 
         if (data.especialidad && data.profesional && data.profesional.id) {
           this.getMarkedDays(data);
+          if(data.persona && data.persona.id){
+            let steps: any[] = this.storeService.get('steps');
+            if(steps &&  steps[0]){
+              steps[0] = {
+                label: steps[0].label,
+                ngClass: 'btn-success'
+              }
+            }
+          }
         }
         if (data.fecha && this.form.valid) {
           this.submitForm(this.form.value);
+          let steps: any[] = this.storeService.get('steps');
+          if(steps &&  steps[1]){
+            steps[1] = {
+              label: steps[1].label,
+              ngClass: 'btn-success'
+            }
+          }
         }
       })
     );
@@ -180,16 +196,10 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
   }
 
   calendarChange(event) {
-
-    console.log(this.calendarDate);
-    console.log(this.timeStampToDate(this.calendarDate));
     this.calendarDate.setMonth(event.month-1);
-    console.log(this.calendarDate);
-    console.log(this.timeStampToDate(this.calendarDate));
     if (!this.form || !this.form.value || !this.form.value.profesional) {
       return;
     }
-
     this.turnoService.getCalendario(this.form.value.profesional, this.timeStampToDate(this.calendarDate))
       .then((data: any[]) => {
         this.markedDays = [];

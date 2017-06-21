@@ -6,39 +6,44 @@
 
 ### Functions
 
+# params #1 : branch
+function checkout
+{
+    git reset --hard HEAD
+    git checkout #1
+    git reset --hard HEAD
+    git pull
+}
+
 function prod_mode
 {
-
-    echo 'not implemented yet :('   
-
+    
+    echo 'not implemented yet :('
+    
 }
 
 function dev_mode
 {
-
+    
     echo '####################################'
     echo '##  Building in development mode  ##'
     echo '####################################'
-
+    
     cd /home/turnero/turnero-ute
-
-    # git commands
-    git reset --hard HEAD
-    git checkout master
-    git reset --hard HEAD
-    git pull
-
+    
+    checkout master
+    
     cd /home/turnero/turnero-ute/desktop
-
+    
     # build commands
     yarn
     npm run build  && \
-
+    
     # Deploy commands
     sudo rm -rf /var/www/html/turnero.folderit.net/public_html/* && \
     cd /home/turnero/turnero-ute/desktop/dist/ && \
     sudo cp -rf * /var/www/html/turnero.folderit.net/public_html/
-
+    
 }
 
 function help()
@@ -54,8 +59,7 @@ function help()
 
 ### MAIN FUNCTION
 
-case "$1"
-in
+case "$1" in
     --prod) prod_mode;;
     --dev) dev_mode;;
     *) help;;
