@@ -12,7 +12,7 @@
     <table class="table table-striped app-timeline">
       <thead>
       <tr>
-        <th width="1em">Hora</th>
+        <th>Horarios de atención del día seleccionado</th>
         <th></th>
       </tr>
       </thead>
@@ -35,7 +35,7 @@
       <label>¿Querés tomar este turno?</label><br>
       <label>Para el dia <strong>{{turno.dia | date: 'dd/MM/yyyy'}}</strong> en el horario <strong>{{turno.hora|
         date:'HH:mm'}}</strong></label><br>
-      <label>Para la especialidad <strong>{{turno.especialidad.nombre}}</strong> atendido por <strong>{{turno.profesional.nombre}}</strong></label><br>
+      <label>Para la especialidad <strong>{{turno.especialidad.nombre}}</strong> atendido por <strong>{{turno.profesional.apellido}}</strong></label><br>
       <!--<div *ngIf="false">-->
       <!--<sebm-google-map [latitude]="lat" [longitude]="lng">-->
       <!--<sebm-google-map-marker [latitude]="lat" [longitude]="lng"></sebm-google-map-marker>-->
@@ -60,6 +60,7 @@
       ></app-select>
     </div>
   </div>
+  <hr class="half-rule"/>
   <div class="row">
     <div class="col-sm-12 text-right">
       <button (click)="reservarTurno(turno)" [disabled]="!motivoTurno || !motivoTurno.id" class="btn btn-primary">SI

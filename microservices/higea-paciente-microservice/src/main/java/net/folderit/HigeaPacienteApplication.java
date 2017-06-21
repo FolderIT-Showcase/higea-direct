@@ -30,7 +30,7 @@ public class HigeaPacienteApplication {
     @PostMapping("/{cliente}")
     public ResponseEntity<Persona> save(@PathVariable("cliente") String codigo, @RequestBody Persona persona) {
         PacienteHigea pacienteHigea = connectionMidleWare.getByDocAndGenero(codigo, persona.getSexo(), persona.getDocumento().getNumero().toString());
-        
+
         if(pacienteHigea!=null) return ResponseEntity.status(HttpStatus.FOUND).body(null);
         return ResponseEntity.ok(connectionMidleWare.savePaciente(codigo, persona));
     }
