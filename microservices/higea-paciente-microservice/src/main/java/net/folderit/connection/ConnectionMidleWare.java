@@ -1,7 +1,10 @@
 package net.folderit.connection;
 
 import net.folderit.domain.core.Persona;
-import net.folderit.domain.higea.*;
+import net.folderit.domain.higea.LoginHigea;
+import net.folderit.domain.higea.LoginResult;
+import net.folderit.domain.higea.PacienteHigea;
+import net.folderit.domain.higea.Result;
 import net.folderit.service.HigeaApiConnect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -23,7 +26,6 @@ public class ConnectionMidleWare {
     public ConnectionMidleWare(HigeaApiConnect higeaApiConnect) {
         this.higeaApiConnect = higeaApiConnect;
     }
-
 
 
     private ResponseEntity<LoginResult> login() {
@@ -54,17 +56,13 @@ public class ConnectionMidleWare {
 
     public PacienteHigea getByDocAndGenero(String codigo, String genero, String documento) {
 
-        String uriPaciente = "http://higea.folderit.net/api/"+codigo+"/pacientes?"+"persona_sexo="+genero+"&"+"persona_documento_nro="+documento;
+        String uriPaciente = "http://higea.folderit.net/api/" + codigo + "/pacientes?" + "persona_sexo=" + genero + "&" + "persona_documento_nro=" + documento;
 
         ResponseEntity<Result<PacienteHigea>> result = higeaApiConnect.get(uriPaciente, new ParameterizedTypeReference<Result<PacienteHigea>>() {
         });
 
-        PacienteHigea pacienteResultHigea = result.getBody().getData().getRows().get(0);
-
-        return pacienteResultHigea;
+        return result.getBody().getData().getRows().size() == 0 ? null : result.getBody().getData().getRows().get(0);
     }
-
-
 
 
 }

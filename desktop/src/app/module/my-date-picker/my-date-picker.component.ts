@@ -911,4 +911,20 @@ export class MyDatePicker implements OnChanges, ControlValueAccessor {
   isEnabled(d) {
     return !!this.markedDays.find(x => x == d);
   }
+
+  currentDay() {
+    const now = new Date();
+    return now.getDate();
+  }
+
+  currentMonth() {
+    const now = new Date();
+    return now.getMonth() + 1;
+  }
+
+  checkMonth(d){
+    if(this.visibleMonth.monthNbr === this.currentMonth()) return  d.dateObj.day > this.currentDay();
+    else if(this.visibleMonth.monthNbr > this.currentMonth()) return true;
+    return false;
+  }
 }

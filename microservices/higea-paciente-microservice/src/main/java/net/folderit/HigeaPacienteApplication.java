@@ -31,7 +31,7 @@ public class HigeaPacienteApplication {
     public ResponseEntity<Persona> save(@PathVariable("cliente") String codigo, @RequestBody Persona persona) {
         PacienteHigea pacienteHigea = connectionMidleWare.getByDocAndGenero(codigo, persona.getSexo(), persona.getDocumento().getNumero().toString());
 
-        if(pacienteHigea!=null) return ResponseEntity.status(HttpStatus.FOUND).body(null);
+        if(pacienteHigea!=null) return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
         return ResponseEntity.ok(connectionMidleWare.savePaciente(codigo, persona));
     }
 

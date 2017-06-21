@@ -76,19 +76,19 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
 
     this.getMetadata();
 
-    const defaultTipoDocumento = this.lists.tipoDocumentos.find(x => x.id.toLowerCase() === 'dni');
-    const defaultPais = this.lists.paises.find(x => x.nombre.toLowerCase() === 'argentina');
-    const defaultProvincia = this.lists.provincias.find(x => x.nombre.toLowerCase() === 'santa fe');
+    // const defaultTipoDocumento = this.lists.tipoDocumentos.find(x => x.id.toLowerCase() === 'dni');
+    // const defaultPais = this.lists.paises.find(x => x.nombre.toLowerCase() === 'argentina');
+    // const defaultProvincia = this.lists.provincias.find(x => x.nombre.toLowerCase() === 'santa fe');
 
     this.mForm = this.fb.group({
       nombre: [null, Validators.required],
       apellido: [null, Validators.required],
       genero: [null, Validators.required],
-      tipoDocumento: [defaultTipoDocumento, Validators.required],
+      tipoDocumento: [null, Validators.required],
       numeroDocumento: [null, Validators.required],
       fechaNacimiento: [null, Validators.required],
-      pais: [defaultPais, Validators.required],
-      provincia: [defaultProvincia, Validators.required],
+      pais: [null, Validators.required],
+      provincia: [null, Validators.required],
       localidad: [null, Validators.required],
       calle: [null],
       telefono: [null],
@@ -226,24 +226,24 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
         'departamento': departamento
       });
 
-      this.mForm.setValue({
-        nombre: [null, Validators.required],
-        'apellido': [null, Validators.required],
-        'genero': [null, Validators.required],
-        'tipoDocumento': [defaultTipoDocumento, Validators.required],
-        'numeroDocumento': [null, Validators.required],
-        'fechaNacimiento': [null, Validators.required],
-        'pais': [defaultPais, Validators.required],
-        'provincia': [defaultProvincia, Validators.required],
-        'localidad': [null, Validators.required],
-        'calle': [null],
-        'telefono': [null],
-        'celular': [null],
-        'email': [null],
-        'obraSocial': [null, Validators.required],
-        'plan': [null, Validators.required],
-        'nroAfiliado': [null],
-      })
+      // this.mForm.setValue({
+      //   'nombre': [integrante.nombre, Validators.required],
+      //   'apellido': [null, Validators.required],
+      //   'genero': [null, Validators.required],
+      //   'tipoDocumento': [null, Validators.required],
+      //   'numeroDocumento': [null, Validators.required],
+      //   'fechaNacimiento': [null, Validators.required],
+      //   'pais': [null, Validators.required],
+      //   'provincia': [null, Validators.required],
+      //   'localidad': [null, Validators.required],
+      //   'calle': [null],
+      //   'telefono': [null],
+      //   'celular': [null],
+      //   'email': [null],
+      //   'obraSocial': [null, Validators.required],
+      //   'plan': [null, Validators.required],
+      //   'nroAfiliado': [null],
+      // })
 
       if (integrante && integrante.domicilio && integrante.domicilio.localidad &&
         integrante.domicilio.localidad.provincia && integrante.domicilio.localidad.provincia.pais) {

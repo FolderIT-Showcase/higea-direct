@@ -407,6 +407,18 @@
   color: $gray-1;
 }
 
+.past {
+  border: none;
+  height: 100% !important;
+  width: 100% !important;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  color: $gray-4;
+}
+
 .mydp .headerbtncell {
   background-color: #FAFAFA;
   display: table-cell;
