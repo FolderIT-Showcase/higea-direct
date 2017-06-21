@@ -181,10 +181,15 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
 
   calendarChange(event) {
 
-    this.calendarDate.setMonth(event.month);
+    console.log(this.calendarDate);
+    console.log(this.timeStampToDate(this.calendarDate));
+    this.calendarDate.setMonth(event.month-1);
+    console.log(this.calendarDate);
+    console.log(this.timeStampToDate(this.calendarDate));
     if (!this.form || !this.form.value || !this.form.value.profesional) {
       return;
     }
+
     this.turnoService.getCalendario(this.form.value.profesional, this.timeStampToDate(this.calendarDate))
       .then((data: any[]) => {
         this.markedDays = [];
