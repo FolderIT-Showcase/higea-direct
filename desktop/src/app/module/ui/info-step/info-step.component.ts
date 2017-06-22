@@ -18,7 +18,7 @@ export class InfoStepComponent implements OnInit {
 
   ngOnInit(): void {
     this.steps.forEach((step: any) => {
-      if (!step.ngClass) step.ngClass = 'btn-info';
+      if (!step.ngClass) step.ngClass = 'btn-warning';
     })
   }
 }

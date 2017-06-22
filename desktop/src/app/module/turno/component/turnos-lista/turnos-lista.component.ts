@@ -51,12 +51,6 @@ export class TurnosListaComponent implements OnInit {
   }
 
   generarPDF() {
-    this.turnoService.generarTurnoPDF(this.turno)
-      .then(data => {
-        // window.open(data);
-      })
-      .catch(error => {
-        console.error(error);
-      });
+    this.turnoService.generarTurnoPDF(this.turno);
   }
 }

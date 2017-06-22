@@ -6,14 +6,17 @@
 }
 
 .control-label {
+  pointer-events: none;
+  font-weight: normal !important;
   opacity: 0.4;
-  font-size: 16px;
+  font-size: 1em !important;
   padding-left: 1em;
   position: absolute;
   z-index: 100;
 }
 
 .control-label:after {
+  pointer-events: none;
   content: '' !important;
 }
 

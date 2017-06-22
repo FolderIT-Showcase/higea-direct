@@ -275,9 +275,6 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
     this.personaService.delete(this.currentPersona)
       .then(() => {
         this.alertService.success('Integrante removido correctamente.');
-      })
-      .catch((error) => {
-        console.error(error);
       });
 
     this.modalConfirmacion.hide();

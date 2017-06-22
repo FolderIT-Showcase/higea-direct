@@ -22,7 +22,7 @@ export class AlertComponent implements OnInit {
     });
   }
 
-  closeAlert(){
+  closeAlert() {
     this.message = undefined;
   }
 

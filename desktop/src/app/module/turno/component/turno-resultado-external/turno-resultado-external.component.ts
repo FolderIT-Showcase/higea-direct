@@ -127,7 +127,7 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
     this.turnoModal.show();
     this.persona = this.storeService.get('persona');
     let steps: any[] = this.storeService.get('steps');
-    if(steps &&  steps[2]){
+    if (steps && steps[2]) {
       steps[2] = {
         label: steps[2].label,
         ngClass: 'btn-success'

@@ -922,9 +922,9 @@ export class MyDatePicker implements OnChanges, ControlValueAccessor {
     return now.getMonth() + 1;
   }
 
-  checkMonth(d){
-    if(this.visibleMonth.monthNbr === this.currentMonth()) return  d.dateObj.day > this.currentDay();
-    else if(this.visibleMonth.monthNbr > this.currentMonth()) return true;
+  checkMonth(d) {
+    if (this.visibleMonth.monthNbr === this.currentMonth()) return d.dateObj.day > this.currentDay();
+    else if (this.visibleMonth.monthNbr > this.currentMonth()) return true;
     return false;
   }
 }

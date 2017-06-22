@@ -101,9 +101,9 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
 
         if (data.especialidad && data.profesional && data.profesional.id) {
           this.getMarkedDays(data);
-          if(data.persona && data.persona.id){
+          if (data.persona && data.persona.id) {
             let steps: any[] = this.storeService.get('steps');
-            if(steps &&  steps[0]){
+            if (steps && steps[0]) {
               steps[0] = {
                 label: steps[0].label,
                 ngClass: 'btn-success'
@@ -114,7 +114,7 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
         if (data.fecha && this.form.valid) {
           this.submitForm(this.form.value);
           let steps: any[] = this.storeService.get('steps');
-          if(steps &&  steps[1]){
+          if (steps && steps[1]) {
             steps[1] = {
               label: steps[1].label,
               ngClass: 'btn-success'
@@ -190,13 +190,13 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
 
   datetoDay(mDate) {
     const strDate = mDate.split('-');
-    let date: any = new Date(strDate[0],strDate[1]-1,strDate[2]);
+    let date: any = new Date(strDate[0], strDate[1] - 1, strDate[2]);
     date = this.datePipe.transform(date, "dd");
     return date;
   }
 
   calendarChange(event) {
-    this.calendarDate.setMonth(event.month-1);
+    this.calendarDate.setMonth(event.month - 1);
     if (!this.form || !this.form.value || !this.form.value.profesional) {
       return;
     }
