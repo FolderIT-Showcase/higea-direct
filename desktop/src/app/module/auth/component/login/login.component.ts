@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   login() {
     const user = new User();
-    user.email = this.model.email;
+    user.email = this.model.email.trim();
     user.password = this.model.password;
     this.auth.login(user)
       .catch(error => {

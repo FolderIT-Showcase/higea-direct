@@ -157,7 +157,7 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
 
   handleEspecialidadClick(especialidad: Especialidad) {
     this.filteredProfesionales = especialidad.profesional.sort((a, b) => {
-      return (a.nombre + a.apellido > b.nombre + b.apellido) ? 1 : ((b.nombre + b.apellido > a.nombre + a.apellido) ? -1 : 0);
+      return (a.apellido + a.nombre > b.apellido + b.nombre) ? 1 : ((b.apellido + b.nombre > a.apellido + a.nombre) ? -1 : 0);
     });
   }
 
