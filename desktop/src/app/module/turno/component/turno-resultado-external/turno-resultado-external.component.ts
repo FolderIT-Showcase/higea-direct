@@ -35,6 +35,7 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
   successModal: ModalDirective;
   timeline: Turno[] = [];
   clickCounter = 0;
+  especialidades: Especialidad [];
 
   constructor(private store: Store,
               private metadataService: MetadataService,
@@ -47,6 +48,8 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
+    this.metadataService.getEspecialidades().then((data: any) => this.especialidades = data);
     this.metadataService.getMotivosTurno().then((data: any) => this.motivos = data);
     this.subs.push(
       this.store.changes.pluck('turnos').subscribe(
@@ -156,6 +159,19 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
 
   handleMotivo(motivo) {
     this.motivoTurno = motivo;
+  }
+
+  getEspecialidad(turno): string {
+    if (!turno ||!this.especialidades)return '';
+
+    let especialidadName;
+
+    for (const especialidad of this.especialidades) {
+      if (especialidad.id === turno.profesional.especialidadId) {
+        especialidadName = especialidad.nombre;
+      }
+    }
+    return especialidadName;
   }
 
 }
