@@ -53,7 +53,6 @@ export class GoogleSigninComponent implements AfterViewInit {
       }, (error) => {
         this.router.navigate(['/login']);
         this.alert.error('Error, por favor intente con otra forma autenticación');
-        console.error(error);
       });
   }
 

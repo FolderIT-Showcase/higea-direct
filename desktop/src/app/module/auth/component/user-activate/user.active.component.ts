@@ -42,13 +42,7 @@ export class UserActiveComponent implements OnInit {
             this.router.navigate(['/login']).then(() => {
               this.alertService.success('Usuario Activado');
             });
-          })
-          .catch(error => {
-            console.error(error);
           });
-      })
-      .catch(error => {
-        console.error(error);
       });
 
   }

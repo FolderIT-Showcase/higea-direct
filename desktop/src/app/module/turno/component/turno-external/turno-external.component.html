@@ -1,15 +1,17 @@
-<div class="container-fluid">
-  <div class="app-header">
-    <h2>Reservar Turno</h2>
+<div class="container">
+  <div class="container-fluid">
+    <div class="app-header">
+      <h2>Reservar Turno</h2>
+    </div>
   </div>
-  <div class="container">
-  <app-info-step [steps]="steps"></app-info-step>
+  <div class="container-fluid">
+    <app-info-step [steps]="steps"></app-info-step>
   </div>
-  <div class="container">
-    <div class="col-sm-4">
+  <div class="container-fluid">
+    <div class="col-sm-5">
       <app-turno-busqueda-avanzada-external></app-turno-busqueda-avanzada-external>
     </div>
-    <div class="col-sm-8">
+    <div class="col-sm-7">
       <app-turno-resultado-external></app-turno-resultado-external>
     </div>
   </div>

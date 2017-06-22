@@ -10,7 +10,7 @@ import {BsDropdownModule, ModalModule} from 'ngx-bootstrap';
 import {RouterModule} from '@angular/router';
 import {SelectComponent} from './select/select.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { InfoStepComponent } from './info-step/info-step.component';
+import {InfoStepComponent} from './info-step/info-step.component';
 
 @NgModule({
   imports: [

@@ -60,7 +60,6 @@ export class ApiService {
 
   private processResponse(response: Response): Response {
     if (response.status >= 200 && response.status < 300) return response.json();
-    // throw new Error(response.text());
   }
 
   private async catchError(error) {
@@ -75,7 +74,6 @@ export class ApiService {
       this.alertService.error(mensaje);
     } catch (error) {
       let mensaje = 'Error Interno, por favor intente mas tarde';
-      console.log(error);
       this.alertService.error(mensaje);
     }
   }

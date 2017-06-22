@@ -41,9 +41,7 @@ export class RecoveryUserComponent implements OnInit {
 
   }
 
-
   submitForm(form: any) {
-
     const user: User = new User();
     user.password = form.password1.trim();
     // do something with this.code and this.accesstoken
@@ -52,24 +50,16 @@ export class RecoveryUserComponent implements OnInit {
         this.router.navigate(['/login']).then(() => {
           this.alertService.success('Usuario Restablecido');
         });
-      })
-      .catch(error => {
-        console.error(error);
       });
   }
 
   ngOnInit(): void {
-
     // Capture the access token and code
     this.route
       .queryParams.first().toPromise()
       .then(params => {
         this.token = params['token'];
-      })
-      .catch(error => {
-        console.error(error);
       });
-
   }
 
   private passwordMatch() {

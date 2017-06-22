@@ -46,11 +46,7 @@ export class FacebookSigninComponent {
           .catch(error => {
             this.router.navigate(['/login']);
             this.alert.error('Error, por favor intente con otra forma autenticación');
-            console.error(error);
           });
-      })
-      .catch((error: any) => {
-        console.error(error);
       });
   }
 
