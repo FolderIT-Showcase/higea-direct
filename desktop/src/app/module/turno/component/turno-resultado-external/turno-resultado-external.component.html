@@ -13,14 +13,15 @@
       <thead>
       <tr>
         <th style="width: 1em"></th>
-        <th>Horarios de atención del día seleccionado</th>
+        <th class="text-right">Horarios de atención</th>
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let turno of timeline" [ngClass]="{'app-selectable-row': turno.enabled}" (click)="showTurnoModal(turno)">
+      <tr *ngFor="let turno of timeline" [ngClass]="{'app-selectable-row': turno.enabled}"
+          (click)="showTurnoModal(turno)">
         <td>{{turno.hora | date: 'HH:mm'}}</td>
         <td>
-          <div [ngClass]="{'app-disabled-line': !turno.enabled}" ></div>
+          <div [ngClass]="{'app-disabled-line': !turno.enabled}"></div>
           <div class="text-right" *ngIf="turno.enabled">{{turno.enabled ? 'RESERVAR' : ''}}</div>
         </td>
       </tr>

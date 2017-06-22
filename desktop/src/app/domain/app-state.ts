@@ -10,4 +10,5 @@ export class AppState {
   turnos: Turno[] = [];
   metadata: Metadata;
   steps = [];
+  lastError = {};
 }

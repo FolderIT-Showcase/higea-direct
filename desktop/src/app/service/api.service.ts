@@ -6,7 +6,6 @@ import {User} from '../domain/user';
 import {Router} from '@angular/router';
 import {LoadingService} from './loading.service';
 import {JwtHelper} from 'angular2-jwt';
-import {Observable} from 'rxjs/Observable';
 import {AlertService} from './alert.service';
 
 declare const require: any;
@@ -24,14 +23,7 @@ export class ApiService {
     'X-Requested-With': 'XMLHttpRequest'
   });
 
-  private static getJson(response: Response) {
-    return response.json();
-  }
-
-  private static filterError(response): Response {
-    if (response.status >= 200 && response.status < 300) return response;
-    else throw new Error(response.error)
-  }
+  private mPromise: Promise<any>;
 
   constructor(private http: Http,
               private router: Router,
@@ -66,25 +58,42 @@ export class ApiService {
     this.headers.delete('authorization');
   }
 
-  private catchBadResponse(err: any) {
-    // log and handle the exception
-    console.log(err.error);
-    this.alertService.error(err.error)
-    return new Observable();
+  private processResponse(response: Response): Response {
+    if (response.status >= 200 && response.status < 300) return response.json();
+    // throw new Error(response.text());
   }
 
-  get(path: string, isAuthNecessary: boolean = true): Promise<any> {
+  private async catchError(error) {
+    this.loadingService.reset();
+    try {
+      const body = error.json();
+      console.log(body);
+      let mensaje = 'Error Interno, por favor intente mas tarde';
+      if (body.error) mensaje = body.error;
+      if (body.message) mensaje = body.message;
+      console.log(mensaje);
+      this.alertService.error(mensaje);
+    } catch (error) {
+      let mensaje = 'Error Interno, por favor intente mas tarde';
+      console.log(error);
+      this.alertService.error(mensaje);
+    }
+  }
+
+  public async get(path: string, isAuthNecessary: boolean = true): Promise<any> {
     this.loadingService.start();
     this.isAuthNecessary(isAuthNecessary);
-    return this.http.get(`${this.baseURL}${path}`, {headers: this.headers})
-      .map(ApiService.filterError)
-      .map(ApiService.getJson)
-      .catch(error => this.catchBadResponse(error))
+    this.mPromise = this.http.get(`${this.baseURL}${path}`, {headers: this.headers})
+      .map(this.processResponse)
       .finally(() => this.loadingService.finish())
       .first().toPromise();
+
+    Promise.all([this.mPromise]).catch(error => this.catchError(error));
+
+    return this.mPromise;
   }
 
-  getFile(path: string, mimeType: string, filename: string, obj: any, isAuthNecessary: boolean = true) {
+  public async getFile(path: string, mimeType: string, filename: string, obj: any, isAuthNecessary: boolean = true) {
     this.loadingService.start();
     this.isAuthNecessary(isAuthNecessary);
     this.headers.set('Accept', mimeType);
@@ -93,73 +102,76 @@ export class ApiService {
       headers: this.headers
     };
 
-    return this.http.post(`${this.baseURL}${path}`, JSON.stringify(obj), options)
-      .map(ApiService.filterError)
+    this.mPromise = this.http.post(`${this.baseURL}${path}`, JSON.stringify(obj), options)
       .map((response: Response) => {
         const content: Blob = response.blob();
         const contentDisposition = response.headers.get('Content-Disposition') || '';
-
         FileSaver.saveAs(content, filename);
-
         return response;
       })
-      .catch(error => this.catchBadResponse(error))
       .finally(() => this.loadingService.finish())
       .first().toPromise();
+
+    Promise.all([this.mPromise]).catch(error => this.catchError(error));
+
+    return this.mPromise;
   }
 
-  public post(path: string, body, isAuthNecessary: boolean = true): Promise<any> {
+  public async post(path: string, body, isAuthNecessary: boolean = true): Promise<any> {
     this.loadingService.start();
     this.isAuthNecessary(isAuthNecessary);
-    return this.http
+    this.mPromise = this.http
       .post(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
-      .map(ApiService.filterError)
-      .map(ApiService.getJson)
-      .catch(error => this.catchBadResponse(error))
+      .map(this.processResponse)
       .finally(() => this.loadingService.finish())
       .first().toPromise();
+
+    Promise.all([this.mPromise]).catch(error => this.catchError(error));
+    return this.mPromise;
   }
 
-  public put(path: string, body, isAuthNecessary: boolean = true): Promise<any> {
+  public async put(path: string, body, isAuthNecessary: boolean = true): Promise<any> {
     this.loadingService.start();
     this.isAuthNecessary(isAuthNecessary);
-    return this.http
+    this.mPromise = this.http
       .put(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
-      .map(ApiService.filterError)
-      .map(ApiService.getJson)
-      .catch(error => this.catchBadResponse(error))
+      .map(this.processResponse)
       .finally(() => this.loadingService.finish())
       .first().toPromise();
+
+    Promise.all([this.mPromise]).catch(error => this.catchError(error));
+    return this.mPromise;
   }
 
-  public patch(path: string, body, isAuthNecessary: boolean = true): Promise<any> {
+  public async patch(path: string, body, isAuthNecessary: boolean = true): Promise<any> {
     this.loadingService.start();
     this.isAuthNecessary(isAuthNecessary);
-    return this.http
+    this.mPromise = this.http
       .patch(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
-      .map(ApiService.filterError)
-      .map(ApiService.getJson)
-      .catch(error => this.catchBadResponse(error))
+      .map(this.processResponse)
       .finally(() => this.loadingService.finish())
       .first().toPromise();
+
+    Promise.all([this.mPromise]).catch(error => this.catchError(error));
+    return this.mPromise;
   }
 
-  public delete(path, isAuthNecessary: boolean = true): Promise<any> {
+  public async delete(path, isAuthNecessary: boolean = true): Promise<any> {
     this.loadingService.start();
     this.isAuthNecessary(isAuthNecessary);
-    return this.http.delete(`${this.baseURL}${path}`, {headers: this.headers})
-      .map(ApiService.filterError)
-      .map(ApiService.getJson)
-      .catch(error => this.catchBadResponse(error))
+    this.mPromise = this.http.delete(`${this.baseURL}${path}`, {headers: this.headers})
+      .map(this.processResponse)
       .finally(() => this.loadingService.finish())
       .first().toPromise();
+
+    Promise.all([this.mPromise]).catch(error => this.catchError(error));
+    return this.mPromise;
   }
 
-  public loginPost(path: string, body): Promise<any> {
+  public async loginPost(path: string, body): Promise<any> {
     this.loadingService.start();
-    return this.http
+    this.mPromise = this.http
       .post(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
-      .map(ApiService.filterError)
       .map((response: Response) => {
         body.token = response.headers.get('authorization').slice(7);
         if (body && body.token) {
@@ -167,9 +179,11 @@ export class ApiService {
           localStorage.setItem('currentUser', JSON.stringify(body));
         }
       })
-      .catch(error => this.catchBadResponse(error))
       .finally(() => this.loadingService.finish())
       .first().toPromise();
+
+    Promise.all([this.mPromise]).catch(error => this.catchError(error));
+    return this.mPromise;
   }
 
 }

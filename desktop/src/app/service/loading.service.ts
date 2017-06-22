@@ -13,11 +13,6 @@ export class LoadingService {
     router.events.subscribe(event => {
       if (event instanceof NavigationStart) this.subject.next();
     });
-
-    window.addEventListener('unhandledrejection', (event: any) => {
-      console.log('te falto un catch')
-    });
-
   }
 
   public start() {
@@ -27,13 +22,9 @@ export class LoadingService {
   }
 
   public finish() {
-    console.log('finishing')
-
     if (isNaN(this.promiseCount)) this.promiseCount = 0;
     else if (this.promiseCount > 0) this.promiseCount--;
     this.subject.next(this.promiseCount);
-
-    console.log(this.promiseCount)
   }
 
   public reset() {

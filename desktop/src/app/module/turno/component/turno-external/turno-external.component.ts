@@ -13,13 +13,16 @@ export class TurnoExternalComponent {
   constructor(private storeService: StoreService, private store: Store) {
     this.steps = [
       {
-        label: 'Selecciona el Paciente, Especialidad y Médico'
+        label: 'Selecciona el Paciente, Especialidad y Médico',
+        order: 1
       },
       {
-        label: 'Escoje los días disponibles'
+        label: 'Escoje los días disponibles',
+        order: 2
       },
       {
-        label: 'Escoje de los turnos disponibles'
+        label: 'Escoje de los turnos disponibles',
+        order: 3
       }
     ];
     this.storeService.update('steps', this.steps);

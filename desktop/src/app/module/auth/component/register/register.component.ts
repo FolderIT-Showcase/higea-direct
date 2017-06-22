@@ -26,14 +26,11 @@ export class RegisterComponent implements OnInit {
   obras_sociales: ObraSocial[] = [];
   obraSocial: ObraSocial;
   planes: Plan[] = [];
-  @Input()
   plan: Plan;
   tipoDocumentos: string[] = TipoDocumentos.build();
   generos: string[] = Generos.build();
   captcha = null;
   selectUndefined: any;
-  @Input()
-  validatorPlan: any [] = [];
   tieneObraSocial = true;
 
   passwordMatcher = (control: AbstractControl): { [key: string]: boolean } => {
@@ -58,7 +55,6 @@ export class RegisterComponent implements OnInit {
       'password2': [null, [Validators.required, this.passwordMatch]],
       'tipoDocumento': [null, Validators.required],
       'numeroDocumento': [null, Validators.required],
-      // 'pais': [this.paises.find(x => x.nombre.toLowerCase() === 'argentina'), Validators.required],
       'genero': [null, Validators.required],
       'obraSocial': [null],
       'plan': [null],
@@ -160,7 +156,6 @@ export class RegisterComponent implements OnInit {
       'apellido': [this.complexForm.value.apellido, Validators.required],
       'numeroDocumento': [this.complexForm.value.numeroDocumento, Validators.required],
       'tipoDocumento': [this.complexForm.value.tipoDocumento, Validators.required],
-      // 'pais': [this.complexForm.value.pais, Validators.required],
       'genero': [this.complexForm.value.genero, Validators.required],
       'password1': [this.complexForm.value.password1, Validators.required],
       'password2': [this.complexForm.value.password2, [Validators.required, this.passwordMatch]],

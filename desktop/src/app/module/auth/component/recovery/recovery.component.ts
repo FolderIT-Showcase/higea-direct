@@ -30,13 +30,10 @@ export class RecoveryComponent implements OnInit {
     const email = data.email.trim();
 
     this.personaService.validateEmail(email)
-       .then(() => {
-         this.alertService.success('Verifique su cuenta de email para restablecer la contraseña');
-         this.router.navigate(['/login']);
-     }).catch(error => {
-         this.alertService.error('Cuenta inexistente');
-     });
+      .then(() => {
+        this.alertService.success('Verifique su cuenta de email para restablecer la contraseña');
+        this.router.navigate(['/login']);
+      });
   }
-
 
 }

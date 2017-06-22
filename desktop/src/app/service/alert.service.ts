@@ -6,29 +6,22 @@ import {Subject} from 'rxjs/Subject';
 @Injectable()
 export class AlertService {
   private subject = new Subject<any>();
-  private await = 300; // tiempo pruedente antes de lanzar la notificacion
 
   constructor(private router: Router) {
     router.events.subscribe(event => {
-      if (event instanceof NavigationStart) {
-        this.subject.next();
-      }
+      if (event instanceof NavigationStart) this.subject.next();
     });
   }
 
-  success(message: string) {
-    setTimeout(() => {
-      this.subject.next({type: 'success', text: message});
-    }, this.await);
+  public success(message: string) {
+    this.subject.next({type: 'success', text: message});
   }
 
-  error(message: string) {
-    setTimeout(() => {
-      this.subject.next({type: 'error', text: message});
-    }, this.await);
+  public error(message: string) {
+    this.subject.next({type: 'error', text: message});
   }
 
-  getMessage(): Observable<any> {
+  public getMessage(): Observable<any> {
     return this.subject.asObservable();
   }
 
