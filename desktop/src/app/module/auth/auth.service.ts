@@ -2,9 +2,7 @@ import {Injectable} from '@angular/core';
 import 'rxjs/add/operator/map';
 import {ApiService} from '../../service/api.service';
 import {User} from '../../domain/user';
-import {StoreService} from '../../service/store.service';
 import {Router} from '@angular/router';
-import {AlertService} from '../../service/alert.service';
 
 @Injectable()
 export class AppAuthService {
@@ -28,23 +26,14 @@ export class AppAuthService {
     return role === 'ROLE_ADMIN';
   }
 
-  constructor(private api: ApiService,
-              private storeService: StoreService,
-              private router: Router,
-              private alertService: AlertService) {
+  constructor(private api: ApiService, private router: Router) {
   }
 
   public login(user: User, type: string = '') {
-    switch (type) {
-      case 'social' :
-        this.normalLogin(user).catch((error) => {
-          this.router.navigate(['/register-social']);
-        });
-        return;
-      default :
-        return this.normalLogin(user)
+    if (type === 'social') {
+      return this.normalLogin(user).catch(() => this.router.navigate(['/auth/register-social']));
     }
-
+    return this.normalLogin(user);
   }
 
   public logout() {
@@ -55,11 +44,10 @@ export class AppAuthService {
   }
 
   normalLogin(user: User, type: string = '') {
-    const path = this.basePath + 'login';
-    return this.api.loginPost(path, user)
-      .then(() => {
-        this.router.navigate(['/']);
-      });
+    const path = `${this.basePath}login`;
+    return this.api
+      .loginPost(path, user)
+      .then(() => this.router.navigate(['/']));
   }
 
 }

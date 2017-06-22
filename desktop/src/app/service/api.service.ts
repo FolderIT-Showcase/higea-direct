@@ -4,12 +4,13 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import {User} from '../domain/user';
 import {Router} from '@angular/router';
-import {AlertService} from './alert.service';
-import {AppException} from '../domain/AppException';
 import {LoadingService} from './loading.service';
 import {JwtHelper} from 'angular2-jwt';
-import * as FileSaver from 'file-saver';
 import {Observable} from 'rxjs/Observable';
+import {AlertService} from './alert.service';
+
+declare const require: any;
+const FileSaver: any = require('file-saver');
 
 @Injectable()
 export class ApiService {
@@ -23,52 +24,13 @@ export class ApiService {
     'X-Requested-With': 'XMLHttpRequest'
   });
 
-  private mPromise: Promise<any>;
-
   private static getJson(response: Response) {
-    return response ? response.json() : {};
+    return response.json();
   }
 
-  private static  checkForError(response: Response): Response | Observable<any> {
+  private static filterError(response): Response {
     if (response.status >= 200 && response.status < 300) return response;
-
-    else {
-      const error = new Error(response.statusText);
-      error['response'] = response;
-      throw error;
-    }
-  }
-
-  private catchError(err: any) {
-    if (err.status === 401) {
-    }
-    console.log(err);
-    this.alertService.error(err);
-    return Observable.throw(err);
-  }
-
-  //
-
-  private static filterError(response: Response): Response | any {
-    if (response.status >= 200 && response.status < 300) return response;
-    throw new Error(response.statusText);
-  }
-
-  private static catchException(exception: any): Response | any {
-    if (!exception || !exception.json) {
-      return;
-    }
-    let mException = exception.json();
-    let mensaje;
-    if (mException.message) {
-      mensaje = mException.message;
-      throw new Error(mensaje);
-    }
-    if (!mException.error) {
-      mException = new AppException();
-    }
-    mensaje = mException.error;
-    throw new Error(mensaje);
+    else throw new Error(response.error)
   }
 
   constructor(private http: Http,
@@ -77,7 +39,8 @@ export class ApiService {
               private alertService: AlertService) {
 
     this.http.get('assets/license.json')
-      .map(res => res.json()).first().toPromise()
+      .map(res => res.json())
+      .first().toPromise()
       .then((data: any) => {
         localStorage.setItem('license', this.jwtHelper.decodeToken(data.token).license);
         localStorage.setItem('client', this.jwtHelper.decodeToken(data.token).client);
@@ -86,21 +49,16 @@ export class ApiService {
 
   isAuthNecessary(isAuthNecessary: boolean) {
     this.headers.set('Accept', 'application/json');
-    if (!isAuthNecessary) {
-      return;
-    }
+    if (!isAuthNecessary) return;
     // use jwt
     if (!this.headers.get('authorization')) {
       const user: User = JSON.parse(localStorage.getItem('currentUser'));
-      if (user && user.token) {
-        this.headers.append('authorization', user.token);
-      }
+      if (user && user.token) this.headers.append('authorization', user.token);
     }
     // check if logged
     if (!this.headers.get('authorization')) {
       localStorage.removeItem('currentUser');
-      this.router.navigate(['/login']);
-      return;
+      this.router.navigate(['/']);
     }
   }
 
@@ -108,17 +66,26 @@ export class ApiService {
     this.headers.delete('authorization');
   }
 
+  private catchBadResponse(err: any) {
+    // log and handle the exception
+    console.log(err.error);
+    this.alertService.error(err.error)
+    return new Observable();
+  }
+
   get(path: string, isAuthNecessary: boolean = true): Promise<any> {
+    this.loadingService.start();
     this.isAuthNecessary(isAuthNecessary);
-    this.mPromise = this.http.get(`${this.baseURL}${path}`, {headers: this.headers})
+    return this.http.get(`${this.baseURL}${path}`, {headers: this.headers})
       .map(ApiService.filterError)
       .map(ApiService.getJson)
-      .first().toPromise().catch(error => ApiService.catchException(error));
-    this.loadingService.setLoading(this.mPromise);
-    return this.mPromise;
+      .catch(error => this.catchBadResponse(error))
+      .finally(() => this.loadingService.finish())
+      .first().toPromise();
   }
 
   getFile(path: string, mimeType: string, filename: string, obj: any, isAuthNecessary: boolean = true) {
+    this.loadingService.start();
     this.isAuthNecessary(isAuthNecessary);
     this.headers.set('Accept', mimeType);
     const options = {
@@ -126,7 +93,7 @@ export class ApiService {
       headers: this.headers
     };
 
-    this.mPromise = this.http.post(`${this.baseURL}${path}`, JSON.stringify(obj), options)
+    return this.http.post(`${this.baseURL}${path}`, JSON.stringify(obj), options)
       .map(ApiService.filterError)
       .map((response: Response) => {
         const content: Blob = response.blob();
@@ -135,54 +102,62 @@ export class ApiService {
         FileSaver.saveAs(content, filename);
 
         return response;
-      }).first().toPromise();
-    return this.mPromise;
+      })
+      .catch(error => this.catchBadResponse(error))
+      .finally(() => this.loadingService.finish())
+      .first().toPromise();
   }
 
   public post(path: string, body, isAuthNecessary: boolean = true): Promise<any> {
+    this.loadingService.start();
     this.isAuthNecessary(isAuthNecessary);
-    this.mPromise = this.http
+    return this.http
       .post(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
-      .map(ApiService.checkForError)
-      .catch(this.catchError.bind(this))
+      .map(ApiService.filterError)
       .map(ApiService.getJson)
+      .catch(error => this.catchBadResponse(error))
+      .finally(() => this.loadingService.finish())
       .first().toPromise();
-    this.loadingService.setLoading(this.mPromise);
-    return this.mPromise;
   }
 
   public put(path: string, body, isAuthNecessary: boolean = true): Promise<any> {
+    this.loadingService.start();
     this.isAuthNecessary(isAuthNecessary);
-    this.mPromise = this.http
+    return this.http
       .put(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
       .map(ApiService.filterError)
       .map(ApiService.getJson)
-      .first().toPromise().catch(error => ApiService.catchException(error));
-    this.loadingService.setLoading(this.mPromise);
-    return this.mPromise;
+      .catch(error => this.catchBadResponse(error))
+      .finally(() => this.loadingService.finish())
+      .first().toPromise();
   }
 
   public patch(path: string, body, isAuthNecessary: boolean = true): Promise<any> {
+    this.loadingService.start();
     this.isAuthNecessary(isAuthNecessary);
-    this.mPromise = this.http
+    return this.http
       .patch(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
       .map(ApiService.filterError)
-      .first().toPromise().catch(error => ApiService.catchException(error));
-    this.loadingService.setLoading(this.mPromise);
-    return this.mPromise;
+      .map(ApiService.getJson)
+      .catch(error => this.catchBadResponse(error))
+      .finally(() => this.loadingService.finish())
+      .first().toPromise();
   }
 
   public delete(path, isAuthNecessary: boolean = true): Promise<any> {
+    this.loadingService.start();
     this.isAuthNecessary(isAuthNecessary);
-    this.mPromise = this.http.delete(`${this.baseURL}${path}`, {headers: this.headers})
+    return this.http.delete(`${this.baseURL}${path}`, {headers: this.headers})
       .map(ApiService.filterError)
-      .first().toPromise().catch(error => ApiService.catchException(error));
-    this.loadingService.setLoading(this.mPromise);
-    return this.mPromise;
+      .map(ApiService.getJson)
+      .catch(error => this.catchBadResponse(error))
+      .finally(() => this.loadingService.finish())
+      .first().toPromise();
   }
 
   public loginPost(path: string, body): Promise<any> {
-    this.mPromise = this.http
+    this.loadingService.start();
+    return this.http
       .post(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
       .map(ApiService.filterError)
       .map((response: Response) => {
@@ -192,9 +167,9 @@ export class ApiService {
           localStorage.setItem('currentUser', JSON.stringify(body));
         }
       })
-      .first().toPromise().catch(error => ApiService.catchException(error));
-    this.loadingService.setLoading(this.mPromise);
-    return this.mPromise;
+      .catch(error => this.catchBadResponse(error))
+      .finally(() => this.loadingService.finish())
+      .first().toPromise();
   }
 
 }

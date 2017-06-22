@@ -7,38 +7,42 @@ import {Observable} from 'rxjs/Observable';
 export class LoadingService {
 
   private subject = new Subject<any>();
-  private promises: Promise<any>[] = [];
   private promiseCount = 0;
 
   constructor(private router: Router) {
     router.events.subscribe(event => {
-      if (event instanceof NavigationStart) {
-        this.subject.next();
-      }
+      if (event instanceof NavigationStart) this.subject.next();
     });
+
+    window.addEventListener('unhandledrejection', (event: any) => {
+      console.log('te falto un catch')
+    });
+
   }
 
   public start() {
-    this.promiseCount++;
+    if (isNaN(this.promiseCount)) this.promiseCount = 0;
+    if (this.promiseCount >= 0) this.promiseCount++;
     this.subject.next(this.promiseCount);
   }
 
   public finish() {
-    if(this.promiseCount){
-      this.promiseCount--;
-    }
+    console.log('finishing')
+
+    if (isNaN(this.promiseCount)) this.promiseCount = 0;
+    else if (this.promiseCount > 0) this.promiseCount--;
+    this.subject.next(this.promiseCount);
+
+    console.log(this.promiseCount)
+  }
+
+  public reset() {
+    this.promiseCount = 0;
     this.subject.next(this.promiseCount);
   }
 
   getMessage(): Observable<any> {
     return this.subject.asObservable();
-  }
-
-  setLoading(promise: Promise<any>) {
-    this.start();
-    this.promises.push(promise);
-    Promise.all(this.promises).catch(() => this.finish()).then(() => this.finish());
-
   }
 
 }

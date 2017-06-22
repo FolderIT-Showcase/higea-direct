@@ -9,5 +9,5 @@ export class AppState {
   centrosSalud: CentroSalud[] = [];
   turnos: Turno[] = [];
   metadata: Metadata;
-
+  steps = [];
 }
