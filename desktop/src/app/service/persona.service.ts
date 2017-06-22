@@ -24,13 +24,11 @@ export class PersonaService {
 
     if (this.license === 'core') return this.api.post(this.uriRegistration, persona, false);
 
-    else {
-      return this.api.post(this.externalUriRegistration, persona, false).then((data) => {
-        if (persona) persona.externalId = data.externalId;
-        this.api.post(this.uriRegistration, persona, false)
-      })
+    return this.api.post(this.externalUriRegistration, persona, false).then((data) => {
+      if (persona) persona.externalId = data.externalId;
+      return this.api.post(this.uriRegistration, persona, false);
+    })
 
-    }
   }
 
   validateEmail(email: string) {

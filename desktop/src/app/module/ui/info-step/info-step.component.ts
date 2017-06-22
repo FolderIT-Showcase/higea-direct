@@ -3,6 +3,7 @@ import {Component, Input, OnInit} from '@angular/core';
 interface step {
   label: ''
   description: '';
+  order: 0;
   ngClass: '' // clases de los botones de bootstrap
 }
 
@@ -17,7 +18,7 @@ export class InfoStepComponent implements OnInit {
 
   ngOnInit(): void {
     this.steps.forEach((step: any) => {
-      if (!step.ngClass) step.ngClass = 'btn-warning';
+      if (!step.ngClass) step.ngClass = 'btn-info';
     })
   }
 }

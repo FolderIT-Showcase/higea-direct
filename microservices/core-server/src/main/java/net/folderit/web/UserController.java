@@ -2,9 +2,9 @@ package net.folderit.web;
 
 import net.folderit.domain.core.Persona;
 import net.folderit.domain.core.Roles;
+import net.folderit.domain.core.TurneroException;
 import net.folderit.domain.core.User;
 import net.folderit.domain.core.security.VerificationToken;
-import net.folderit.exception.TurneroException;
 import net.folderit.repository.RoleRepository;
 import net.folderit.service.PersonaService;
 import net.folderit.service.UserService;

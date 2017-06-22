@@ -1,4 +1,4 @@
-package net.folderit.exception;
+package net.folderit.domain.core;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
@@ -39,6 +39,8 @@ public class TurneroException extends IOException implements Serializable {
 
     public static final String MESSAGE_INVALID_USER = "message.invalid.user";
 
+    public static final String MESSAGE_DOC_EXIST = "message.doc.exist";
+
     public static TurneroException instance;
     private String error;
 
@@ -49,8 +51,6 @@ public class TurneroException extends IOException implements Serializable {
         return instance;
     }
 
-    //@Bean
-    //@JsonIgnore
     public MessageSource messageSource() {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
         messageSource.setBasenames("i18/message");
@@ -64,7 +64,6 @@ public class TurneroException extends IOException implements Serializable {
         } catch (Exception exception) {
             throw exception;
         }
-
     }
 
 

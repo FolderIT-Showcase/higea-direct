@@ -1,5 +1,5 @@
 <div class="container-fluid">
-  <div class="row">
+  <div class="container">
     <div class="col-sm-12 col-md-4">
       <div class="app-header">
         <h2>Mis Turnos</h2>
@@ -30,17 +30,17 @@
       </a>
     </div>
   </div>
-</div>
-<div class="container">
-  <tabset [justified]="true">
-    <tab (click)="clearTable()" heading="Próximos Turnos">
-      <app-turnos-proximos [turnos]="turnosProximos" [desktopMode]="desktopMode"
-                           [mode]="'proximos'"></app-turnos-proximos>
-    </tab>
-    <tab (click)="clearTable()" heading="Historial de Turnos">
-      <app-turnos-proximos [turnos]="turnosHistorial" [desktopMode]="desktopMode"
-                           [mode]="'historial'"></app-turnos-proximos>
-    </tab>
-  </tabset>
+  <div class="container">
+    <tabset [justified]="true">
+      <tab (click)="clearTable()" heading="Próximos Turnos">
+        <app-turnos-proximos [turnos]="turnosProximos" [desktopMode]="desktopMode"
+                             [mode]="'proximos'"></app-turnos-proximos>
+      </tab>
+      <tab (click)="clearTable()" heading="Historial de Turnos">
+        <app-turnos-proximos [turnos]="turnosHistorial" [desktopMode]="desktopMode"
+                             [mode]="'historial'"></app-turnos-proximos>
+      </tab>
+    </tabset>
+  </div>
 </div>
 

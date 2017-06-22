@@ -26,7 +26,6 @@ export class RegisterComponent implements OnInit {
   obras_sociales: ObraSocial[] = [];
   obraSocial: ObraSocial;
   planes: Plan[] = [];
-  @Input()
   plan: Plan;
   tipoDocumentos: string[] = TipoDocumentos.build();
   generos: string[] = Generos.build();
@@ -35,6 +34,7 @@ export class RegisterComponent implements OnInit {
   @Input()
   validatorPlan: any [] = [];
   tieneObraSocial = false;
+
 
   passwordMatcher = (control: AbstractControl): { [key: string]: boolean } => {
     const password1 = control.get('password1');
@@ -58,7 +58,6 @@ export class RegisterComponent implements OnInit {
       'password2': [null, [Validators.required, this.passwordMatch]],
       'tipoDocumento': [null],
       'numeroDocumento': [null, Validators.required],
-      // 'pais': [this.paises.find(x => x.nombre.toLowerCase() === 'argentina'), Validators.required],
       'genero': [null, Validators.required],
       'obraSocial': [null],
       'plan': [null],
@@ -203,8 +202,6 @@ export class RegisterComponent implements OnInit {
 
   handleObraSocialClick(obra_social: ObraSocial) {
     this.planes = obra_social.planes;
-
-
   }
 
 
@@ -246,6 +243,7 @@ export class RegisterComponent implements OnInit {
         'nroAfiliado': [this.complexForm.value.nroAfiliado],
       }, {validator: this.passwordMatcher});
     }
+
   }
 
 }
