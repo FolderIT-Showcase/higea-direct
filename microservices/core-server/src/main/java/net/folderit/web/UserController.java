@@ -168,12 +168,10 @@ public class UserController {
     }
 
 
-
-
     @GetMapping("/users/validEmail")
-    public ResponseEntity<?> validEmail(WebRequest request,@RequestParam("email") String email) {
+    public ResponseEntity<?> validEmail(WebRequest request, @RequestParam("email") String email) {
         User user = userService.userExist(email);
-        if (user!=null){
+        if (user != null) {
             try {
                 String appUrl = request.getContextPath();
                 eventPublisher.publishEvent(new OnRecoveryCompleteEvent
@@ -184,10 +182,8 @@ public class UserController {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(TurneroException.getInstance());
             }
             return ResponseEntity.ok(Boolean.TRUE);
-        }
-
-        else{
-            TurneroException.getInstance().getMessage(TurneroException.MESSAGE_INVALID_USER,null);
+        } else {
+            TurneroException.getInstance().getMessage(TurneroException.MESSAGE_INVALID_USER, null);
         }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(TurneroException.getInstance());
     }

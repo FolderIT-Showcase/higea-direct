@@ -1,7 +1,7 @@
 import {EventEmitter, Injectable} from '@angular/core';
 
 @Injectable()
-export class UtilsService {
+export class Util {
 
   innerHeight: any;
   innerWidth: any;
@@ -22,6 +22,19 @@ export class UtilsService {
 
   public getWidthResizeEvent() {
     return this.widhtResize;
+  }
+
+  public static getFirstDefault(list: any[]) {
+    if (list.length == 1) return list[0];
+    return null;
+  }
+
+  public static label(props: any[]) {
+    let mLabel = '';
+    props.forEach(prop => {
+      mLabel = mLabel + ' ' + prop.toUpperCase();
+    });
+    return mLabel;
   }
 
 }

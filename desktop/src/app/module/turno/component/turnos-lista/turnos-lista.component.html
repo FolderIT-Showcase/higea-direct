@@ -8,7 +8,8 @@
           <label><strong>Día: </strong>{{turno.dia | date: 'EEEE'}}</label><br>
           <label><strong>Fecha: </strong>{{turno.fecha | date: 'dd/MM/yyyy'}}</label><br>
           <label><strong>Hora: </strong>{{turno.hora | date: 'HH:mm'}}</label><br>
-          <label><strong>Centro de Salud: </strong>{{turno.centroSalud.nombre}}</label><br>
+          <label *ngIf="turnos[0].centroSalud"><strong>Centro de
+            Salud: </strong>{{turno.centroSalud.nombre}}</label><br>
           <label><strong>Especialidad: </strong>{{turno.especialidad.nombre}}</label><br>
           <label><strong>Profesional: </strong>{{turno.profesional.nombre}}</label><br>
           <label><strong>Observaciones: </strong>{{turno.observaciones}}</label>
@@ -37,8 +38,8 @@
               <th>Día</th>
               <th>Fecha</th>
               <th>Hora</th>
-              <th>Centro de Salud</th>
-              <th>Especialidad</th>
+              <th *ngIf="turnos[0].centroSalud.nombre">Centro de Salud</th>
+              <th *ngIf="turnos[0].especialidad.nombre">Especialidad</th>
               <th>Profesional</th>
               <th>Observaciones</th>
               <th class="text-right">Acciones</th>
@@ -49,10 +50,10 @@
               <td>{{turno.dia | date: 'EEEE'}}</td>
               <td>{{turno.fecha | date: 'dd/MM/yyyy'}}</td>
               <td>{{turno.hora | date: 'HH:mm'}}</td>
-              <td>{{turno.centroSalud.nombre}}</td>
-              <td>{{turno.especialidad.nombre}}</td>
-              <td>{{turno.profesional.nombre}}</td>
-              <td>{{turno.observaciones}}</td>
+              <td *ngIf="turnos[0].centroSalud.nombre">{{turno.centroSalud.nombre}}</td>
+              <td *ngIf="turnos[0].especialidad.nombre">{{turno.especialidad.nombre}}</td>
+              <td>{{label(turno.profesional)}}</td>
+              <td>{{turno.observaciones || ' - '}}</td>
               <td class="text-right">
                 <a *ngIf="mode == 'proximos'" (click)="showModal(turno)" class="btn btn-danger btn-md">
                   <span class="fa fa-trash"></span>

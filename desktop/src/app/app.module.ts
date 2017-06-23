@@ -5,7 +5,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {RouterModule} from '@angular/router';
 import {HttpModule} from '@angular/http';
 import {CommonModule} from '@angular/common';
-import {UtilsService} from './service/utils.service';
+import {Util} from './service/utils.service';
 import {TurnoService} from './service/turno.service';
 import {LoadingService} from './service/loading.service';
 import {IntegrantesResolveService} from './service/resolve/integrantes-resolve.service';
@@ -44,7 +44,7 @@ const providers = [
   AdminService,
   LoadingService,
   TurnoService,
-  UtilsService
+  Util
 ];
 
 @NgModule({

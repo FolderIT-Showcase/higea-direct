@@ -34,7 +34,6 @@ export class RegisterComponent implements OnInit {
   validatorPlan: any [] = [];
   tieneObraSocial = false;
 
-
   passwordMatcher = (control: AbstractControl): { [key: string]: boolean } => {
     const password1 = control.get('password1');
     const password2 = control.get('password2');
@@ -106,7 +105,7 @@ export class RegisterComponent implements OnInit {
     persona.documento.id = null;
     persona.documento.numero = data.numeroDocumento;
     persona.documento.tipoDocumento = TipoDocumentos.findByLabel(data.tipoDocumento);
-    if(!data.tipoDocumento)persona.documento.tipoDocumento = TipoDocumentos.findByLabel('DNI');
+    if (!data.tipoDocumento) persona.documento.tipoDocumento = TipoDocumentos.findByLabel('DNI');
     persona.nombre = data.nombre;
     persona.apellido = data.apellido;
 
@@ -139,7 +138,6 @@ export class RegisterComponent implements OnInit {
   submitForm(data: any) {
 
     if (!this.complexForm.valid) {
-
 
       this.complexForm.controls['nombre'].markAsTouched(true);
       this.complexForm.controls['apellido'].markAsTouched(true);
@@ -202,7 +200,6 @@ export class RegisterComponent implements OnInit {
   handleObraSocialClick(obra_social: ObraSocial) {
     this.planes = obra_social.planes;
   }
-
 
   eventClickOS(event) {
     console.log(this.tieneObraSocial);

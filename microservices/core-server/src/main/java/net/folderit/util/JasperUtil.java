@@ -16,10 +16,7 @@ import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
-import javax.xml.transform.Templates;
 import java.awt.*;
-import java.io.InputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -40,9 +37,8 @@ public class JasperUtil {
                         .setDefaultStyles(getTitleStyle(), getSubtitleStyle(), getHeaderStyle(), null)
                         .setPrintBackgroundOnOddRows(true)
                         .setUseFullPageWidth(true)
-                       // .setTemplateFile(JasperUtil.class.getResourceAsStream("StylesReport.jrxml").toString())
+                        // .setTemplateFile(JasperUtil.class.getResourceAsStream("StylesReport.jrxml").toString())
                         .build();
-
 
 
         JRDataSource ds = new JRBeanCollectionDataSource(turnos);
@@ -50,7 +46,6 @@ public class JasperUtil {
         byte[] report = JasperExportManager.exportReportToPdf(jp);
         return report;
     }
-
 
 
     public byte[] buildReportTurnoByturno(Turno turno) throws Exception {
@@ -77,7 +72,7 @@ public class JasperUtil {
         return report;
     }
 
-    private Style getTitleStyle(){
+    private Style getTitleStyle() {
         /**
          * "titleStyle" exists in the template .jrxml file
          * The title should be seen in a big font size, violet foreground and light green background
@@ -87,7 +82,7 @@ public class JasperUtil {
         return titleStyle;
     }
 
-    private Style getSubtitleStyle(){
+    private Style getSubtitleStyle() {
         /**
          * "subtitleStyleParent" is meant to be used as a parent style, while
          * "subtitleStyle" is the child.
@@ -99,10 +94,10 @@ public class JasperUtil {
         Style subtitleStyle = Style.createBlankStyle("subtitleStyle", "subtitleParent");
         subtitleStyle.setFont(Font.GEORGIA_SMALL_BOLD);
 
-        return  subtitleStyle;
+        return subtitleStyle;
     }
 
-    private Style getHeaderStyle(){
+    private Style getHeaderStyle() {
         Style headerStyle = new Style();
 
         headerStyle.setBackgroundColor(new Color(230, 230, 230));
@@ -110,7 +105,7 @@ public class JasperUtil {
         headerStyle.setHorizontalAlign(HorizontalAlign.CENTER);
         headerStyle.setTransparency(ar.com.fdvs.dj.domain.constants.Transparency.OPAQUE);
 
-        return  headerStyle;
+        return headerStyle;
     }
 
     private AbstractColumn getHourTurno() {

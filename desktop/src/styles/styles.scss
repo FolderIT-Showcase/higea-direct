@@ -20,6 +20,8 @@ $light-orange: #ffb190;
 $light-blue: #ecf6fc;
 $blue: #64c0fc;
 $medium-light-blue: #7494de;
+$purple: #772953;
+$dark-purple: #481a33;
 
 html,
 body {
@@ -282,6 +284,15 @@ td {
   padding: 4px !important;
 }
 
+.table-striped>tbody>tr:nth-of-type(odd) {
+  background-color: $gray-1;
+}
+
+.table>thead>tr>th, .table>thead>tr>td, .table>tbody>tr>th, .table>tbody>tr>td, .table>tfoot>tr>th, .table>tfoot>tr>td {
+  //border-top: 1px solid #ddd;
+  border-top: 1px solid $gray-2;
+}
+
 .app-timeline {
   .app-selectable-row {
     font-weight: bold;
@@ -325,8 +336,8 @@ td {
 
 @media (min-width: 768px) {
   .app-scroll-70 {
-    max-height: 70vh !important;
-    overflow-y: scroll !important;
+    //max-height: 70vh !important;
+    //overflow-y: scroll !important;
   }
 }
 
@@ -372,3 +383,25 @@ div.selector.inlinedp {
   background-color: $gray-4;
 }
 
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  padding: 0;
+  font-size: 12px;
+  line-height: 1.428571429;
+  border: 1px solid $gray-3;
+  border-radius: 15px;
+}
+
+.legend-available{
+  background-color: $green;
+}
+
+.legend-past{
+  background-color: white;
+}
+
+.legend-unavailable{
+  background-color: $gray-1;
+}

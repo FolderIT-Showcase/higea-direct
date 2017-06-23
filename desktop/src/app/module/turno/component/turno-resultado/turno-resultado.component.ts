@@ -8,7 +8,7 @@ import {StoreService} from '../../../../service/store.service';
 import {Persona} from '../../../../domain/persona';
 import {Especialidad} from '../../../../domain/especialidad';
 import {Profesional} from '../../../../domain/profesional';
-import {UtilsService} from '../../../../service/utils.service';
+import {Util} from '../../../../service/utils.service';
 import {Turno} from '../../../../domain/turno';
 
 @Component({
@@ -35,7 +35,7 @@ export class TurnoResultadoComponent implements OnInit, OnDestroy, AfterViewInit
   desktopMode = true;
 
   constructor(private store: Store,
-              private utilsService: UtilsService,
+              private utilsService: Util,
               private turnoService: TurnoService,
               private storeService: StoreService) {
 
@@ -70,7 +70,7 @@ export class TurnoResultadoComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   ngAfterViewInit(): void {
-    this.desktopMode = (UtilsService.getWidth()) >= 1000;
+    this.desktopMode = (Util.getWidth()) >= 1000;
     this.subs.push(this.utilsService.getWidthResizeEvent().subscribe(data => {
       this.desktopMode = data >= 1000;
     }));

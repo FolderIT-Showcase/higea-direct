@@ -19,7 +19,9 @@ export class PreparacionComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.persona = this.storeService.get('persona');
-    this.turnos = this.persona.turno;
+    if (this.persona && this.persona.turno) {
+      this.turnos = this.persona.turno;
+    }
   }
 
   ngOnDestroy(): void {

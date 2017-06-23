@@ -6,8 +6,8 @@
         <label><strong>Día: </strong>{{turno.dia | date: 'EEEE'}}</label><br>
         <label><strong>Fecha: </strong>{{turno.fecha | date: 'dd/MM/yyyy'}}</label><br>
         <label><strong>Hora: </strong>{{turno.hora | date: 'HH:mm'}}</label><br>
-        <label><strong>Centro de Salud: </strong>{{turno.centroSalud.nombre}}</label><br>
-        <label><strong>Especialidad: </strong>{{turno.especialidad.nombre}}</label><br>
+        <label *ngIf="turnos[0].centroSalud"><strong>Centro de Salud: </strong>{{turno.centroSalud.nombre}}</label><br>
+        <label *ngIf="turnos[0].especialidad"><strong>Especialidad: </strong>{{turno.especialidad.nombre}}</label><br>
         <label><strong>Profesional: </strong>{{turno.profesional.nombre}}</label><br>
         <label><strong>Preparacion: </strong>{{turno.motivoTurno.preparacion.descripcion}}</label>
       </div>
