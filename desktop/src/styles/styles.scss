@@ -405,3 +405,11 @@ div.selector.inlinedp {
 .legend-unavailable{
   background-color: $gray-1;
 }
+
+.app-wrapper-absolute-center{
+  height: 90vh;
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: flex-start !important;
+  align-items: center !important;
+}

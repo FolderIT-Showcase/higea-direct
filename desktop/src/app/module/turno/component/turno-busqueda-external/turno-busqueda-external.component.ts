@@ -23,7 +23,7 @@ class Data {
 
 @Component({
   selector: 'app-turno-busqueda-avanzada-external',
-  templateUrl: './turno-busqueda-avanzada-external.component.html'
+  templateUrl: './turno-busqueda-external.component.html'
 })
 export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy {
 
