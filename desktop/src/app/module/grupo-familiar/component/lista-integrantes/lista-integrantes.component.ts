@@ -73,7 +73,7 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
               private personaService: PersonaService,
               private alertService: AlertService,
               private storeHelper: StoreService) {
-
+    const EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
     this.getMetadata();
 
     // const defaultTipoDocumento = this.lists.tipoDocumentos.find(x => x.id.toLowerCase() === 'dni');
@@ -81,22 +81,22 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
     // const defaultProvincia = this.lists.provincias.find(x => x.nombre.toLowerCase() === 'santa fe');
 
     this.mForm = this.fb.group({
-      nombre: [null, Validators.required],
-      apellido: [null, Validators.required],
-      genero: [null, Validators.required],
-      tipoDocumento: [null, Validators.required],
-      numeroDocumento: [null, Validators.required],
-      fechaNacimiento: [null, Validators.required],
-      pais: [null, Validators.required],
-      provincia: [null, Validators.required],
-      localidad: [null, Validators.required],
-      calle: [null],
-      telefono: [null],
-      celular: [null],
-      email: [null],
-      obraSocial: [null, Validators.required],
-      plan: [null, Validators.required],
-      nroAfiliado: [null],
+      'nombre': [null,[Validators.required, Validators.pattern('[a-zA-Z ]*')]],
+      'apellido': [null, [Validators.required, Validators.pattern('[a-zA-Z ]*')]],
+      'genero': [null, Validators.required],
+      'tipoDocumento': [null, Validators.required],
+      'numeroDocumento': [null, Validators.required],
+      'fechaNacimiento': [null, Validators.required],
+      'pais': [null, Validators.required],
+      'provincia': [null, Validators.required],
+      'localidad': [null, Validators.required],
+      'calle': [null],
+      'telefono': [null],
+      'celular': [null],
+      'email': [null, [Validators.required, Validators.pattern(EMAIL_REGEXP)]],
+      'obraSocial': [null, Validators.required],
+      'plan': [null, Validators.required],
+      'nroAfiliado': [null],
     });
 
   }
@@ -201,8 +201,8 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
       const calle = (integrante.domicilio && integrante.domicilio.calle) ? integrante.domicilio.calle : '';
       const piso = (integrante.domicilio && integrante.domicilio.piso) ? integrante.domicilio.piso : '';
       const departamento = (integrante.domicilio && integrante.domicilio.departamento) ? integrante.domicilio.departamento : '';
-
-      this.mForm.setValue({
+console.log("Entro");
+      this.mForm = this.fb.group({
         'nombre': integrante.nombre || '',
         'apellido': integrante.apellido || '',
         'genero': integrante.genero || '',
