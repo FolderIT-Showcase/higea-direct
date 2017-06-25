@@ -1,0 +1,45 @@
+@import "../../../../styles/styles";
+
+.app-footer {
+  display: none;
+  bottom: 0;
+  width: 100%;
+  background-color: $dark-purple;
+}
+
+@media (min-width: 1090px) {
+  .app-footer {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: $dark-purple;
+  }
+}
+
+.footer-bottom {
+  background-color: $dark-purple;
+  min-height: 30px;
+  width: 100%;
+}
+
+.copyright {
+  color: $gray-1;
+  font-weight: bold;
+  //line-height: 24px;
+  //min-height: 24px;
+  padding: 7px 0;
+}
+
+.design {
+  color: $gray-1;
+  font-weight: bold;
+  //line-height: 24px;
+  //min-height: 24px;
+  padding: 4px 0;
+  text-align: right;
+}
+
+.copyright a {
+  color: #fff;
+}

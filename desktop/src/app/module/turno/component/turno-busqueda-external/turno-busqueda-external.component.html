@@ -1,7 +1,6 @@
 <form [formGroup]="form" (ngSubmit)="submitForm(form.value)">
   <div class="form-group"
        [ngClass]="{'has-error':!form.controls['persona'].valid && form.controls['persona'].touched}">
-    <small>Paciente</small>
     <app-select
       ngDefaultControl
       [placeHolder]="'Paciente'"
@@ -15,7 +14,6 @@
     </small>
   </div>
   <div class="form-group">
-    <small>Especialidad</small>
     <app-select
       ngDefaultControl
       [placeHolder]="'Especialidad'"
@@ -26,7 +24,6 @@
     ></app-select>
   </div>
   <div class="form-group">
-    <small>Médico y/o Profesional</small>
     <app-select
       ngDefaultControl
       [placeHolder]="'Médico/Profesional'"
@@ -35,23 +32,39 @@
       [displayProp]="['apellido', 'nombre']"
     ></app-select>
   </div>
-  <br>
-
-  <small>Dias de atencion</small>
-  <div class="col-sm-12" style="padding: 0; margin: 0;">
-
-    <div class="app-container">
-      <div class="dummy"></div>
-      <div class="app-cal-container">
-        <my-date-picker
-          id="fecha"
-          (calendarViewChanged)="calendarChange($event)"
-          [options]="myDatePickerOptions"
-          [locale]="'es'"
-          [formControl]="form.controls['fecha']"
-          [markedDays]="markedDays"
-        ></my-date-picker>
+  <div class="form-group">
+    <small>Dias de atencion</small>
+    <div class="col-sm-12">
+      <div class="app-container">
+        <div class="dummy"></div>
+        <div class="app-cal-container">
+          <my-date-picker
+            id="fecha"
+            (calendarViewChanged)="calendarChange($event)"
+            [options]="myDatePickerOptions"
+            [locale]="'es'"
+            [formControl]="form.controls['fecha']"
+            [markedDays]="markedDays"
+          ></my-date-picker>
+        </div>
       </div>
+    </div>
+  </div>
+  <br>
+  <div class="form-group">
+    <small>Leyenda</small>
+    <div class="col-sm-12">
+      <br>
+      <a class="btn btn-circle legend-available"></a>
+      <label>Dia con turnos disponibles</label>
+      <br>
+      <br>
+      <a class="btn btn-circle legend-past"></a>
+      <label>Dia con turnos pasados</label>
+      <br>
+      <br>
+      <a class="btn btn-circle legend-unavailable"></a>
+      <label>Dia sin turnos disponibles</label>
     </div>
   </div>
 

@@ -11,6 +11,7 @@ import {RouterModule} from '@angular/router';
 import {SelectComponent} from './select/select.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {InfoStepComponent} from './info-step/info-step.component';
+import {FooterComponent} from './footer/footer.component';
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import {InfoStepComponent} from './info-step/info-step.component';
     NavbarComponent,
     SelectComponent,
     InfoStepComponent,
+    FooterComponent,
   ],
   exports: [
     AlertComponent,
@@ -39,7 +41,8 @@ import {InfoStepComponent} from './info-step/info-step.component';
     ModalComponent,
     NavbarComponent,
     SelectComponent,
-    InfoStepComponent
+    InfoStepComponent,
+    FooterComponent
   ]
 })
 export class UIModule {

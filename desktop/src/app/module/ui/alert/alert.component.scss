@@ -1,19 +1,31 @@
 @import "../../../../styles/styles";
 
-/* The snackbar - position it at the top and in the middle of the screen */
 .app-snackbar {
   cursor: pointer;
-  min-width: 250px; /* Set a default minimum width */
-  margin-left: -125px; /* Divide value of min-width by 2 */
-  background-color: #333; /* Black background color */
-  color: #fff; /* White text color */
-  text-align: center; /* Centered text */
-  padding: 16px; /* Padding */
-  position: fixed; /* Sit on top of the screen */
-  z-index: 2000; /* Add a z-index if needed */
-  left: 50%; /* Center the snackbar */
-  top: 20px;
-  border-radius: 5px;
+  color: #fff;
+  padding: 16px;
+  border-radius: 0;
+}
+
+.alert-wrapper {
+  width: 100vw !important;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: baseline;
+  position: fixed;
+  z-index: 2000;
+  color: #fff;
+}
+
+@media (min-width: 800px) {
+  .app-snackbar {
+    cursor: pointer;
+    min-width: 250px;
+    margin: 10px;
+    padding: 16px;
+    border-radius: 5px;
+  }
 }
 
 .hide {

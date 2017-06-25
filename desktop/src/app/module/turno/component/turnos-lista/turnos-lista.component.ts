@@ -4,6 +4,8 @@ import {ModalDirective} from 'ngx-bootstrap';
 import {TurnoService} from '../../../../service/turno.service';
 import {StoreService} from '../../../../service/store.service';
 import {Persona} from '../../../../domain/persona';
+import {Util} from '../../../../service/utils.service';
+import {Profesional} from '../../../../domain/profesional';
 
 @Component({
   selector: 'app-turnos-proximos',
@@ -52,5 +54,9 @@ export class TurnosListaComponent implements OnInit {
 
   generarPDF() {
     this.turnoService.generarTurnoPDF(this.turno);
+  }
+
+  label(profesional: Profesional) {
+    return Util.label([profesional.apellido, profesional.nombre]);
   }
 }

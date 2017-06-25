@@ -11,6 +11,7 @@ import {MetadataService} from '../../../../service/metadata.service';
 import {AlertService} from '../../../../service/alert.service';
 import {Subscription} from 'rxjs/Subscription';
 import {IMyOptions} from '../../../my-date-picker/interfaces/my-options.interface';
+import {Util} from '../../../../service/utils.service';
 
 class Data {
   persona: Persona;
@@ -22,7 +23,7 @@ class Data {
 
 @Component({
   selector: 'app-turno-busqueda-avanzada-external',
-  templateUrl: './turno-busqueda-avanzada-external.component.html'
+  templateUrl: './turno-busqueda-external.component.html'
 })
 export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy {
 
@@ -53,19 +54,18 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
               private alertService: AlertService,
               private turnoService: TurnoService,
               private fb: FormBuilder) {
+    this.form = this.fb.group({
+      'persona': [null, Validators.required],
+      'fecha': [null, Validators.required],
+      'especialidad': [null],
+      'profesional': [null, Validators.required]
+    });
   }
 
   ngOnInit(): void {
 
     this.personas = this.storeService.get('integrantes');
     const date = new Date();
-    this.form = this.fb.group({
-      'persona': [this.personas[0], Validators.required],
-      'fecha': [null, Validators.required],
-      'especialidad': [null],
-      'profesional': [null, Validators.required]
-    });
-    this.form.value.fechaDesde = new Date();
 
     this.metadataService.getEspecialidades()
       .then(data => {
@@ -74,9 +74,7 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
       })
       .then(data => {
         this.profesionales = data;
-
         let especialidadesTmp = [];
-
         for (let i in this.profesionales) {
           for (let j in this.especialidades) {
             if (this.profesionales[i].especialidadId == this.especialidades[j].id) {
@@ -84,45 +82,50 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
             }
           }
         }
-
         for (let j in this.especialidades) {
           if (this.especialidades[j].profesional.length !== 0) {
             especialidadesTmp.push(this.especialidades[j]);
           }
         }
-
         this.especialidades = Object.assign([], especialidadesTmp);
+        this.form = this.fb.group({
+          'persona': [Util.getFirstDefault(this.personas), Validators.required],
+          'fecha': [null, Validators.required],
+          'especialidad': [Util.getFirstDefault(this.especialidades)],
+          'profesional': [null, Validators.required]
+        });
+        this.form.value.fechaDesde = new Date();
+      })
+      .then(() => {
+        this.subs.push(
+          this.form.valueChanges.subscribe(data => {
+            if (!data) return;
 
-      });
-
-    this.subs.push(
-      this.form.valueChanges.subscribe(data => {
-        if (!data) return;
-
-        if (data.especialidad && data.profesional && data.profesional.id) {
-          this.getMarkedDays(data);
-          if (data.persona && data.persona.id) {
-            let steps: any[] = this.storeService.get('steps');
-            if (steps && steps[0]) {
-              steps[0] = {
-                label: steps[0].label,
-                ngClass: 'btn-success'
+            if (data.especialidad && data.profesional && data.profesional.id) {
+              this.getMarkedDays(data);
+              if (data.persona && data.persona.id) {
+                let steps: any[] = this.storeService.get('steps');
+                if (steps && steps[0]) {
+                  steps[0] = {
+                    label: steps[0].label,
+                    ngClass: 'btn-success'
+                  }
+                }
               }
             }
-          }
-        }
-        if (data.fecha && this.form.valid) {
-          this.submitForm(this.form.value);
-          let steps: any[] = this.storeService.get('steps');
-          if (steps && steps[1]) {
-            steps[1] = {
-              label: steps[1].label,
-              ngClass: 'btn-success'
+            if (data.fecha && this.form.valid) {
+              this.submitForm(this.form.value);
+              let steps: any[] = this.storeService.get('steps');
+              if (steps && steps[1]) {
+                steps[1] = {
+                  label: steps[1].label,
+                  ngClass: 'btn-success'
+                }
+              }
             }
-          }
-        }
-      })
-    );
+          })
+        );
+      });
 
   }
 

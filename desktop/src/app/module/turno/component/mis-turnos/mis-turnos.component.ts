@@ -8,7 +8,7 @@ import {AlertService} from '../../../../service/alert.service';
 import {Especialidad} from '../../../../domain/especialidad';
 import {CentroSalud} from '../../../../domain/centro-salud';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {UtilsService} from '../../../../service/utils.service';
+import {Util} from '../../../../service/utils.service';
 import {Subject} from 'rxjs/Subject';
 
 @Component({
@@ -29,7 +29,7 @@ export class MisTurnosComponent implements OnInit, OnDestroy, AfterViewInit {
   desktopMode = true;
   private ngUnsubscribe: Subject<void> = new Subject<void>();
 
-  constructor(private utilsService: UtilsService,
+  constructor(private utilsService: Util,
               private storeService: StoreService,
               private turnoService: TurnoService,
               private fb: FormBuilder,
@@ -50,13 +50,15 @@ export class MisTurnosComponent implements OnInit, OnDestroy, AfterViewInit {
     this.persona = this.personas[0];
     this.storeService.update('persona', this.personas[0]);
     this.turnoService.getTurnoByPersonaId(this.persona.externalId).then(turnos => this.buildTurnos(turnos));
-  }
 
-  ngAfterViewInit(): void {
-    this.desktopMode = (UtilsService.getWidth()) >= 1000;
+    this.desktopMode = (Util.getWidth()) >= 1000;
     this.utilsService.getWidthResizeEvent()
       .takeUntil(this.ngUnsubscribe)
       .subscribe(data => this.desktopMode = data >= 1000);
+  }
+
+  ngAfterViewInit(): void {
+
   }
 
   ngOnDestroy(): void {
@@ -71,11 +73,8 @@ export class MisTurnosComponent implements OnInit, OnDestroy, AfterViewInit {
     this.turnosHistorial = [];
     this.turnosProximos = [];
     this.turnos.forEach(x => {
-      if (x.fecha <= Date.now()) {
-        this.turnosHistorial.push(x);
-      } else {
-        this.turnosProximos.push(x);
-      }
+      if (x.fecha <= Date.now()) this.turnosHistorial.push(x);
+      else this.turnosProximos.push(x);
     });
   }
 

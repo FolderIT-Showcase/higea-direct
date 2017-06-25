@@ -27,7 +27,7 @@ public class SyncService {
         metadataService.clearProfesionales();
     }
 
-    public void syncAll(){
+    public void syncAll() {
         syncMotivosTurno();
         syncProfesionales();
         syncEspecialidades();
@@ -37,7 +37,7 @@ public class SyncService {
         syncObrasSociales();
     }
 
-    private List<Profesional> nameProfesionals(List<Profesional> profesionals){
+    private List<Profesional> nameProfesionals(List<Profesional> profesionals) {
 
         List<String> names = new ArrayList<>();
         List<String> surnames = new ArrayList<>();
@@ -88,7 +88,8 @@ public class SyncService {
 
     private void syncEspecialidades() {
         String url = "http://localhost:36004/{cliente}/especialidad";
-        ResponseEntity<List<Especialidad>> result = higeaApiConnect.get(url, new ParameterizedTypeReference<List<Especialidad>>(){});
+        ResponseEntity<List<Especialidad>> result = higeaApiConnect.get(url, new ParameterizedTypeReference<List<Especialidad>>() {
+        });
         List<Especialidad> listOld = metadataService.getAllEspecialidades();
         List<Especialidad> listNew = result.getBody();
         metadataService.saveAllEspecialidades(listDiff(listOld, listNew));
@@ -96,7 +97,8 @@ public class SyncService {
 
     private void syncProfesionales() {
         String url = "http://localhost:36004/{cliente}/profesional";
-        ResponseEntity<List<Profesional>> result = higeaApiConnect.get(url, new ParameterizedTypeReference<List<Profesional>>(){});
+        ResponseEntity<List<Profesional>> result = higeaApiConnect.get(url, new ParameterizedTypeReference<List<Profesional>>() {
+        });
         List<Profesional> listOld = metadataService.getAllProfesionales();
         List<Profesional> listNew = result.getBody();
 
@@ -109,7 +111,8 @@ public class SyncService {
     // @Scheduled(fixedRate = 35000)
     private void syncObrasSociales() {
         String url = "http://localhost:36004/{cliente}/obraSocial";
-        ResponseEntity<List<ObraSocial>> result = higeaApiConnect.get(url, new ParameterizedTypeReference<List<ObraSocial>>(){});
+        ResponseEntity<List<ObraSocial>> result = higeaApiConnect.get(url, new ParameterizedTypeReference<List<ObraSocial>>() {
+        });
         List<ObraSocial> obrasSocialesOld = metadataService.getAllObrasSociales();
         List<ObraSocial> obrasSocialesNew = result.getBody();
         metadataService.saveAllObraSocial(listDiff(obrasSocialesOld, obrasSocialesNew));
@@ -117,7 +120,8 @@ public class SyncService {
 
     private void syncPaises() {
         String url = "http://localhost:36004/{cliente}/pais";
-        ResponseEntity<List<Pais>> result = higeaApiConnect.get(url, new ParameterizedTypeReference<List<Pais>>(){});
+        ResponseEntity<List<Pais>> result = higeaApiConnect.get(url, new ParameterizedTypeReference<List<Pais>>() {
+        });
         List<Pais> listOld = metadataService.findAllPais();
         List<Pais> listNew = result.getBody();
         metadataService.saveAllPaises(listDiff(listOld, listNew));
@@ -125,7 +129,8 @@ public class SyncService {
 
     private void syncProvincias() {
         String url = "http://localhost:36004/{cliente}/provincia";
-        ResponseEntity<List<Provincia>> result = higeaApiConnect.get(url, new ParameterizedTypeReference<List<Provincia>>(){});
+        ResponseEntity<List<Provincia>> result = higeaApiConnect.get(url, new ParameterizedTypeReference<List<Provincia>>() {
+        });
         List<Provincia> listOld = metadataService.findAllProvincia();
         List<Provincia> listNew = result.getBody();
         metadataService.saveAllProvincias(listDiff(listOld, listNew));
@@ -133,7 +138,8 @@ public class SyncService {
 
     private void syncLocalidades() {
         String url = "http://localhost:36004/{cliente}/localidad";
-        ResponseEntity<List<Localidad>> result = higeaApiConnect.get(url, new ParameterizedTypeReference<List<Localidad>>(){});
+        ResponseEntity<List<Localidad>> result = higeaApiConnect.get(url, new ParameterizedTypeReference<List<Localidad>>() {
+        });
         List<Localidad> listOld = metadataService.findAllLocalidad();
         List<Localidad> listNew = result.getBody();
         metadataService.saveAllLocalidad(listDiff(listOld, listNew));
@@ -141,7 +147,8 @@ public class SyncService {
 
     private void syncMotivosTurno() {
         String url = "http://localhost:36004/{cliente}/motivoTurno";
-        ResponseEntity<List<MotivoTurno>> result = higeaApiConnect.get(url, new ParameterizedTypeReference<List<MotivoTurno>>(){});
+        ResponseEntity<List<MotivoTurno>> result = higeaApiConnect.get(url, new ParameterizedTypeReference<List<MotivoTurno>>() {
+        });
         List<MotivoTurno> listOld = metadataService.findAllMotivosTurno();
         List<MotivoTurno> listNew = result.getBody();
         metadataService.saveAllMotivosTurno(listDiff(listOld, listNew));

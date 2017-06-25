@@ -13,7 +13,7 @@ export class TurnoExternalComponent {
   constructor(private storeService: StoreService, private store: Store) {
     this.steps = [
       {
-        label: 'Selecciona el Paciente, Especialidad y Médico',
+        label: 'Escoje Paciente, Especialidad y Médico',
         order: 1
       },
       {

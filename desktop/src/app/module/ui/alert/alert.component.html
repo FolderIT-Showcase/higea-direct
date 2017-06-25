@@ -1,6 +1,9 @@
-<div *ngIf="message"
-     (click)="closeAlert()"
-     class="app-snackbar"
-     [ngClass]="{ 'alert': message, 'success': message.type === 'success', 'error': message.type === 'error' }"
->{{message.text}}
+<div class="alert-wrapper">
+  <div *ngIf="message"
+       (click)="closeAlert()"
+       class="app-snackbar"
+       [ngClass]="{ 'alert': message, 'success': message.type === 'success', 'error': message.type === 'error' }"
+  >{{message.text}}
+  </div>
 </div>
+

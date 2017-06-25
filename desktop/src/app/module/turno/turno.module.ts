@@ -13,9 +13,8 @@ import {ModalModule, TabsModule, TimepickerModule} from 'ngx-bootstrap';
 import {SwitchTurnoComponent} from './component/switch-turno/switch-turno.component';
 import {TurnosListaComponent} from './component/turnos-lista/turnos-lista.component';
 import {TurnoBusquedaRapidaComponent} from './component/turno-busqueda-rapida/turno-busqueda-rapida.component';
-import {TurnoBusquedaRapidaExternalComponent} from './component/turno-busqueda-rapida-external/turno-busqueda-rapida-external.component';
 import {TurnoResultadoExternalComponent} from './component/turno-resultado-external/turno-resultado-external.component';
-import {TurnoBusquedaAvanzadaExternalComponent} from './component/turno-busqueda-avanzada-external/turno-busqueda-avanzada-external.component';
+import {TurnoBusquedaAvanzadaExternalComponent} from './component/turno-busqueda-external/turno-busqueda-external.component';
 import {TurnoExternalComponent} from './component/turno-external/turno-external.component';
 import {TurnoRoutingModule} from './turno.routing.module';
 import {TurnoHomeComponent} from './turno-home.component';
@@ -53,7 +52,6 @@ import {MyDatePickerModule} from '../my-date-picker/my-date-picker.module';
     TurnoExternalComponent,
     TurnoBusquedaAvanzadaExternalComponent,
     TurnoResultadoExternalComponent,
-    TurnoBusquedaRapidaExternalComponent,
     PreparacionComponent
   ]
 })

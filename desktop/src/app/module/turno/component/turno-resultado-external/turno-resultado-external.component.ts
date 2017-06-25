@@ -90,6 +90,17 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
       let date = new Date().setHours(i, baseMin, 0, 0);
       let turno = new Turno();
       turno.hora = date;
+
+      for (let turnoEnabled of this.turnos) {
+        const dateTimeline = new Date(turno.hora);
+        const date = new Date(turnoEnabled.hora);
+        if (dateTimeline.getHours() === date.getHours() &&
+          dateTimeline.getMinutes() === date.getMinutes()) {
+          turnoEnabled.enabled = true;
+          turno = turnoEnabled;
+        }
+      }
+
       this.timeline.push(turno);
 
       for (let j = duracion; j !== 0; j = (j + duracion) % 60) {
@@ -169,7 +180,7 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
   }
 
   getEspecialidad(turno): string {
-    if (!turno ||!this.especialidades)return '';
+    if (!turno || !this.especialidades)return '';
 
     let especialidadName;
 

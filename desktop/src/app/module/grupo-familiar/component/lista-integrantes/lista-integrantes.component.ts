@@ -19,7 +19,7 @@ import {Store} from '../../../../service/store';
 import {Subscription} from 'rxjs/Subscription';
 import * as _ from 'lodash';
 import {DatePipe} from '@angular/common';
-import {UtilsService} from '../../../../service/utils.service';
+import {Util} from '../../../../service/utils.service';
 import {ObraSocial} from '../../../../domain/obra-social';
 import {Plan} from '../../../../domain/plan';
 import {Metadata} from '../../../../domain/metadata';
@@ -68,7 +68,7 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
   validatorPlan: any [] = [];
 
   constructor(private fb: FormBuilder,
-              private utilsService: UtilsService,
+              private utilsService: Util,
               private store: Store,
               private personaService: PersonaService,
               private alertService: AlertService,
@@ -141,7 +141,7 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.desktopMode = (UtilsService.getWidth()) >= 1000;
+    this.desktopMode = (Util.getWidth()) >= 1000;
     this.subs.push(this.utilsService.getWidthResizeEvent().subscribe(data => {
       this.desktopMode = data >= 1000;
     }));
@@ -201,7 +201,7 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
       const calle = (integrante.domicilio && integrante.domicilio.calle) ? integrante.domicilio.calle : '';
       const piso = (integrante.domicilio && integrante.domicilio.piso) ? integrante.domicilio.piso : '';
       const departamento = (integrante.domicilio && integrante.domicilio.departamento) ? integrante.domicilio.departamento : '';
-console.log("Entro");
+
       this.mForm = this.fb.group({
         'nombre': integrante.nombre || '',
         'apellido': integrante.apellido || '',
