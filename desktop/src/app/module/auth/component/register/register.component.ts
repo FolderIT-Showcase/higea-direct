@@ -70,6 +70,7 @@ export class RegisterComponent implements OnInit {
     });
     this.metadataService.getObrasSociales().then((data: any) => {
       this.obras_sociales = data;
+      this.getParticularPlan();
     });
   }
 
@@ -125,10 +126,8 @@ export class RegisterComponent implements OnInit {
   getParticularPlan(): Plan {
     let plan: Plan;
     for (let obraSocial of this.obras_sociales) {
-      if (obraSocial.nombre === 'Particular') {
-
+      if (obraSocial && obraSocial.nombre && obraSocial.nombre.toLowerCase() === 'particular') {
         plan = obraSocial.planes[0];
-        console.log(plan.id);
       }
     }
     return plan;
@@ -148,7 +147,6 @@ export class RegisterComponent implements OnInit {
       this.complexForm.controls['numeroDocumento'].markAsTouched(true);
       this.complexForm.controls['genero'].markAsTouched(true);
       if (this.tieneObraSocial) {
-        console.log(this.tieneObraSocial)
         this.complexForm.controls['obraSocial'].markAsTouched(true);
         this.complexForm.controls['plan'].markAsTouched(true);
         this.complexForm.controls['nroAfiliado'].markAsTouched(true);
@@ -163,7 +161,7 @@ export class RegisterComponent implements OnInit {
     // if (!this.captcha) {
     //   return;
     // }
-    
+
     this.savePersona(persona);
 
   }
@@ -171,8 +169,11 @@ export class RegisterComponent implements OnInit {
   savePersona(persona: Persona) {
     this.personaService.create(persona)
       .then(() => {
-        this.alertService.success('Registro Exitoso, chequee su cuenta de email para activar el usuario');
-        this.router.navigate(['/login']);
+        this.router
+          .navigate(['/login'])
+          .then(() => {
+            this.alertService.success('Registro Exitoso, chequee su cuenta de email para activar el usuario');
+          })
       });
   }
 

@@ -3,6 +3,8 @@ import {ApiService} from './api.service';
 import {Persona} from '../domain/persona';
 import {StoreService} from './store.service';
 import {User} from '../domain/user';
+import {AlertService} from './alert.service';
+import {Router} from '@angular/router';
 
 @Injectable()
 export class PersonaService {
@@ -17,17 +19,26 @@ export class PersonaService {
   uriChangePass = `${this.basePathCore}users/changePassword`;
   externalUriRegistration = `${this.basePathHigea}paciente/${this.client}`;
 
-  constructor(private api: ApiService, private storeService: StoreService) {
+  constructor(private api: ApiService,
+              private storeService: StoreService,
+              private router: Router,
+              private alertService: AlertService,) {
   }
 
   create(persona: Persona) {
 
     if (this.license === 'core') return this.api.post(this.uriRegistration, persona, false);
 
-    return this.api.post(this.externalUriRegistration, persona, false).then((data) => {
-      if (persona) persona.externalId = data.externalId;
-      return this.api.post(this.uriRegistration, persona, false);
-    })
+    return this.api
+      .post(this.externalUriRegistration, persona, false)
+      .then((data) => {
+        if (persona) persona.externalId = data.externalId;
+        return this.api.post(this.uriRegistration, persona, false);
+      })
+      // .then(() => {
+      //   this.alertService.success('Registro Exitoso, chequee su cuenta de email para activar el usuario');
+      //   this.router.navigate(['/login']);
+      // });
 
   }
 
