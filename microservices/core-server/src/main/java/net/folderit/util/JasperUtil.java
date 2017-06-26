@@ -8,8 +8,11 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -41,8 +44,9 @@ public class JasperUtil {
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         PDDocument doc = new PDDocument();
-        PDImageXObject pdImage = PDImageXObject.createFromFile(getClass().getClassLoader().getResource("report/higea.png").getPath(), doc);
-        //contentStream.drawImage(pdImage, 20, 20, pdImage.getWidth() * scale, pdImage.getHeight() * scale);
+
+        BufferedImage bin = ImageIO.read(getClass().getClassLoader().getResourceAsStream("report/higea.png"));
+        PDImageXObject pdImage = LosslessFactory.createFromImage(doc, bin);
 
         doc.addPage(page);
 
