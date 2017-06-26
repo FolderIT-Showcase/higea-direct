@@ -31,9 +31,9 @@ export class RecoveryComponent implements OnInit {
 
     this.personaService.validateEmail(email)
       .then(() => {
-        this.alertService.success('Verifique su cuenta de email para restablecer la contraseña');
-        this.router.navigate(['/login']);
-      });
-  }
+        this.router.navigate(['/login']).then(() => {
+          this.alertService.success('Verifique su cuenta de email para restablecer la contraseña')});
+        });
+      }
 
-}
+  }
