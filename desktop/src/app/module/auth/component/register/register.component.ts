@@ -163,23 +163,7 @@ export class RegisterComponent implements OnInit {
     // if (!this.captcha) {
     //   return;
     // }
-
-    if (persona.documento.tipoDocumento === 'dni') {
-
-      const doc = {
-        documento: persona.documento.numero,
-        nombre: persona.nombre,
-        apellido: persona.apellido,
-        genero: persona.genero.slice(0, 1)
-      };
-      this.personaService.validateDni(doc)
-        .then(() => {
-          this.savePersona(persona);
-        });
-
-      return;
-    }
-
+    
     this.savePersona(persona);
 
   }
