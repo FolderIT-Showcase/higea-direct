@@ -40,10 +40,8 @@ public class JasperUtil {
         PDPage page = new PDPage();
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        getClass().getClassLoader().getResource("./report/higea.png");
-
         PDDocument doc = new PDDocument();
-        PDImageXObject pdImage = PDImageXObject.createFromFile(getClass().getClassLoader().getResource("./report/higea.png").getPath(), doc);
+        PDImageXObject pdImage = PDImageXObject.createFromFile(getClass().getClassLoader().getResource("report/higea.png").getPath(), doc);
         //contentStream.drawImage(pdImage, 20, 20, pdImage.getWidth() * scale, pdImage.getHeight() * scale);
 
         doc.addPage(page);
