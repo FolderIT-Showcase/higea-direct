@@ -125,7 +125,7 @@ export class RegisterComponent implements OnInit {
   getParticularPlan(): Plan {
     let plan: Plan;
     for (let obraSocial of this.obras_sociales) {
-      if (obraSocial.nombre.toLowerCase() === 'particular') {
+      if (obraSocial.nombre === 'Particular') {
 
         plan = obraSocial.planes[0];
         console.log(plan.id);
@@ -214,7 +214,6 @@ export class RegisterComponent implements OnInit {
         'password2': [this.complexForm.value.password2, [Validators.required, this.passwordMatch]],
         'tipoDocumento': [this.complexForm.value.tipoDocumento],
         'numeroDocumento': [this.complexForm.value.numeroDocumento, Validators.required],
-        // 'pais': [this.paises.find(x => x.nombre.toLowerCase() === 'argentina'), Validators.required],
         'genero': [this.complexForm.value.genero, Validators.required],
         'obraSocial': [this.complexForm.value.obraSocial, Validators.required],
         'plan': [this.complexForm.value.plan, Validators.required],
@@ -231,7 +230,6 @@ export class RegisterComponent implements OnInit {
         'password2': [this.complexForm.value.password2, [Validators.required, this.passwordMatch]],
         'tipoDocumento': [this.complexForm.value.tipoDocumento],
         'numeroDocumento': [this.complexForm.value.numeroDocumento, Validators.required],
-        // 'pais': [this.paises.find(x => x.nombre.toLowerCase() === 'argentina'), Validators.required],
         'genero': [this.complexForm.value.genero, Validators.required],
         'obraSocial': [this.complexForm.value.obraSocial],
         'plan': [this.complexForm.value.plan],
