@@ -125,7 +125,7 @@ export class RegisterComponent implements OnInit {
   getParticularPlan(): Plan {
     let plan: Plan;
     for (let obraSocial of this.obras_sociales) {
-      if (obraSocial.nombre === 'Particular') {
+      if (obraSocial.nombre.toLowerCase() === 'particular') {
 
         plan = obraSocial.planes[0];
         console.log(plan.id);

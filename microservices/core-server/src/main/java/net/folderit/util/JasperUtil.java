@@ -1,153 +1,134 @@
 package net.folderit.util;
 
-import ar.com.fdvs.dj.core.DynamicJasperHelper;
-import ar.com.fdvs.dj.core.layout.ClassicLayoutManager;
-import ar.com.fdvs.dj.domain.DynamicReport;
-import ar.com.fdvs.dj.domain.Style;
-import ar.com.fdvs.dj.domain.builders.ColumnBuilder;
-import ar.com.fdvs.dj.domain.builders.DynamicReportBuilder;
-import ar.com.fdvs.dj.domain.constants.Border;
-import ar.com.fdvs.dj.domain.constants.Font;
-import ar.com.fdvs.dj.domain.constants.HorizontalAlign;
-import ar.com.fdvs.dj.domain.entities.columns.AbstractColumn;
+import ar.com.fdvs.dj.domain.AutoText;
+import ar.com.fdvs.dj.domain.DJCrosstab;
 import net.folderit.domain.core.Turno;
-import net.sf.jasperreports.engine.JRDataSource;
-import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import org.apache.commons.lang.WordUtils;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
-import java.awt.*;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
 public class JasperUtil {
 
+    protected final List<DJCrosstab> globalHeaderCrosstabs = new ArrayList<DJCrosstab>();
+
+    protected final List<DJCrosstab> globalFooterCrosstabs = new ArrayList<DJCrosstab>();
+
+
+    protected final List<AutoText> autoTexts = new ArrayList<AutoText>();
+
+    private Turno turno;
+
     public byte[] buildReportTurno(List<Turno> turnos) throws Exception {
-
-        DynamicReportBuilder drb = new DynamicReportBuilder();
-        DynamicReport dr =
-                drb.addColumn(getFechaTurno())
-                        .addColumn(getHourTurno())
-                        .addColumn(getCentro())
-                        .addColumn(getProfesional())
-                        .addColumn(getDescripcion())
-                        .setTitle("Preparacion para su turno")
-                        .setDefaultStyles(getTitleStyle(), getSubtitleStyle(), getHeaderStyle(), null)
-                        .setPrintBackgroundOnOddRows(true)
-                        .setUseFullPageWidth(true)
-                        // .setTemplateFile(JasperUtil.class.getResourceAsStream("StylesReport.jrxml").toString())
-                        .build();
-
-
-        JRDataSource ds = new JRBeanCollectionDataSource(turnos);
-        JasperPrint jp = DynamicJasperHelper.generateJasperPrint(dr, new ClassicLayoutManager(), ds);
-        byte[] report = JasperExportManager.exportReportToPdf(jp);
-        return report;
+        return null;
     }
 
 
     public byte[] buildReportTurnoByturno(Turno turno) throws Exception {
-        DynamicReportBuilder drb = new DynamicReportBuilder();
-        DynamicReport dr =
-                drb.addColumn(getFechaTurno())
-                        .addColumn(getHourTurno())
-                        .addColumn(getCentro())
-                        .addColumn(getProfesional())
-                        .addColumn(getDescripcion())
-                        .setTitle("Preparacion para su turno")
-                        .setDefaultStyles(getTitleStyle(), getSubtitleStyle(), getHeaderStyle(), null)
-                        .setPrintBackgroundOnOddRows(true)
-                        .setUseFullPageWidth(true)
-                        //.setTemplateFile("./report/StylesReport.jrxml")
-                        .build();
 
+        this.turno = turno;
 
-        Collection<Turno> turnos = new ArrayList<>();
-        turnos.add(turno);
-        JRDataSource ds = new JRBeanCollectionDataSource(turnos);
-        JasperPrint jp = DynamicJasperHelper.generateJasperPrint(dr, new ClassicLayoutManager(), ds);
-        byte[] report = JasperExportManager.exportReportToPdf(jp);
-        return report;
+        PDPage page = new PDPage();
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        getClass().getClassLoader().getResource("./report/higea.png");
+
+        PDDocument doc = new PDDocument();
+        PDImageXObject pdImage = PDImageXObject.createFromFile(getClass().getClassLoader().getResource("./report/higea.png").getPath(), doc);
+        //contentStream.drawImage(pdImage, 20, 20, pdImage.getWidth() * scale, pdImage.getHeight() * scale);
+
+        doc.addPage(page);
+
+        PDPageContentStream content = new PDPageContentStream(doc, page);
+        float scale = 1f;
+        content.drawImage(pdImage, 20, 720, pdImage.getWidth() * scale, pdImage.getHeight() * scale);
+        createTitle("Datos sobre su Turno", content, 26);
+        content.drawLine(20, 710, 600, 710);
+        createText("Dia ", page, content, 12, 80, 680, true);
+        createText(getFechaTurno(), page, content, 12, 80, 660, false);
+        createText("Hora", page, content,12, 80, 640, true);
+        createText(getHourTurno(), page, content, 12, 80, 620, false);
+        createText("Profesional ", page, content, 12, 80, 600, true);
+        createText(turno.getProfesional().getApellido() + " " + turno.getProfesional().getNombre(), page, content, 12, 80, 580, false);
+        createText("Preparación " , page, content, 12, 80, 540, true);
+        createTextLarge(turno.getMotivoTurno().getPreparacion().getDescripcion(), page, content, 12, 80, 520);
+
+        content.close();
+        doc.save(out);
+        doc.close();
+
+        return out.toByteArray();
     }
 
-    private Style getTitleStyle() {
-        /**
-         * "titleStyle" exists in the template .jrxml file
-         * The title should be seen in a big font size, violet foreground and light green background
-         */
-        Style titleStyle = new Style("titleStyle");
-        titleStyle.setFont(Font.ARIAL_BIG);
-        return titleStyle;
+    private void createTitle(String text, PDPageContentStream content, int fontSize) throws IOException {
+        content.beginText();
+        content.setFont(PDType1Font.HELVETICA, fontSize);
+        content.moveTextPositionByAmount(220, 740);
+        content.showText(text);
+        content.endText();
     }
 
-    private Style getSubtitleStyle() {
-        /**
-         * "subtitleStyleParent" is meant to be used as a parent style, while
-         * "subtitleStyle" is the child.
-         */
-        Style subtitleStyleParent = new Style("subtitleParent");
-        subtitleStyleParent.setBackgroundColor(Color.CYAN);
-        subtitleStyleParent.setTransparency(ar.com.fdvs.dj.domain.constants.Transparency.OPAQUE);
+    private void createTextLarge(String text, PDPage page, PDPageContentStream content, int fontSize, int tx, int ty) throws IOException {
 
-        Style subtitleStyle = Style.createBlankStyle("subtitleStyle", "subtitleParent");
-        subtitleStyle.setFont(Font.GEORGIA_SMALL_BOLD);
-
-        return subtitleStyle;
+        breakString(content, text, tx, ty);
     }
 
-    private Style getHeaderStyle() {
-        Style headerStyle = new Style();
+    private void createText(String text, PDPage page, PDPageContentStream content, int fontSize, int tx, int ty, boolean bold) throws IOException {
 
-        headerStyle.setBackgroundColor(new Color(230, 230, 230));
-        headerStyle.setBorderBottom(Border.THIN());
-        headerStyle.setHorizontalAlign(HorizontalAlign.CENTER);
-        headerStyle.setTransparency(ar.com.fdvs.dj.domain.constants.Transparency.OPAQUE);
 
-        return headerStyle;
+        content.beginText();
+        if(bold) content.setFont(PDType1Font.HELVETICA_BOLD, fontSize);else content.setFont(PDType1Font.HELVETICA, fontSize);
+        content.moveTextPositionByAmount(tx, ty);
+        content.showText(text);
+        content.endText();
+
     }
 
-    private AbstractColumn getHourTurno() {
-        AbstractColumn column = ColumnBuilder.getNew()
-                .setColumnProperty("hora", Date.class.getName())
-                .setTitle("Hora").setWidth(new Integer(30)).setPattern("HH:mm:ss")
-                .build();
 
-        return column;
+    public void breakString(PDPageContentStream content, String textLarge, int tx, int ty) throws IOException {
+
+        String[] wrT = null;
+        String s = null;
+
+        wrT = WordUtils.wrap(textLarge, 90).split("\\r?\\n");
+        for (int i = 0; i < wrT.length; i++) {
+            content.beginText();
+            content.setFont(PDType1Font.HELVETICA, 12);
+            // content.moveTextPositionByAmount(tx, ty);
+            content.newLineAtOffset(tx, ty - i * 15);
+            s = wrT[i];
+            content.showText(s);
+            content.endText();
+        }
     }
 
-    private AbstractColumn getFechaTurno() {
-        AbstractColumn column = ColumnBuilder.getNew()
-                .setColumnProperty("fecha", Date.class.getName())
-                .setTitle("Dia").setWidth(new Integer(30)).setPattern("dd/MM/yyyy")
-                .build();
 
-        return column;
+    private String getHourTurno() {
+        String date;
+        SimpleDateFormat sdfDate = new SimpleDateFormat("HH:mm:ss");
+        Date now = new Date();
+        String strDate = sdfDate.format(turno.getHora());
+        return strDate;
     }
 
-    private AbstractColumn getCentro() {
-        AbstractColumn column = ColumnBuilder.getNew()
-                .setColumnProperty("centroSalud.nombre", String.class.getName())
-                .setTitle("Centro").setWidth(new Integer(30)).build();
+    private String getFechaTurno() {
 
-        return column;
+        String date;
+        SimpleDateFormat sdfDate = new SimpleDateFormat("dd/MM/yyyy");
+        Date now = new Date();
+        String strDate = sdfDate.format(turno.getFecha());
+        return strDate;
+
     }
 
-    private AbstractColumn getProfesional() {
-        AbstractColumn column = ColumnBuilder.getNew()
-                .setColumnProperty("profesional.apellido", String.class.getName())
-                .setTitle("Profesional").setWidth(new Integer(30)).build();
-
-        return column;
-    }
-
-    private AbstractColumn getDescripcion() {
-        AbstractColumn column = ColumnBuilder.getNew()
-                .setColumnProperty("motivoTurno.preparacion.descripcion", String.class.getName())
-                .setTitle("Descripcion").setWidth(new Integer(120)).build();
-
-        return column;
-    }
 
 }

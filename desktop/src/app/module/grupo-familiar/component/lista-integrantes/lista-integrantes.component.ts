@@ -140,7 +140,7 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
       const piso = (integrante.domicilio && integrante.domicilio.piso) ? integrante.domicilio.piso : '';
       const departamento = (integrante.domicilio && integrante.domicilio.departamento) ? integrante.domicilio.departamento : '';
 
-      this.mForm.setValue({
+      this.mForm = this.fb.group({
         'nombre': integrante.nombre || '',
         'apellido': integrante.apellido || '',
         'genero': integrante.genero || '',
