@@ -45,7 +45,12 @@ export class ApiService {
     // use jwt
     if (!this.headers.get('authorization')) {
       const user: User = JSON.parse(localStorage.getItem('currentUser'));
+      const jwt = this.jwtHelper.decodeToken(user.token);
       if (user && user.token) this.headers.append('authorization', user.token);
+      if (jwt.exp < Date.now() / 1000) {
+        this.removeJwt();
+        localStorage.removeItem('currentUser');
+      }
     }
     // check if logged
     if (!this.headers.get('authorization')) {
