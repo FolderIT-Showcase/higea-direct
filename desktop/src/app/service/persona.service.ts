@@ -75,25 +75,25 @@ export class PersonaService {
 
   updatePersonaUser(persona: Persona) {
     const path = this.basePathCore + 'persona';
-    let promises;
 
     if (this.license === 'core') {
-      promises = [
-        this.api.post(path, persona).then(() => {
-          this.buildIntegrantes(persona)
-        })
-      ];
+
+      return this.api.post(path, persona).then(() => {
+        this.buildIntegrantes(persona)
+      });
+
     } else {
-      const integrante: Persona = persona.integrantes.find(x => !x.externalId);
+
       const index = persona.integrantes.findIndex(x => !x.externalId);
-      return this.api.post(this.externalUriRegistration, integrante, false).then((data) => {
-        if (integrante) {
-          persona.integrantes[index].externalId = data.externalId;
-        }
-        this.api
-          .post(path, persona, false)
-          .then(() => this.getIntegrantes());
-      })
+      const integrante: Persona = persona.integrantes[index];
+      return this.api.post(this.externalUriRegistration, integrante, false)
+        .then((data) => {
+          if (integrante) {
+            persona.integrantes[index].externalId = data.externalId;
+          }
+          return this.api.post(path, persona, false)
+            .then(() => this.getIntegrantes());
+        })
 
     }
 

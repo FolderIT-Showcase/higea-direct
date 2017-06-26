@@ -34,10 +34,6 @@ body {
   -webkit-font-smoothing: subpixel-antialiased !important;
 }
 
-.app {
-  //padding-top: 53px
-}
-
 div.well {
   height: 250px;
 }
@@ -284,11 +280,11 @@ td {
   padding: 4px !important;
 }
 
-.table-striped>tbody>tr:nth-of-type(odd) {
+.table-striped > tbody > tr:nth-of-type(odd) {
   background-color: $gray-1;
 }
 
-.table>thead>tr>th, .table>thead>tr>td, .table>tbody>tr>th, .table>tbody>tr>td, .table>tfoot>tr>th, .table>tfoot>tr>td {
+.table > thead > tr > th, .table > thead > tr > td, .table > tbody > tr > th, .table > tbody > tr > td, .table > tfoot > tr > th, .table > tfoot > tr > td {
   //border-top: 1px solid #ddd;
   border-top: 1px solid $gray-2;
 }
@@ -394,22 +390,155 @@ div.selector.inlinedp {
   border-radius: 15px;
 }
 
-.legend-available{
+.legend-available {
   background-color: $green;
 }
 
-.legend-past{
+.legend-past {
   background-color: white;
 }
 
-.legend-unavailable{
+.legend-unavailable {
   background-color: $gray-1;
 }
 
-.app-wrapper-absolute-center{
+.app-wrapper-absolute-center {
   height: 90vh;
   display: flex !important;
   flex-direction: row !important;
   justify-content: flex-start !important;
   align-items: center !important;
+}
+
+.app-inline-input-group {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: flex-start !important;
+  align-items: baseline !important;
+}
+
+.app-inline-control-label {
+  color: $gray-5;
+  pointer-events: none;
+  font-weight: normal !important;
+  font-size: 0.7em !important;
+  padding-top: 0.3em;
+  padding-left: 0.5em;
+  position: absolute;
+  z-index: 100;
+}
+
+.input-group-addon {
+  line-height: inherit;
+}
+
+.input-group-addon, .input-group-btn {
+  width: auto;
+}
+
+input {
+  display: inline-block;
+  padding: 0.45em !important;
+  padding-top: 1.5em !important;
+  height: 3.5em !important;
+}
+
+.input-group {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: flex-start !important;
+  align-items: baseline !important;
+}
+
+.form-control {
+  border-radius: 4px !important;
+}
+
+.control-label {
+  color: $gray-5;
+  pointer-events: none;
+  font-weight: normal !important;
+  font-size: 0.85em !important;
+  padding-top: 0.3em;
+  padding-left: 0.5em;
+  position: absolute;
+  z-index: 100;
+}
+
+.required,
+.has-error .help-block,
+.has-error .form-control {
+  color: $red !important;
+}
+
+.btn-group>.btn:first-child:not(:last-child):not(.dropdown-toggle) {
+  border-top-right-radius: 4px;
+}
+
+[type="checkbox"]:not(:checked),
+[type="checkbox"]:checked {
+  position: absolute;
+  left: -9999px;
+}
+[type="checkbox"]:not(:checked) + label,
+[type="checkbox"]:checked + label {
+  position: relative;
+  padding-left: 1.95em;
+  cursor: pointer;
+}
+
+/* checkbox aspect */
+[type="checkbox"]:not(:checked) + label:before,
+[type="checkbox"]:checked + label:before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0;
+  width: 1.25em; height: 1.25em;
+  border: 2px solid #ccc;
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,.1);
+}
+/* checked mark aspect */
+[type="checkbox"]:not(:checked) + label:after,
+[type="checkbox"]:checked + label:after {
+  content: '✔';
+  position: absolute;
+  top: .2em; left: .1em;
+  font-size: 1.3em;
+  line-height: 0.8;
+  color: $green;
+  transition: all .2s;
+}
+/* checked mark aspect changes */
+[type="checkbox"]:not(:checked) + label:after {
+  opacity: 0;
+  transform: scale(0);
+}
+[type="checkbox"]:checked + label:after {
+  opacity: 1;
+  transform: scale(1);
+}
+/* disabled checkbox */
+[type="checkbox"]:disabled:not(:checked) + label:before,
+[type="checkbox"]:disabled:checked + label:before {
+  box-shadow: none;
+  border-color: $gray-2;
+  background-color: $gray-1;
+}
+[type="checkbox"]:disabled:checked + label:after {
+  color: $gray-4;
+}
+[type="checkbox"]:disabled + label {
+  color: $gray-5;
+}
+/* accessibility */
+[type="checkbox"]:checked:focus + label:before,
+[type="checkbox"]:not(:checked):focus + label:before {
+  border: 2px solid $medium-light-blue ;
+}
+
+/* hover style just for information */
+label:hover:before {
+  border: 2px solid $blue !important;
 }

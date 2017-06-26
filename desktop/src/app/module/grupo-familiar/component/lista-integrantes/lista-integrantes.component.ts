@@ -7,14 +7,11 @@ import {Generos} from '../../../../domain/enums/genero';
 import {TipoDocumentos} from '../../../../domain/enums/tipo-documento';
 import {TipoContactos} from '../../../../domain/enums/tipo-contacto';
 import {StoreService} from '../../../../service/store.service';
-import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {PersonaService} from '../../../../service/persona.service';
-import {Localidad} from '../../../../domain/localidad';
-import {Provincia} from '../../../../domain/provincia';
+
 import {Documento} from '../../../../domain/documento';
 import {Contacto} from '../../../../domain/contacto';
-import {Domicilio} from '../../../../domain/domicilio';
-import {Pais} from '../../../../domain/pais';
 import {Store} from '../../../../service/store';
 import {Subscription} from 'rxjs/Subscription';
 import * as _ from 'lodash';
@@ -22,8 +19,8 @@ import {DatePipe} from '@angular/common';
 import {Util} from '../../../../service/utils.service';
 import {ObraSocial} from '../../../../domain/obra-social';
 import {Plan} from '../../../../domain/plan';
-import {Metadata} from '../../../../domain/metadata';
 import {IMyOptions} from '../../../my-date-picker/interfaces/my-options.interface';
+import {MetadataService} from '../../../../service/metadata.service';
 
 @Component({
   selector: 'app-lista-integrantes',
@@ -39,10 +36,7 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
     'generos': Generos.export(),
     'tipoDocumentos': TipoDocumentos.export(),
     'estadosCiviles': EstadosCiviles.export(),
-    'tipoContactos': TipoContactos.export(),
-    'paises': [],
-    'provincias': [],
-    'localidades': []
+    'tipoContactos': TipoContactos.export()
   };
 
   myDatePickerOptions: IMyOptions = {
@@ -51,8 +45,6 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
 
   datePipe = new DatePipe('es-AR');
 
-  localidades: Localidad[] = [];
-  provincias: Provincia[] = [];
   integrante: Persona = null;
   obras_sociales: ObraSocial[] = [];
   obraSocial: ObraSocial;
@@ -66,57 +58,34 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
   desktopMode = true;
 
   validatorPlan: any [] = [];
+  tieneObraSocial = false;
 
   constructor(private fb: FormBuilder,
               private utilsService: Util,
               private store: Store,
+              private metadataService: MetadataService,
               private personaService: PersonaService,
               private alertService: AlertService,
               private storeHelper: StoreService) {
 
-    this.getMetadata();
-
-    // const defaultTipoDocumento = this.lists.tipoDocumentos.find(x => x.id.toLowerCase() === 'dni');
-    // const defaultPais = this.lists.paises.find(x => x.nombre.toLowerCase() === 'argentina');
-    // const defaultProvincia = this.lists.provincias.find(x => x.nombre.toLowerCase() === 'santa fe');
-
-    this.mForm = this.fb.group({
-      nombre: [null, Validators.required],
-      apellido: [null, Validators.required],
-      genero: [null, Validators.required],
-      tipoDocumento: [null, Validators.required],
-      numeroDocumento: [null, Validators.required],
-      fechaNacimiento: [null, Validators.required],
-      pais: [null, Validators.required],
-      provincia: [null, Validators.required],
-      localidad: [null, Validators.required],
-      calle: [null],
-      telefono: [null],
-      celular: [null],
-      email: [null],
-      obraSocial: [null, Validators.required],
-      plan: [null, Validators.required],
-      nroAfiliado: [null],
+    this.mForm = fb.group({
+      'nombre': [null, [Validators.required, Validators.pattern('[a-zA-Z ]*')]],
+      'apellido': [null, [Validators.required, Validators.pattern('[a-zA-Z ]*')]],
+      'genero': [null, Validators.required],
+      'numeroDocumento': [null, Validators.required],
+      'tipoDocumento': [null],
+      'telefono': [null],
     });
 
   }
 
-  planMatcher = (control: AbstractControl): { [key: string]: boolean } => {
-    const plan = control.get('plan');
-    const os = control.get('obraSocial');
-    if (!os) return null;
-    return (os && plan) ? null : {nomatch: true};
-  };
-
-  private getMetadata() {
-    const metadata: Metadata = this.storeHelper.get('metadata');
-    this.lists.paises = metadata.paises;
-    this.provincias = metadata.provincias;
-    this.localidades = metadata.localidades;
-    this.obras_sociales = metadata.obrasSociales;
-  }
-
   ngOnInit() {
+
+    this.metadataService.getObrasSociales()
+      .then(data => {
+        this.obras_sociales = data
+        console.log(this.obras_sociales)
+      })
 
     this.subs.push(
       this.store.changes.pluck('integrantes').subscribe(
@@ -154,23 +123,6 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
     else return '';
   }
 
-  rebuildProvinceList(pais) {
-    const paisID = pais.id;
-    if (!paisID) return;
-
-    const argentina: Pais = this.lists.paises.find(x => x.nombre.toUpperCase() === 'ARGENTINA');
-    if (Number(paisID) === Number(argentina.id)) this.lists.provincias = this.provincias
-    else {
-      // TODO: completar otras provincias
-    }
-  }
-
-  rebuildLocationList(provincia) {
-    const provinciaID = provincia.id;
-    if (!provinciaID) return;
-    this.lists.localidades = this.localidades.filter(x => Number(x.provincia.id) === Number(provinciaID));
-  }
-
   public showModal(action, integrante: Persona) {
 
     this.mForm.reset();
@@ -184,20 +136,6 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
         ? integrante.contacto[0].tipoContacto : '';
       const dato = (integrante.contacto && integrante.contacto[0] && integrante.contacto[0].dato)
         ? integrante.contacto[0].dato : '';
-      const localidad = (integrante.domicilio && integrante.domicilio.localidad) ? integrante.domicilio.localidad.id : '';
-      const provincia = () => {
-        if (integrante.domicilio.localidad && integrante.domicilio.localidad.provincia) {
-          return integrante.domicilio.localidad.provincia.id;
-        }
-        return '';
-      };
-      const pais = () => {
-        if (integrante.domicilio.localidad && integrante.domicilio.localidad.provincia &&
-          integrante.domicilio.localidad.provincia.pais) {
-          return integrante.domicilio.localidad.provincia.pais.id;
-        }
-        return new Pais();
-      };
       const calle = (integrante.domicilio && integrante.domicilio.calle) ? integrante.domicilio.calle : '';
       const piso = (integrante.domicilio && integrante.domicilio.piso) ? integrante.domicilio.piso : '';
       const departamento = (integrante.domicilio && integrante.domicilio.departamento) ? integrante.domicilio.departamento : '';
@@ -218,38 +156,10 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
         'tipoContacto': tipoContacto,
         'dato': dato,
         'estadoCivil': EstadosCiviles.findIDByLabel(integrante.estadoCivil) || '',
-        'pais': pais(),
-        'provincia': provincia(),
-        'localidad': localidad,
         'calle': calle,
         'piso': piso,
         'departamento': departamento
       });
-
-      // this.mForm.setValue({
-      //   'nombre': [integrante.nombre, Validators.required],
-      //   'apellido': [null, Validators.required],
-      //   'genero': [null, Validators.required],
-      //   'tipoDocumento': [null, Validators.required],
-      //   'numeroDocumento': [null, Validators.required],
-      //   'fechaNacimiento': [null, Validators.required],
-      //   'pais': [null, Validators.required],
-      //   'provincia': [null, Validators.required],
-      //   'localidad': [null, Validators.required],
-      //   'calle': [null],
-      //   'telefono': [null],
-      //   'celular': [null],
-      //   'email': [null],
-      //   'obraSocial': [null, Validators.required],
-      //   'plan': [null, Validators.required],
-      //   'nroAfiliado': [null],
-      // })
-
-      if (integrante && integrante.domicilio && integrante.domicilio.localidad &&
-        integrante.domicilio.localidad.provincia && integrante.domicilio.localidad.provincia.pais) {
-        this.rebuildProvinceList(integrante.domicilio.localidad.provincia.pais.id);
-        this.rebuildLocationList(integrante.domicilio.localidad.provincia.id);
-      }
 
     }
 
@@ -283,6 +193,8 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
 
   buildIntegrante(form) {
 
+    console.log(form)
+
     const integrante: Persona = new Persona();
 
     for (const i in form) {
@@ -294,35 +206,38 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
     integrante.id = this.integrante.id;
     integrante.nombre = form.nombre;
     integrante.apellido = form.apellido;
-    integrante.genero = form.genero.id;
     integrante.documento = new Documento();
     integrante.documento.id = null;
-    integrante.documento.tipoDocumento = form.tipoDocumento.id;
     integrante.documento.numero = form.numeroDocumento;
 
-    integrante.fechaNacimiento = form.fechaNacimiento.epoc;
-    integrante.contacto = [];
-
-    integrante.contacto.push(new Contacto('telefono', form.telefono));
-    if (form.celular) {
-      integrante.contacto.push(new Contacto('celular', form.celular));
+    if (form.tipoDocumento && form.tipoDocumento.id) {
+      integrante.documento.tipoDocumento = form.tipoDocumento.id;
+    } else {
+      integrante.documento.tipoDocumento = TipoDocumentos.findByLabel('DNI');
     }
-    if (form.email) {
-      integrante.contacto.push(new Contacto('mail', form.email));
+    if (form.telefono) {
+      integrante.contacto = [];
+      integrante.contacto.push(new Contacto('telefono', form.telefono));
+    }
+    if (form.genero && form.genero.id) {
+      integrante.genero = form.genero.id;
+    }
+    if (this.tieneObraSocial) {
+      integrante.plan = form.plan;
+      integrante.nroAfiliado = form.nroAfiliado;
+    } else {
+      const os = this.obras_sociales.find(x => {
+        if (x.nombre) return x.nombre.trim().toLowerCase() === 'particular';
+        else return false;
+      });
+      console.log(os);
+      integrante.plan = os.planes[0]
     }
 
-    integrante.estadoCivil = form.estadoCivil ? form.estadoCivil.id : EstadosCiviles.findIDByLabel('Soltero');
 
-    integrante.domicilio = new Domicilio();
-    integrante.domicilio.piso = form.piso;
-    integrante.domicilio.calle = form.calle;
-    integrante.domicilio.departamento = form.departamento;
 
-    integrante.domicilio.localidad = form.localidad;
-    integrante.domicilio.localidad.provincia = form.provincia;
-    integrante.domicilio.localidad.provincia.pais = form.pais;
-    integrante.plan = form.plan;
-    integrante.nroAfiliado = form.nroAfiliado;
+    console.log(this.tieneObraSocial ? 'tiene obra social' : 'no tiene')
+    console.log(integrante.plan);
 
     return integrante;
   }
@@ -395,6 +310,41 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
       this.validatorPlan.push(Validators.required);
       this.mForm.controls['plan'].valid;
     }
+  }
+
+  eventClickOS(event) {
+    console.log(this.tieneObraSocial);
+    const EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
+    this.tieneObraSocial = !this.tieneObraSocial;
+    if (this.tieneObraSocial) {
+      this.mForm = this.fb.group({
+        'nombre': [this.mForm.value.nombre, [Validators.required, Validators.pattern('[a-zA-Z ]*')]],
+        'apellido': [this.mForm.value.apellido, [Validators.required, Validators.pattern('[a-zA-Z ]*')]],
+        'email': [this.mForm.value.email, [Validators.required, Validators.pattern(EMAIL_REGEXP)]],
+        'telefono': [this.mForm.value.telefono, Validators.required],
+        'tipoDocumento': [this.mForm.value.tipoDocumento],
+        'numeroDocumento': [this.mForm.value.numeroDocumento, Validators.required],
+        'genero': [this.mForm.value.genero, Validators.required],
+        'obraSocial': [this.mForm.value.obraSocial, Validators.required],
+        'plan': [this.mForm.value.plan, Validators.required],
+        'nroAfiliado': [this.mForm.value.nroAfiliado],
+      });
+    } else {
+
+      this.mForm = this.fb.group({
+        'nombre': [this.mForm.value.nombre, [Validators.required, Validators.pattern('[a-zA-Z ]*')]],
+        'apellido': [this.mForm.value.apellido, [Validators.required, Validators.pattern('[a-zA-Z ]*')]],
+        'email': [this.mForm.value.email, [Validators.required, Validators.pattern(EMAIL_REGEXP)]],
+        'telefono': [this.mForm.value.telefono, Validators.required],
+        'tipoDocumento': [this.mForm.value.tipoDocumento],
+        'numeroDocumento': [this.mForm.value.numeroDocumento, Validators.required],
+        'genero': [this.mForm.value.genero, Validators.required],
+        'obraSocial': [this.mForm.value.obraSocial],
+        'plan': [this.mForm.value.plan],
+        'nroAfiliado': [this.mForm.value.nroAfiliado],
+      });
+    }
+
   }
 
 }

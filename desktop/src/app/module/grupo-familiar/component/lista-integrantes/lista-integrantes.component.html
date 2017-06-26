@@ -29,10 +29,10 @@
       </div>
       <div class="card-action">
         <div class="btn-group btn-group-justified">
-          <a (click)="showModal('view', currentPersona)" class="btn btn-primary">
-            <span><i class="fa fa-eye"></i></span></a>
-          <a (click)="showModal('edit', integrante)" class="btn btn-success">
-            <span><i class="fa fa-pencil"></i></span></a>
+          <!--<a (click)="showModal('view', currentPersona)" class="btn btn-primary">-->
+            <!--<span><i class="fa fa-eye"></i></span></a>-->
+          <!--<a (click)="showModal('edit', integrante)" class="btn btn-success">-->
+            <!--<span><i class="fa fa-pencil"></i></span></a>-->
           <a *ngIf="integrante.id !== integrantes[0].id" (click)="showDeleteModal(integrante)"
              class="btn btn-danger"><i class="fa fa-trash"></i></a>
         </div>
@@ -62,12 +62,12 @@
             <td>{{ label('tipoDocumentos', integrante.documento.tipoDocumento) }} {{integrante.documento.numero}}</td>
             <td class="text-right">
               <div class="btn-group">
-                <a (click)="showModal('view', currentPersona)" class="btn btn-primary">
-                  <span><i class="fa fa-eye"></i></span>
-                </a>
-                <a (click)="showModal('edit', integrante)" class="btn btn-success">
-                  <span><i class="fa fa-pencil"></i></span>
-                </a>
+                <!--<a (click)="showModal('view', currentPersona)" class="btn btn-primary">-->
+                  <!--<span><i class="fa fa-eye"></i></span>-->
+                <!--</a>-->
+                <!--<a (click)="showModal('edit', integrante)" class="btn btn-success">-->
+                  <!--<span><i class="fa fa-pencil"></i></span>-->
+                <!--</a>-->
                 <a *ngIf="integrante.id !== integrantes[0].id" (click)="showDeleteModal(integrante)"
                    class="btn btn-danger">
                   <span><i class="fa fa-trash"></i></span>
@@ -102,44 +102,58 @@
         <p class="text-danger">* Campos Requeridos</p>
       </div>
     </div>
-    <fieldset style="padding: 0;" [disabled]="modalAction === 'view'">
+
+    <fieldset [disabled]="modalAction === 'view'">
       <div class="row">
         <div class="col-sm-4">
           <div class="form-group required"
                [ngClass]="{'has-error':!mForm.controls['nombre'].valid && mForm.controls['nombre'].touched}">
-            <label class="control-label">Nombres</label>
-            <input type="text" class="form-control" name="nombre" placeholder="Ej: José"
-                   [formControl]="mForm.controls['nombre']"/>
-            <small *ngIf="!mForm.controls['nombre'].valid && mForm.controls['nombre'].touched" class="help-block">
-              Ingrese los Nombres
+            <div class="input-group">
+              <label class="control-label">Nombre</label>
+              <input class="form-control" type="text" placeholder="José"
+                     [formControl]="mForm.controls['nombre']">
+            </div>
+            <small
+              *ngIf="mForm.controls['nombre'].hasError('required') && mForm.controls['nombre'].touched"
+              class="help-block">Debes incluir tu nombre.
+            </small>
+            <small
+              *ngIf="mForm.controls['nombre'].hasError('pattern') && mForm.controls['nombre'].touched"
+              class="help-block">El nombre no debe contener caracteres inválidos.
             </small>
           </div>
         </div>
         <div class="col-sm-4">
           <div class="form-group required"
                [ngClass]="{'has-error':!mForm.controls['apellido'].valid && mForm.controls['apellido'].touched}">
-            <label class="control-label">Apellidos</label>
-            <input type="text" class="form-control" name="apellido" placeholder="Ej: Perez"
-                   [formControl]="mForm.controls['apellido']"/>
-            <small *ngIf="!mForm.controls['apellido'].valid && mForm.controls['apellido'].touched" class="help-block">
-              Ingrese los Apellidos
+            <div class="input-group">
+              <label class="control-label">Apellido</label>
+              <input class="form-control" type="text" placeholder="Perez"
+                     [formControl]="mForm.controls['apellido']">
+            </div>
+            <small
+              *ngIf="mForm.controls['apellido'].hasError('required') && mForm.controls['apellido'].touched"
+              class="help-block">Debes incluir tu apellido.
+            </small>
+            <small
+              *ngIf="mForm.controls['apellido'].hasError('pattern') && mForm.controls['apellido'].touched"
+              class="help-block">El apellido no debe contener caracteres inválidos.
             </small>
           </div>
         </div>
         <div class="col-sm-4">
           <div class="form-group required"
                [ngClass]="{'has-error':!mForm.controls['genero'].valid && mForm.controls['genero'].touched}">
-            <label class="control-label">Género</label>
-
             <app-select
               ngDefaultControl
+              [placeHolder]="'Género'"
               [formControl]="mForm.controls['genero']"
               [list]="lists.generos"
               [displayProp]="['label']"
             ></app-select>
-
-            <small *ngIf="!mForm.controls['genero'].valid && mForm.controls['genero'].touched" class="help-block">
-              Seleccione el Género
+            <small
+              *ngIf="mForm.controls['genero'].hasError('required') && mForm.controls['genero'].touched"
+              class="help-block">Ingrese su Género
             </small>
           </div>
         </div>
@@ -148,231 +162,111 @@
       <div class="row">
         <div class="col-sm-4">
           <div class="form-group required"
-               [ngClass]="{'has-error':!mForm.controls['tipoDocumento'].valid && mForm.controls['genero'].touched}">
-            <label class="control-label">Tipo de Documento</label>
-
+               [ngClass]="{'has-error':!mForm.controls['numeroDocumento'].valid && mForm.controls['numeroDocumento'].touched}">
+            <div class="input-group">
+              <label class="control-label">Número de documento</label>
+              <input class="form-control" type="number" placeholder="XXXXXXXX"
+                     [formControl]="mForm.controls['numeroDocumento']">
+            </div>
+            <small
+              *ngIf="mForm.controls['numeroDocumento'].hasError('required') && mForm.controls['numeroDocumento'].touched"
+              class="help-block">Debes incluir tu número de documento
+            </small>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group"
+               [ngClass]="{'has-error':!mForm.controls['tipoDocumento'].valid && mForm.controls['tipoDocumento'].touched}">
             <app-select
               ngDefaultControl
+              [placeHolder]="'Tipo de documento'"
               [formControl]="mForm.controls['tipoDocumento']"
               [list]="lists.tipoDocumentos"
               [displayProp]="['label']"
             ></app-select>
-
-            <small *ngIf="!mForm.controls['tipoDocumento'].valid && mForm.controls['tipoDocumento'].touched"
-                   class="help-block">Seleccione el Tipo de Documento
-            </small>
           </div>
         </div>
         <div class="col-sm-4">
-          <div class="form-group required"
-               [ngClass]="{ 'has-error': !mForm.controls['numeroDocumento'].valid && mForm.controls['numeroDocumento'].touched }">
-            <label class="control-label">Número de Documento</label>
-            <input type="text" class="form-control" placeholder="Número de Documento"
-                   [formControl]="mForm.controls['numeroDocumento']"/>
-            <small *ngIf="!mForm.controls['numeroDocumento'].valid && mForm.controls['numeroDocumento'].touched"
-                   class="help-block">Ingrese el Número de Documento
+          <div class="form-group"
+               [ngClass]="{'has-error':!mForm.controls['telefono'].valid && mForm.controls['telefono'].touched}">
+            <div class="input-group">
+              <label class="control-label">Número de teléfono</label>
+              <input class="form-control" type="tel" placeholder="0342 48XXXXX"
+                     [formControl]="mForm.controls['telefono']">
+            </div>
+            <small
+              *ngIf="mForm.controls['telefono'].hasError('required') && mForm.controls['telefono'].touched"
+              class="help-block">Debes incluir un Teléfono.
             </small>
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="form-group required"
-               [ngClass]="{ 'has-error': !mForm.controls['fechaNacimiento'].valid && mForm.controls['fechaNacimiento'].touched }">
-            <label for="fechaNacimiento" class="control-label">Fecha de Nacimiento</label>
-
-            <my-date-picker id="fechaNacimiento" [options]="myDatePickerOptions" [locale]="'es'"
-                            [formControl]="mForm.controls['fechaNacimiento']"></my-date-picker>
-
-            <small *ngIf="!mForm.controls['fechaNacimiento'].valid && mForm.controls['fechaNacimiento'].touched"
-                   class="help-block">Ingrese la Fecha de Nacimiento
-            </small>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-sm-4">
-          <div class="form-group required"
-               [ngClass]="{ 'has-error': !mForm.controls['pais'].valid && mForm.controls['pais'].touched }">
-            <label class="control-label">País</label>
-
-            <app-select
-              ngDefaultControl
-              [formControl]="mForm.controls['pais']"
-              [list]="lists.paises"
-              [displayProp]="['nombre']"
-              (change)="rebuildProvinceList(mForm.value.pais)"
-            ></app-select>
-
-            <small *ngIf="!mForm.controls['pais'].valid && mForm.controls['pais'].touched" class="help-block">Seleccione
-              el País
-            </small>
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="form-group required"
-               [ngClass]="{ 'has-error': !mForm.controls['provincia'].valid && mForm.controls['provincia'].touched }">
-            <label class="control-label">Provincia</label>
-
-            <app-select
-              ngDefaultControl
-              [formControl]="mForm.controls['provincia']"
-              [list]="lists.provincias"
-              [displayProp]="['nombre']"
-              (change)="rebuildLocationList(mForm.value.provincia)"
-            ></app-select>
-
-            <small *ngIf="!mForm.controls['provincia'].valid && mForm.controls['provincia'].touched" class="help-block">
-              Seleccione la Provincia
-            </small>
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="form-group required"
-               [ngClass]="{ 'has-error': !mForm.controls['localidad'].valid && mForm.controls['localidad'].touched }">
-            <label class="control-label">Localidad</label>
-
-            <app-select
-              ngDefaultControl
-              [formControl]="mForm.controls['localidad']"
-              [list]="lists.localidades"
-              [displayProp]="['nombre']"
-            ></app-select>
-
-            <small *ngIf="!mForm.controls['localidad'].valid && mForm.controls['localidad'].touched" class="help-block">
-              Seleccione la Localidad
-            </small>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-8">
-          <div class="form-group">
-            <label class="control-label">Dirección</label>
-            <input type="text" class="form-control" placeholder="Ingresar Dirección"
-                   [formControl]="mForm.controls['calle']"/>
           </div>
         </div>
 
       </div>
 
       <div class="row">
-        <div class="col-sm-4">
-
-          <div class="form-group required"
-               [ngClass]="{ 'has-error': !mForm.controls['telefono'].valid && mForm.controls['telefono'].touched }">
-            <label class="control-label">Telefono</label>
-            <input type="tel" class="form-control" placeholder="Ingresar teléfono."
-                   [formControl]="mForm.controls['telefono']"/>
-            <small *ngIf="!mForm.controls['telefono'].valid && mForm.controls['telefono'].touched" class="help-block">
-              Ingrese su telefono.
-            </small>
-          </div>
-
-        </div>
-        <div class="col-sm-4">
-          <label class="control-label">Celular</label>
-          <div class="form-group">
-            <input type="tel" class="form-control" placeholder="Ingresar teléfono."
-                   [formControl]="mForm.controls['celular']"/>
+        <div class="col-sm-12">
+          <div style="padding: 1em">
+            <input id="tieneObraSocial" type="checkbox" [ngModel]="tieneObraSocial"
+                   [ngModelOptions]="{standalone: true}"
+                   (click)="eventClickOS($event)"/>
+            <label for="tieneObraSocial">¿ Tiene Obra social ?</label>
           </div>
         </div>
-
       </div>
 
-
-      <div class="row">
+      <div class="row" *ngIf="tieneObraSocial">
         <div class="col-sm-4">
           <div class="form-group required"
                [ngClass]="{'has-error':!mForm.controls['obraSocial'].valid && mForm.controls['obraSocial'].touched}">
-            <label class="control-label">Obra Social</label>
-
             <app-select
               ngDefaultControl
+              [placeHolder]="'Obra social'"
               [formControl]="mForm.controls['obraSocial']"
               [list]="obras_sociales"
               [displayProp]="['nombre']"
               (change)="handleObraSocialClick(mForm.value.obraSocial)"
             ></app-select>
-
-            <small *ngIf="mForm.controls['obraSocial'].hasError('required') && mForm.controls['obraSocial'].touched"
-                   class="help-block">Ingrese su Obra Social
+            <small
+              *ngIf="mForm.controls['obraSocial'].hasError('required') && mForm.controls['obraSocial'].touched"
+              class="help-block">Ingrese su ObraSocial
             </small>
           </div>
         </div>
         <div class="col-sm-4">
-
           <div class="form-group required"
-               [ngClass]="{'has-error':!mForm.controls['plan'].valid && mForm.controls['plan'].touched}">
-            <label class="control-label">Plan</label>
-
+               [ngClass]="{'has-error':!mForm.value.plan  && mForm.controls['plan'].touched}">
             <app-select
               ngDefaultControl
+              [placeHolder]="'Plan'"
               [formControl]="mForm.controls['plan']"
               [list]="planes"
-              [displayProp]="['razon_social']"
-            ></app-select>
-
-            <small *ngIf="mForm.controls['plan'].hasError('required') && mForm.controls['plan'].touched"
-                   class="help-block">Ingrese su Plan
+              [displayProp]="['razon_social']"></app-select>
+            <small
+              *ngIf=" !mForm.value.plan && mForm.controls['plan'].touched" class="help-block">
+              Ingrese su Plan.
             </small>
           </div>
         </div>
-        <div class="col-sm-4">
-          <div class="col-sm-12 no-padding-horizontal">
-            <label class="control-label">Email</label>
-          </div>
-          <div class="col-sm-12 no-padding-horizontal">
-            <div class="form-group">
-              <input type="email" class="form-control" placeholder="Ingresar Corréo Electrónico."
-                     [formControl]="mForm.controls['email']"/>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-
         <div class="col-sm-4">
           <div class="form-group"
                [ngClass]="{'has-error':!mForm.controls['nroAfiliado'].valid && mForm.controls['nroAfiliado'].touched}">
-
             <div class="input-group">
-              <div class="col-sm-12 no-padding-horizontal">
-                <label class="control-label">Nro Afiliado</label>
-              </div>
-              <!--<span class="input-group-addon"><i class="fa fa-handshake-o"></i></span>-->
-              <input class="form-control" type="text" placeholder="Numero Afiliado"
+              <label class="control-label">Número de afiliado</label>
+              <input class="form-control" type="text" placeholder="XXXXXXXX"
                      [formControl]="mForm.controls['nroAfiliado']">
-              <small
-                *ngIf="mForm.controls['nroAfiliado'].hasError('required') && mForm.controls['nroAfiliado'].touched"
-                class="help-block">Debes incluir su numero afiliado.
-              </small>
             </div>
-
-
           </div>
         </div>
-
       </div>
 
-      <div class="row">
-
-        <div class="col-sm-6">
-          <div class="col-sm-12 no-padding-horizontal">
-            <label class="control-label"> </label>
-          </div>
-          <div class="row text-right">
-            <div class="col-sm-6">
-              <button type="submit" *ngIf="['add', 'edit'].indexOf(modalAction) >= 0"
-                      [disabled]="!mForm.valid" class="btn btn-block btn-primary">
-                Aceptar
-              </button>
-            </div>
-            <div class="col-sm-6">
-              <a (click)="hideModalForm()" class="btn btn-block btn-default">Cerrar</a>
-            </div>
-          </div>
-        </div>
+      <div class="col-sm-12 col-md-2 col-md-offset-8">
+        <button type="submit" *ngIf="['add', 'edit'].indexOf(modalAction) >= 0"
+                [disabled]="!mForm.valid" class="btn btn-block btn-success">
+          Aceptar
+        </button>
+      </div>
+      <div class="col-sm-12 col-md-2">
+        <a (click)="hideModalForm()" class="btn btn-block btn-primary">Cerrar</a>
       </div>
     </fieldset>
   </form>

@@ -11,7 +11,7 @@
   color: $gray-5;
   pointer-events: none;
   font-weight: normal !important;
-  font-size: 0.7em !important;
+  font-size: 0.85em !important;
   padding-top: 0.3em;
   padding-left: 0.5em;
   position: absolute;
@@ -26,8 +26,9 @@ select {
   border-bottom-left-radius: 0 !important;
   border-top-left-radius: 0 !important;
   display: inline-block;
-  padding: 0.3em;
-  padding-top: 1em;
+  padding: 0.45em !important;
+  padding-top: 1.5em !important;
+  height: 3.5em !important;
 
   /* reset */
 
@@ -44,9 +45,7 @@ select {
 select.minimal {
   background-image: linear-gradient(45deg, transparent 50%, $gray-5 50%),
   linear-gradient(135deg, $gray-5 50%, transparent 50%);
-  background-position: calc(100% - 20px) calc(1em + 2px),
-  calc(100% - 15px) calc(1em + 2px),
-  calc(100% - 2.5em) 0.5em;
+  background-position: calc(100% - 20px) calc(1em + 9px), calc(100% - 15px) calc(1em + 9px), calc(100% - 2.5em) 0.5em;
   background-size: 5px 5px,
   5px 5px,
   1px 1.5em;
@@ -56,8 +55,8 @@ select.minimal {
 select.minimal:focus {
   background-image: linear-gradient(45deg, $gray-5 50%, transparent 50%),
   linear-gradient(135deg, transparent 50%, $gray-5 50%);
-  background-position: calc(100% - 15px) 1em,
-  calc(100% - 20px) 1em,
+  background-position: calc(100% - 15px) calc(1em + 7px),
+  calc(100% - 20px) calc(1em + 7px),
   calc(100% - 2.5em) 0.5em;
   background-size: 5px 5px,
   5px 5px,

@@ -25,15 +25,15 @@ export class Generos {
 
   static build() {
     const generos: string[] = [];
-    generos.push(GeneroLabel.masculino);
     generos.push(GeneroLabel.femenino);
+    generos.push(GeneroLabel.masculino);
     generos.push(GeneroLabel.otro);
     generos.sort();
     return generos;
   }
 
   static export() {
-    const generos = Generos.generos
+    const generos = Generos.generos;
     generos.sort((a, b) => {
       return (a.label > b.label) ? 1 : ((b.label > a.label) ? -1 : 0);
     });

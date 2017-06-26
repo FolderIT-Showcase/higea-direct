@@ -1,5 +1,7 @@
 package net.folderit.connection;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import net.folderit.domain.core.Persona;
 import net.folderit.domain.higea.LoginHigea;
 import net.folderit.domain.higea.LoginResult;
@@ -38,11 +40,24 @@ public class ConnectionMidleWare {
 
     public Persona savePaciente(String codigo, Persona persona) {
         PacienteHigea dto = persona.convertToPacienteHigeaDTO();
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        try {
+            String jsonInString = mapper.writeValueAsString(dto);
+            System.out.println(jsonInString);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
         ResponseEntity<LoginResult> loginResultDTO = login();
         HttpHeaders headers = new HttpHeaders();
         headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("Authorization", loginResultDTO.getBody().getToken());
+
+        System.out.println(loginResultDTO.getBody().getToken());
+
         HttpEntity entity = new HttpEntity<>(dto, headers);
         Map<String, String> uriParams = new HashMap<>();
         uriParams.put("cliente", codigo);

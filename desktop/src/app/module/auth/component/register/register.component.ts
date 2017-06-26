@@ -116,7 +116,6 @@ export class RegisterComponent implements OnInit {
     if (data.plan) persona.plan = data.plan;
     if (!this.tieneObraSocial) {
       persona.plan = this.getParticularPlan();
-      console.log("Entrooo");
     }
     persona.nroAfiliado = data.nroAfiliado;
 
