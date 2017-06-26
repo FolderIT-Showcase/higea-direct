@@ -71,7 +71,7 @@ public class JasperUtil {
 
     private void createTitle(String text, PDPageContentStream content, int fontSize) throws IOException {
         content.beginText();
-        content.setFont(PDType1Font.TIMES_ROMAN, fontSize);
+        content.setFont(PDType1Font.HELVETICA, fontSize);
         content.moveTextPositionByAmount(220, 740);
         content.showText(text);
         content.endText();
@@ -86,7 +86,7 @@ public class JasperUtil {
 
 
         content.beginText();
-        if(bold) content.setFont(PDType1Font.TIMES_BOLD, fontSize);else content.setFont(PDType1Font.TIMES_ROMAN, fontSize);
+        if(bold) content.setFont(PDType1Font.HELVETICA_BOLD, fontSize);else content.setFont(PDType1Font.HELVETICA, fontSize);
         content.moveTextPositionByAmount(tx, ty);
         content.showText(text);
         content.endText();
@@ -99,10 +99,10 @@ public class JasperUtil {
         String[] wrT = null;
         String s = null;
 
-        wrT = WordUtils.wrap(textLarge, 100).split("\\r?\\n");
+        wrT = WordUtils.wrap(textLarge, 90).split("\\r?\\n");
         for (int i = 0; i < wrT.length; i++) {
             content.beginText();
-            content.setFont(PDType1Font.TIMES_ROMAN, 12);
+            content.setFont(PDType1Font.HELVETICA, 12);
             // content.moveTextPositionByAmount(tx, ty);
             content.newLineAtOffset(tx, ty - i * 15);
             s = wrT[i];
