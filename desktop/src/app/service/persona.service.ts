@@ -35,10 +35,10 @@ export class PersonaService {
         if (persona) persona.externalId = data.externalId;
         return this.api.post(this.uriRegistration, persona, false);
       })
-      // .then(() => {
-      //   this.alertService.success('Registro Exitoso, chequee su cuenta de email para activar el usuario');
-      //   this.router.navigate(['/login']);
-      // });
+    // .then(() => {
+    //   this.alertService.success('Registro Exitoso, chequee su cuenta de email para activar el usuario');
+    //   this.router.navigate(['/login']);
+    // });
 
   }
 

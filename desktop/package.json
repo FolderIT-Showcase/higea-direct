@@ -39,6 +39,7 @@
     "@angular/platform-server": "4.2.4",
     "@ngtools/webpack": "^1.4.2",
     "@types/core-js": "^0.9.41",
+    "@types/file-saver": "0.0.1",
     "@types/gapi": "0.0.33",
     "@types/gapi.auth2": "0.0.39",
     "@types/localforage": "^0.0.34",

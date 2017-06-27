@@ -83,7 +83,7 @@ export class CentrosSaludComponent implements OnInit {
   }
 
   crear(value: Data) {
-    this.especialidades = this.storeService.get('especialidadesSeleccionadas')
+    this.especialidades = this.storeService.get('especialidadesSeleccionadas');
 
     if (!this.especialidades || this.especialidades.length === 0) {
       this.alertService.error('Debe seleccionar las especialidades asociadas al centro de salud');

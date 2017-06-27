@@ -7,9 +7,7 @@ import {Router} from '@angular/router';
 import {LoadingService} from './loading.service';
 import {JwtHelper} from 'angular2-jwt';
 import {AlertService} from './alert.service';
-
-declare const require: any;
-const FileSaver: any = require('file-saver');
+import * as FileSaver from 'file-saver';
 
 @Injectable()
 export class ApiService {

@@ -83,9 +83,9 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
 
     this.metadataService.getObrasSociales()
       .then(data => {
-        this.obras_sociales = data
+        this.obras_sociales = data;
         console.log(this.obras_sociales)
-      })
+      });
 
     this.subs.push(
       this.store.changes.pluck('integrantes').subscribe(
@@ -193,7 +193,7 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
 
   buildIntegrante(form) {
 
-    console.log(form)
+    console.log(form);
 
     const integrante: Persona = new Persona();
 
@@ -234,9 +234,7 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
       integrante.plan = os.planes[0]
     }
 
-
-
-    console.log(this.tieneObraSocial ? 'tiene obra social' : 'no tiene')
+    console.log(this.tieneObraSocial ? 'tiene obra social' : 'no tiene');
     console.log(integrante.plan);
 
     return integrante;
@@ -308,7 +306,6 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
     if (obra_social) {
       this.planes = obra_social.planes;
       this.validatorPlan.push(Validators.required);
-      this.mForm.controls['plan'].valid;
     }
   }
 

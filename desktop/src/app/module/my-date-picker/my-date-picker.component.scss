@@ -99,16 +99,14 @@
 }
 
 .mydp .selectorarrow:after {
-  border-color: rgba(250, 250, 250, 0);
+  border: 10px rgba(250, 250, 250, 0);
   border-bottom-color: #FAFAFA;
-  border-width: 10px;
   margin-left: -10px;
 }
 
 .mydp .selectorarrow:before {
-  border-color: transparent;
+  border: 11px transparent;
   border-bottom-color: $gray-4;
-  border-width: 11px;
   margin-left: -11px;
 }
 

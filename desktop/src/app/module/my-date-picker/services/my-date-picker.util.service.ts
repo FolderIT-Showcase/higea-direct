@@ -58,7 +58,7 @@ export class UtilService {
     return returnDate;
   }
 
-  getDateFormatSeparators(dateFormat: string): Array<string> {
+  getDateFormatSeparators(dateFormat: string): Array<string> | any {
     return dateFormat.match(/[^(dmy)]{1,}/g);
   }
 
