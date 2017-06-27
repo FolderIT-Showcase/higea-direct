@@ -24,12 +24,8 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
   turno: Turno = new Turno();
   subs: Subscription[] = [];
   persona: Persona;
-
-  lat = -31.623357;
-  lng = -60.704956;
   motivos: MotivoTurno[] = [];
   motivoTurno: MotivoTurno = new MotivoTurno();
-  emptyResponse = undefined;
 
   turnoModal: ModalDirective;
   successModal: ModalDirective;

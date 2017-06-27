@@ -1,5 +1,4 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {CentroSalud} from '../../../../domain/centro-salud';
 import {Especialidad} from '../../../../domain/especialidad';
 import {Profesional} from '../../../../domain/profesional';
 import {Persona} from '../../../../domain/persona';
@@ -13,14 +12,6 @@ import {Subscription} from 'rxjs/Subscription';
 import {IMyOptions} from '../../../my-date-picker/interfaces/my-options.interface';
 import {Util} from '../../../../service/utils.service';
 
-class Data {
-  persona: Persona;
-  centro: CentroSalud;
-  especialidad: Especialidad;
-  profesional: Profesional;
-  fecha: Date = new Date();
-}
-
 @Component({
   selector: 'app-turno-busqueda-avanzada-external',
   templateUrl: './turno-busqueda-external.component.html'
@@ -28,14 +19,11 @@ class Data {
 export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy {
 
   datePipe = new DatePipe('es-AR');
-  model: Data = new Data();
   especialidades: Especialidad[] = [];
   profesionales: Profesional[] = [];
   filteredProfesionales: Profesional[] = [];
   personas: Persona[] = [];
   form: FormGroup;
-  fechaDesde: Date = new Date();
-  centroSalud: string = localStorage.getItem('client');
   subs: Subscription[] = [];
 
   calendarDate = new Date();
@@ -54,18 +42,13 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
               private alertService: AlertService,
               private turnoService: TurnoService,
               private fb: FormBuilder) {
-    this.form = this.fb.group({
-      'persona': [null, Validators.required],
-      'fecha': [null, Validators.required],
-      'especialidad': [null],
-      'profesional': [null, Validators.required]
-    });
   }
 
   ngOnInit(): void {
 
+    this.buildForm();
+
     this.personas = this.storeService.get('integrantes');
-    const date = new Date();
 
     this.metadataService.getEspecialidades()
       .then(data => {
@@ -74,73 +57,73 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
       })
       .then(data => {
         this.profesionales = data;
-        let especialidadesTmp = [];
-        for (let i in this.profesionales) {
-          for (let j in this.especialidades) {
-            if (this.profesionales[i].especialidadId == this.especialidades[j].id) {
-              this.especialidades[j].profesional.push(this.profesionales[i]);
-            }
-          }
-        }
-        for (let j in this.especialidades) {
-          if (this.especialidades[j].profesional.length !== 0) {
-            especialidadesTmp.push(this.especialidades[j]);
-          }
-        }
-        this.especialidades = Object.assign([], especialidadesTmp);
-        this.form = this.fb.group({
-          'persona': [Util.getFirstDefault(this.personas), Validators.required],
-          'fecha': [null, Validators.required],
-          'especialidad': [Util.getFirstDefault(this.especialidades)],
-          'profesional': [null, Validators.required]
-        });
-        this.form.value.fechaDesde = new Date();
-      })
-      .then(() => {
-        this.subs.push(
-          this.form.valueChanges.subscribe(data => {
-            if (!data) return;
-
-            if (data.especialidad && data.profesional && data.profesional.id) {
-              this.getMarkedDays(data);
-              if (data.persona && data.persona.id) {
-                let steps: any[] = this.storeService.get('steps');
-                if (steps && steps[0]) {
-                  steps[0] = {
-                    label: steps[0].label,
-                    ngClass: 'btn-success'
-                  }
-                }
-              }
-            }
-            if (data.fecha && this.form.valid) {
-              this.submitForm(this.form.value);
-              let steps: any[] = this.storeService.get('steps');
-              if (steps && steps[1]) {
-                steps[1] = {
-                  label: steps[1].label,
-                  ngClass: 'btn-success'
-                }
-              }
-            }
-          })
-        );
+        this.buildEspecialidades();
+        this.buildForm();
+        this.subscribeFormChanges();
       });
 
+  }
+
+  subscribeFormChanges() {
+    this.subs.push(
+      this.form.valueChanges.subscribe(data => {
+        if (!data) return;
+
+        if (data.persona && data.especialidad && data.profesional && data.profesional.id) {
+          this.getMarkedDays(data);
+          if (data.persona && data.persona.id) {
+            let steps: any[] = this.storeService.get('steps');
+            if (steps && steps[0]) {
+              steps[0] = {
+                label: steps[0].label,
+                ngClass: 'btn-success'
+              }
+            }
+          }
+        }
+        if (data.fecha && this.form.valid) {
+          this.submitForm(this.form.value);
+          let steps: any[] = this.storeService.get('steps');
+          if (steps && steps[1]) {
+            steps[1] = {
+              label: steps[1].label,
+              ngClass: 'btn-success'
+            }
+          }
+        }
+      })
+    );
+  }
+
+  buildForm() {
+    this.form = this.fb.group({
+      'persona': [this.personas[0] || null, Validators.required],
+      'fecha': [null, Validators.required],
+      'especialidad': [Util.getFirstDefault(this.especialidades)],
+      'profesional': [null, Validators.required]
+    });
+  }
+
+  buildEspecialidades() {
+    let especialidadesTmp = [];
+    for (let i in this.profesionales) {
+      for (let j in this.especialidades) {
+        if (this.profesionales[i].especialidadId == this.especialidades[j].id) {
+          this.especialidades[j].profesional.push(this.profesionales[i]);
+        }
+      }
+    }
+    for (let j in this.especialidades) {
+      if (this.especialidades[j].profesional.length !== 0) {
+        especialidadesTmp.push(this.especialidades[j]);
+      }
+    }
+    this.especialidades = Object.assign([], especialidadesTmp);
   }
 
   ngOnDestroy() {
-    this.storeService.update('CentroSalud', null);
     this.storeService.update('turnos', []);
     this.subs.forEach(x => x.unsubscribe());
-  }
-
-  getMarkedDays(data) {
-    this.turnoService.getCalendario(data.profesional, this.timeStampToDate(this.calendarDate))
-      .then(data => {
-        this.markedDays = [];
-        data.forEach(x => this.markedDays.push(this.datetoDay(x.calendario_fecha)));
-      });
   }
 
   handlePersonaClick(persona: Persona) {
@@ -148,14 +131,8 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
   }
 
   labelPersona(persona: Persona) {
-    if (!persona) {
-      return;
-    }
+    if (!persona) return;
     return (`${persona.nombre} ${persona.apellido}`).toUpperCase();
-  }
-
-  handleCentroSaludClick(centroSalud: CentroSalud) {
-    this.especialidades = centroSalud.especialidad;
   }
 
   handleEspecialidadClick(especialidad: Especialidad) {
@@ -165,12 +142,10 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
   }
 
   submitForm(form) {
-    if (!form.fecha || !form.fecha.epoc) {
-      return;
-    }
+
+    if (!form.fecha || !form.fecha.epoc) return;
 
     const fechaDesde = form.fecha.epoc * 1000;
-
     const ahora = new Date().setHours(0, 0, 0, 0);
     const fechaTurno = new Date(fechaDesde).setHours(0, 0, 0, 0);
 
@@ -186,9 +161,7 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
   }
 
   timeStampToDate(timestamp) {
-    let date: any = timestamp;
-    date = this.datePipe.transform(date, "yyyy-MM-dd");
-    return date;
+    return this.datePipe.transform(timestamp, "yyyy-MM-dd");
   }
 
   datetoDay(mDate) {
@@ -199,12 +172,18 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
   }
 
   calendarChange(event) {
+
     this.calendarDate.setMonth(event.month - 1);
-    if (!this.form || !this.form.value || !this.form.value.profesional) {
-      return;
-    }
-    this.turnoService.getCalendario(this.form.value.profesional, this.timeStampToDate(this.calendarDate))
-      .then((data: any[]) => {
+
+    if (!this.form || !this.form.value || !this.form.value.profesional || !this.form.value.persona) return;
+
+    this.getMarkedDays(this.form.value);
+
+  }
+
+  getMarkedDays(data) {
+    this.turnoService.getCalendario(data.profesional, this.timeStampToDate(this.calendarDate))
+      .then(data => {
         this.markedDays = [];
         data.forEach(x => this.markedDays.push(this.datetoDay(x.calendario_fecha)));
       });
