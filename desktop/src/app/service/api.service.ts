@@ -69,11 +69,9 @@ export class ApiService {
     this.loadingService.reset();
     try {
       const body = error.json();
-      console.log(body);
       let mensaje = 'Error Interno, por favor intente mas tarde';
       if (body.error) mensaje = body.error;
       if (body.message) mensaje = body.message;
-      console.log(mensaje);
       this.alertService.error(mensaje);
     } catch (error) {
       let mensaje = 'Error Interno, por favor intente mas tarde';

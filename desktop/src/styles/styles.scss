@@ -1,6 +1,6 @@
-.brand-no-auth {
-  padding: 2em;
-}
+//@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.min.css');
 
 // Colors
 $white: #ffffff;
@@ -32,6 +32,10 @@ body {
   min-width: 320px;
   overflow: auto;
   -webkit-font-smoothing: subpixel-antialiased !important;
+}
+
+.brand-no-auth {
+  padding: 2em;
 }
 
 div.well {
@@ -541,4 +545,8 @@ input {
 /* hover style just for information */
 label:hover:before {
   border: 2px solid $blue !important;
+}
+
+label {
+  font-weight: normal;
 }

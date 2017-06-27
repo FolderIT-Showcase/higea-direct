@@ -33,7 +33,7 @@ public class HigeaPacienteApplication {
         PacienteHigea pacienteHigea = connectionMidleWare.getByDocAndGenero(codigo, persona.getSexo(), persona.getDocumento().getNumero().toString());
 
         if (pacienteHigea != null) {
-            TurneroException.getInstance().getMessage(TurneroException.MESSAGE_MAIL_EXIST, new String[]{persona.getDocumento().getNumero().toString()});
+            TurneroException.getInstance().getMessage(TurneroException.MESSAGE_DOC_EXIST, new String[]{persona.getDocumento().getNumero().toString()});
             return ResponseEntity.status(HttpStatus.CONFLICT).body(TurneroException.getInstance());
         }
 

@@ -97,6 +97,7 @@ export class PersonaService {
 
       const index = persona.integrantes.findIndex(x => !x.externalId);
       const integrante: Persona = persona.integrantes[index];
+
       return this.api.post(this.externalUriRegistration, integrante, false)
         .then((data) => {
           if (integrante) {

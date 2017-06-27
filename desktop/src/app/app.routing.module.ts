@@ -35,10 +35,10 @@ const routes: Routes = [
           metadata: MetadataResolveService,
         }
       },
-      {
-        path: 'admin',
-        loadChildren: './module/admin/admin.module#AdminModule',
-      },
+      // {
+      //   path: 'admin',
+      //   loadChildren: './module/admin/admin.module#AdminModule',
+      // },
     ]
   },
   {

@@ -186,7 +186,6 @@ export class RegisterComponent implements OnInit {
   }
 
   eventClickOS(event) {
-    console.log(this.tieneObraSocial);
     const EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
     this.tieneObraSocial = !this.tieneObraSocial;
     if (this.tieneObraSocial) {

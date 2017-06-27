@@ -23,19 +23,10 @@
     <div class="card">
       <div class="card-content text-left">
         <label><strong>Integrante: </strong>{{ integrante.nombre }} {{ integrante.apellido }}</label><br>
-        <label><strong>Fecha de Nacimiento: </strong>{{ integrante.fechaNacimiento | date: 'dd/MM/yyyy' }}</label><br>
-        <label><strong>Tipo y Nro. de Documento: </strong>{{ label('tipoDocumentos',
+        <label><strong>Documento: </strong>{{ label(tipoDocumentos,
           integrante.documento.tipoDocumento) }} {{integrante.documento.numero}}</label><br>
       </div>
       <div class="card-action">
-        <div class="btn-group btn-group-justified">
-          <!--<a (click)="showModal('view', currentPersona)" class="btn btn-primary">-->
-          <!--<span><i class="fa fa-eye"></i></span></a>-->
-          <!--<a (click)="showModal('edit', integrante)" class="btn btn-success">-->
-          <!--<span><i class="fa fa-pencil"></i></span></a>-->
-          <a *ngIf="integrante.id !== integrantes[0].id" (click)="showDeleteModal(integrante)"
-             class="btn btn-danger"><i class="fa fa-trash"></i></a>
-        </div>
       </div>
     </div>
   </div>
@@ -50,30 +41,13 @@
           <thead>
           <tr>
             <th>Integrante</th>
-            <th>Fecha de Nacimiento</th>
-            <th>Tipo y Nro. de Documento</th>
-            <th class="text-right">Acciones</th>
+            <th>Documento</th>
           </tr>
           </thead>
           <tbody>
           <tr *ngFor="let integrante of integrantes">
             <td>{{ integrante.nombre }} {{ integrante.apellido }}</td>
-            <td>{{ integrante.fechaNacimiento | date: 'dd/MM/yyyy' }}</td>
-            <td>{{ label('tipoDocumentos', integrante.documento.tipoDocumento) }} {{integrante.documento.numero}}</td>
-            <td class="text-right">
-              <div class="btn-group">
-                <!--<a (click)="showModal('view', currentPersona)" class="btn btn-primary">-->
-                <!--<span><i class="fa fa-eye"></i></span>-->
-                <!--</a>-->
-                <!--<a (click)="showModal('edit', integrante)" class="btn btn-success">-->
-                <!--<span><i class="fa fa-pencil"></i></span>-->
-                <!--</a>-->
-                <a *ngIf="integrante.id !== integrantes[0].id" (click)="showDeleteModal(integrante)"
-                   class="btn btn-danger">
-                  <span><i class="fa fa-trash"></i></span>
-                </a>
-              </div>
-            </td>
+            <td>{{ label(tipoDocumentos, integrante.documento.tipoDocumento) }} {{integrante.documento.numero}}</td>
           </tr>
           </tbody>
         </table>
@@ -148,7 +122,7 @@
               ngDefaultControl
               [placeHolder]="'Género'"
               [formControl]="mForm.controls['genero']"
-              [list]="lists.generos"
+              [list]="generos"
               [displayProp]="['label']"
             ></app-select>
             <small
@@ -181,7 +155,7 @@
               ngDefaultControl
               [placeHolder]="'Tipo de documento'"
               [formControl]="mForm.controls['tipoDocumento']"
-              [list]="lists.tipoDocumentos"
+              [list]="tipoDocumentos"
               [displayProp]="['label']"
             ></app-select>
           </div>

@@ -16,6 +16,7 @@
       "tsconfig": "tsconfig.app.json",
       "prefix": "app",
       "styles": [
+        "styles/bootstrap.min.css",
         "styles/styles.scss",
         "styles/card.scss"
       ],
