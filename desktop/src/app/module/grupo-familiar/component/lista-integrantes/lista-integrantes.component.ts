@@ -146,19 +146,15 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
         'genero': integrante.genero || '',
         'tipoDocumento': integrante.documento.tipoDocumento || '',
         'numeroDocumento': integrante.documento.numero || '',
-        'fechaNacimiento': {
+   /*     'fechaNacimiento': {
           date: {
             year: this.datePipe.transform(integrante.fechaNacimiento, 'yyyy'),
             month: this.datePipe.transform(integrante.fechaNacimiento, 'M'),
             day: this.datePipe.transform(integrante.fechaNacimiento, 'dd')
           }
-        },
+        },*/
         'tipoContacto': tipoContacto,
-        'dato': dato,
-        'estadoCivil': EstadosCiviles.findIDByLabel(integrante.estadoCivil) || '',
-        'calle': calle,
-        'piso': piso,
-        'departamento': departamento
+
       });
 
     }
@@ -320,7 +316,6 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
       this.mForm = this.fb.group({
         'nombre': [this.mForm.value.nombre, [Validators.required, Validators.pattern('[a-zA-Z ]*')]],
         'apellido': [this.mForm.value.apellido, [Validators.required, Validators.pattern('[a-zA-Z ]*')]],
-        'email': [this.mForm.value.email, [Validators.required, Validators.pattern(EMAIL_REGEXP)]],
         'telefono': [this.mForm.value.telefono, Validators.required],
         'tipoDocumento': [this.mForm.value.tipoDocumento],
         'numeroDocumento': [this.mForm.value.numeroDocumento, Validators.required],
@@ -334,8 +329,7 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
       this.mForm = this.fb.group({
         'nombre': [this.mForm.value.nombre, [Validators.required, Validators.pattern('[a-zA-Z ]*')]],
         'apellido': [this.mForm.value.apellido, [Validators.required, Validators.pattern('[a-zA-Z ]*')]],
-        'email': [this.mForm.value.email, [Validators.required, Validators.pattern(EMAIL_REGEXP)]],
-        'telefono': [this.mForm.value.telefono, Validators.required],
+         'telefono': [this.mForm.value.telefono, Validators.required],
         'tipoDocumento': [this.mForm.value.tipoDocumento],
         'numeroDocumento': [this.mForm.value.numeroDocumento, Validators.required],
         'genero': [this.mForm.value.genero, Validators.required],
