@@ -108,58 +108,57 @@
           <div class="col-sm-12 col-sm-offset-0">
             <div style="padding: 1em">
               <input id="tieneObraSocial" type="checkbox" [ngModel]="tieneObraSocial"
-                     [ngModelOptions]="{standalone: true}"
-                     (click)="eventClickOS($event)"/>
+                     [ngModelOptions]="{standalone: true}" (click)="eventClickOS()"/>
               <label for="tieneObraSocial">¿ Tiene Obra social ?</label>
             </div>
           </div>
         </div>
-
-        <div class="row" *ngIf="tieneObraSocial">
-          <div class="col-sm-4">
-            <div class="form-group required"
-                 [ngClass]="{'has-error':!complexForm.controls['obraSocial'].valid && complexForm.controls['obraSocial'].touched}">
-              <app-select
-                ngDefaultControl
-                [placeHolder]="'Obra social'"
-                [formControl]="complexForm.controls['obraSocial']"
-                [list]="obras_sociales"
-                [displayProp]="['nombre']"
-                (change)="handleObraSocialClick(complexForm.value.obraSocial)"
-              ></app-select>
-              <small
-                *ngIf="complexForm.controls['obraSocial'].hasError('required') && complexForm.controls['obraSocial'].touched"
-                class="help-block">Ingrese su ObraSocial
-              </small>
+        <fieldset [disabled]="!tieneObraSocial">
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="form-group required"
+                   [ngClass]="{'has-error':!complexForm.controls['obraSocial'].valid && complexForm.controls['obraSocial'].touched}">
+                <app-select
+                  ngDefaultControl
+                  [placeHolder]="'Obra social'"
+                  [formControl]="complexForm.controls['obraSocial']"
+                  [list]="obras_sociales"
+                  [displayProp]="['nombre']"
+                  (change)="handleObraSocialClick(complexForm.value.obraSocial)"
+                ></app-select>
+                <small
+                  *ngIf="complexForm.controls['obraSocial'].hasError('required') && complexForm.controls['obraSocial'].touched"
+                  class="help-block">Ingrese su ObraSocial
+                </small>
+              </div>
             </div>
-          </div>
-          <div class="col-sm-4">
-            <div class="form-group required"
-                 [ngClass]="{'has-error':!complexForm.value.plan  && complexForm.controls['plan'].touched}">
-              <app-select
-                ngDefaultControl
-                [placeHolder]="'Plan'"
-                [formControl]="complexForm.controls['plan']"
-                [list]="planes"
-                [displayProp]="['razon_social']"></app-select>
-              <small
-                *ngIf=" !complexForm.value.plan && complexForm.controls['plan'].touched" class="help-block">
-                Ingrese su Plan.
-              </small>
+            <div class="col-sm-4">
+              <div class="form-group required"
+                   [ngClass]="{'has-error':!complexForm.value.plan  && complexForm.controls['plan'].touched}">
+                <app-select
+                  ngDefaultControl
+                  [placeHolder]="'Plan'"
+                  [formControl]="complexForm.controls['plan']"
+                  [list]="planes"
+                  [displayProp]="['razon_social']"></app-select>
+                <small
+                  *ngIf=" !complexForm.value.plan && complexForm.controls['plan'].touched" class="help-block">
+                  Ingrese su Plan.
+                </small>
+              </div>
             </div>
-          </div>
-          <div class="col-sm-4">
-            <div class="form-group"
-                 [ngClass]="{'has-error':!complexForm.controls['nroAfiliado'].valid && complexForm.controls['nroAfiliado'].touched}">
-              <div class="input-group">
-                <label class="control-label">Número de afiliado</label>
-                <input class="form-control" type="text" placeholder="XXXXXXXX"
-                       [formControl]="complexForm.controls['nroAfiliado']">
+            <div class="col-sm-4">
+              <div class="form-group"
+                   [ngClass]="{'has-error':!complexForm.controls['nroAfiliado'].valid && complexForm.controls['nroAfiliado'].touched}">
+                <div class="input-group">
+                  <label class="control-label">Número de afiliado</label>
+                  <input class="form-control" type="text" placeholder="XXXXXXXX"
+                         [formControl]="complexForm.controls['nroAfiliado']">
+                </div>
               </div>
             </div>
           </div>
-        </div>
-
+        </fieldset>
         <div class="row">
           <div class="col-sm-12"
                [ngClass]="{'has-error': !captcha}">
@@ -174,7 +173,6 @@
         <div class="row">
           <br>
           <div class="col-sm-6 col-md-4 col-md-offset-2 col-lg-2 col-lg-offset-4 ">
-            <!--<button type="submit" class="btn btn-primary btn-block" [disabled]="!complexForm.valid || !captcha">Registrarse </button>-->
             <button type="submit" class="btn btn-success btn-block">Registrarse</button>
           </div>
           <div class="col-sm-6 col-md-4 col-lg-2">

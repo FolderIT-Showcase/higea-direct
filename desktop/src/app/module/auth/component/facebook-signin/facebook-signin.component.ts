@@ -19,7 +19,7 @@ export class FacebookSigninComponent {
     const initParams: InitParams = {
       appId: '285797451868355',
       xfbml: true,
-      version: 'v2.8'
+      version: 'v2.9'
     };
 
     fb.init(initParams);
@@ -42,11 +42,11 @@ export class FacebookSigninComponent {
             user.firstName = data.first_name;
             user.lastName = data.last_name;
             localStorage.setItem('socialUser', JSON.stringify(user));
-            this.auth.login(user, 'social');
+            this.auth.login(user);
             this.fb.logout();
           })
           .catch(error => {
-            this.router.navigate(['/login']);
+            this.router.navigate(['/auth/login']);
             this.alert.error('Error, por favor intente con otra forma autenticación');
           });
       });

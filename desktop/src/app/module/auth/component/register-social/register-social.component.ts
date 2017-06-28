@@ -8,11 +8,12 @@ import {Pais} from '../../../../domain/pais';
 import {User} from '../../../../domain/user';
 import {Persona} from '../../../../domain/persona';
 import {Documento} from '../../../../domain/documento';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MetadataService} from '../../../../service/metadata.service';
 import {Contacto} from '../../../../domain/contacto';
 import {ObraSocial} from '../../../../domain/obra-social';
 import {Plan} from '../../../../domain/plan';
+import {error} from 'util';
 
 @Component({
   selector: 'app-register-social',
@@ -21,7 +22,6 @@ import {Plan} from '../../../../domain/plan';
 export class RegisterSocialComponent implements OnInit {
 
   complexForm: FormGroup;
-
   paises: Pais[] = [];
   obras_sociales: ObraSocial[] = [];
   obraSocial: ObraSocial;
@@ -30,10 +30,9 @@ export class RegisterSocialComponent implements OnInit {
   tipoDocumentos: string[] = TipoDocumentos.build();
   generos: string[] = Generos.build();
   captcha = null;
-  selectUndefined: any;
   tieneObraSocial = false;
 
-  user: User = JSON.parse(localStorage.getItem('socialUser'));
+  user: User = null;
 
   constructor(private fb: FormBuilder,
               private router: Router,
@@ -41,11 +40,16 @@ export class RegisterSocialComponent implements OnInit {
               private personaService: PersonaService,
               private alertService: AlertService) {
 
+    try {
+      this.user = JSON.parse(localStorage.getItem('socialUser'));
+      if(!this.user) throw error;
+    } catch (error){
+      this.router.navigate(['/']);
+    }
 
-
-    this.complexForm = fb.group({
-      'nombre': [this.user.firstName, [Validators.required, Validators.pattern('[a-zA-Z ]*')]],
-      'apellido': [this.user.lastName, [Validators.required, Validators.pattern('[a-zA-Z ]*')]],
+    this.complexForm = this.fb.group({
+      'nombre': [null, [Validators.required, Validators.pattern('[a-zA-Z ]*')]],
+      'apellido': [null, [Validators.required, Validators.pattern('[a-zA-Z ]*')]],
       'telefono': [null, Validators.required],
       'tipoDocumento': [null],
       'numeroDocumento': [null, Validators.required],
@@ -58,7 +62,6 @@ export class RegisterSocialComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.metadataService.getPaises().then((data: any) => {
       this.paises = data;
     });
@@ -144,6 +147,7 @@ export class RegisterSocialComponent implements OnInit {
             this.alertService.success('Registro Exitoso, chequee su cuenta de email para activar el usuario');
           })
       });
+    localStorage.removeItem('socialUser')
   }
 
   handleCorrectCaptcha(event) {
@@ -154,7 +158,7 @@ export class RegisterSocialComponent implements OnInit {
     this.planes = obra_social.planes;
   }
 
-  eventClickOS(event) {
+  eventClickOS() {
 
     this.tieneObraSocial = !this.tieneObraSocial;
     if (this.tieneObraSocial) {
@@ -162,6 +166,7 @@ export class RegisterSocialComponent implements OnInit {
         'nombre': [this.complexForm.value.nombre, [Validators.required, Validators.pattern('[a-zA-Z ]*')]],
         'apellido': [this.complexForm.value.apellido, [Validators.required, Validators.pattern('[a-zA-Z ]*')]],
         'telefono': [this.complexForm.value.telefono, Validators.required],
+        'tipoDocumento': [this.complexForm.value.tipoDocumento],
         'numeroDocumento': [this.complexForm.value.numeroDocumento, Validators.required],
         'genero': [this.complexForm.value.genero, Validators.required],
         'obraSocial': [this.complexForm.value.obraSocial, Validators.required],
@@ -174,6 +179,7 @@ export class RegisterSocialComponent implements OnInit {
         'nombre': [this.complexForm.value.nombre, [Validators.required, Validators.pattern('[a-zA-Z ]*')]],
         'apellido': [this.complexForm.value.apellido, [Validators.required, Validators.pattern('[a-zA-Z ]*')]],
         'telefono': [this.complexForm.value.telefono, Validators.required],
+        'tipoDocumento': [this.complexForm.value.tipoDocumento],
         'numeroDocumento': [this.complexForm.value.numeroDocumento, Validators.required],
         'genero': [this.complexForm.value.genero, Validators.required],
         'obraSocial': [this.complexForm.value.obraSocial],

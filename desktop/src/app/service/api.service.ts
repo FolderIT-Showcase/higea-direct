@@ -57,12 +57,24 @@ export class ApiService {
     }
   }
 
+  private getHeaders(response: Response): Response {
+    localStorage.setItem('headers', JSON.stringify(response.headers));
+    return response;
+  }
+
   removeJwt() {
     this.headers.delete('authorization');
   }
 
   private processResponse(response: Response): Response {
-    if (response.status >= 200 && response.status < 300) return response.json();
+    if(response.status < 200 || response.status >= 300) throw new Error();
+    let data = null;
+    try {
+      data = response.json();
+    } catch (error) {
+      return response
+    }
+    return data;
   }
 
   private async catchError(error) {
@@ -121,6 +133,7 @@ export class ApiService {
     this.isAuthNecessary(isAuthNecessary);
     this.mPromise = this.http
       .post(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
+      .map(this.getHeaders)
       .map(this.processResponse)
       .finally(() => this.loadingService.finish())
       .first().toPromise();
@@ -160,24 +173,6 @@ export class ApiService {
     this.isAuthNecessary(isAuthNecessary);
     this.mPromise = this.http.delete(`${this.baseURL}${path}`, {headers: this.headers})
       .map(this.processResponse)
-      .finally(() => this.loadingService.finish())
-      .first().toPromise();
-
-    Promise.all([this.mPromise]).catch(error => this.catchError(error));
-    return this.mPromise;
-  }
-
-  public async loginPost(path: string, body): Promise<any> {
-    this.loadingService.start();
-    this.mPromise = this.http
-      .post(`${this.baseURL}${path}`, JSON.stringify(body), {headers: this.headers})
-      .map((response: Response) => {
-        body.token = response.headers.get('authorization').slice(7);
-        if (body && body.token) {
-          // store user details and jwt token in local storage to keep user logged in between page refreshes
-          localStorage.setItem('currentUser', JSON.stringify(body));
-        }
-      })
       .finally(() => this.loadingService.finish())
       .first().toPromise();
 

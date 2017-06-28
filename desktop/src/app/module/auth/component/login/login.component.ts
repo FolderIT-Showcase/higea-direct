@@ -1,6 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {AlertService} from '../../../../service/alert.service';
+import {Component, OnInit} from '@angular/core';
 import {AppAuthService} from '../../auth.service';
 import {User} from '../../../../domain/user';
 
@@ -9,25 +7,17 @@ import {User} from '../../../../domain/user';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit {
 
   model: any = {};
-  sub1: any;
 
-  constructor(private router: Router,
-              private alertService: AlertService,
-              private auth: AppAuthService) {
+  constructor(private auth: AppAuthService) {
+    localStorage.clear();
   }
 
   ngOnInit() {
     // reset login status
     this.auth.logout();
-  }
-
-  ngOnDestroy(): void {
-    if (this.sub1) {
-      this.sub1.unsubscribe();
-    }
   }
 
   login() {

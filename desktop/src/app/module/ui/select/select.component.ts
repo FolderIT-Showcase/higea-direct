@@ -11,7 +11,6 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
  */
 export class SelectComponent {
 
-  @Input() isDisabled = false;
   // form reactivo
   @Input() formControl;
   // placeholder a mostrar dentro del select

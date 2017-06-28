@@ -50,10 +50,14 @@ export class GoogleSigninComponent implements AfterViewInit {
         user.firstName = googleUser.getBasicProfile().getGivenName();
         user.lastName = googleUser.getBasicProfile().getFamilyName();
         localStorage.setItem('socialUser', JSON.stringify(user));
-        this.auth.login(user, 'social');
-        googleUser.disconnect();
+        this.auth.login(user);
+
+        setTimeout(() => {
+          googleUser.disconnect();
+        }, 800);
+
       }, (error) => {
-        this.router.navigate(['/login']);
+        this.router.navigate(['/auth/login']);
         this.alert.error('Error, por favor intente con otra forma autenticación');
       });
   }

@@ -11,47 +11,45 @@ export class AppAuthService {
 
   static getRole(): string {
     const user: User = JSON.parse(localStorage.getItem('currentUser'));
-    if (!user || !user.roles) {
-      return 'ROLE_USER';
-    }
+    if (!user || !user.roles) return 'ROLE_USER';
     const role = user.roles[0].authority;
-    if (role) {
-      return role;
-    }
+    if (role) return role;
     return 'ROLE_USER'
   }
 
   static isAdmin() {
-    const role: string = AppAuthService.getRole();
-    return role === 'ROLE_ADMIN';
+    return AppAuthService.getRole() === 'ROLE_ADMIN';
   }
 
   constructor(private api: ApiService, private router: Router) {
   }
 
-  public login(user, type: string = '') {
+  public login(user) {
     user = {
       email: user.email,
       password: user.password
     };
-    if (type === 'social') {
-      return this.normalLogin(user).catch(() => this.router.navigate(['/auth/register-social']));
-    }
-    return this.normalLogin(user);
+    const path = `${this.basePath}login`;
+    return this.api.post(path, user, false)
+      .then(response => {
+        console.log(response);
+        user.token = response.headers.get('authorization').slice(7);
+        if (user && user.token) localStorage.setItem('currentUser', JSON.stringify(user));
+        this.router.navigate(['/']);
+      })
+      .catch((error) => {
+        console.log('hey 500');
+        const socialuser = JSON.parse(localStorage.getItem('socialUser'));
+        if (socialuser) this.router.navigate(['/auth/register-social']);
+      });
+
   }
 
   public logout() {
     // remove user from local storage to log user out
-    localStorage.removeItem('currentUser');
+    localStorage.clear();
     this.api.removeJwt();
     return this.router.navigate(['/auth/login']);
-  }
-
-  normalLogin(user: User, type: string = '') {
-    const path = `${this.basePath}login`;
-    return this.api
-      .loginPost(path, user)
-      .then(() => this.router.navigate(['/']));
   }
 
 }

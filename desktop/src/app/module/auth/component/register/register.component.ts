@@ -21,7 +21,6 @@ import {Plan} from '../../../../domain/plan';
 export class RegisterComponent implements OnInit {
 
   complexForm: FormGroup;
-
   paises: Pais[] = [];
   obras_sociales: ObraSocial[] = [];
   obraSocial: ObraSocial;
@@ -30,7 +29,6 @@ export class RegisterComponent implements OnInit {
   tipoDocumentos: string[] = TipoDocumentos.build();
   generos: string[] = Generos.build();
   captcha = null;
-  selectUndefined: any;
   tieneObraSocial = false;
 
   passwordMatcher = (control: AbstractControl): { [key: string]: boolean } => {
@@ -76,19 +74,6 @@ export class RegisterComponent implements OnInit {
   private passwordMatch() {
     return (c: FormControl) => {
       return (c.value === this.complexForm.value.password1) ? null : {'passwordMatch': {valid: false}};
-    }
-  }
-
-  private emailValidator() {
-    const EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
-    return (c: FormControl) => {
-      return ( c.value !== '' && (c.value.length <= 5 || !EMAIL_REGEXP.test(c.value)) ) ? {'emailValidator': {valid: false}} : null;
-    }
-  }
-
-  private planValid() {
-    return (c: FormControl) => {
-      return (c.value && this.complexForm.value.obraSocial) ? null : {'planValid': {valid: false}};
     }
   }
 
