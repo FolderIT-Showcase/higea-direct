@@ -31,7 +31,6 @@ export class RegisterComponent implements OnInit {
   generos: string[] = Generos.build();
   captcha = null;
   selectUndefined: any;
-  validatorPlan: any [] = [];
   tieneObraSocial = false;
 
   passwordMatcher = (control: AbstractControl): { [key: string]: boolean } => {

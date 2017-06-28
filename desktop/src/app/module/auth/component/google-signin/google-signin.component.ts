@@ -47,7 +47,9 @@ export class GoogleSigninComponent implements AfterViewInit {
         const user: User = new User();
         user.email = googleUser.getBasicProfile().getEmail();
         user.password = googleUser.getBasicProfile().getId();
-        localStorage.setItem('currentUser', JSON.stringify(user));
+        user.firstName = googleUser.getBasicProfile().getGivenName();
+        user.lastName = googleUser.getBasicProfile().getFamilyName();
+        localStorage.setItem('socialUser', JSON.stringify(user));
         this.auth.login(user, 'social');
         googleUser.disconnect();
       }, (error) => {

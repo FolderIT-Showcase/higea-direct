@@ -29,7 +29,11 @@ export class AppAuthService {
   constructor(private api: ApiService, private router: Router) {
   }
 
-  public login(user: User, type: string = '') {
+  public login(user, type: string = '') {
+    user = {
+      email: user.email,
+      password: user.password
+    };
     if (type === 'social') {
       return this.normalLogin(user).catch(() => this.router.navigate(['/auth/register-social']));
     }

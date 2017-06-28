@@ -34,12 +34,14 @@ export class FacebookSigninComponent {
     };
     this.fb.login(options)
       .then((response: LoginResponse) => {
-        this.fb.api('/me', 'get', {fields: 'email'})
+        this.fb.api('/me', 'get', {fields: 'id,first_name,last_name,email'})
           .then((data: any) => {
             const user: User = new User();
-            user.password = response.authResponse.userID;
+            user.password = data.id;
             user.email = data.email;
-            localStorage.setItem('currentUser', JSON.stringify(user));
+            user.firstName = data.first_name;
+            user.lastName = data.last_name;
+            localStorage.setItem('socialUser', JSON.stringify(user));
             this.auth.login(user, 'social');
             this.fb.logout();
           })
