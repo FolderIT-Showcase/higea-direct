@@ -111,7 +111,6 @@ export class ListaIntegrantesComponent implements AfterViewInit {
       }
     }
 
-    integrante.id = this.integrante.id;
     integrante.nombre = form.nombre;
     integrante.apellido = form.apellido;
     integrante.documento = new Documento();

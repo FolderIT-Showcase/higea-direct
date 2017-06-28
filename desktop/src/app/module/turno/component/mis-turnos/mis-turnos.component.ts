@@ -35,11 +35,6 @@ export class MisTurnosComponent implements OnInit, OnDestroy, AfterViewInit {
               private fb: FormBuilder,
               private alertService: AlertService) {
 
-    this.turno.especialidad = new Especialidad;
-    this.turno.especialidad.nombre = '';
-    this.turno.centroSalud = new CentroSalud;
-    this.turno.centroSalud.nombre = '';
-
   }
 
   ngOnInit() {
@@ -79,10 +74,10 @@ export class MisTurnosComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   handlePersonaClick(persona: Persona) {
+    console.log(persona);
     this.storeService.update('persona', persona);
     this.persona = persona;
-    this.turnoService.getTurnoByPersonaId(persona.externalId)
-      .then(data => this.turnos = data);
+    this.turnoService.getTurnoByPersonaId(persona.externalId).then(turnos => this.buildTurnos(turnos));
   }
 
   public showModal(turno: Turno) {

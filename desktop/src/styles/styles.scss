@@ -21,7 +21,7 @@ $light-blue: #ecf6fc;
 $blue: #64c0fc;
 $medium-light-blue: #7494de;
 $purple: #772953;
-$dark-purple: #481a33;
+$dark-purple: #2d0b1e;
 
 html,
 body {
@@ -268,10 +268,10 @@ fieldset {
   display: flex;
   flex-direction: row-reverse;
   justify-content: center;
-  align-items: center;
+  align-items: baseline;
   margin: 0 !important;
-  height: 100% !important;
-  width: 100% !important;
+  height: calc(100% - 20px) !important;
+  width: calc(100% - 20px) !important;
   background-color: rgba(0, 0, 0, 0.4);
 }
 
@@ -362,6 +362,7 @@ div.selector.inlinedp {
 }
 
 .app-no-data {
+  margin-top: 10em;
   color: $gray-5;
   background-color: $gray-1;
 }
