@@ -116,7 +116,7 @@ export class ListaIntegrantesComponent implements AfterViewInit {
     integrante.documento = new Documento();
     integrante.documento.id = null;
     integrante.documento.numero = form.numeroDocumento;
-
+console.log(form.numeroDocumento);
     if (form.tipoDocumento && form.tipoDocumento.id) {
       integrante.documento.tipoDocumento = form.tipoDocumento.id;
     } else {

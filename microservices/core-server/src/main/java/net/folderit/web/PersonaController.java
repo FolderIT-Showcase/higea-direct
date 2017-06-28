@@ -41,6 +41,8 @@ public class PersonaController {
 
     @PostMapping("/persona")
     public ResponseEntity<Long> createUser(@RequestBody Persona persona) {
+        Persona exist =  personaService.findById(persona.getId());
+        if(exist!=null) persona.getUserAsociado().setPassword(exist.getUserAsociado().getPassword());
         Persona mPersona = personaService.save(persona);
         return ResponseEntity.ok(mPersona.getId());
     }
