@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component} from '@angular/core';
 import {ModalDirective} from 'ngx-bootstrap';
 import {AlertService} from '../../../../service/alert.service';
 import {Persona} from '../../../../domain/persona';
@@ -7,12 +7,10 @@ import {TipoDocumentos} from '../../../../domain/enums/tipo-documento';
 import {StoreService} from '../../../../service/store.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {PersonaService} from '../../../../service/persona.service';
-
 import {Documento} from '../../../../domain/documento';
 import {Contacto} from '../../../../domain/contacto';
 import {Store} from '../../../../service/store';
 import {Subscription} from 'rxjs/Subscription';
-import * as _ from 'lodash';
 import {Util} from '../../../../service/utils.service';
 import {ObraSocial} from '../../../../domain/obra-social';
 import {Plan} from '../../../../domain/plan';
@@ -23,13 +21,11 @@ import {MetadataService} from '../../../../service/metadata.service';
   selector: 'app-lista-integrantes',
   templateUrl: './lista-integrantes.component.html'
 })
-export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
+export class ListaIntegrantesComponent implements AfterViewInit {
 
   private currentUser = JSON.parse(localStorage.getItem('currentUser'));
-  public currentPersona: Persona;
-  public modalAction = 'none';
+  public currentPersona: Persona = new Persona();
   public integrantes: Persona[] = [];
-
   public generos: Array<any> = Generos.export();
   public tipoDocumentos: Array<any> = TipoDocumentos.export();
 
@@ -44,7 +40,6 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
   plan: Plan;
 
   mForm: FormGroup;
-  modalConfirmacion: ModalDirective;
   modalForm: ModalDirective;
   subs: Subscription[] = [];
   desktopMode = true;
@@ -69,9 +64,8 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
       'telefono': [null],
     });
 
-  }
-
-  ngOnInit() {
+    this.integrantes = this.storeHelper.get('integrantes');
+    this.currentPersona = this.storeHelper.get('persona');
 
     this.metadataService.getObrasSociales()
       .then(data => {
@@ -85,9 +79,6 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
         }
       )
     );
-
-    this.integrantes = this.storeHelper.get('integrantes');
-    this.currentPersona = this.storeHelper.get('persona');
 
   }
 
@@ -105,41 +96,9 @@ export class ListaIntegrantesComponent implements OnInit, AfterViewInit {
     else return '';
   }
 
-  public showModal(action, integrante: Persona) {
-
+  public showModal() {
     this.mForm.reset();
     this.modalForm.show();
-    this.modalAction = action;
-    this.integrante = integrante;
-
-    if (['edit', 'view'].indexOf(action) >= 0) {
-
-      this.mForm = this.fb.group({
-        'nombre': integrante.nombre || '',
-        'apellido': integrante.apellido || '',
-        'genero': integrante.genero || '',
-        'tipoDocumento': integrante.documento.tipoDocumento || '',
-        'numeroDocumento': integrante.documento.numero || ''
-      });
-
-    }
-
-  }
-
-  showDeleteModal(persona) {
-    this.integrante = persona;
-    this.modalConfirmacion.show();
-  }
-
-  confirmDeleteModal() {
-    const integrantes: Persona[] = [];
-    this.currentPersona.integrantes.forEach(x => {
-      if (x.id !== this.integrante.id) integrantes.push(x);
-    });
-    this.currentPersona.integrantes = _.merge([], integrantes);
-    this.personaService.delete(this.currentPersona)
-      .then(() => this.alertService.success('Integrante removido correctamente.'));
-    this.modalConfirmacion.hide();
   }
 
   buildIntegrante(form) {
@@ -164,13 +123,16 @@ console.log(form.numeroDocumento);
     } else {
       integrante.documento.tipoDocumento = TipoDocumentos.findByLabel('DNI');
     }
+
     if (form.telefono) {
       integrante.contacto = [];
       integrante.contacto.push(new Contacto('telefono', form.telefono));
     }
+
     if (form.genero && form.genero.id) {
       integrante.genero = form.genero.id;
     }
+
     if (this.tieneObraSocial) {
       integrante.plan = form.plan;
       integrante.nroAfiliado = form.nroAfiliado;
@@ -179,51 +141,19 @@ console.log(form.numeroDocumento);
         if (x.nombre) return x.nombre.trim().toLowerCase() === 'particular';
         else return false;
       });
-
       integrante.plan = os.planes[0]
     }
 
     return integrante;
   }
 
-  public confirmModal(action, form) {
-
-    let integranteNuevo: Persona = this.buildIntegrante(form);
-
-    if (!this.currentPersona.integrantes) {
-      this.currentPersona.integrantes = [];
-    }
-
-    // si es la persona usuario
-    if (integranteNuevo.id === this.integrantes[0].id) {
-      // copiamos los integrantes que ya tenia
-      integranteNuevo = _.defaultsDeep(integranteNuevo, this.currentPersona);
-      integranteNuevo.integrantes = _.merge({}, this.currentPersona.integrantes);
-      // y copiamos a current persona
-      this.currentPersona = _.merge({}, integranteNuevo);
-    } else {
-
-      if (action === 'edit') {
-        const index = this.currentPersona.integrantes.findIndex((value, index, obj) => value.id === integranteNuevo.id);
-        this.currentPersona.integrantes[index] = integranteNuevo;
-      }
-      this.currentPersona.integrantes.push(integranteNuevo);
-    }
-
+  public addModal(form) {
+    const integranteNuevo: Persona = this.buildIntegrante(form);
+    if (!this.currentPersona.integrantes) this.currentPersona.integrantes = [];
+    this.currentPersona.integrantes.push(integranteNuevo);
     this.personaService.updatePersonaUser(this.currentPersona)
-      .then(() => {
-        if (action === 'add') {
-          this.alertService.success('Integrante agregado correctamente.');
-        } else if (action === 'edit') {
-          this.alertService.success('Integrante editado correctamente.');
-        }
-      });
-
+      .then(() => this.alertService.success('Integrante agregado correctamente.'));
     this.modalForm.hide();
-  }
-
-  handleModalConfirmacion(event) {
-    this.modalConfirmacion = event;
   }
 
   handleModalForm(event) {
@@ -244,32 +174,28 @@ console.log(form.numeroDocumento);
 
   eventClickOS(event) {
 
-    const EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
     this.tieneObraSocial = !this.tieneObraSocial;
     if (this.tieneObraSocial) {
       this.mForm = this.fb.group({
         'nombre': [this.mForm.value.nombre, [Validators.required, Validators.pattern('[a-zA-Z ]*')]],
         'apellido': [this.mForm.value.apellido, [Validators.required, Validators.pattern('[a-zA-Z ]*')]],
-        'telefono': [this.mForm.value.telefono, Validators.required],
-        'tipoDocumento': [this.mForm.value.tipoDocumento],
-        'numeroDocumento': [this.mForm.value.numeroDocumento, Validators.required],
         'genero': [this.mForm.value.genero, Validators.required],
+        'numeroDocumento': [this.mForm.value.numeroDocumento, Validators.required],
+        'tipoDocumento': [this.mForm.value.tipoDocumento],
+        'telefono': [this.mForm.value.telefono],
         'obraSocial': [this.mForm.value.obraSocial, Validators.required],
         'plan': [this.mForm.value.plan, Validators.required],
-        'nroAfiliado': [this.mForm.value.nroAfiliado],
+        'nroAfiliado': [this.mForm.value.nroAfiliado]
       });
     } else {
 
       this.mForm = this.fb.group({
         'nombre': [this.mForm.value.nombre, [Validators.required, Validators.pattern('[a-zA-Z ]*')]],
         'apellido': [this.mForm.value.apellido, [Validators.required, Validators.pattern('[a-zA-Z ]*')]],
-        'telefono': [this.mForm.value.telefono, Validators.required],
-        'tipoDocumento': [this.mForm.value.tipoDocumento],
-        'numeroDocumento': [this.mForm.value.numeroDocumento, Validators.required],
         'genero': [this.mForm.value.genero, Validators.required],
-        'obraSocial': [this.mForm.value.obraSocial],
-        'plan': [this.mForm.value.plan],
-        'nroAfiliado': [this.mForm.value.nroAfiliado],
+        'numeroDocumento': [this.mForm.value.numeroDocumento, Validators.required],
+        'tipoDocumento': [this.mForm.value.tipoDocumento],
+        'telefono': [this.mForm.value.telefono]
       });
     }
 

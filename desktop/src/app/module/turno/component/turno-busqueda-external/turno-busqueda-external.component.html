@@ -1,4 +1,4 @@
-<form [formGroup]="form" (ngSubmit)="submitForm(form.value)">
+<form [formGroup]="form">
   <div class="form-group"
        [ngClass]="{'has-error':!form.controls['persona'].valid && form.controls['persona'].touched}">
     <app-select
@@ -33,7 +33,7 @@
     ></app-select>
   </div>
   <div class="form-group">
-    <small>Dias de atencion</small>
+    <small>Días de atención</small>
     <div class="col-sm-12">
       <div class="app-container">
         <div class="dummy"></div>
@@ -67,5 +67,4 @@
       <label>Dia sin turnos disponibles</label>
     </div>
   </div>
-
 </form>
