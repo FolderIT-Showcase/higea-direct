@@ -74,7 +74,6 @@ export class MisTurnosComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   handlePersonaClick(persona: Persona) {
-    console.log(persona);
     this.storeService.update('persona', persona);
     this.persona = persona;
     this.turnoService.getTurnoByPersonaId(persona.externalId).then(turnos => this.buildTurnos(turnos));
