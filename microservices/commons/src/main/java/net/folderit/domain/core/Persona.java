@@ -142,6 +142,8 @@ public class Persona implements Serializable {
     }
 
     public String getSexo(){
+
+        if (getGenero()==null) return null;
         if(getGenero().equals(Genero.MASCULINO)){
             return "N";
         }else if(getGenero().equals(Genero.FEMENINO)){

@@ -16,6 +16,7 @@ import {Plan} from '../../../domain/plan';
 import {PersonaService} from '../../../service/persona.service';
 import {Documento} from '../../../domain/documento';
 import {Contacto} from '../../../domain/contacto';
+import {TipoDocumentos} from '../../../domain/enums/tipo-documento';
 
 @Component({
   selector: 'app-turno-resultado-external',
@@ -176,7 +177,7 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
     const especialidad = this.storeService.get('especialidad');
     turno.tomado = true;
     turno.motivoTurno = this.form.value.motivo;
-    turno.plan = this.persona.plan;
+    turno.plan =  this.form.value.plan;
     turno.especialidad = especialidad;
 
     delete turno.centroSalud;
@@ -188,10 +189,14 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
         {tipoContacto: 'mail', dato: this.form.value.email},
       ];
 
+      const documento: Documento = new Documento();
+      documento.tipoDocumento = TipoDocumentos.findByLabel('DNI');
+      documento.numero =  this.form.value.numeroDocumento;
+
       const persona: any = {
         apellido: this.form.value.apellido,
         nombre: this.form.value.nombre,
-        documento: Documento,
+        documento: documento,
         contacto: contactos,
         plan: this.form.value.plan,
       };
@@ -231,9 +236,13 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
 
   fetchPerson(numeroDocumento: number) {
     this.personaService.getPaciente(numeroDocumento)
-      .then((data: Persona) => {
+      .then((data: any) => {
+
+        this.isFieldsetEnabled = true;
 
         if (!data) return;
+
+        if(data.status)return;
 
         this.persona = data;
 
@@ -266,7 +275,7 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
           'email': [null],
         });
 
-        this.isFieldsetEnabled = true;
+
       })
   }
 

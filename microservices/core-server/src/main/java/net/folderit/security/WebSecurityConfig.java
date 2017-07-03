@@ -53,6 +53,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/obraSocial").permitAll()
                 .antMatchers(HttpMethod.GET, "/users/validEmail").permitAll()
                 .antMatchers(HttpMethod.POST, "/users/changePassword").permitAll()
+                .antMatchers(HttpMethod.GET, "/test/sync").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 // We filter the api/login requests

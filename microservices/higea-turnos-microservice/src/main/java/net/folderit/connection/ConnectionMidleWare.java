@@ -83,7 +83,7 @@ public class ConnectionMidleWare {
 
     private MotivoTurno getMotivoTurno(Long motivoTurnoHigeaId) {
         if (motivoTurnoHigeaId == null) return null;
-        String uriProfesionales = "http://localhost:36000/motivoTurno/" + motivoTurnoHigeaId;
+        String uriProfesionales = "http://localhost:36000/metadata/motivoTurno/" + motivoTurnoHigeaId;
         ResponseEntity<MotivoTurno> result = coreApiConnect.get(uriProfesionales, new ParameterizedTypeReference<MotivoTurno>() {
         });
         return result.getBody();
@@ -101,6 +101,7 @@ public class ConnectionMidleWare {
 
         ResponseEntity<Result<TurnoHigea>> result = higeaApiConnect.post(uriTurnos, new ParameterizedTypeReference<Result<TurnoHigea>>() {
         }, turnoHigea);
+
         List<Profesional> profesionales = getProfesionales();
         System.out.println(result);
         Long tipoTurno = result.getBody().getData().getRows().get(0).getTurno_tipo_turno();

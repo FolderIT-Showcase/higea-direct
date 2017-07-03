@@ -58,18 +58,20 @@ public class PacienteHigea {
         plan.setId(plan_os_id_1);
         persona.setPlan(plan);
         persona.setExternalId(paciente_id);
+        if(persona_sexo!=null){
+            switch (persona_sexo) {
+                case "N":
+                    persona.setGenero(Genero.MASCULINO);
+                    break;
+                case "S":
+                    persona.setGenero(Genero.FEMENINO);
+                    break;
+                default:
+                    persona.setGenero(Genero.OTROS);
+                    break;
+            }
+    }else  persona.setGenero(null);
 
-        switch (persona_sexo) {
-            case "N":
-                persona.setGenero(Genero.MASCULINO);
-                break;
-            case "S":
-                persona.setGenero(Genero.FEMENINO);
-                break;
-            default:
-                persona.setGenero(Genero.OTROS);
-                break;
-        }
 
         return persona;
     }

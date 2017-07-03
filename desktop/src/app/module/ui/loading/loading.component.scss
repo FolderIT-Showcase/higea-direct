@@ -1,7 +1,7 @@
 $accentColor: #E95420;
 
 .loading-wrapper {
-  z-index: 1000;
+  z-index: 5000;
   position: fixed;
   left: 0;
   top: 0;
@@ -12,7 +12,7 @@ $accentColor: #E95420;
 }
 
 .loader {
-  z-index: 1001;
+  z-index: 5001;
   position: absolute;
   left: 0;
   right: 0;

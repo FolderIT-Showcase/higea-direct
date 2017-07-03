@@ -1,6 +1,8 @@
 package net.folderit.domain.core;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -101,6 +103,16 @@ public class Turno implements Serializable {
         turnoHigea.setTurno_tipo_turno(motivoTurno.getId());
         turnoHigea.setServicio_id((long) servicio);
         turnoHigea.setPaciente_id(pacienteId);
+        ObjectMapper mapper = new ObjectMapper();
+
+
+//Object to JSON in String
+        String jsonInString = null;
+        try {
+             jsonInString = mapper.writeValueAsString(turnoHigea);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
         return turnoHigea;
     }
 
