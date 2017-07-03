@@ -25,11 +25,9 @@ export class MetadataService {
   motivos: MotivoTurno[] = [];
   license = localStorage.getItem('license');
   client = localStorage.getItem('client');
-  // basePath = `${this.license}/${this.client}/`;
-  basePath = 'core/';
+  basePath = 'core/metadata/';
 
-  constructor(private api: ApiService,
-              private store: Store) {
+  constructor(private api: ApiService, private store: Store) {
 
     if (this.license === 'core') {
       this.basePath = this.license + '/';
@@ -47,7 +45,7 @@ export class MetadataService {
   }
 
   requestPaises() {
-    const path = this.basePath + 'pais';
+    const path = `${this.basePath}pais`;
     return this.api.get(path, false);
   }
 
@@ -68,8 +66,8 @@ export class MetadataService {
   }
 
   requestProvincias() {
-    const path = this.basePath + 'provincia';
-    return this.api.get(path);
+    const path = `${this.basePath}provincia`;
+    return this.api.get(path, false);
   }
 
   setProvincias(mProvincias) {
@@ -89,8 +87,8 @@ export class MetadataService {
   }
 
   requestLocalidades() {
-    const path = this.basePath + 'localidad';
-    return this.api.get(path);
+    const path = `${this.basePath}localidad`;
+    return this.api.get(path, false);
   }
 
   setLocalidades(mLocalidades) {
@@ -99,8 +97,6 @@ export class MetadataService {
     });
     this.store.db.setItem('localidades', this.localidades);
   }
-
-  uriRegistration = this.basePath + 'users/registration';
 
   async getObrasSociales() {
     let list = await this.store.get('obras_sociales');
@@ -112,7 +108,7 @@ export class MetadataService {
   }
 
   requestObrasSociales() {
-    const path = this.basePath + 'obraSocial';
+    const path = `${this.basePath}obraSocial`;
     return this.api.get(path, false);
   }
 
@@ -133,8 +129,8 @@ export class MetadataService {
   }
 
   requestTiposTurnos() {
-    const path = this.basePath + 'tipoTurno';
-    return this.api.get(path);
+    const path = `${this.basePath}tipoTurno`;
+    return this.api.get(path, false);
   }
 
   setTipoTurnos(mTT) {
@@ -154,8 +150,8 @@ export class MetadataService {
   }
 
   requestEstadoCivil() {
-    const path = this.basePath + 'estadoCivil';
-    return this.api.get(path);
+    const path = `${this.basePath}estadoCivil`;
+    return this.api.get(path, false);
   }
 
   setEstadoCivil(estado) {
@@ -175,8 +171,8 @@ export class MetadataService {
   }
 
   requestEspecialidades() {
-    const path = this.basePath + 'especialidad';
-    return this.api.get(path);
+    const path = `${this.basePath}especialidad`;
+    return this.api.get(path, false);
   }
 
   setEspecialidades(especialidades) {
@@ -196,8 +192,8 @@ export class MetadataService {
   }
 
   requestProfesionales() {
-    const path = this.basePath + 'profesional';
-    return this.api.get(path);
+    const path = `${this.basePath}profesional`;
+    return this.api.get(path, false);
   }
 
   setProfesionales(especialidades) {
@@ -217,8 +213,8 @@ export class MetadataService {
   }
 
   requestMotivosTurno() {
-    const path = this.basePath + 'motivoTurno';
-    return this.api.get(path);
+    const path = `${this.basePath}motivoTurno`;
+    return this.api.get(path, false);
   }
 
   setMotivosTurno(motivos) {

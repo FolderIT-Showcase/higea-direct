@@ -19,12 +19,7 @@ public class Plan {
 
     @Id
     private Long id;
-
     private String razon_social;
-
     private int codigo;
 
-  /*  @ManyToOne
-    @JoinColumn(name = "os_id")
-    private ObraSocial obraSocial;*/
 }

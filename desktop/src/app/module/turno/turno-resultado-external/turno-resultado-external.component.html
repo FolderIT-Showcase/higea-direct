@@ -1,0 +1,197 @@
+<div class="list-group">
+  <div class="table-responsive">
+    <div *ngIf="!turnos[0] && clickCounter > 1" class="app-container-row" style="position: absolute; z-index: 1000;">
+      <a class="list-group-item app-no-data">
+        <div class="text-center">
+          <h4> No hay turnos disponibles </h4>
+          <h4> por favor busque nuevamente </h4>
+        </div>
+      </a>
+    </div>
+    <table class="table table-striped app-timeline">
+      <thead>
+      <tr>
+        <th style="width: 1em"></th>
+        <th class="text-right">Horarios de atención</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let turno of timeline" [ngClass]="{'app-selectable-row': turno.enabled}"
+          (click)="showTurnoModal(turno)">
+        <td>{{turno.hora | date: 'HH:mm'}}</td>
+        <td>
+          <div [ngClass]="{'app-disabled-line': !turno.enabled}"></div>
+          <div class="text-right" *ngIf="turno.enabled">{{turno.enabled ? 'RESERVAR' : ''}}</div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<app-modal [title]="'Confirmación'" (outModal)="handleTurnoModal($event)">
+  <div class="row">
+    <div class="col-sm-12">
+      <label>¿Querés tomar este turno?</label><br>
+      <label>Para el dia <strong>{{turno.dia | date: 'dd/MM/yyyy'}}</strong> a las <strong>{{turno.hora|
+        date:'HH:mm'}} hs</strong></label><br>
+      <label> Atendido por <strong>{{turno.profesional.apellido +' '+ turno.profesional.nombre}}</strong></label><br>
+    </div>
+  </div>
+  <br>
+
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+      <div class="form-group required"
+           [ngClass]="{'has-error':!form.controls['numeroDocumento'].valid && form.controls['numeroDocumento'].touched}">
+        <div class="input-group">
+          <label class="control-label">Número de documento</label>
+          <input class="form-control" type="number" placeholder="XXXXXXXX"
+                 [formControl]="form.controls['numeroDocumento']">
+        </div>
+        <small
+          *ngIf="form.controls['numeroDocumento'].hasError('required') && form.controls['numeroDocumento'].touched"
+          class="help-block">Ingrese su número de documento por favor.
+        </small>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="btn btn-group">
+        <button class="btn btn-primary btn-block" (click)="fetchPerson(form.value.numeroDocumento)">BUSCAR</button>
+      </div>
+    </div>
+  </div>
+  <fieldset *ngIf="isFieldsetEnabled">
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="form-group required"
+             [ngClass]="{'has-error':!form.controls['nombre'].valid && form.controls['nombre'].touched}">
+          <div class="input-group">
+            <label class="control-label">Nombre</label>
+            <input class="form-control" type="text" placeholder="José"
+                   [formControl]="form.controls['nombre']">
+          </div>
+          <small
+            *ngIf="form.controls['nombre'].hasError('required') && form.controls['nombre'].touched"
+            class="help-block">Ingrese su nombre por favor.
+          </small>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group required"
+             [ngClass]="{'has-error':!form.controls['apellido'].valid && form.controls['apellido'].touched}">
+          <div class="input-group">
+            <label class="control-label">Apellido</label>
+            <input class="form-control" type="text" placeholder="Perez"
+                   [formControl]="form.controls['apellido']">
+          </div>
+          <small
+            *ngIf="form.controls['apellido'].hasError('required') && form.controls['apellido'].touched"
+            class="help-block">Ingrese su apellido por favor.
+          </small>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group required"
+             [ngClass]="{'has-error':!form.controls['telefono'].valid && form.controls['telefono'].touched}">
+          <div class="input-group">
+            <label class="control-label">Teléfono</label>
+            <input class="form-control" type="text" placeholder="0342 4XXXXXX"
+                   [formControl]="form.controls['telefono']">
+          </div>
+          <small
+            *ngIf="form.controls['telefono'].hasError('required') && form.controls['telefono'].touched"
+            class="help-block">Ingrese su Teléfono por favor.
+          </small>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group"
+             [ngClass]="{'has-error':!form.controls['email'].valid && form.controls['email'].touched}">
+          <div class="input-group">
+            <label class="control-label">Correo electrónico</label>
+            <input class="form-control" type="text" placeholder="usuario@correo.com.ar"
+                   [formControl]="form.controls['email']">
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group required"
+             [ngClass]="{'has-error':!form.controls['motivo'].valid && form.controls['motivo'].touched}">
+          <app-select
+            ngDefaultControl
+            [placeHolder]="'Motivo del turno'"
+            (onChange)="handleMotivo($event)"
+            [list]="motivos"
+            [formControl]="form.controls['motivo']"
+            [displayProp]="['descripcion']"
+          ></app-select>
+          <small
+            *ngIf="form.controls['motivo'].hasError('required') && form.controls['motivo'].touched"
+            class="help-block">Ingrese su motivo por favor.
+          </small>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group required"
+             [ngClass]="{'has-error':!form.controls['obraSocial'].valid && form.controls['obraSocial'].touched}">
+          <app-select
+            ngDefaultControl
+            [placeHolder]="'Obra social'"
+            [formControl]="form.controls['obraSocial']"
+            [list]="obras_sociales"
+            [displayProp]="['nombre']"
+            (change)="handleObraSocialClick(form.value.obraSocial)"
+          ></app-select>
+          <small
+            *ngIf="form.controls['obraSocial'].hasError('required') && form.controls['obraSocial'].touched"
+            class="help-block">Ingrese su Obra social por favor.
+          </small>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group required"
+             [ngClass]="{'has-error':!form.controls['plan'].valid && form.controls['plan'].touched}">
+          <app-select
+            ngDefaultControl
+            [placeHolder]="'Plan'"
+            [formControl]="form.controls['plan']"
+            [list]="planes"
+            [displayProp]="['razon_social']">
+          </app-select>
+          <small
+            *ngIf="form.controls['plan'].hasError('required') && form.controls['plan'].touched"
+            class="help-block">Ingrese su plan por favor.
+          </small>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+
+  <hr class="half-rule"/>
+  <div class="row">
+    <div class="col-sm-12 text-right">
+      <button (click)="reservarTurno(turno)" [disabled]="!isFieldsetEnabled" class="btn btn-primary">
+        RESERVAR
+      </button>
+      <button (click)="turnoModal.hide()" class="btn btn-default">CANCELAR</button>
+    </div>
+  </div>
+</app-modal>
+
+<app-modal [title]="'Confirmación'" (outModal)="handleSuccessModal($event)">
+  <label>El turno ha sido tomado con éxito</label><br>
+  <div class="row">
+    <div class="text-right">
+      <div class="col-sm-12 col-md-4 col-md-offset-8">
+        <a (click)="successModal.hide()" class="btn btn-block btn-success">Salir</a>
+      </div>
+    </div>
+  </div>
+</app-modal>
+
+

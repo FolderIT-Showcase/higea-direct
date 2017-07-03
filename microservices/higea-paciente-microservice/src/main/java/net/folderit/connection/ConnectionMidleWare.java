@@ -21,8 +21,8 @@ import java.util.Map;
 public class ConnectionMidleWare {
 
     private final String uriPaciente = "http://higea.folderit.net/api/{cliente}/pacientes";
-    private RestTemplate restTemplate = new RestTemplate();
     private final HigeaApiConnect higeaApiConnect;
+    private RestTemplate restTemplate = new RestTemplate();
 
     @Autowired
     public ConnectionMidleWare(HigeaApiConnect higeaApiConnect) {
@@ -69,14 +69,12 @@ public class ConnectionMidleWare {
         return persona;
     }
 
-    public PacienteHigea getByDocAndGenero(String codigo, String genero, String documento) {
-
-        String uriPaciente = "http://higea.folderit.net/api/" + codigo + "/pacientes?" + "persona_sexo=" + genero + "&" + "persona_documento_nro=" + documento;
-
+    public Persona getByDocAndGenero(String codigo, String documento) {
+        String uriPaciente = "http://higea.folderit.net/api/" + codigo + "/pacientes?" + "persona_documento_nro=" + documento;
         ResponseEntity<Result<PacienteHigea>> result = higeaApiConnect.get(uriPaciente, new ParameterizedTypeReference<Result<PacienteHigea>>() {
         });
-
-        return result.getBody().getData().getRows().size() == 0 ? null : result.getBody().getData().getRows().get(0);
+        Persona persona = result.getBody().getData().getRows().size() == 0 ? null : result.getBody().getData().getRows().get(0).convert();
+        return persona;
     }
 
 

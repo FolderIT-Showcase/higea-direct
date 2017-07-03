@@ -12,6 +12,7 @@ import {SelectComponent} from './select/select.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {InfoStepComponent} from './info-step/info-step.component';
 import {FooterComponent} from './footer/footer.component';
+import {PublicHomeComponent} from './public-home/public-home.component';
 
 @NgModule({
   imports: [
@@ -32,6 +33,7 @@ import {FooterComponent} from './footer/footer.component';
     SelectComponent,
     InfoStepComponent,
     FooterComponent,
+    PublicHomeComponent,
   ],
   exports: [
     AlertComponent,

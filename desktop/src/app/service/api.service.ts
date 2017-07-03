@@ -67,7 +67,7 @@ export class ApiService {
   }
 
   private processResponse(response: Response): Response {
-    if(response.status < 200 || response.status >= 300) throw new Error();
+    if (response.status < 200 || response.status >= 300) throw new Error();
     let data = null;
     try {
       data = response.json();

@@ -1,0 +1,55 @@
+<form [formGroup]="form">
+  <div class="form-group">
+    <app-select
+      ngDefaultControl
+      [placeHolder]="'Especialidad'"
+      (change)="handleEspecialidadClick(form.value.especialidad)"
+      [formControl]="form.controls['especialidad']"
+      [list]="especialidades"
+      [displayProp]="['nombre']"
+    ></app-select>
+  </div>
+  <div class="form-group">
+    <app-select
+      ngDefaultControl
+      [placeHolder]="'Médico / Profesional'"
+      [formControl]="form.controls['profesional']"
+      [list]="filteredProfesionales"
+      [displayProp]="['apellido', 'nombre']"
+    ></app-select>
+  </div>
+  <div class="form-group">
+    <small>Días de atención</small>
+    <div class="col-sm-12">
+      <div class="app-container">
+        <div class="dummy"></div>
+        <div class="app-cal-container">
+          <app-datepicker
+            (calendarViewChanged)="calendarChange($event)"
+            [options]="myDatePickerOptions"
+            [locale]="'es'"
+            [formControl]="form.controls['fecha']"
+            [markedDays]="markedDays"
+          ></app-datepicker>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="form-group">
+    <small>Leyenda</small>
+    <div class="col-sm-12">
+      <br>
+      <a class="btn btn-circle legend-available"></a>
+      <label>Dia con turnos disponibles</label>
+      <br>
+      <br>
+      <a class="btn btn-circle legend-past"></a>
+      <label>Dia con turnos pasados</label>
+      <br>
+      <br>
+      <a class="btn btn-circle legend-unavailable"></a>
+      <label>Dia sin turnos disponibles</label>
+    </div>
+  </div>
+</form>

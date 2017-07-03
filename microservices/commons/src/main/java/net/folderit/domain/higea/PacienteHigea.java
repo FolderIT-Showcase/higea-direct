@@ -4,6 +4,12 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import net.folderit.domain.core.Contacto;
+import net.folderit.domain.core.Persona;
+import net.folderit.domain.core.Plan;
+import net.folderit.domain.core.enums.Genero;
+
+import java.util.ArrayList;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
@@ -38,5 +44,34 @@ public class PacienteHigea {
     private String paciente_os_afiliado1_nro;
     private String paciente_os_afiliado2_nro;
     private String paciente_os_afiliado3_nro;
+
+    public Persona convert() {
+        Persona persona = new Persona();
+        Contacto contacto = new Contacto();
+        contacto.setDato(persona_telefono_part_nro);
+        ArrayList<Contacto> contactos = new ArrayList<>();
+        contactos.add(contacto);
+        persona.setContacto(contactos);
+        persona.setApellido(persona_apellido);
+        persona.setNombre(getPersona_nombres());
+        Plan plan = new Plan();
+        plan.setId(plan_os_id_1);
+        persona.setPlan(plan);
+        persona.setExternalId(paciente_id);
+
+        switch (persona_sexo) {
+            case "N":
+                persona.setGenero(Genero.MASCULINO);
+                break;
+            case "S":
+                persona.setGenero(Genero.FEMENINO);
+                break;
+            default:
+                persona.setGenero(Genero.OTROS);
+                break;
+        }
+
+        return persona;
+    }
 
 }

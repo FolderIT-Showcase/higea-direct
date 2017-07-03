@@ -21,5 +21,4 @@ export class Persona {
   plan?: Plan;
   nroAfiliado?: number;
   externalId?: number;
-
 }

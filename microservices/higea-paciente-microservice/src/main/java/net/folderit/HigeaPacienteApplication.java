@@ -30,19 +30,16 @@ public class HigeaPacienteApplication {
 
     @PostMapping("/{cliente}")
     public ResponseEntity<?> save(@PathVariable("cliente") String codigo, @RequestBody Persona persona) {
-        PacienteHigea pacienteHigea = connectionMidleWare.getByDocAndGenero(codigo, persona.getSexo(), persona.getDocumento().getNumero().toString());
-
+        Persona pacienteHigea = connectionMidleWare.getByDocAndGenero(codigo, persona.getDocumento().getNumero().toString());
         if (pacienteHigea != null) {
             TurneroException.getInstance().getMessage(TurneroException.MESSAGE_DOC_EXIST, new String[]{persona.getDocumento().getNumero().toString()});
             return ResponseEntity.status(HttpStatus.CONFLICT).body(TurneroException.getInstance());
         }
-
         return ResponseEntity.ok(connectionMidleWare.savePaciente(codigo, persona));
     }
 
     @GetMapping("/{cliente}")
-    public PacienteHigea getByDocAndGenero(@PathVariable("cliente") String codigo, @RequestParam("genero") String genero,
-                                           @RequestParam("documento") String documento) {
-        return connectionMidleWare.getByDocAndGenero(codigo, genero, documento);
+    public ResponseEntity<?> getByDocAndGenero(@PathVariable("cliente") String codigo,  @RequestParam("documento") String documento) {
+        return ResponseEntity.ok(connectionMidleWare.getByDocAndGenero(codigo, documento));
     }
 }

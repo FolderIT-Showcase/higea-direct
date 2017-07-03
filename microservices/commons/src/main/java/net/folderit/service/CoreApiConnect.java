@@ -29,7 +29,6 @@ public class CoreApiConnect {
 
     private HttpEntity<?> getSession() {
         ResponseEntity<LoginResult> loginResultDTO = login();
-        // URI (URL) parameters
         HttpHeaders headers = new HttpHeaders();
         headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
         headers.set("Authorization", loginResultDTO.getBody().getToken());

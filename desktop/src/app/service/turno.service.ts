@@ -73,7 +73,7 @@ export class TurnoService {
 
     filtro.fecha = fecha;
 
-    return this.api.post(path, filtro)
+    return this.api.post(path, filtro, false)
       .then(data => {
         this.storeService.update('CentroSalud', centro);
         this.storeService.update('turnos', data);
@@ -119,7 +119,7 @@ export class TurnoService {
 
   reservarTurno(turno: Turno, persona: Persona) {
     const path = `${this.pathTurno}/persona/${persona.externalId}`;
-    return this.api.post(path, turno);
+    return this.api.post(path, turno, false);
   }
 
   generarPDF(persona: Persona) {
@@ -150,7 +150,7 @@ export class TurnoService {
 
   getCalendario(profesional: Profesional, fecha: any) {
     const path = this.pathTurno + '/calendarios?profesional_id=' + profesional.id + '&calendario_fecha=' + fecha + '&servicio_id=8';
-    return this.api.get(path);
+    return this.api.get(path, false);
   }
 
 }

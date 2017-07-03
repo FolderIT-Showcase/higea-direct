@@ -1,10 +1,8 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {SwitchTurnoComponent} from './component/switch-turno/switch-turno.component';
-import {IntegrantesResolveService} from '../../service/resolve/integrantes-resolve.service';
-import {CentrosSaludResolveService} from '../../service/resolve/centros-salud-resolve.service';
-import {MisTurnosComponent} from './component/mis-turnos/mis-turnos.component';
 import {TurnoHomeComponent} from './turno-home.component';
+import {TurnoExternalComponent} from './turno-external/turno-external.component';
+import {MetadataResolveService} from '../../service/resolve/metadata-resolve.service';
 
 const routes: Routes = [
   {
@@ -13,22 +11,13 @@ const routes: Routes = [
     children: [
       {
         path: 'nuevo',
-        component: SwitchTurnoComponent,
+        component: TurnoExternalComponent,
         resolve: {
-          integrantes: IntegrantesResolveService,
-          centrosSalud: CentrosSaludResolveService
+          metadata: MetadataResolveService
         }
-      },
-      {
-        path: 'tomados',
-        component: MisTurnosComponent,
-        resolve: {
-          integrantes: IntegrantesResolveService,
-        }
-      },
+      }
     ]
   }
-
 ];
 
 @NgModule({

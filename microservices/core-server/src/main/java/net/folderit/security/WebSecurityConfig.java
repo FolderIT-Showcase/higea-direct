@@ -44,6 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable().authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
+                .antMatchers(HttpMethod.GET, "/metadata/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/users/external").permitAll()
                 .antMatchers(HttpMethod.POST, "/users/registration").permitAll()
                 .antMatchers(HttpMethod.GET, "/auth/regitrationConfirm").permitAll()
@@ -80,7 +81,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                                 "and true = U.enabled " +
                                 "and U.email = ?")
                 .rolePrefix("ROLE_");
-// TODO: solo para testing o backup, cambiar o mejorar
         auth.inMemoryAuthentication().withUser("HigeaDirect").password("alagrandelepusecuca2017").roles("ADMIN");
     }
 

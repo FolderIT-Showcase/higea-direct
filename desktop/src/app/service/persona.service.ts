@@ -124,4 +124,9 @@ export class PersonaService {
     return this.api.post(path, user, false);
   }
 
+  getPaciente(numeroDocumento: number) {
+    const path = this.externalUriRegistration + '?documento=' + numeroDocumento;
+    return this.api.get(path, false);
+  }
+
 }

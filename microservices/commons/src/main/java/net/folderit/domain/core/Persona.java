@@ -111,6 +111,7 @@ public class Persona implements Serializable {
         pacienteDTO.setPersona_apellido(getApellido());
         pacienteDTO.setPersona_nombres(getNombre());
         //pacienteDTO.setPersona_fecha_nacimiento(getFechaNacimiento() != null ? getFechaNacimiento().toString():null);
+
         pacienteDTO.setPersona_sexo(getSexo());
         pacienteDTO.setPersona_documento_nro(getDocumento() != null ? getDocumento().getNumero().toString() :null);
         pacienteDTO.setPersona_telefono_part_nro(getTipoContaco(TipoContacto.telefono));
@@ -146,7 +147,7 @@ public class Persona implements Serializable {
         }else if(getGenero().equals(Genero.FEMENINO)){
             return "S";
         }
-        return null;
+        return "";
     }
 
     public Long getTipoDocID(TipoDocumento tipoDocumento) {

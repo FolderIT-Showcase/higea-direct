@@ -9,13 +9,9 @@ import {Util} from './service/utils.service';
 import {TurnoService} from './service/turno.service';
 import {LoadingService} from './service/loading.service';
 import {IntegrantesResolveService} from './service/resolve/integrantes-resolve.service';
-import {AppAuthService} from './module/auth/auth.service';
 import {LocalidadesResolveService} from './service/resolve/localidades-resolve.service';
-import {CentrosSaludResolveService} from './service/resolve/centros-salud-resolve.service';
 import {PersonaService} from './service/persona.service';
 import {AlertService} from './service/alert.service';
-import {AdminGuard} from './service/guard/admin.guard';
-import {AuthGuard} from './service/guard/auth.guard';
 import {MetadataService} from './service/metadata.service';
 import {ApiService} from './service/api.service';
 import {Store} from './service/store';
@@ -30,13 +26,9 @@ const providers = [
   Store,
   StoreService,
   MetadataService,
-  AuthGuard,
-  AdminGuard,
   AlertService,
   PersonaService,
   ApiService,
-  AppAuthService,
-  CentrosSaludResolveService,
   IntegrantesResolveService,
   LocalidadesResolveService,
   MetadataResolveService,

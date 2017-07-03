@@ -42,10 +42,10 @@ public class ConnectionMidleWare {
         return result.getBody().getData().getRows();
     }
 
-
     private List<Profesional> getProfesionales() {
-        String uriProfesionales = "http://localhost:36000/profesional";
-        ResponseEntity<ArrayList<Profesional>> result = coreApiConnect.get(uriProfesionales, new ParameterizedTypeReference<ArrayList<Profesional>>() {});
+        String uriProfesionales = "http://localhost:36000/metadata/profesional";
+        ResponseEntity<ArrayList<Profesional>> result = coreApiConnect.get(uriProfesionales, new ParameterizedTypeReference<ArrayList<Profesional>>() {
+        });
         return result.getBody();
     }
 
@@ -56,7 +56,7 @@ public class ConnectionMidleWare {
 
         for (TurnoHigea turnoHigea : turnosHigea) {
             MotivoTurno motivoTurno = getMotivoTurno(turnoHigea.getTurno_tipo_turno());
-            turnosCore.add(turnoHigea.convert(profesionales,motivoTurno));
+            turnosCore.add(turnoHigea.convert(profesionales, motivoTurno));
         }
 
         return turnosCore;
@@ -75,16 +75,17 @@ public class ConnectionMidleWare {
 
         for (TurnoHigea turnoHigea : result.getBody().getData().getRows()) {
             MotivoTurno motivoTurno = getMotivoTurno(turnoHigea.getTurno_tipo_turno());
-            turnosCore.add(turnoHigea.convert(profesionales,motivoTurno));
+            turnosCore.add(turnoHigea.convert(profesionales, motivoTurno));
         }
 
         return turnosCore;
     }
 
     private MotivoTurno getMotivoTurno(Long motivoTurnoHigeaId) {
-        if(motivoTurnoHigeaId==null)return null;
+        if (motivoTurnoHigeaId == null) return null;
         String uriProfesionales = "http://localhost:36000/motivoTurno/" + motivoTurnoHigeaId;
-        ResponseEntity<MotivoTurno> result = coreApiConnect.get(uriProfesionales, new ParameterizedTypeReference<MotivoTurno>() {});
+        ResponseEntity<MotivoTurno> result = coreApiConnect.get(uriProfesionales, new ParameterizedTypeReference<MotivoTurno>() {
+        });
         return result.getBody();
     }
 
@@ -101,12 +102,13 @@ public class ConnectionMidleWare {
         ResponseEntity<Result<TurnoHigea>> result = higeaApiConnect.post(uriTurnos, new ParameterizedTypeReference<Result<TurnoHigea>>() {
         }, turnoHigea);
         List<Profesional> profesionales = getProfesionales();
+        System.out.println(result);
+        Long tipoTurno = result.getBody().getData().getRows().get(0).getTurno_tipo_turno();
+        MotivoTurno motivoTurno = getMotivoTurno(tipoTurno);
 
-        MotivoTurno motivoTurno = getMotivoTurno(result.getBody().getData().getRows().get(0).getTurno_tipo_turno());
-
-        return result.getBody().getData().getRows().get(0).convert(profesionales,motivoTurno);
+        Turno mTurno = result.getBody().getData().getRows().get(0).convert(profesionales, motivoTurno);
+        return mTurno;
     }
-
 
     private Long getOtorgado(String codigo) {
         List<EstadoTurnosHigea> estados = findEstadosTurnos(codigo);
@@ -118,7 +120,6 @@ public class ConnectionMidleWare {
         }
         return null;
     }
-
 
     private List<TurnoHigea> findTurnos(Long profesionalId, Date fecha) {
 
@@ -152,7 +153,7 @@ public class ConnectionMidleWare {
         turnosHigea.forEach(turnoHigea -> {
             if (turnoHigea.getPaciente_id() == null) {
                 MotivoTurno motivoTurno = getMotivoTurno(turnoHigea.getTurno_tipo_turno());
-                turnosCoreLibres.add(turnoHigea.convert(profesionales,motivoTurno));
+                turnosCoreLibres.add(turnoHigea.convert(profesionales, motivoTurno));
             }
         });
 
@@ -171,14 +172,13 @@ public class ConnectionMidleWare {
 
     public List<CalendarioDataHigea> findCalendarios(String codigo, String profesional_id, String servicio_id, String calendario_fecha) {
 
-        String url = "http://higea.folderit.net/api/" + cliente + "/calendario"+ "?" + "profesional_id=" +profesional_id + "&servicio_id="+servicio_id + "&calendario_fecha="+calendario_fecha;
+        String url = "http://higea.folderit.net/api/" + cliente + "/calendario" + "?" + "profesional_id=" + profesional_id + "&servicio_id=" + servicio_id + "&calendario_fecha=" + calendario_fecha;
 
         ResponseEntity<CalendarioHigea> result = higeaApiConnect.get(url,
                 new ParameterizedTypeReference<CalendarioHigea>() {
                 });
         return result.getBody().getData();
     }
-
 
 
 }
