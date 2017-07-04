@@ -177,7 +177,7 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
     const especialidad = this.storeService.get('especialidad');
     turno.tomado = true;
     turno.motivoTurno = this.form.value.motivo;
-    turno.plan =  this.form.value.plan;
+    turno.plan = this.form.value.plan;
     turno.especialidad = especialidad;
 
     delete turno.centroSalud;
@@ -191,7 +191,7 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
 
       const documento: Documento = new Documento();
       documento.tipoDocumento = TipoDocumentos.findByLabel('DNI');
-      documento.numero =  this.form.value.numeroDocumento;
+      documento.numero = this.form.value.numeroDocumento;
 
       const persona: any = {
         apellido: this.form.value.apellido,
@@ -207,11 +207,18 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
           return this.turnoService.reservarTurno(turno, this.persona)
         })
         .then(() => this.successModal.show());
+     this.resetState();
       return;
     }
 
     this.turnoService.reservarTurno(turno, this.persona).then(() => this.successModal.show());
+    this.resetState();
+  }
 
+  resetState(){
+    this.isFieldsetEnabled = false;
+    this.form.reset();
+    this.buildTimeline([]);
   }
 
   handleTurnoModal(event) {
@@ -242,7 +249,7 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
 
         if (!data) return;
 
-        if(data.status)return;
+        if (data.status) return;
 
         this.persona = data;
 
@@ -274,7 +281,6 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
           'motivo': [null, Validators.required],
           'email': [null],
         });
-
 
       })
   }
