@@ -47,6 +47,7 @@
         <div class="input-group">
           <label class="control-label">Número de documento</label>
           <input class="form-control" type="number" placeholder="XXXXXXXX"
+                 (keydown)="keyPress($event)" (keypress)="keyPress($event)"
                  [formControl]="form.controls['numeroDocumento']">
         </div>
         <small
@@ -57,7 +58,7 @@
     </div>
     <div class="col-sm-3">
       <div class="btn btn-group">
-        <button class="btn btn-primary btn-block" (click)="fetchPerson(form.value.numeroDocumento)">BUSCAR</button>
+        <button class="btn btn-primary btn-block"  (click)="fetchPerson(form.value.numeroDocumento)">BUSCAR</button>
       </div>
     </div>
   </div>
