@@ -13,6 +13,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {InfoStepComponent} from './info-step/info-step.component';
 import {FooterComponent} from './footer/footer.component';
 import {PublicHomeComponent} from './public-home/public-home.component';
+import {SidebarComponent} from './sidebar/sidebar.component';
 
 @NgModule({
   imports: [
@@ -34,6 +35,7 @@ import {PublicHomeComponent} from './public-home/public-home.component';
     InfoStepComponent,
     FooterComponent,
     PublicHomeComponent,
+    SidebarComponent
   ],
   exports: [
     AlertComponent,
@@ -44,7 +46,9 @@ import {PublicHomeComponent} from './public-home/public-home.component';
     NavbarComponent,
     SelectComponent,
     InfoStepComponent,
-    FooterComponent
+    FooterComponent,
+    PublicHomeComponent,
+    SidebarComponent
   ]
 })
 export class UIModule {
