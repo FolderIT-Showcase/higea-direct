@@ -39,14 +39,24 @@
     </div>
   </div>
   <br>
-
+  <br>
+  <br>
+  <br>
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-6">
+      <p class="text-center">
+        <span popover="Para seguir por favor ingresa tu número de documento" triggers="" #pop="bs-popover">
+        </span>
+      </p>
+    </div>
+  </div>
   <div class="row">
     <div class="col-sm-6 col-sm-offset-3">
       <div class="form-group required"
            [ngClass]="{'has-error':!form.controls['numeroDocumento'].valid && form.controls['numeroDocumento'].touched}">
         <div class="input-group">
           <label class="control-label">Número de documento</label>
-          <input class="form-control" type="number" placeholder="XXXXXXXX"
+          <input autofocus (focus)="pop.show()" class="form-control" type="number" placeholder="XXXXXXXX"
                  [formControl]="form.controls['numeroDocumento']">
         </div>
         <small
