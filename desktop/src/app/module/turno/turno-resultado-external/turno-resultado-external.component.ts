@@ -242,7 +242,15 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
     return '';
   }
 
+  keyPress(event) {
+     if (this.form.controls['numeroDocumento'].valid && event.which === 13) {
+      this.fetchPerson(this.form.value.numeroDocumento);
+    }
+  }
+
+
   fetchPerson(numeroDocumento: number) {
+    this.resetState();
     this.personaService.getPaciente(numeroDocumento)
       .then((data: any) => {
 
