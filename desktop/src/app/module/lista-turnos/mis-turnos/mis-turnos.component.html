@@ -14,19 +14,11 @@
       <br>
       <br>
       <div class="row">
-        <div class="col-sm-6 col-sm-offset-6">
-          <p class="text-center">
-        <span popover="Para seguir por favor ingresa tu número de documento" triggers="" #pop="bs-popover">
-        </span>
-          </p>
-        </div>
-      </div>
-      <div class="row">
         <div class="col-sm-12 col-md-4 col-md-offset-4">
-          <div class="form-group">
+          <div tooltip="Para seguir por favor ingresa tu número de documento" class="form-group">
             <div class="input-group">
               <label class="control-label">Número de documento</label>
-              <input autofocus (focus)="pop.show()" class="form-control" type="number" min="0" max="999999999"
+              <input autofocus class="form-control" type="number" min="0" max="999999999"
                      placeholder="XXXXXXXX" [(ngModel)]="numeroDocumento"
                      [ngModelOptions]="{standalone: true}">
             </div>

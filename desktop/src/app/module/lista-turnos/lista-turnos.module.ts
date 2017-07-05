@@ -14,7 +14,6 @@ import {ListaTurnosComponent} from './lista-turnos/lista-turnos.component';
     ReactiveFormsModule,
     FormsModule,
     UIModule,
-    PopoverModule.forRoot(),
     TabsModule.forRoot()
   ],
   declarations: [

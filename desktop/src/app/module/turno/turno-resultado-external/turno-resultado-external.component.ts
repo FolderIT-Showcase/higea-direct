@@ -112,7 +112,7 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
       let turno = new Turno();
       turno.hora = date;
 
-      for (let turnoEnabled of this.turnos) {
+      for (let turnoEnabled of turnos) {
         const dateTimeline = new Date(turno.hora);
         const date = new Date(turnoEnabled.hora);
         if (dateTimeline.getHours() === date.getHours() &&
@@ -131,7 +131,7 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
         turno = new Turno();
         turno.hora = date;
 
-        for (let turnoEnabled of this.turnos) {
+        for (let turnoEnabled of turnos) {
           const dateTimeline = new Date(turno.hora);
           const date = new Date(turnoEnabled.hora);
           if (dateTimeline.getHours() === date.getHours() &&
@@ -149,6 +149,36 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
     turno.hora = date;
     this.timeline.push(turno);
 
+  }
+
+  clearTimeline(){
+
+    // duracion en minutos
+    let duracion = 30;
+    this.timeline = [];
+
+    const baseMin = 0;
+    const minHour = 8;
+    const maxHour = 20;
+
+    for (let i = minHour; i < maxHour; i++) {
+      let date = new Date().setHours(i, baseMin, 0, 0);
+      let turno = new Turno();
+      turno.hora = date;
+      this.timeline.push(turno);
+      for (let j = duracion; j !== 0; j = (j + duracion) % 60) {
+        let date = new Date().setHours(i, j, 0, 0);
+        let turno = new Turno();
+        turno = new Turno();
+        turno.hora = date;
+        this.timeline.push(turno);
+      }
+    }
+
+    let date = new Date().setHours(maxHour, baseMin, 0, 0);
+    let turno = new Turno();
+    turno.hora = date;
+    this.timeline.push(turno)
   }
 
   public showTurnoModal(turno: Turno) {
@@ -290,6 +320,11 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
         });
 
       })
+  }
+
+  onSuccessModal() {
+    this.successModal.hide();
+    this.buildTimeline([]);
   }
 
 }

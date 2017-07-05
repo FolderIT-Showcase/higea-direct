@@ -25,7 +25,6 @@ import {MyDatePickerModule} from '../datepicker/datepicker.module';
     TabsModule.forRoot(),
     BsDropdownModule.forRoot(),
     TimepickerModule.forRoot(),
-    PopoverModule.forRoot(),
     MyDatePickerModule,
     ModalModule.forRoot(),
   ],
