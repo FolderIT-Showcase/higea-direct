@@ -252,6 +252,11 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
     this.buildTimeline([]);
   }
 
+  resetForm() {
+    this.isFieldsetEnabled = false;
+    this.form.reset();
+  }
+
   handleTurnoModal(event) {
     this.turnoModal = event;
   }
@@ -280,7 +285,7 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
 
   fetchPerson(numeroDocumento: number) {
     if (!this.form.controls['numeroDocumento'].valid) return;
-    this.resetState();
+    this.resetForm();
     this.personaService.getPaciente(numeroDocumento)
       .then((data: any) => {
 
