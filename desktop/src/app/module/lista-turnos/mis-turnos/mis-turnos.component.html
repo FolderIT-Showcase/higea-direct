@@ -1,0 +1,46 @@
+<div class="container-fluid">
+  <div class="container">
+    <div class="col-sm-12 col-md-4">
+      <div class="app-header">
+        <h2>Mis Turnos</h2>
+        <p>Aca podes administrar tus turnos</p>
+      </div>
+    </div>
+    <br>
+    <br>
+    <form>
+      <div class="row">
+        <div class="col-sm-12 col-md-4">
+          <div class="form-group">
+            <div class="input-group">
+              <label class="control-label">Número de documento</label>
+              <input class="form-control" type="number" min="0" max="999999999" placeholder="XXXXXXXX" [(ngModel)]="numeroDocumento"
+                     [ngModelOptions]="{standalone: true}">
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-4 col-lg-3">
+          <div class="btn btn-group">
+            <button class="btn btn-block btn-primary" (click)="fetchTurnos()">
+              BUSCAR TURNOS
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+
+  </div>
+  <div class="container">
+    <tabset [justified]="true">
+      <tab (click)="clearTable()" heading="Próximos Turnos">
+        <app-lista-turnos [turnos]="turnosProximos" [desktopMode]="desktopMode"
+                          [mode]="'proximos'"></app-lista-turnos>
+      </tab>
+      <tab (click)="clearTable()" heading="Historial de Turnos">
+        <app-lista-turnos [turnos]="turnosHistorial" [desktopMode]="desktopMode"
+                          [mode]="'historial'"></app-lista-turnos>
+      </tab>
+    </tabset>
+  </div>
+</div>
+

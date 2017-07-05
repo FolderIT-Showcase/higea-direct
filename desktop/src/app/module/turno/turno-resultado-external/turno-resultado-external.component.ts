@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChildren} from '@angular/core';
 import {ModalDirective} from 'ngx-bootstrap';
 import {Store} from '../../../service/store';
 import {Subscription} from 'rxjs/Subscription';
@@ -67,6 +67,7 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
     this.metadataService.getObrasSociales().then((data: any) => this.obras_sociales = data);
     this.metadataService.getEspecialidades().then((data: any) => this.especialidades = data);
     this.metadataService.getMotivosTurno().then((data: any) => this.motivos = data);
@@ -256,9 +257,7 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
 
         this.isFieldsetEnabled = true;
 
-        if (!data) return;
-
-        if (data.status) return;
+        if (!data || data.status) return;
 
         this.persona = data;
 

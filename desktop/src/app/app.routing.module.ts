@@ -21,6 +21,10 @@ const routes: Routes = [
         path: 'turno',
         loadChildren: './module/turno/turno.module#TurnoModule',
       },
+      {
+        path: 'mis-turnos',
+        loadChildren: './module/lista-turnos/lista-turnos.module#ListaTurnosModule',
+      },
     ]
   },
 
