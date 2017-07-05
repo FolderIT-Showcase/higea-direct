@@ -47,12 +47,17 @@
         <div class="input-group">
           <label class="control-label">Número de documento</label>
           <input class="form-control" type="number" placeholder="XXXXXXXX"
+                 min="0"
                  (keydown)="keyPress($event)" (keypress)="keyPress($event)"
                  [formControl]="form.controls['numeroDocumento']">
         </div>
         <small
           *ngIf="form.controls['numeroDocumento'].hasError('required') && form.controls['numeroDocumento'].touched"
           class="help-block">Ingrese su número de documento por favor.
+        </small>
+        <small
+          *ngIf="form.controls['numeroDocumento'].hasError('minlength') && form.controls['numeroDocumento'].touched"
+          class="help-block">Ingrese un minimo de 8 numeros.
         </small>
       </div>
     </div>
