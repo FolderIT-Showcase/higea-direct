@@ -256,9 +256,7 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
 
         this.isFieldsetEnabled = true;
 
-        if (!data) return;
-
-        if (data.status) return;
+        if (!data || data.status) return;
 
         this.persona = data;
 

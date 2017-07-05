@@ -82,7 +82,7 @@ export class TurnoService {
 
   getTurnoByPersonaId(id: number) {
     const path = `${this.license}/turnos/${this.client}/persona/${id}`;
-    return this.api.get(path);
+    return this.api.get(path, false);
   }
 
   getProximosTurnos(centro: CentroSalud, especialidad: Especialidad, profesional: Profesional) {

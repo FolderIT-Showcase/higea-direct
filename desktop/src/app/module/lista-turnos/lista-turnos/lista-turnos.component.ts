@@ -6,11 +6,12 @@ import {TurnoService} from '../../../service/turno.service';
 import {StoreService} from '../../../service/store.service';
 import {Profesional} from '../../../domain/profesional';
 import {Util} from '../../../service/utils.service';
+
 @Component({
   selector: 'app-lista-turnos',
-  templateUrl: './turnos-lista.component.html'
+  templateUrl: './lista-turnos.component.html'
 })
-export class TurnosListaComponent implements OnInit {
+export class ListaTurnosComponent implements OnInit {
   @Input() turnos: Turno[] = [];
   @Input() desktopMode = false;
   @Input() mode = 'proximos'; // 'proximos' o 'historial'
