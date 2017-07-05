@@ -14,16 +14,6 @@
           <label><strong>Profesional: </strong>{{turno.profesional.nombre}}</label><br>
           <label><strong>Observaciones: </strong>{{turno.observaciones || ' - '}}</label>
         </div>
-        <div *ngIf="mode == 'proximos'" class="card-action">
-          <div class="btn-group btn-group-justified">
-            <a (click)="showModal(turno)" class="btn btn-danger">
-              <i class="fa fa-trash"></i>
-            </a>
-            <a (click)="showModalimpresion(turno)" class="btn btn-success btn-md">
-              <span class="fa fa-print"></span>
-            </a>
-          </div>
-        </div>
       </div>
       <br>
     </div>
@@ -43,7 +33,6 @@
               <th *ngIf="turnos[0].especialidad.nombre">Especialidad</th>
               <th>Profesional</th>
               <th>Observaciones</th>
-              <th class="text-right">Acciones</th>
             </tr>
             </thead>
             <tbody>
@@ -55,14 +44,6 @@
               <td *ngIf="turnos[0].especialidad.nombre">{{turno.especialidad.nombre}}</td>
               <td>{{label(turno.profesional)}}</td>
               <td>{{turno.observaciones || ' - '}}</td>
-              <td class="text-right">
-                <a *ngIf="mode == 'proximos'" (click)="showModal(turno)" class="btn btn-danger btn-md">
-                  <span class="fa fa-trash"></span>
-                </a>
-                <a *ngIf="mode == 'proximos'" (click)="showModalimpresion(turno)" class="btn btn-success btn-md">
-                  <span class="fa fa-print"></span>
-                </a>
-              </td>
             </tr>
             </tbody>
           </table>
