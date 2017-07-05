@@ -54,7 +54,7 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
     this.turno.profesional.nombre = '';
 
     this.form = this.fb.group({
-      'numeroDocumento': [null, Validators.required],
+      'numeroDocumento': [null, Validators.required, Validators.minLength(8)],
       'telefono': [null, Validators.required],
       'apellido': [null, Validators.required],
       'nombre': [null, Validators.required],
@@ -249,6 +249,7 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
 
 
   fetchPerson(numeroDocumento: number) {
+    if (!this.form.controls['numeroDocumento'].valid) return;
     this.resetState();
     this.personaService.getPaciente(numeroDocumento)
       .then((data: any) => {
