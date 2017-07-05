@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChildren} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ModalDirective} from 'ngx-bootstrap';
 import {Store} from '../../../service/store';
 import {Subscription} from 'rxjs/Subscription';
@@ -54,7 +54,7 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
     this.turno.profesional.nombre = '';
 
     this.form = this.fb.group({
-      'numeroDocumento': [null, Validators.required, Validators.minLength(8)],
+      'numeroDocumento': [null, Validators.compose([Validators.required, Validators.minLength(8)])],
       'telefono': [null, Validators.required],
       'apellido': [null, Validators.required],
       'nombre': [null, Validators.required],
@@ -208,7 +208,7 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
           return this.turnoService.reservarTurno(turno, this.persona)
         })
         .then(() => this.successModal.show());
-     this.resetState();
+      this.resetState();
       return;
     }
 
@@ -216,7 +216,7 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
     this.resetState();
   }
 
-  resetState(){
+  resetState() {
     this.isFieldsetEnabled = false;
     this.form.reset();
     this.buildTimeline([]);
@@ -243,11 +243,10 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
   }
 
   keyPress(event) {
-     if (this.form.controls['numeroDocumento'].valid && event.which === 13) {
+    if (this.form.controls['numeroDocumento'].valid && event.which === 13) {
       this.fetchPerson(this.form.value.numeroDocumento);
     }
   }
-
 
   fetchPerson(numeroDocumento: number) {
     if (!this.form.controls['numeroDocumento'].valid) return;
