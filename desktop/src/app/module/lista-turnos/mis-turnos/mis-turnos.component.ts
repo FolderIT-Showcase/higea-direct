@@ -84,6 +84,8 @@ export class MisTurnosComponent implements OnInit, OnDestroy {
 
   fetchTurnos() {
 
+    this.buildTurnos([]);
+
     if (this.isDocumentoNotValid()) {
       this.alertService.error('Ingrese un número de documento válido por favor');
       return;
@@ -109,6 +111,10 @@ export class MisTurnosComponent implements OnInit, OnDestroy {
       this.numeroDocumento.toString().length < 8 ||
       this.numeroDocumento.toString().length > 11
     );
+  }
+
+  dismissAlert(){
+    this.alertService.reset();
   }
 
 }

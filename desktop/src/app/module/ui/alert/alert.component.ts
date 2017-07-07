@@ -15,10 +15,15 @@ export class AlertComponent implements OnInit {
 
   ngOnInit() {
     this.alertService.getMessage().subscribe(message => {
-      this.message = message;
-      setTimeout(() => {
-        this.message = undefined;
-      }, 20000);
+
+      if (message && !message.text) this.closeAlert();
+      else {
+        this.message = message;
+        setTimeout(() => {
+          this.closeAlert();
+        }, 20000);
+      }
+
     });
   }
 

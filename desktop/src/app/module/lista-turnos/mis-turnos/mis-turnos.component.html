@@ -3,7 +3,7 @@
     <div class="col-sm-12 col-md-4">
       <div class="app-header">
         <h2>Mis Turnos</h2>
-        <p>Aca podes administrar tus turnos</p>
+        <p>Aca podes visualizar tus turnos</p>
       </div>
     </div>
     <br>
@@ -18,7 +18,7 @@
           <div tooltip="Para seguir por favor ingresa tu número de documento" class="form-group">
             <div class="input-group">
               <label class="control-label">Número de documento</label>
-              <input autofocus class="form-control" type="number" min="0" max="999999999"
+              <input autofocus (focus)="dismissAlert()" class="form-control" type="number" min="0" max="999999999"
                      placeholder="XXXXXXXX" [(ngModel)]="numeroDocumento"
                      [ngModelOptions]="{standalone: true}">
             </div>

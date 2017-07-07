@@ -1,5 +1,5 @@
 <div class="alert-wrapper">
-  <div *ngIf="message"
+  <div *ngIf="!!message"
        (click)="closeAlert()"
        class="app-snackbar"
        [ngClass]="{ 'alert': message, 'success': message.type === 'success', 'error': message.type === 'error' }"

@@ -25,4 +25,8 @@ export class AlertService {
     return this.subject.asObservable();
   }
 
+  public reset(){
+    this.subject.next({type: 'error', text: undefined });
+  }
+
 }

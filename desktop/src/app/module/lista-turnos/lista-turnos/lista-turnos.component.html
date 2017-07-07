@@ -11,7 +11,7 @@
           <label *ngIf="turno.centroSalud && turno.centroSalud.nombre"><br><strong>Centro de
             Salud: </strong>{{turno.centroSalud.nombre}}</label><br>
           <label *ngIf="turno.especialidad && turno.especialidad.nombre"><br><strong>Especialidad: </strong>{{turno.especialidad.nombre}}</label>
-          <label><strong>Profesional: </strong>{{turno.profesional.nombre}}</label><br>
+          <label><strong>Profesional: </strong>{{label(turno.profesional)}}</label><br>
           <label><strong>Observaciones: </strong>{{turno.observaciones || ' - '}}</label>
         </div>
       </div>
