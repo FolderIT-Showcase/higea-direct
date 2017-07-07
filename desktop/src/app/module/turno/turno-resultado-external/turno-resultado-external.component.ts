@@ -295,7 +295,19 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
 
         this.isFieldsetEnabled = true;
 
-        if (!data || data.status) return;
+        if (!data || data.status) {
+          this.form = this.fb.group({
+            'numeroDocumento': [numeroDocumento, Validators.required],
+            'telefono': [null, Validators.required],
+            'apellido': [null, Validators.required],
+            'nombre': [null, Validators.required],
+            'obraSocial': [null, Validators.required],
+            'plan': [null, Validators.required],
+            'motivo': [null, Validators.required],
+            'email': [null],
+          });
+          return;
+        }
 
         this.persona = data;
 
