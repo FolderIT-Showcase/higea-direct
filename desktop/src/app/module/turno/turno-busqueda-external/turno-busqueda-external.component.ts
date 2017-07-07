@@ -25,10 +25,10 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
   personas: Persona[] = [];
   form: FormGroup;
   subs: Subscription[] = [];
-
   calendarDate = new Date();
-
   markedDays = [];
+
+  currentEspecialidad: Especialidad = null;
 
   myDatePickerOptions: IMyOptions = {
     dateFormat: 'dd/mm/yyyy',
@@ -63,7 +63,12 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
       this.form.valueChanges.subscribe(data => {
         if (!data) return;
 
+        if (data.especialidad && this.currentEspecialidad && data.especialidad.id !== this.currentEspecialidad.id) {
+          delete data.profesional;
+        }
+
         if (data.especialidad && data.profesional && data.profesional.id) {
+
           this.getMarkedDays(data);
           let steps: any[] = this.storeService.get('steps');
           if (steps && steps[0]) {
@@ -117,16 +122,13 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
     this.subs.forEach(x => x.unsubscribe());
   }
 
-  handlePersonaClick(persona: Persona) {
-    this.storeService.update('persona', persona);
-  }
-
   labelPersona(persona: Persona) {
     if (!persona) return;
     return (`${persona.nombre} ${persona.apellido}`).toUpperCase();
   }
 
   handleEspecialidadClick(especialidad: Especialidad) {
+    this.currentEspecialidad = especialidad;
     this.filteredProfesionales = especialidad.profesional.sort((a, b) => {
       return (a.apellido + a.nombre > b.apellido + b.nombre) ? 1 : ((b.apellido + b.nombre > a.apellido + a.nombre) ? -1 : 0);
     });

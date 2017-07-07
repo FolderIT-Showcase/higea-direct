@@ -5,6 +5,25 @@
   font-size: 0.85em;
 }
 
+.app-powered-by {
+  z-index: 2500;
+  position: absolute;
+  bottom: 25px;
+  right: 25px;
+  opacity: 0.65;
+}
+
+.app-powered-by-home {
+  z-index: 2500;
+  position: relative;
+  bottom: 10px;
+  right: calc(50vw - 87px);
+  opacity: 0.65;
+  img {
+    height: 40px !important;
+  }
+}
+
 @media (min-width: 1220px) {
   .app-footer {
     display: block;
@@ -13,6 +32,16 @@
     width: 100%;
     background-color: $dark-purple;
   }
+  .app-powered-by-home {
+    z-index: 2500;
+    position: absolute;
+    bottom: 75px;
+    right: 25px;
+    opacity: 0.65;
+    img {
+      height: 48px !important;
+    }
+  }
 }
 
 .footer-bottom {
@@ -20,7 +49,7 @@
 }
 
 .copyright {
-  padding: 3em;
+  padding: 1em;
   height: 100% !important;
   color: $gray-1;
   font-weight: bold;

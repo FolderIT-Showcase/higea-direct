@@ -11,22 +11,50 @@
   border-radius: 100%;
 }
 
-.stepwizard-step p {
-  padding: 10px;
-  color: $gray-5;
-  border-radius: 4px;
+.stepwizard-step {
+  width: 100%;
+  display: inline-block;
+  position: relative;
+  margin: 4px;
 }
+
+.stepwizard-step p {
+  display: inline;
+  padding: 0;
+  color: $purple;
+  border-radius: 4px;
+  margin: 4px;
+}
+
+.stepwizard-step-complete p {
+  display: inline;
+  padding: 0;
+  color: $purple;
+  border-radius: 4px;
+  margin: 4px;
+}
+
 
 @media (min-width: 800px) {
 
   .stepwizard-step p {
     display: block;
     margin: 10px;
-    padding: 10px;
+    padding: 10px 16px;
+    color: $purple;
+    border: 1px solid $purple;
+    background-color: white;
+    border-radius: 128px;
+  }
+
+  .stepwizard-step p:hover {
     color: white;
-    border: 1px solid $gray-5;
-    background-color: $gray-4;
-    border-radius: 4px;
+    background-color: $purple;
+  }
+
+  .stepwizard-step-complete p {
+    color: white;
+    background-color: $purple;
   }
 
   .stepwizard-row {
@@ -60,6 +88,7 @@
     display: table-cell;
     text-align: center;
     position: relative;
+    width: auto;
   }
 
 }
