@@ -55,8 +55,7 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
         this.especialidades = data;
         this.buildForm();
         this.subscribeFormChanges();
-      });
-
+      })
   }
 
   subscribeFormChanges() {
