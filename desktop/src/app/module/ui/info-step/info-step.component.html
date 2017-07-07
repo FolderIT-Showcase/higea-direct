@@ -1,6 +1,8 @@
 <div class="stepwizard">
   <div class="stepwizard-row">
-    <div class="stepwizard-step" *ngFor="let step of steps">
+    <div class="stepwizard-step"
+         [ngClass]="{'stepwizard-step-complete': step.ngClass === 'btn-success'}"
+         *ngFor="let step of steps">
       <button type="button" class="btn btn-circle" [ngClass]="step.ngClass">
           <span [ngClass]="{'fa-check': step.ngClass === 'btn-success'}" class="fa" style="font-weight: bold">
             {{step.ngClass === 'btn-success' ? '' : step.order}}

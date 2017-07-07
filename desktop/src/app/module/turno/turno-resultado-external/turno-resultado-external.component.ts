@@ -17,6 +17,7 @@ import {PersonaService} from '../../../service/persona.service';
 import {Documento} from '../../../domain/documento';
 import {Contacto} from '../../../domain/contacto';
 import {TipoDocumentos} from '../../../domain/enums/tipo-documento';
+import {Util} from '../../../service/utils.service';
 
 @Component({
   selector: 'app-turno-resultado-external',
@@ -151,7 +152,7 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
 
   }
 
-  clearTimeline(){
+  clearTimeline() {
 
     // duracion en minutos
     let duracion = 30;
@@ -185,6 +186,9 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
     if (!turno.enabled) {
       return;
     }
+
+    Util.scrollToTop();
+
     this.turno = turno;
 
     this.turnoModal.show();

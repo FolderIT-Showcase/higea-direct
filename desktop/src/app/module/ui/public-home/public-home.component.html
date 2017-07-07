@@ -1,48 +1,22 @@
 <div class="container">
   <br>
   <div class="row">
-    <div class="col-sm-12">
+    <div class="col-sm-6 col-sm-offset-3">
       <div class="app-img text-center">
-        <img height="96" src="./assets/img/logo-negro.png">
-        <h3>Clínica Fernandez</h3>
+        <img height="96" src="./assets/img/amado.png">
+        <h3 style="max-width: 300px; margin: 0 auto">Instituto de Oftalmología Santa Fe</h3>
       </div>
     </div>
   </div>
-  <div class="card-container">
-    <div (click)="navigate('/turno')" class="col-md-4 text-center no-padding">
-      <div class="card">
-        <div class="card-image">
-          <img class="img-responsive" src="../../../../assets/img/nuevo-turno.jpg">
-          <span class="card-title"><strong>Nuevo Turno</strong></span>
-        </div>
-        <div class="card-action">
-          <div class="btn-group btn-group-justified">
-            <a class="btn btn-link"><strong>RESERVAR TURNO</strong></a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div (click)="navigate('/mis-turnos')" class="col-md-4 text-center no-padding">
-      <div class="card">
-        <div class="card-image">
-          <img class="img-responsive" src="../../../../assets/img/mis-turnos.jpg">
-          <span class="card-title"><strong>Turnos Tomados</strong></span>
-        </div>
-        <div class="card-action">
-          <div class="btn-group btn-group-justified">
-            <a class="btn btn-link"><strong>MIS TURNOS</strong></a>
-          </div>
-        </div>
-      </div>
-    </div>
+
+  <div class="app-landing-container">
+    <a href="/turno" class="btn btn-lg app-landing-button">RESERVAR TURNO</a>
+    <a href="/mis-turnos" class="btn btn-lg app-landing-button">MIS TURNOS</a>
   </div>
+
 </div>
-
-<div class="app-powered-by-home text-right">
-  <img height="48" src="./assets/img/pb.png">
-</div>
-
-
+<br>
+<br>
 <br>
 <br>
 <app-footer></app-footer>
