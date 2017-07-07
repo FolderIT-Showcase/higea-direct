@@ -68,9 +68,7 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
           delete data.profesional;
         }
 
-        if (data.especialidad && data.profesional && data.profesional.id) {
-
-          this.getMarkedDays(data);
+        if (data.especialidad){
           let steps: any[] = this.storeService.get('steps');
           if (steps && steps[0]) {
             steps[0] = {
@@ -79,12 +77,24 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
             }
           }
         }
-        if (data.fecha && this.form.valid) {
-          this.submitForm(this.form.value);
+
+        if (data.especialidad && data.profesional && data.profesional.id) {
+
+          this.getMarkedDays(data);
           let steps: any[] = this.storeService.get('steps');
           if (steps && steps[1]) {
             steps[1] = {
               label: steps[1].label,
+              ngClass: 'btn-success'
+            }
+          }
+        }
+        if (data.fecha && this.form.valid) {
+          this.submitForm(this.form.value);
+          let steps: any[] = this.storeService.get('steps');
+          if (steps && steps[2]) {
+            steps[2] = {
+              label: steps[2].label,
               ngClass: 'btn-success'
             }
           }

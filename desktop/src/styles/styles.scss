@@ -28,8 +28,14 @@ body {
   font-size: 15px;
   font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
   min-width: 320px;
+  max-width: 99.9vw;
+  width: 99.9vw;
   overflow: auto;
   -webkit-font-smoothing: subpixel-antialiased !important;
+}
+
+.app{
+
 }
 
 .brand-no-auth {
