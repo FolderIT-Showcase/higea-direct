@@ -153,4 +153,10 @@ export class TurnoService {
     return this.api.get(path, false);
   }
 
+  requestCondicional(data, fecha) {
+    const path = this.pathTurno + '/managment/sobreturno?nombre=' + data.nombre + '&apellido=' + data.apellido +
+      '&email=' + data.email + '&telefono=' + data.telefono + '&fecha=' + fecha;
+    return this.api.post(path, null, false);
+  }
+
 }

@@ -1,4 +1,3 @@
-//@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
 @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.min.css');
 
@@ -359,7 +358,7 @@ div.selector.inlinedp {
 }
 
 .app-no-data {
-  margin-top: 10em;
+  margin-top: 0;
   color: $gray-5;
   background-color: $gray-1;
 }
@@ -624,4 +623,18 @@ label {
 .app-landing-button:hover{
   background-color: $purple;
   color: white;
+}
+
+@media (min-width: 1440px) {
+  .app-scroll-70 {
+    max-height: 80vh !important;
+    overflow-y: scroll !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .app-scroll-70 {
+    max-height: 65vh !important;
+    overflow-y: scroll !important;
+  }
 }

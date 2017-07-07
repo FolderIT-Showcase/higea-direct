@@ -1,31 +1,38 @@
 <div class="list-group">
   <div class="table-responsive">
     <div *ngIf="!turnos[0] && clickCounter > 1" class="app-container-row" style="position: absolute; z-index: 1000;">
-      <a class="list-group-item app-no-data">
+      <div class="list-group-item app-no-data">
         <div class="text-center">
           <h4> No hay turnos disponibles </h4>
           <h4> por favor busque nuevamente </h4>
+          <br>
+          <div class="btn-group">
+            <button (click)="showCondicionalModal()" class="btn btn-primary">SOLICITAR TURNO CONDICIONAL</button>
+          </div>
+          <br>
         </div>
-      </a>
+      </div>
     </div>
-    <table class="table table-striped app-timeline">
-      <thead>
-      <tr>
-        <th style="width: 1em"></th>
-        <th class="text-right">Horarios de atención</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let turno of timeline" [ngClass]="{'app-selectable-row': turno.enabled}"
-          (click)="showTurnoModal(turno)">
-        <td>{{turno.hora | date: 'HH:mm'}}</td>
-        <td>
-          <div [ngClass]="{'app-disabled-line': !turno.enabled}"></div>
-          <div class="text-right" *ngIf="turno.enabled">{{turno.enabled ? 'RESERVAR' : ''}}</div>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+    <div class="app-scroll-70">
+      <table class="table table-striped app-timeline">
+        <thead>
+        <tr>
+          <th style="width: 1em"></th>
+          <th class="text-right">Horarios de atención</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let turno of timeline" [ngClass]="{'app-selectable-row': turno.enabled}"
+            (click)="showTurnoModal(turno)">
+          <td>{{turno.hora | date: 'HH:mm'}}</td>
+          <td>
+            <div [ngClass]="{'app-disabled-line': !turno.enabled}"></div>
+            <div class="text-right" *ngIf="turno.enabled">{{turno.enabled ? 'RESERVAR' : ''}}</div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 
@@ -211,3 +218,76 @@
 </app-modal>
 
 
+<app-modal [title]="'Solicitud de turno condicional'" (outModal)="handleCondicionalModal($event)">
+
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="form-group required"
+           [ngClass]="{'has-error':!condicionalForm.controls['nombre'].valid && condicionalForm.controls['nombre'].touched}">
+        <div class="input-group">
+          <label class="control-label">Nombre</label>
+          <input class="form-control" type="text" placeholder="José"
+                 [formControl]="condicionalForm.controls['nombre']">
+        </div>
+        <small
+          *ngIf="condicionalForm.controls['nombre'].hasError('required') && condicionalForm.controls['nombre'].touched"
+          class="help-block">Ingrese su nombre por favor.
+        </small>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="form-group required"
+           [ngClass]="{'has-error':!condicionalForm.controls['apellido'].valid && condicionalForm.controls['apellido'].touched}">
+        <div class="input-group">
+          <label class="control-label">Apellido</label>
+          <input class="form-control" type="text" placeholder="Perez"
+                 [formControl]="condicionalForm.controls['apellido']">
+        </div>
+        <small
+          *ngIf="condicionalForm.controls['apellido'].hasError('required') && condicionalForm.controls['apellido'].touched"
+          class="help-block">Ingrese su apellido por favor.
+        </small>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="form-group required"
+           [ngClass]="{'has-error':!condicionalForm.controls['telefono'].valid && condicionalForm.controls['telefono'].touched}">
+        <div class="input-group">
+          <label class="control-label">Teléfono</label>
+          <input class="form-control" type="text" placeholder="0342 4XXXXXX"
+                 [formControl]="condicionalForm.controls['telefono']">
+        </div>
+        <small
+          *ngIf="condicionalForm.controls['telefono'].hasError('required') && condicionalForm.controls['telefono'].touched"
+          class="help-block">Ingrese su telefono por favor.
+        </small>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="form-group required"
+           [ngClass]="{'has-error':!condicionalForm.controls['email'].valid && condicionalForm.controls['email'].touched}">
+        <div class="input-group">
+          <label class="control-label">Correo electrónico</label>
+          <input class="form-control" type="text" placeholder="usuario@correo.com"
+                 [formControl]="condicionalForm.controls['email']">
+        </div>
+        <small
+          *ngIf="condicionalForm.controls['email'].hasError('required') && condicionalForm.controls['email'].touched"
+          class="help-block">Ingrese su correo electrónico por favor.
+        </small>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3 col-sm-offset-6">
+      <button class="btn btn-primary btn-block" (click)="submitCondicional(condicionalForm.value)">SOLICITAR</button>
+    </div>
+    <div class="col-sm-3">
+      <button class="btn btn-default btn-block">CANCELAR</button>
+    </div>
+  </div>
+
+
+</app-modal>

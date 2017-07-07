@@ -11,4 +11,5 @@ export class AppState {
   metadata: Metadata;
   steps = [];
   lastError = {};
+  fecha = '';
 }

@@ -36,6 +36,8 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
 
   turnoModal: ModalDirective;
   successModal: ModalDirective;
+  condicionalModal: ModalDirective;
+  condicionalForm: FormGroup;
   timeline: Turno[] = [];
   clickCounter = 0;
   especialidades: Especialidad [];
@@ -54,6 +56,9 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
     this.turno.profesional = new Profesional();
     this.turno.profesional.nombre = '';
 
+    const EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
+    const COMMON_REGEXP = '[a-zA-Z ]*';
+
     this.form = this.fb.group({
       'numeroDocumento': [null, Validators.compose([Validators.required, Validators.minLength(8)])],
       'telefono': [null, Validators.required],
@@ -63,6 +68,13 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
       'plan': [null, Validators.required],
       'motivo': [null, Validators.required],
       'email': [null],
+    });
+
+    this.condicionalForm = this.fb.group({
+      'telefono': [null, Validators.required],
+      'apellido': [null,  Validators.compose([Validators.required, Validators.pattern(COMMON_REGEXP)])],
+      'nombre': [null, Validators.compose([Validators.required, Validators.pattern(COMMON_REGEXP)])],
+      'email': [null,  Validators.compose([Validators.required, Validators.pattern(EMAIL_REGEXP)])],
     });
 
   }
@@ -346,6 +358,22 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
   onSuccessModal() {
     this.successModal.hide();
     this.buildTimeline([]);
+  }
+
+// nombre, apellido y telefono
+
+  handleCondicionalModal(event) {
+    this.condicionalModal = event;
+  }
+
+  showCondicionalModal() {
+    this.condicionalModal.show();
+  }
+
+  submitCondicional(data) {
+    if (!this.condicionalForm.valid) return;
+    const fecha = this.storeService.get('fecha');
+    this.turnoService.requestCondicional(data, fecha)
   }
 
 }
