@@ -53,15 +53,9 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
     this.metadataService.getEspecialidades()
       .then(data => {
         this.especialidades = data;
-        return this.metadataService.getProfesionales();
-      })
-      .then(data => {
-        this.profesionales = data;
-        this.buildEspecialidades();
         this.buildForm();
         this.subscribeFormChanges();
-      });
-
+      })
   }
 
   subscribeFormChanges() {
