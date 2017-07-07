@@ -41,6 +41,10 @@ public class TurneroException extends IOException implements Serializable {
 
     public static final String MESSAGE_DOC_EXIST = "message.doc.exist";
 
+    public static final String MESSAGE_SECRETARIA = "message.mensajeSecretaria";
+
+    public static final String MESSAGE_PACIENTE = "message.mensajePaciente";
+
     public static TurneroException instance;
     private String error;
 

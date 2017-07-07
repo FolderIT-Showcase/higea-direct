@@ -13,6 +13,7 @@ export class TurnoService {
 
   license = localStorage.getItem('license');
   client = localStorage.getItem('client');
+  pathManagment = `core/`;
   pathTurno = `${this.license}/turnos/${this.client}`;
   pathCentroSalud = `${this.license}/centroSalud/${this.client}`;
   pathPersona = `${this.license}/persona/${this.client}`;
@@ -154,7 +155,7 @@ export class TurnoService {
   }
 
   requestCondicional(data, fecha) {
-    const path = this.pathTurno + '/managment/sobreturno?nombre=' + data.nombre + '&apellido=' + data.apellido +
+    const path = this.pathManagment + 'managment/sobreturno?nombre=' + data.nombre + '&apellido=' + data.apellido +
       '&email=' + data.email + '&telefono=' + data.telefono + '&fecha=' + fecha;
     return this.api.post(path, null, false);
   }
