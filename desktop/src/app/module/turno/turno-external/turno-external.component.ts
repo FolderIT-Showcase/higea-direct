@@ -11,20 +11,7 @@ export class TurnoExternalComponent {
   steps = [];
 
   constructor(private storeService: StoreService, private store: Store) {
-    // this.steps = [
-    //   {
-    //     label: 'Escoje Especialidad y Médico',
-    //     order: 1
-    //   },
-    //   {
-    //     label: 'Escoje los días disponibles',
-    //     order: 2
-    //   },
-    //   {
-    //     label: 'Escoje de los turnos disponibles',
-    //     order: 3
-    //   }
-    // ];
+
     this.steps = [
       {
         label: 'Escoja la Especialidad del Turno que necesita',
