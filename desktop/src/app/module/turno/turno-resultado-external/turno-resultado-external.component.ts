@@ -376,6 +376,7 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
   }
 
   showCondicionalModal() {
+    Util.scrollToTop();
     this.condicionalModal.show();
   }
 

@@ -92,6 +92,7 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
           if (!this.markedDays.find(x => x === data.fecha.date.day.toString())) {
             this.storeService.update('validDayFlag', false);
             return;
+
           }
 
           this.storeService.update('validDayFlag', true);
@@ -186,7 +187,6 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
 
   calendarChange(event) {
     this.calendarDate.setMonth(event.month - 1);
-
     if (!this.form || !this.form.value || !this.form.value.profesional) return;
     this.getMarkedDays(this.form.value);
   }
