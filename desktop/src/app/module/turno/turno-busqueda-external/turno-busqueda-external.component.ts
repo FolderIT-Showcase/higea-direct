@@ -94,6 +94,8 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
             return;
           }
 
+          this.storeService.update('validDayFlag', true);
+
           this.submitForm(this.form.value);
           let steps: any[] = this.storeService.get('steps');
           if (steps && steps[2]) {
@@ -170,7 +172,7 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
     this.storeService.update('fecha', this.timeStampToDate(form.fecha.epoc * 1000));
     this.turnoService.getTurnos(form.centro, form.especialidad, form.profesional, form.fecha.epoc * 1000);
   }
-  
+
   timeStampToDate(timestamp, format = 'yyyy-MM-dd') {
     return this.datePipe.transform(timestamp, format);
   }
