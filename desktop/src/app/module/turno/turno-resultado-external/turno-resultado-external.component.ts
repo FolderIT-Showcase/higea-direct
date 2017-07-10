@@ -72,9 +72,9 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
 
     this.condicionalForm = this.fb.group({
       'telefono': [null, Validators.required],
-      'apellido': [null,  Validators.compose([Validators.required, Validators.pattern(COMMON_REGEXP)])],
+      'apellido': [null, Validators.compose([Validators.required, Validators.pattern(COMMON_REGEXP)])],
       'nombre': [null, Validators.compose([Validators.required, Validators.pattern(COMMON_REGEXP)])],
-      'email': [null,  Validators.compose([Validators.required, Validators.pattern(EMAIL_REGEXP)])],
+      'email': [null, Validators.compose([Validators.required, Validators.pattern(EMAIL_REGEXP)])],
     });
 
   }
@@ -88,10 +88,8 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
       this.store.changes.pluck('turnos').subscribe(
         (data: any) => {
           this.clickCounter++;
-
           if (!data || !data[0]) this.turnos = [];
           else this.turnos = data;
-
           this.buildTimeline(this.turnos);
         }
       ));
