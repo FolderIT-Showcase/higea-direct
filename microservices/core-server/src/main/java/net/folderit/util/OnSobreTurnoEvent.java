@@ -15,12 +15,12 @@ public class OnSobreTurnoEvent extends ApplicationEvent {
 
     private String email;
     private String nombre;
-    private Date fecha;
+    private String fecha;
     private String apellido;
     private String telefono;
 
     public OnSobreTurnoEvent(
-            Date fecha, String email,  String nombre, String apellido, String telefono) {
+            String fecha, String email,  String nombre, String apellido, String telefono) {
          super(email);
 
         this.email = email;

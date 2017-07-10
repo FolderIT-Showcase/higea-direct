@@ -18,6 +18,7 @@ import {Documento} from '../../../domain/documento';
 import {Contacto} from '../../../domain/contacto';
 import {TipoDocumentos} from '../../../domain/enums/tipo-documento';
 import {Util} from '../../../service/utils.service';
+import {AlertService} from '../../../service/alert.service';
 
 @Component({
   selector: 'app-turno-resultado-external',
@@ -49,7 +50,8 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
               private fb: FormBuilder,
               private turnoService: TurnoService,
               private personaService: PersonaService,
-              private storeService: StoreService) {
+              private storeService: StoreService,
+              private alertService: AlertService) {
 
     this.turno.especialidad = new Especialidad;
     this.turno.especialidad.nombre = '';
@@ -371,7 +373,11 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
   submitCondicional(data) {
     if (!this.condicionalForm.valid) return;
     const fecha = this.storeService.get('fecha');
-    this.turnoService.requestCondicional(data, fecha)
+    this.turnoService.requestCondicional(data, fecha).then( data => {
+      this.alertService.success('Comuníquese por teléfono a la clínica para verificar ' +
+        'si pudieron aceptar su turno condicional y quedar en lista de espera');
+      this.condicionalModal.hide();
+    });
   }
 
 }

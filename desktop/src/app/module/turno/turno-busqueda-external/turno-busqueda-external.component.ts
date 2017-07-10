@@ -162,10 +162,12 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
     form.especialidad = Object.assign({}, especialidad);
     this.storeService.update('especialidad', especialidad);
     this.storeService.update('profesional', form.profesional);
+    this.storeService.update('fecha', this.timeStampToDate(form.fecha.epoc * 1000));
     this.turnoService.getTurnos(form.centro, form.especialidad, form.profesional, form.fecha.epoc * 1000);
   }
 
   timeStampToDate(timestamp) {
+    console.log(this.datePipe.transform(timestamp, 'yyyy-MM-dd'));
     return this.datePipe.transform(timestamp, 'yyyy-MM-dd');
   }
 
@@ -178,7 +180,7 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
 
   calendarChange(event) {
     this.calendarDate.setMonth(event.month - 1);
-    this.storeService.update('fecha', this.calendarDate);
+
     if (!this.form || !this.form.value || !this.form.value.profesional) return;
     this.getMarkedDays(this.form.value);
   }
