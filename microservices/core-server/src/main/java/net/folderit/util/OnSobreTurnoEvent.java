@@ -3,6 +3,7 @@ package net.folderit.util;
 import lombok.Data;
 import org.springframework.context.ApplicationEvent;
 
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -14,12 +15,12 @@ public class OnSobreTurnoEvent extends ApplicationEvent {
 
     private String email;
     private String nombre;
-    private String fecha;
+    private Date fecha;
     private String apellido;
     private String telefono;
 
     public OnSobreTurnoEvent(
-            String fecha, String email,  String nombre, String apellido, String telefono) {
+            Date fecha, String email,  String nombre, String apellido, String telefono) {
          super(email);
 
         this.email = email;

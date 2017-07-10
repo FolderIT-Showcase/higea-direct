@@ -12,6 +12,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -43,7 +45,7 @@ public class SobreTurnoListener implements ApplicationListener<OnSobreTurnoEvent
         String apellido = event.getApellido();
         String nombre = event.getNombre();
         String telefono = event.getTelefono();
-        String fecha = event.getFecha();
+        Date fecha = event.getFecha();
 
 
 
@@ -51,11 +53,11 @@ public class SobreTurnoListener implements ApplicationListener<OnSobreTurnoEvent
        sendPacienteMail();
     }
 
-    private void sendSecretariaMail(String fecha, String email,String apellido,String nombre,  String telefono ){
+    private void sendSecretariaMail(Date fecha, String email,String apellido,String nombre,  String telefono ){
 
         String recipientAddress = email;
         String subject = "Solicitud de sobre turno";
-        TurneroException.getInstance().getMessage(TurneroException.MESSAGE_SECRETARIA, new String[]{fecha,apellido,nombre,telefono,email});
+        TurneroException.getInstance().getMessage(TurneroException.MESSAGE_SECRETARIA, new String[]{getFechaTurno(fecha),apellido,nombre,telefono,email});
         String mensaje = TurneroException.getInstance().getError();
 
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
@@ -81,5 +83,15 @@ public class SobreTurnoListener implements ApplicationListener<OnSobreTurnoEvent
         simpleMailMessage.setText(mensaje);
 
         mailSender.send(simpleMailMessage);
+    }
+
+    private String getFechaTurno(Date fecha) {
+
+        String date;
+        SimpleDateFormat sdfDate = new SimpleDateFormat("dd/MM/yyyy");
+        Date now = new Date();
+        String strDate = sdfDate.format(fecha);
+        return strDate;
+
     }
 }

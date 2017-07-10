@@ -40,7 +40,7 @@ public class ManagmentController {
         try {
 
             eventPublisher.publishEvent(new OnSobreTurnoEvent
-                    (fecha.toString(), email, nombre, apellido, telefono));
+                    (fecha, email, nombre, apellido, telefono));
         } catch (Exception me) {
 
             TurneroException.getInstance().getMessage(TurneroException.MESSAGE_ERROR_GENERIC, null);
