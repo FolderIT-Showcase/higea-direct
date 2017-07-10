@@ -44,6 +44,8 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
   form: FormGroup;
   isFieldsetEnabled = false;
 
+  diaValido = true;
+
   constructor(private store: Store,
               private metadataService: MetadataService,
               private fb: FormBuilder,
@@ -93,6 +95,15 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
           this.buildTimeline(this.turnos);
         }
       ));
+
+    this.subs.push(
+      this.store.changes.pluck('validDayFlag').subscribe(
+        (data: any) => {
+          this.diaValido = data;
+          if (!this.diaValido) this.turnos = [];
+        }
+      ));
+
   }
 
   ngOnDestroy(): void {
@@ -109,9 +120,7 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
     // duracion en minutos
     let duracion = 30;
     this.timeline = [];
-    if (turnos && turnos[0] && turnos[0].duracion) {
-      duracion = turnos[0].duracion;
-    }
+    if (turnos && turnos[0] && turnos[0].duracion) duracion = turnos[0].duracion;
 
     const baseMin = 0;
     const minHour = 8;
@@ -366,6 +375,10 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
 
   showCondicionalModal() {
     this.condicionalModal.show();
+  }
+
+  hideCondicionalModal() {
+    this.condicionalModal.hide();
   }
 
   submitCondicional(data) {
