@@ -45,7 +45,7 @@ public class SobreTurnoListener implements ApplicationListener<OnSobreTurnoEvent
         String apellido = event.getApellido();
         String nombre = event.getNombre();
         String telefono = event.getTelefono();
-        Date fecha = event.getFecha();
+        String fecha = event.getFecha();
 
 
 
@@ -53,11 +53,11 @@ public class SobreTurnoListener implements ApplicationListener<OnSobreTurnoEvent
        sendPacienteMail();
     }
 
-    private void sendSecretariaMail(Date fecha, String email,String apellido,String nombre,  String telefono ){
+    private void sendSecretariaMail(String fecha, String email,String apellido,String nombre,  String telefono ){
 
         String recipientAddress = email;
         String subject = "Solicitud de sobre turno";
-        TurneroException.getInstance().getMessage(TurneroException.MESSAGE_SECRETARIA, new String[]{getFechaTurno(fecha),apellido,nombre,telefono,email});
+        TurneroException.getInstance().getMessage(TurneroException.MESSAGE_SECRETARIA, new String[]{fecha,apellido,nombre,telefono,email});
         String mensaje = TurneroException.getInstance().getError();
 
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();

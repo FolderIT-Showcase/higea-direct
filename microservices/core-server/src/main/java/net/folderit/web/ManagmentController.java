@@ -34,7 +34,7 @@ public class ManagmentController {
     public ResponseEntity sobreTurno(@RequestParam("nombre") String nombre,
                                      @RequestParam("apellido") String apellido,
                                      @RequestParam("email") String email,
-                                     @RequestParam("telefono") String telefono, @RequestParam("fecha") Date fecha
+                                     @RequestParam("telefono") String telefono, @RequestParam("fecha") String fecha
                                      ) {
 
         try {
