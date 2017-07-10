@@ -167,7 +167,6 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
   }
 
   timeStampToDate(timestamp) {
-    console.log(this.datePipe.transform(timestamp, 'yyyy-MM-dd'));
     return this.datePipe.transform(timestamp, 'yyyy-MM-dd');
   }
 
