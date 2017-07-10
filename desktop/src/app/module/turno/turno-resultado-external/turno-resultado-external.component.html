@@ -1,19 +1,26 @@
 <div class="list-group">
   <div class="table-responsive">
-    <div *ngIf="!turnos[0] && clickCounter > 2" class="app-container-row" style="position: absolute; z-index: 1000;">
+    <div *ngIf="!turnos[0] && clickCounter > 2">
       <div class="list-group-item app-no-data">
         <div class="text-center">
           <h4> No hay turnos disponibles </h4>
           <h4> por favor busque nuevamente </h4>
           <br>
-          <div class="btn-group">
+          <div class="btn-group" *ngIf="diaValido">
             <button (click)="showCondicionalModal()" class="btn btn-primary">SOLICITAR TURNO CONDICIONAL</button>
           </div>
           <br>
         </div>
       </div>
     </div>
-    <div class="app-scroll-70">
+    <div *ngIf="!turnos[0] && clickCounter === 2">
+      <div class="list-group-item app-no-data">
+        <div class="text-center">
+          <h4> Realice una busqueda por favor </h4>
+        </div>
+      </div>
+    </div>
+    <div class="app-scroll-70" *ngIf="turnos[0]">
       <table class="table table-striped app-timeline">
         <thead>
         <tr>
@@ -217,7 +224,6 @@
   </div>
 </app-modal>
 
-
 <app-modal [title]="'Solicitud de turno condicional'" (outModal)="handleCondicionalModal($event)">
 
   <div class="row">
@@ -285,7 +291,7 @@
       <button class="btn btn-primary btn-block" (click)="submitCondicional(condicionalForm.value)">SOLICITAR</button>
     </div>
     <div class="col-sm-3">
-      <button class="btn btn-default btn-block" (click)="condicionalModal.hide();">CANCELAR</button>
+      <button (click)="hideCondicionalModal()" class="btn btn-default btn-block">CANCELAR</button>
     </div>
   </div>
 

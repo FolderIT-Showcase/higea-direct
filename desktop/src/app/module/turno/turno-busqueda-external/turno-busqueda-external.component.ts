@@ -67,7 +67,7 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
           delete data.profesional;
         }
 
-        if (data.especialidad){
+        if (data.especialidad) {
           let steps: any[] = this.storeService.get('steps');
           if (steps && steps[0]) {
             steps[0] = {
@@ -78,7 +78,6 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
         }
 
         if (data.especialidad && data.profesional && data.profesional.id) {
-
           this.getMarkedDays(data);
           let steps: any[] = this.storeService.get('steps');
           if (steps && steps[1]) {
@@ -88,7 +87,14 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
             }
           }
         }
+
         if (data.fecha && this.form.valid) {
+          if (!this.markedDays.find(x => x === data.fecha.date.day.toString())) {
+            this.storeService.update('validDayFlag', false);
+            return;
+
+          }
+
           this.submitForm(this.form.value);
           let steps: any[] = this.storeService.get('steps');
           if (steps && steps[2]) {
@@ -166,8 +172,10 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
     this.turnoService.getTurnos(form.centro, form.especialidad, form.profesional, form.fecha.epoc * 1000);
   }
 
-  timeStampToDate(timestamp) {
-    return this.datePipe.transform(timestamp, 'yyyy-MM-dd');
+
+  timeStampToDate(timestamp, format = 'yyyy-MM-dd') {
+    return this.datePipe.transform(timestamp, format);
+
   }
 
   datetoDay(mDate) {
