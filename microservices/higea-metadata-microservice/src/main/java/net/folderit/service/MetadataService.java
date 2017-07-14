@@ -137,6 +137,14 @@ public class MetadataService {
         }).getBody();
     }
 
+    public List<ProfesionalHigea> getProfesionalesDisponibles() {
+        // send request and parse result
+        String uriProfesionales = "http://localhost:36001/{cliente}/profesionalesDisponibles";
+        return higeaApiConnect.get(uriProfesionales, new ParameterizedTypeReference<List<ProfesionalHigea>>() {
+        }).getBody();
+    }
+
+
     public List<Profesional> findProfesionales() {
         List<ProfesionalHigea> profesionalesHigea = getProfesionales();
         List<Profesional> profesionales = new ArrayList<>();
@@ -144,9 +152,16 @@ public class MetadataService {
         return profesionales;
     }
 
+    public List<Profesional> findProfesionalesDisponibles() {
+        List<ProfesionalHigea> profesionalesHigea = getProfesionalesDisponibles();
+        List<Profesional> profesionales = new ArrayList<>();
+        profesionalesHigea.forEach(x -> profesionales.add(x.convert()));
+        return profesionales;
+    }
+
 
     public List<Especialidad> findEspecialidades() {
-        List<ProfesionalHigea> profesionalesHigea = this.getProfesionales();
+        List<ProfesionalHigea> profesionalesHigea = this.getProfesionalesDisponibles();
         String uriEspecialidad = "http://higea.folderit.net/api/{cliente}/especialidades";
         ResponseEntity<Result<EspecialidadHigea>> result = higeaApiConnect.get(uriEspecialidad, new ParameterizedTypeReference<Result<EspecialidadHigea>>() {
         });
@@ -161,7 +176,10 @@ public class MetadataService {
                 }
             });
             especialidadCore.setProfesional(profesionalesCore);
-            especialidades.add(especialidadCore);
+            if(especialidadCore.getProfesional().size()>0){
+                especialidades.add(especialidadCore);
+            }
+
         });
         return especialidades;
     }

@@ -96,7 +96,7 @@ public class SyncService {
     }
 
     private void syncProfesionales() {
-        String url = "http://localhost:36004/{cliente}/profesional";
+        String url = "http://localhost:36004/{cliente}/profesionalDisponible";
         ResponseEntity<List<Profesional>> result = higeaApiConnect.get(url, new ParameterizedTypeReference<List<Profesional>>() {
         });
         List<Profesional> listOld = metadataService.getAllProfesionales();

@@ -77,4 +77,10 @@ public class HigeaMetadataApplication {
         return ResponseEntity.ok(metadataService.findProfesionales());
     }
 
+    @GetMapping("/{cliente}/profesionalDisponible")
+    public ResponseEntity<List<Profesional>> getProfesionalesDisponibles(@PathVariable("cliente") String codigo) {
+        return ResponseEntity.ok(metadataService.findProfesionalesDisponibles());
+    }
+
+
 }

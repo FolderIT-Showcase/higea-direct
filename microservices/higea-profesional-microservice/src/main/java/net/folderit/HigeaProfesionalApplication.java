@@ -38,4 +38,12 @@ public class HigeaProfesionalApplication {
         return connectionMidleWare.getProfesionalesHigea(codigo);
     }
 
+    @RequestMapping("/{cliente}/profesionalesDisponibles")
+    public List<ProfesionalHigea> profesionalesDisponiblesHigea(@PathVariable("cliente") String codigo) {
+        List<ProfesionalHigea> profesionalHigeas =  connectionMidleWare.getProfesionalesDisponiblesHigea(codigo);
+        return profesionalHigeas;
+    }
+
+
+
 }

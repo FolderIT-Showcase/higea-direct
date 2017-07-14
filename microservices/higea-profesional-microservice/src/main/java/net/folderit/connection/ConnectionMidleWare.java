@@ -54,5 +54,27 @@ public class ConnectionMidleWare {
         return result.getBody().getData().getRows();
     }
 
+    public List<ProfesionalHigea> getProfesionalesDisponiblesHigea(String codigo) {
+
+        ResponseEntity<LoginResult> loginResultDTO = login();
+
+        // URI (URL) parameters
+        Map<String, String> uriParams = new HashMap<>();
+        uriParams.put("cliente", codigo);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+        headers.set("Authorization", loginResultDTO.getBody().getToken());
+        HttpEntity<?> entity = new HttpEntity<>(headers);
+
+        String uriProfesionalesDisponibles = "http://higea.folderit.net/api/{cliente}/profesionalesDisponibles";
+        ResponseEntity<Result<ProfesionalHigea>> result = restTemplate.exchange(uriProfesionalesDisponibles, HttpMethod.GET, entity,
+                new ParameterizedTypeReference<Result<ProfesionalHigea>>() {
+                }, uriParams);
+
+        return result.getBody().getData().getRows();
+    }
+
+
+
 
 }
