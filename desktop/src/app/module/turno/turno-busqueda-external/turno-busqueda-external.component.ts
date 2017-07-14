@@ -95,6 +95,8 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
 
           }
 
+          this.storeService.update('validDayFlag', true);
+
           this.submitForm(this.form.value);
           let steps: any[] = this.storeService.get('steps');
           if (steps && steps[2]) {
@@ -172,10 +174,8 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
     this.turnoService.getTurnos(form.centro, form.especialidad, form.profesional, form.fecha.epoc * 1000);
   }
 
-
   timeStampToDate(timestamp, format = 'yyyy-MM-dd') {
     return this.datePipe.transform(timestamp, format);
-
   }
 
   datetoDay(mDate) {
@@ -187,7 +187,6 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
 
   calendarChange(event) {
     this.calendarDate.setMonth(event.month - 1);
-
     if (!this.form || !this.form.value || !this.form.value.profesional) return;
     this.getMarkedDays(this.form.value);
   }
