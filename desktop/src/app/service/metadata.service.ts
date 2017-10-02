@@ -30,7 +30,9 @@ export class MetadataService {
   license = localStorage.getItem('license');
   client = localStorage.getItem('client');
   basePath = 'core/metadata/';
-  parametrosWebPath = `${this.license}/${this.client}/`;
+  basePathHigea = `${this.license}/`;
+  basePathClient = `${this.client}/`;
+  parametrosWebPath = `${this.basePathHigea}${this.basePathClient}`;
 
   constructor(private api: ApiService, private store: Store) {
 
