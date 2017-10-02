@@ -21,7 +21,7 @@ public class HigeaApiConnect {
     private ResponseEntity<LoginResult> login() {
         LoginHigea loginDTO = new LoginHigea("turneroweb", "WroteScientistFarmerCarbon");
         // send request and parse result
-        String url = "http://higea.folderit.net/api/login";
+        String url = "https://higea.folderit.net/api/login";
         LoginResult result = restTemplate.postForObject(url, loginDTO, LoginResult.class);
         return ResponseEntity.ok(result);
     }

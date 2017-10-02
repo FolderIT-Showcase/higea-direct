@@ -25,7 +25,7 @@ public class MetadataService {
     }
 
     private List<PlanObraSocialHigea> findAllPlanesObrasSociales() {
-        String url = "http://higea.folderit.net/api/{cliente}/planesObraSocial";
+        String url = "https://higea.folderit.net/api/{cliente}/planesObraSocial";
         ResponseEntity<Result<PlanObraSocialHigea>> result = higeaApiConnect.get(url, new ParameterizedTypeReference<Result<PlanObraSocialHigea>>() {
         });
         return result.getBody().getData().getRows();
@@ -35,7 +35,7 @@ public class MetadataService {
 
         List<PlanObraSocialHigea> todosLosPlanes = findAllPlanesObrasSociales();
 
-        String url = "http://higea.folderit.net/api/{cliente}/obrasSociales";
+        String url = "https://higea.folderit.net/api/{cliente}/obrasSociales";
         ResponseEntity<Result<ObraSocialHigea>> result = higeaApiConnect.get(url, new ParameterizedTypeReference<Result<ObraSocialHigea>>() {
         });
 
@@ -60,7 +60,7 @@ public class MetadataService {
 
     public List<TipoTurno> findTiposTurnoFac() {
 
-        String url = "http://higea.folderit.net/api/{cliente}/tipoTurnoFac";
+        String url = "https://higea.folderit.net/api/{cliente}/tipoTurnoFac";
         ResponseEntity<Result<TipoTurnoHigea>> result = higeaApiConnect.get(url, new ParameterizedTypeReference<Result<TipoTurnoHigea>>() {
         });
 
@@ -72,7 +72,7 @@ public class MetadataService {
     }
 
     public List<MotivoTurno> findMotivosTurno() {
-        String url = "http://higea.folderit.net/api/{cliente}/motivoTurnos";
+        String url = "https://higea.folderit.net/api/{cliente}/motivoTurnos";
         ResponseEntity<Result<MotivoTurnoHigea>> result = higeaApiConnect.get(url, new ParameterizedTypeReference<Result<MotivoTurnoHigea>>() {
         });
         ArrayList<MotivoTurno> motivosTurno = new ArrayList<>();
@@ -83,7 +83,7 @@ public class MetadataService {
 
 
     public List<Pais> findPaises() {
-        String url = "http://higea.folderit.net/api/{cliente}/paises";
+        String url = "https://higea.folderit.net/api/{cliente}/paises";
         ResponseEntity<Result<PaisHigea>> result = higeaApiConnect.get(url, new ParameterizedTypeReference<Result<PaisHigea>>() {
         });
 
@@ -98,7 +98,7 @@ public class MetadataService {
     }
 
     public List<Provincia> findProvincias() {
-        String url = "http://higea.folderit.net/api/{cliente}/provincias";
+        String url = "https://higea.folderit.net/api/{cliente}/provincias";
         ResponseEntity<Result<ProvinciaHigea>> result = higeaApiConnect.get(url, new ParameterizedTypeReference<Result<ProvinciaHigea>>() {
         });
         List<Provincia> provincias = new ArrayList<>();
@@ -109,7 +109,7 @@ public class MetadataService {
     }
 
     public List<Localidad> findLocalidades() {
-        String url = "http://higea.folderit.net/api/{cliente}/localidades";
+        String url = "https://higea.folderit.net/api/{cliente}/localidades";
         ResponseEntity<Result<LocalidadHigea>> result = higeaApiConnect.get(url, new ParameterizedTypeReference<Result<LocalidadHigea>>() {
         });
         List<Localidad> localidades = new ArrayList<>();
@@ -120,7 +120,7 @@ public class MetadataService {
     }
 
     public List<EstadoCivil> findEstadoCiviles() {
-        String url = "http://higea.folderit.net/api/{cliente}/estadoCiviles";
+        String url = "https://higea.folderit.net/api/{cliente}/estadoCiviles";
         ResponseEntity<Result<EstadoCivilHigea>> result = higeaApiConnect.get(url, new ParameterizedTypeReference<Result<EstadoCivilHigea>>() {
         });
         List<EstadoCivil> estadosCiviles = new ArrayList<>();
@@ -144,6 +144,16 @@ public class MetadataService {
         }).getBody();
     }
 
+    public List<ConfiguracionWeb> findConfiguracionWeb() {
+        // send request and parse result
+        String uriConfiguracionWeb = "https://higea.folderit.net/api/{cliente}/parametrosWeb";
+        ResponseEntity<Result<ConfiguracionWeb>> result = higeaApiConnect.get(uriConfiguracionWeb, new ParameterizedTypeReference<Result<ConfiguracionWeb>>(){});
+
+       List<ConfiguracionWeb> data = result.getBody().getData().getRows();
+
+        return data;
+    }
+
 
     public List<Profesional> findProfesionales() {
         List<ProfesionalHigea> profesionalesHigea = getProfesionales();
@@ -159,10 +169,9 @@ public class MetadataService {
         return profesionales;
     }
 
-
     public List<Especialidad> findEspecialidades() {
         List<ProfesionalHigea> profesionalesHigea = this.getProfesionalesDisponibles();
-        String uriEspecialidad = "http://higea.folderit.net/api/{cliente}/especialidades";
+        String uriEspecialidad = "https://higea.folderit.net/api/{cliente}/especialidades";
         ResponseEntity<Result<EspecialidadHigea>> result = higeaApiConnect.get(uriEspecialidad, new ParameterizedTypeReference<Result<EspecialidadHigea>>() {
         });
         ArrayList<Especialidad> especialidades = new ArrayList<>();

@@ -11,7 +11,7 @@ export class MetadataResolveService implements Resolve<any> {
   }
 
   async resolve() {
-    let metadata: Metadata = new Metadata;
+    const metadata: Metadata = new Metadata;
     metadata.paises = await this.metadataService.getPaises();
     metadata.provincias = await this.metadataService.getProvincias();
     metadata.localidades = await this.metadataService.getLocalidades();

@@ -30,8 +30,8 @@ export class TurnoExternalComponent {
         order: 4
       }
     ];
-    this.storeService.update('steps', this.steps);
 
+    this.storeService.update('steps', this.steps);
     this.store.changes.pluck('steps').subscribe((data: any) => this.steps = data);
   }
 

@@ -20,7 +20,7 @@ import java.util.Map;
 @Service
 public class ConnectionMidleWare {
 
-    private final String uriPaciente = "http://higea.folderit.net/api/{cliente}/pacientes";
+    private final String uriPaciente = "https://higea.folderit.net/api/{cliente}/pacientes";
     private final HigeaApiConnect higeaApiConnect;
     private RestTemplate restTemplate = new RestTemplate();
 
@@ -33,7 +33,7 @@ public class ConnectionMidleWare {
     private ResponseEntity<LoginResult> login() {
         LoginHigea loginDTO = new LoginHigea("turneroweb", "WroteScientistFarmerCarbon");
         // send request and parse result
-        String uriLogin = "http://higea.folderit.net/api/login";
+        String uriLogin = "https://higea.folderit.net/api/login";
         LoginResult result = restTemplate.postForObject(uriLogin, loginDTO, LoginResult.class);
         return ResponseEntity.ok(result);
     }
@@ -61,7 +61,7 @@ public class ConnectionMidleWare {
         HttpEntity entity = new HttpEntity<>(dto, headers);
         Map<String, String> uriParams = new HashMap<>();
         uriParams.put("cliente", codigo);
-        String uriPaciente = "http://higea.folderit.net/api/{cliente}/pacientes";
+        String uriPaciente = "https://higea.folderit.net/api/{cliente}/pacientes";
         ResponseEntity<Result<PacienteHigea>> result = restTemplate.exchange(uriPaciente, HttpMethod.POST, entity, new ParameterizedTypeReference<Result<PacienteHigea>>() {
         }, uriParams);
         PacienteHigea pacienteResultHigea = result.getBody().getData().getRows().get(0);
@@ -70,7 +70,7 @@ public class ConnectionMidleWare {
     }
 
     public Persona getByDocAndGenero(String codigo, String documento) {
-        String uriPaciente = "http://higea.folderit.net/api/" + codigo + "/pacientes?" + "persona_documento_nro=" + documento;
+        String uriPaciente = "https://higea.folderit.net/api/" + codigo + "/pacientes?" + "persona_documento_nro=" + documento;
         ResponseEntity<Result<PacienteHigea>> result = higeaApiConnect.get(uriPaciente, new ParameterizedTypeReference<Result<PacienteHigea>>() {
         });
         Persona persona = result.getBody().getData().getRows().size() == 0 ? null : result.getBody().getData().getRows().get(0).convert();

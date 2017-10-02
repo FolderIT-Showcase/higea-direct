@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {ApiService} from './api.service';
 import {Pais} from '../domain/pais';
 import {Provincia} from '../domain/provincia';
+import {ParametrosWeb} from '../domain/parametrosWeb';
 import {Localidad} from '../domain/localidad';
 import {Store} from './store';
 import {ObraSocial} from '../domain/obra-social';
@@ -16,6 +17,9 @@ export class MetadataService {
 
   paises: Pais[] = [];
   provincias: Provincia[] = [];
+  //Modif 2/10/2017 - bonfanti -
+  parametrosWeb: ParametrosWeb[] = [];
+  //Fin Modif 2/10/2017 - bonfanti -
   localidades: Localidad[] = [];
   especialidades: Especialidad[] = [];
   profesionales: Profesional[] = [];
@@ -26,6 +30,7 @@ export class MetadataService {
   license = localStorage.getItem('license');
   client = localStorage.getItem('client');
   basePath = 'core/metadata/';
+  parametrosWebPath = `${this.license}/${this.client}/`;
 
   constructor(private api: ApiService, private store: Store) {
 
@@ -109,6 +114,7 @@ export class MetadataService {
 
   requestObrasSociales() {
     const path = `${this.basePath}obraSocial`;
+    console.log(path);
     return this.api.get(path, false);
   }
 
@@ -223,5 +229,26 @@ export class MetadataService {
     });
     this.store.db.setItem('motivos', this.motivos);
   }
+//Modif 2/10/2017 - bonfanti -
+  async getParametrosWeb() {
+    let list = await this.store.get('parametrosWeb');
+    if (!list) {
+      list = await this.requestParametrosWeb();
+      this.setParametrosWeb(list);
+    }
+    return list;
+  }
+
+  requestParametrosWeb() {
+    const path = `${this.parametrosWebPath}parametrosWeb`;
+    console.log(path);
+    return this.api.get(path, false);
+  }
+
+  setParametrosWeb(mParametrosWeb) {
+    this.parametrosWeb = mParametrosWeb;
+    this.store.db.setItem('parametrosWeb', this.parametrosWeb);
+  }
+//Fin Modif 2/10/2017 - bonfanti -
 
 }

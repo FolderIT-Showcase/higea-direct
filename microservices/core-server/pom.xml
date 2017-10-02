@@ -102,7 +102,7 @@
             <artifactId>spring-cloud-starter-eureka</artifactId>
             <version>RELEASE</version>
         </dependency>
-        <dependency>
+ <!--       <dependency>
             <groupId>ar.com.fdvs</groupId>
             <artifactId>DynamicJasper</artifactId>
             <version>5.1.0</version>
@@ -111,7 +111,7 @@
             <groupId>ar.com.fdvs</groupId>
             <artifactId>DynamicJasper-core-fonts</artifactId>
             <version>1.0</version>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>org.apache.pdfbox</groupId>

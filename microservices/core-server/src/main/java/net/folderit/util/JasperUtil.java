@@ -1,7 +1,5 @@
 package net.folderit.util;
 
-import ar.com.fdvs.dj.domain.AutoText;
-import ar.com.fdvs.dj.domain.DJCrosstab;
 import net.folderit.domain.core.Turno;
 import org.apache.commons.lang.WordUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -16,20 +14,12 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class JasperUtil {
 
-    protected final List<DJCrosstab> globalHeaderCrosstabs = new ArrayList<DJCrosstab>();
-
-    protected final List<DJCrosstab> globalFooterCrosstabs = new ArrayList<DJCrosstab>();
-
-
-    protected final List<AutoText> autoTexts = new ArrayList<AutoText>();
-
-    private Turno turno;
+     private Turno turno;
 
     public byte[] buildReportTurno(List<Turno> turnos) throws Exception {
         return null;

@@ -97,10 +97,12 @@ export class MisTurnosComponent implements OnInit, OnDestroy {
           this.alertService.error('Usted no tiene turnos solicitados');
           return;
         }
+        console.log(data);
         this.persona = data;
         return this.turnoService.getTurnoByPersonaId(this.persona.externalId);
       })
-      .then(turnos => this.buildTurnos(turnos));
+      .then(turnos => { console.log(turnos);
+        this.buildTurnos(turnos)});
 
   }
 

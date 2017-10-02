@@ -22,7 +22,7 @@ public class ConnectionMidleWare {
 
     private ResponseEntity<LoginResult> login() {
         LoginHigea loginDTO = new LoginHigea("turneroweb", "WroteScientistFarmerCarbon");
-        String uriLogin = "http://higea.folderit.net/api/login";
+        String uriLogin = "https://higea.folderit.net/api/login";
         LoginResult result = restTemplate.postForObject(uriLogin, loginDTO, LoginResult.class);
         return ResponseEntity.ok(result);
     }
@@ -46,7 +46,7 @@ public class ConnectionMidleWare {
         headers.set("Authorization", loginResultDTO.getBody().getToken());
         HttpEntity<?> entity = new HttpEntity<>(headers);
 
-        String uriEspecialidad = "http://higea.folderit.net/api/{cliente}/profesionales";
+        String uriEspecialidad = "https://higea.folderit.net/api/{cliente}/profesionales";
         ResponseEntity<Result<ProfesionalHigea>> result = restTemplate.exchange(uriEspecialidad, HttpMethod.GET, entity,
                 new ParameterizedTypeReference<Result<ProfesionalHigea>>() {
                 }, uriParams);
@@ -66,7 +66,7 @@ public class ConnectionMidleWare {
         headers.set("Authorization", loginResultDTO.getBody().getToken());
         HttpEntity<?> entity = new HttpEntity<>(headers);
 
-        String uriProfesionalesDisponibles = "http://higea.folderit.net/api/{cliente}/profesionalesDisponibles";
+        String uriProfesionalesDisponibles = "https://higea.folderit.net/api/{cliente}/profesionalesDisponibles";
         ResponseEntity<Result<ProfesionalHigea>> result = restTemplate.exchange(uriProfesionalesDisponibles, HttpMethod.GET, entity,
                 new ParameterizedTypeReference<Result<ProfesionalHigea>>() {
                 }, uriParams);

@@ -4,7 +4,7 @@
   "license": "All rights reserved Folder IT 2017",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve  --port 8083 --proxy-config proxy.conf.json",
+    "start": "ng serve  --port 8085 --proxy-config proxy.conf.json",
     "mstart": "ng serve --proxy-config proxy.conf.json",
     "build": "ng build --prod --verbose=true",
     "build:prod": "ng build --prod --verbose=true",

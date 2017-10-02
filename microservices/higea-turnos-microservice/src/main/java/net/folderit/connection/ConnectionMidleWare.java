@@ -22,7 +22,7 @@ import java.util.List;
 @Service
 public class ConnectionMidleWare {
 
-    private final String uriTurnos = "http://higea.folderit.net/api/{cliente}/turnos";
+    private final String uriTurnos = "https://higea.folderit.net/api/{cliente}/turnos";
     private final HigeaApiConnect higeaApiConnect;
     private final CoreApiConnect coreApiConnect;
     @Value("${turnero.client.label}")
@@ -63,7 +63,7 @@ public class ConnectionMidleWare {
     }
 
     public List<Turno> findAllByPersona(Integer pacienteId) {
-        String url = "http://higea.folderit.net/api/" + cliente + "/turnos";
+        String url = "https://higea.folderit.net/api/" + cliente + "/turnos";
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("paciente_id", pacienteId);
 
@@ -124,7 +124,7 @@ public class ConnectionMidleWare {
 
     private List<TurnoHigea> findTurnos(Long profesionalId, Date fecha) {
 
-        String url = "http://higea.folderit.net/api/" + cliente + "/agendas";
+        String url = "https://higea.folderit.net/api/" + cliente + "/agendas";
 
         if (profesionalId == null || fecha == null) {
             return new ArrayList<>();
@@ -163,7 +163,7 @@ public class ConnectionMidleWare {
 
     public List<EstadoTurnosHigea> findEstadosTurnos(String codigo) {
 
-        String url = "http://higea.folderit.net/api/" + cliente + "/estadoTurnos";
+        String url = "https://higea.folderit.net/api/" + cliente + "/estadoTurnos";
 
         ResponseEntity<Result<EstadoTurnosHigea>> result = higeaApiConnect.get(url,
                 new ParameterizedTypeReference<Result<EstadoTurnosHigea>>() {
@@ -173,7 +173,7 @@ public class ConnectionMidleWare {
 
     public List<CalendarioDataHigea> findCalendarios(String codigo, String profesional_id, String servicio_id, String calendario_fecha) {
 
-        String url = "http://higea.folderit.net/api/" + cliente + "/calendario" + "?" + "profesional_id=" + profesional_id + "&servicio_id=" + servicio_id + "&calendario_fecha=" + calendario_fecha;
+        String url = "https://higea.folderit.net/api/" + cliente + "/calendario" + "?" + "profesional_id=" + profesional_id + "&servicio_id=" + servicio_id + "&calendario_fecha=" + calendario_fecha;
 
         ResponseEntity<CalendarioHigea> result = higeaApiConnect.get(url,
                 new ParameterizedTypeReference<CalendarioHigea>() {

@@ -2,6 +2,7 @@ package net.folderit;
 
 import net.folderit.domain.core.*;
 import net.folderit.domain.core.enums.EstadoCivil;
+import net.folderit.domain.higea.ConfiguracionWeb;
 import net.folderit.service.MetadataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -80,6 +81,11 @@ public class HigeaMetadataApplication {
     @GetMapping("/{cliente}/profesionalDisponible")
     public ResponseEntity<List<Profesional>> getProfesionalesDisponibles(@PathVariable("cliente") String codigo) {
         return ResponseEntity.ok(metadataService.findProfesionalesDisponibles());
+    }
+
+    @GetMapping("/{cliente}/parametrosWeb")
+    public ResponseEntity<List<ConfiguracionWeb>> getConfiguracionWeb(@PathVariable("cliente") String codigo) {
+        return ResponseEntity.ok(metadataService.findConfiguracionWeb());
     }
 
 
