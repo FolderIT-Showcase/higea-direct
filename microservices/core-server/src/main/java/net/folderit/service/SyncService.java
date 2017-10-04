@@ -4,6 +4,7 @@ import net.folderit.domain.core.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ public class SyncService {
         metadataService.clearProfesionales();
     }
 
+    @Scheduled(cron = "* */5 * * * *")
     public void syncAll() {
         syncMotivosTurno();
         syncProfesionales();
