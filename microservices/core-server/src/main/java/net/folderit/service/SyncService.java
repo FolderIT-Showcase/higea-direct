@@ -105,9 +105,25 @@ public class SyncService {
         List<Profesional> listNew = result.getBody();
 
         // TODO: test filter, sacar despues de la demo
-        listNew = nameProfesionals(listNew);
+        //listNew = nameProfesionals(listNew);
 
-        metadataService.saveAllProfesionales(listDiff(listOld, listNew));
+
+        // Si la listOld no es vacia, entonces remover y agregar segun corresponda
+        if(!listOld.isEmpty()){
+            List<Profesional> listNewToAdd = listNew.subList(0,listNew.size()-1);
+            List<Profesional> listOldToRemove = listOld.subList(0,listOld.size()-1);
+            // listOldAux queda con los profecionales que dejaron de estar disponibles
+            listOldToRemove.remove(listNew);
+            // listNewAux queda con los nuevos profecionales disponibles que no estaban antes
+            listNewToAdd.remove(listOld);
+
+            for (Profesional pToRemove: listOldToRemove){
+                metadataService.deleteProfesional(pToRemove.getId()); }
+
+            metadataService.saveAllProfesionales(listNewToAdd);
+        } else {
+            metadataService.saveAllProfesionales(listDiff(listOld, listNew));
+        }
     }
 
     // @Scheduled(fixedRate = 35000)
