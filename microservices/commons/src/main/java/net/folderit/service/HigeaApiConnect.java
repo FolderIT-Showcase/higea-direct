@@ -15,11 +15,15 @@ import java.util.Map;
 public class HigeaApiConnect {
     @Value("${turnero.client.label}")
     private String cliente;
+    @Value("${higea.api.connect.user}")
+    private String user;
+    @Value("${higea.api.connect.pass}")
+    private String pass;
     private RestTemplate restTemplate = new RestTemplate();
     private Map<String, String> uriParams = new HashMap<>();
 
     private ResponseEntity<LoginResult> login() {
-        LoginHigea loginDTO = new LoginHigea("turneroweb", "WroteScientistFarmerCarbon");
+        LoginHigea loginDTO = new LoginHigea(user, pass);
         // send request and parse result
         String url = "https://higea.folderit.net/api/login";
         LoginResult result = restTemplate.postForObject(url, loginDTO, LoginResult.class);
