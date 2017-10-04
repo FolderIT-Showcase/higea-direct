@@ -20,6 +20,7 @@ import {UIModule} from './module/ui/ui.module';
 import {MetadataResolveService} from './service/resolve/metadata-resolve.service';
 import {AdminService} from './service/admin.service';
 import {ProfesionalResolveService} from './service/resolve/profesionales-resolve.service';
+import {AccessControlUtil} from './module/ui/util/access.control.util';
 
 const providers = [
   {provide: LOCALE_ID, useValue: 'es-AR'},
@@ -36,7 +37,8 @@ const providers = [
   AdminService,
   LoadingService,
   TurnoService,
-  Util
+  Util,
+  AccessControlUtil
 ];
 
 @NgModule({
