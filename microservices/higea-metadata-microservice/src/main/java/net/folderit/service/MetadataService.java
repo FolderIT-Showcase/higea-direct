@@ -77,7 +77,8 @@ public class MetadataService {
         });
         ArrayList<MotivoTurno> motivosTurno = new ArrayList<>();
         Preparacion preparacion = getPreparacion();
-        result.getBody().getData().getRows().forEach(motivoTurnoHigea -> motivosTurno.add(motivoTurnoHigea.convert(preparacion)));
+
+        result.getBody().getData().getRows().forEach(motivoTurnoHigea -> motivosTurno.add(motivoTurnoHigea.convert()));
         return motivosTurno;
     }
 

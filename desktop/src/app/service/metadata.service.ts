@@ -17,7 +17,9 @@ export class MetadataService {
 
   paises: Pais[] = [];
   provincias: Provincia[] = [];
+  //Modif 2/10/2017 - bonfanti -
   parametrosWeb: ParametrosWeb[] = [];
+  //Fin Modif 2/10/2017 - bonfanti -
   localidades: Localidad[] = [];
   especialidades: Especialidad[] = [];
   profesionales: Profesional[] = [];
@@ -28,13 +30,15 @@ export class MetadataService {
   license = localStorage.getItem('license');
   client = localStorage.getItem('client');
   basePath = 'core/metadata/';
+  parametrosWebPath;
 
-  constructor(private api: ApiService,
-              private store: Store) {
+  constructor(private api: ApiService, private store: Store) {
 
     if (this.license === 'core') {
       this.basePath = this.license + '/';
     }
+  console.log(this.license);
+   this.parametrosWebPath = `${this.license}/${this.client}/`;
   }
 
   async getPaises() {
@@ -226,7 +230,7 @@ export class MetadataService {
     });
     this.store.db.setItem('motivos', this.motivos);
   }
-
+//Modif 2/10/2017 - bonfanti -
   async getParametrosWeb() {
     let list = await this.store.get('parametrosWeb');
     if (!list) {
@@ -237,10 +241,7 @@ export class MetadataService {
   }
 
   requestParametrosWeb() {
-    const basePathHigea = localStorage.getItem('license') + '/';
-    const basePathClient = localStorage.getItem('client') + '/';
-    const parametrosWebPath = `${basePathHigea}${basePathClient}`;
-    const path = `${parametrosWebPath}parametrosWeb`;
+    const path = `${this.parametrosWebPath}parametrosWeb`;
     console.log(path);
     return this.api.get(path, false);
   }
@@ -249,6 +250,6 @@ export class MetadataService {
     this.parametrosWeb = mParametrosWeb;
     this.store.db.setItem('parametrosWeb', this.parametrosWeb);
   }
-
+//Fin Modif 2/10/2017 - bonfanti -
 
 }

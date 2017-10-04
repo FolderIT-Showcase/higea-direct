@@ -104,9 +104,9 @@ export class ApiService {
     return this.mPromise;
   }
 
-  public async getFile(path: string, mimeType: string, filename: string, obj: any, isAuthNecessary: boolean = true) {
+  public async getFile(path: string, mimeType: string, filename: string, obj: any, isAuthNecessary: boolean = false) {
     this.loadingService.start();
-    this.isAuthNecessary(isAuthNecessary);
+   // this.isAuthNecessary(isAuthNecessary);
     this.headers.set('Accept', mimeType);
     const options = {
       responseType: ResponseContentType.Blob,

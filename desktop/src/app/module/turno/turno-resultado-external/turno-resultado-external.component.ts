@@ -48,6 +48,8 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
 
   diaValido = true;
 
+  impimirModal: ModalDirective;
+
   constructor(private store: Store,
               private metadataService: MetadataService,
               private fb: FormBuilder,
@@ -224,6 +226,7 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
     }
   }
 
+
   public reservarTurno(turno: Turno) {
 
     if (!this.form.valid) {
@@ -237,9 +240,9 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
     turno.motivoTurno = this.form.value.motivo;
     turno.plan = this.form.value.plan;
     turno.especialidad = especialidad;
-
     delete turno.centroSalud;
-    delete turno.motivoTurno.preparacion;
+
+    // delete turno.motivoTurno.preparacion;
 
     if (!this.persona) {
       const contactos: Contacto[] = [
@@ -294,6 +297,14 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
 
   handleMotivo(motivo) {
     this.motivoTurno = motivo;
+    /*
+    console.log('handleMotivo');
+    console.log(this.motivoTurno);
+    */
+  }
+
+  handleInprimirModal(event) {
+    this.impimirModal = event;
   }
 
   getEspecialidad(turno): string {
@@ -399,6 +410,15 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
         'si pudieron aceptar su turno condicional y quedar en lista de espera');
       this.condicionalModal.hide();
     });
+  }
+
+  showModalimpresion() {
+    // this.turno = turno;
+    this.impimirModal.show();
+  }
+
+  generarPDF() {
+    this.turnoService.generarTurnoPDF(this.turno);
   }
 
 }
