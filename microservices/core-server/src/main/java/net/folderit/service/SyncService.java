@@ -28,7 +28,7 @@ public class SyncService {
         metadataService.clearProfesionales();
     }
 
-   // @Scheduled(cron = "* */5 * * * *")
+    @Scheduled(cron = "* */5 * * * *")
     public void syncAll() {
         syncMotivosTurno();
         syncProfesionales();
