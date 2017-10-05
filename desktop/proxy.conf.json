@@ -1,16 +1,6 @@
 {
-  /*"/api": {
-    "target": "https://turnero.folderit.net",
-    "secure": false,
-    "changeOrigin": true,
-    "logLevel": "debug",
-    "pathRewrite": {
-      "^/api": ""
-    }
-  }*/
-
   "/api": {
-    "target": "https://127.0.0.1:8080",
+    "target": "https://turnero.folderit.net",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug",
