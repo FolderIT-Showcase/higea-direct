@@ -171,10 +171,9 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
   }
 
   onSingleItemDetect(especialidad: Especialidad) {
-    if (especialidad) {
+    if (especialidad && especialidad.profesional) {
       this.filteredProfesionales = especialidad.profesional.sort((a, b) => {
-      return (a.apellido + a.nombre > b.apellido + b.nombre) ? 1 : ((b.apellido + b.nombre > a.apellido + a.nombre) ? -1 : 0);
-    });
+        return (a.apellido + a.nombre > b.apellido + b.nombre) ? 1 : ((b.apellido + b.nombre > a.apellido + a.nombre) ? -1 : 0);});
 
       let steps: any[] = this.storeService.get('steps');
       if (steps && steps[0]) {
