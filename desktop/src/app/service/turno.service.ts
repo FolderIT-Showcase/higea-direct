@@ -157,7 +157,10 @@ export class TurnoService {
   }
 
   getCalendario(profesional: Profesional, fecha: any) {
-    const path = this.pathTurno + '/calendarios?profesional_id=' + profesional.id + '&calendario_fecha=' + fecha + '&servicio_id=8';
+    const path = this.pathTurno + '/calendarios?profesional_id=' + profesional.id
+      + '&calendario_fecha=' + fecha
+      + '&servicio_id=' + profesional.servicioId;
+
     return this.api.get(path, false);
   }
 

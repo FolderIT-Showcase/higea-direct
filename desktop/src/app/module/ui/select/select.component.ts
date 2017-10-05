@@ -1,4 +1,5 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import { Component, DoCheck, EventEmitter, Input, Output} from '@angular/core';
+
 
 @Component({
   selector: 'app-select',
@@ -9,7 +10,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
  Componente <select> reusable para Angular
  permite usarse con Reactive Forms y Model Driven Forms
  */
-export class SelectComponent {
+export class SelectComponent implements DoCheck{
 
   // form reactivo
   @Input() formControl;
@@ -21,17 +22,25 @@ export class SelectComponent {
   @Input() displayProp = [];
   // onChange Event callback
   @Output() change = new EventEmitter<any>();
+  // notifica si la lista tiene un solo emelemto
+  @Output() singleItemList = new EventEmitter<boolean>();
 
   mModel: any = null;
   item = null;
 
   // onChange para model driven form
-  @Output() onChange = new EventEmitter<any>();
+    @Output() onChange = new EventEmitter<any>();
 
   @Input()
   set setModel(item) {
     this.mModel = item;
   }
+
+    ngDoCheck () {
+      if (this.list.length === 1) {
+        this.singleItemList.emit(true);
+      }
+    }
 
   // event emitter para onChange callback
   handleChange(item) {

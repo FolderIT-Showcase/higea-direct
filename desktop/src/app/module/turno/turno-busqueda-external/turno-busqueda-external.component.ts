@@ -116,13 +116,14 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
       'especialidad': [Util.getFirstDefault(this.especialidades)],
       'profesional': [null, Validators.required]
     });
+
   }
 
   buildEspecialidades() {
     let especialidadesTmp = [];
     for (let i in this.profesionales) {
       for (let j in this.especialidades) {
-        if (this.profesionales[i].especialidadId == this.especialidades[j].id) {
+        if (this.profesionales[i].especialidadId === this.especialidades[j].id) {
           this.especialidades[j].profesional.push(this.profesionales[i]);
         }
       }
@@ -150,6 +151,23 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
     this.filteredProfesionales = especialidad.profesional.sort((a, b) => {
       return (a.apellido + a.nombre > b.apellido + b.nombre) ? 1 : ((b.apellido + b.nombre > a.apellido + a.nombre) ? -1 : 0);
     });
+  }
+
+  onSingleItemDetect(especialidad: Especialidad) {
+    if (especialidad) {
+      this.filteredProfesionales = especialidad.profesional.sort((a, b) => {
+      return (a.apellido + a.nombre > b.apellido + b.nombre) ? 1 : ((b.apellido + b.nombre > a.apellido + a.nombre) ? -1 : 0);
+    });
+
+      let steps: any[] = this.storeService.get('steps');
+      if (steps && steps[0]) {
+        steps[0] = {
+          label: steps[0].label,
+          ngClass: 'btn-success'
+        }
+      }
+    }
+
   }
 
   submitForm(form) {

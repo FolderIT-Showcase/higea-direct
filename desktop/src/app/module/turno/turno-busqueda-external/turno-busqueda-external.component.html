@@ -4,6 +4,7 @@
       ngDefaultControl
       [placeHolder]="'Especialidad'"
       (change)="handleEspecialidadClick(form.value.especialidad)"
+      (singleItemList)="onSingleItemDetect(form.value.especialidad);"
       [formControl]="form.controls['especialidad']"
       [list]="especialidades"
       [displayProp]="['nombre']"

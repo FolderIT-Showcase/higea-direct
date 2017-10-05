@@ -169,11 +169,11 @@ export class MetadataService {
   }
 
   async getEspecialidades(): Promise<any> {
-    let list = await this.store.get('especialidades');
-    if (!list) {
-      list = await this.requestEspecialidades();
+    //let list = await this.store.get('especialidades');
+   // if (!list) {
+      let list = await this.requestEspecialidades();
       this.setEspecialidades(list);
-    }
+  //  }
     return list;
   }
 
