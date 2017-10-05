@@ -3,6 +3,7 @@ package net.folderit.domain.core;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -16,6 +17,7 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(NON_NULL)
+@EqualsAndHashCode(exclude={"especialidadId", "servicioId"})
 public class Profesional implements Serializable {
 
     @Id
@@ -24,7 +26,6 @@ public class Profesional implements Serializable {
     private String nombre;
     @Transient
     private Long especialidadId;
-    @Transient
     private Long servicioId;
 
     public void finalize() throws Throwable {

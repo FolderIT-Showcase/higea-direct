@@ -94,7 +94,25 @@ public class SyncService {
         });
         List<Especialidad> listOld = metadataService.getAllEspecialidades();
         List<Especialidad> listNew = result.getBody();
-        metadataService.saveAllEspecialidades(listDiff(listOld, listNew));
+        if(!listOld.isEmpty()) {
+            List<Especialidad> listNewToAdd = listNew.subList(0, listNew.size());
+            List<Especialidad> listOldToRemove = listOld.subList(0, listOld.size());
+
+            // listOldAux queda con lespecialedades que dejaron de estar disponibles
+            listOldToRemove.remove(listNew);
+            // listNewAux queda con las nuevas especialidades disponibles que no estaban antes
+            listNewToAdd.remove(listOld);
+
+            for(Especialidad espToRemove: listOldToRemove){
+                metadataService.deleteEspecialidad(espToRemove.getId());
+            }
+            if(!listNewToAdd.isEmpty()){
+                metadataService.saveAllEspecialidades(listNewToAdd);
+            }
+
+        } else {
+            metadataService.saveAllEspecialidades(listDiff(listOld, listNew));
+        }
     }
 
     private void syncProfesionales() {
@@ -103,21 +121,27 @@ public class SyncService {
         });
         List<Profesional> listOld = metadataService.getAllProfesionales();
         List<Profesional> listNew = result.getBody();
-
         // TODO: test filter, sacar despues de la demo
         //listNew = nameProfesionals(listNew);
 
 
         // Si la listOld no es vacia, entonces remover y agregar segun corresponda
         if(!listOld.isEmpty()){
-            List<Profesional> listNewToAdd = listNew.subList(0,listNew.size()-1);
-            List<Profesional> listOldToRemove = listOld.subList(0,listOld.size()-1);
+            List<Especialidad> listOldEsp = metadataService.getAllEspecialidades();
+            List<Profesional> listNewToAdd = listNew.subList(0,listNew.size());
+            List<Profesional> listOldToRemove = listOld.subList(0,listOld.size());
             // listOldAux queda con los profecionales que dejaron de estar disponibles
             listOldToRemove.remove(listNew);
             // listNewAux queda con los nuevos profecionales disponibles que no estaban antes
             listNewToAdd.remove(listOld);
 
             for (Profesional pToRemove: listOldToRemove){
+                for(Especialidad espToEdit: listOldEsp){
+                    boolean save = espToEdit.getProfesional().remove(pToRemove);
+                    if (save){
+                        metadataService.saveEspecialidad(espToEdit);
+                    }
+                }
                 metadataService.deleteProfesional(pToRemove.getId()); }
 
             metadataService.saveAllProfesionales(listNewToAdd);

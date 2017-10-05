@@ -30,9 +30,9 @@ public class MotivoTurnoHigea {
 
     public MotivoTurno convert() {
         MotivoTurno motivoTurno = new MotivoTurno();
-        motivoTurno.setId((long) this.tcg_id );
+        motivoTurno.setId((long) this.tipo_consulta_id );
         motivoTurno.setDescripcion(this.tipo_consulta_nombre);
-        motivoTurno.setCodigo(this.tcg_id.intValue());
+        motivoTurno.setCodigo(this.tipo_consulta_id.intValue());
 
         Preparacion preparacion = new Preparacion();
         preparacion.setDescripcion(this.tipo_consulta_observaciones);
