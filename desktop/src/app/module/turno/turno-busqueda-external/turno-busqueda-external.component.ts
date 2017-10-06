@@ -171,9 +171,13 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
 
   handleEspecialidadClick(especialidad: Especialidad) {
     this.currentEspecialidad = especialidad;
-    this.filteredProfesionales = especialidad.profesional.sort((a, b) => {
-      return (a.apellido + a.nombre > b.apellido + b.nombre) ? 1 : ((b.apellido + b.nombre > a.apellido + a.nombre) ? -1 : 0);
-    });
+    if (especialidad && especialidad.profesional) {
+      this.filteredProfesionales = especialidad.profesional.sort((a, b) => {
+        return (a.apellido + a.nombre > b.apellido + b.nombre) ? 1 : ((b.apellido + b.nombre > a.apellido + a.nombre) ? -1 : 0);
+      });
+    } else {
+      this.filteredProfesionales = [];
+    }
   }
 
   onSingleItemDetect(especialidad: Especialidad) {
@@ -210,7 +214,9 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
     this.storeService.update('especialidad', especialidad);
     this.storeService.update('profesional', form.profesional);
     this.storeService.update('fecha', this.timeStampToDate(form.fecha.epoc * 1000));
-    this.turnoService.getTurnos(form.centro, form.especialidad, form.profesional, form.fecha.epoc * 1000);
+    if (form.especialidad && form.profesional) {
+      this.turnoService.getTurnos(form.centro, form.especialidad, form.profesional, form.fecha.epoc * 1000);
+    }
   }
 
   timeStampToDate(timestamp, format = 'yyyy-MM-dd') {
