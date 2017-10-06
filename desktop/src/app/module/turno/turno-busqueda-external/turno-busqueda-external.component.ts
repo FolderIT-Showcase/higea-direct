@@ -64,27 +64,6 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
         if (!data) {
           return;
         }
-        // UPDATE STEP 1 - USER SELECT ESPECIALIDAD
-        if (data.especialidad) {
-          const steps: any[] = this.storeService.get('steps');
-          if (steps && steps[0]) {
-            steps[0] = {
-              label: steps[0].label,
-              ngClass: 'btn-success'
-            }
-          }
-        }
-        // UPDATE STEP 2 - USER SELECT PROFESIONAL
-        if (data.especialidad && data.profesional && data.profesional.id) {
-          this.getMarkedDays(data);
-          const steps: any[] = this.storeService.get('steps');
-          if (steps && steps[1]) {
-            steps[1] = {
-              label: steps[1].label,
-              ngClass: 'btn-success'
-            }
-          }
-        }
         // HANDLER CHANGES IN ESPECIALIDAD INPUT
         if (data.especialidad && this.currentEspecialidad && data.especialidad.id !== this.currentEspecialidad.id) {
           // RESET PROFESIONAL DATA
@@ -108,12 +87,34 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
           };
           // RESET MARKED DAYS OF CALENDAR
           this.markedDays = [];
+
+        }
+        // UPDATE STEP 1 - USER SELECT ESPECIALIDAD
+        if (data.especialidad) {
+          const steps: any[] = this.storeService.get('steps');
+          if (steps && steps[0]) {
+            steps[0] = {
+              label: steps[0].label,
+              ngClass: 'btn-success'
+            }
+          }
+        }
+        // UPDATE STEP 2 - USER SELECT PROFESIONAL
+        if (data.especialidad && data.profesional && data.profesional.id) {
+          this.getMarkedDays(data);
+          const steps: any[] = this.storeService.get('steps');
+          if (steps && steps[1]) {
+            steps[1] = {
+              label: steps[1].label,
+              ngClass: 'btn-success'
+            }
+          }
         }
         // CHECK DATE SELECTED
         if (data.fecha && this.form.valid) {
           // CHECK DAYS AVAILABLES
           if (!this.markedDays.find(x => x === data.fecha.date.day.toString())) {
-            // SET DAY FLAG TRUE
+            // SET DAY FLAG FALSE
             this.storeService.update('validDayFlag', false);
             return;
           }
@@ -170,13 +171,13 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
   }
 
   handleEspecialidadClick(especialidad: Especialidad) {
+    this.form.controls['profesional'].reset();
     this.currentEspecialidad = especialidad;
     if (especialidad && especialidad.profesional) {
       this.filteredProfesionales = especialidad.profesional.sort((a, b) => {
+        console.log(this.filteredProfesionales);
         return (a.apellido + a.nombre > b.apellido + b.nombre) ? 1 : ((b.apellido + b.nombre > a.apellido + a.nombre) ? -1 : 0);
       });
-    } else {
-      this.filteredProfesionales = [];
     }
   }
 
