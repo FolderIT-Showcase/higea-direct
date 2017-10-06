@@ -29,6 +29,8 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
   markedDays = [];
 
   currentEspecialidad: Especialidad = null;
+  currentProfesional: Profesional = null;
+
 
   myDatePickerOptions: IMyOptions = {
     dateFormat: 'dd/mm/yyyy',
@@ -89,6 +91,7 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
           this.markedDays = [];
 
         }
+
         // UPDATE STEP 1 - USER SELECT ESPECIALIDAD
         if (data.especialidad) {
           const steps: any[] = this.storeService.get('steps');
@@ -101,6 +104,9 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
         }
         // UPDATE STEP 2 - USER SELECT PROFESIONAL
         if (data.especialidad && data.profesional && data.profesional.id) {
+
+          // this.form.controls['fecha'].reset();
+
           this.getMarkedDays(data);
           const steps: any[] = this.storeService.get('steps');
           if (steps && steps[1]) {
@@ -122,6 +128,7 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
           this.storeService.update('validDayFlag', true);
 
           this.submitForm(this.form.value);
+
           const steps: any[] = this.storeService.get('steps');
           if (steps && steps[2]) {
             steps[2] = {
@@ -175,9 +182,21 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
     this.currentEspecialidad = especialidad;
     if (especialidad && especialidad.profesional) {
       this.filteredProfesionales = especialidad.profesional.sort((a, b) => {
-        console.log(this.filteredProfesionales);
         return (a.apellido + a.nombre > b.apellido + b.nombre) ? 1 : ((b.apellido + b.nombre > a.apellido + a.nombre) ? -1 : 0);
       });
+    }
+  }
+
+  handleProfesionalClick(profesional: Profesional) {
+    console.log(this.form.value.fecha);
+    this.currentProfesional = profesional;
+    const steps: any[] = this.storeService.get('steps');
+    if (steps && steps[1]) {
+      steps[2] = {
+        label: steps[0].label,
+        ngClass: 'btn-warning',
+        order: 3
+      }
     }
   }
 
@@ -199,6 +218,8 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
   }
 
   submitForm(form) {
+    console.log(form);
+
     if (!form.fecha || !form.fecha.epoc) return;
     const fechaDesde = form.fecha.epoc * 1000;
     const ahora = new Date().setHours(0, 0, 0, 0);
@@ -215,8 +236,15 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
     this.storeService.update('especialidad', especialidad);
     this.storeService.update('profesional', form.profesional);
     this.storeService.update('fecha', this.timeStampToDate(form.fecha.epoc * 1000));
+    // GET TURNOS
     if (form.especialidad && form.profesional) {
-      this.turnoService.getTurnos(form.centro, form.especialidad, form.profesional, form.fecha.epoc * 1000);
+      // CHECK PROFESIONAL INPUT TO UPDATE TURNOS
+      if (form.profesional.id === this.currentProfesional.id) {
+        this.turnoService.getTurnos(form.centro, form.especialidad, form.profesional, form.fecha.epoc * 1000);
+      } else {
+        this.storeService.update('turnos', []);
+      }
+
     }
   }
 
