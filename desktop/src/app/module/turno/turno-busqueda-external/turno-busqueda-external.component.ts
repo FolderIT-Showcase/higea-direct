@@ -65,13 +65,23 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
 
         if (data.especialidad && this.currentEspecialidad && data.especialidad.id !== this.currentEspecialidad.id) {
           delete data.profesional;
-          //update step
           let steps: any[] = this.storeService.get('steps');
           steps[1] = {
             label: steps[1].label,
             ngClass: 'btn-warning',
             order: 2
-          }
+          };
+          steps[2] = {
+            label: steps[1].label,
+            ngClass: 'btn-warning',
+            order: 3
+          };
+          steps[3] = {
+            label: steps[1].label,
+            ngClass: 'btn-warning',
+            order: 4
+          };
+          this.markedDays = [];
         }
 
         if (data.especialidad) {
