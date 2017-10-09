@@ -91,7 +91,7 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
 
     this.metadataService.getObrasSociales().then((data: any) => this.obras_sociales = data);
     this.metadataService.getEspecialidades().then((data: any) => this.especialidades = data);
-    this.metadataService.getMotivosTurno().then((data: any) => {this.motivos = data; console.log(data)});
+    this.metadataService.getMotivosTurno().then((data: any) => {this.motivos = data;});
     this.subs.push(
       this.store.changes.pluck('turnos').subscribe(
         (data: any) => {
