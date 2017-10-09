@@ -94,7 +94,6 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
         // UPDATE STEP 1 - USER SELECT ESPECIALIDAD
         if (data.especialidad) {
           this.storeService.update('turnos', []);
-          console.log(this.storeService.get('turnos'));
           const steps: any[] = this.storeService.get('steps');
           if (steps && steps[0]) {
             steps[0] = {
@@ -217,8 +216,6 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
   }
 
   submitForm(form) {
-    console.log(form);
-
     if (!form.fecha || !form.fecha.epoc) return;
     const fechaDesde = form.fecha.epoc * 1000;
     const ahora = new Date().setHours(0, 0, 0, 0);
