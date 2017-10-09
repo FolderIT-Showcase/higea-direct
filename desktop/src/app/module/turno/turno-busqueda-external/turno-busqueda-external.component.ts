@@ -66,7 +66,7 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
         if (!data) {
           return;
         }
-        // HANDLER CHANGES IN ESPECIALIDAD INPUT
+        // HANDLER CHANGES ESPECIALIDAD INPUT AFTER FIRST SELECTION
         if (data.especialidad && this.currentEspecialidad && data.especialidad.id !== this.currentEspecialidad.id) {
           // RESET PROFESIONAL DATA
           delete data.profesional;
@@ -89,11 +89,12 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
           };
           // RESET MARKED DAYS OF CALENDAR
           this.markedDays = [];
-
         }
 
         // UPDATE STEP 1 - USER SELECT ESPECIALIDAD
         if (data.especialidad) {
+          this.storeService.update('turnos', []);
+          console.log(this.storeService.get('turnos'));
           const steps: any[] = this.storeService.get('steps');
           if (steps && steps[0]) {
             steps[0] = {
@@ -104,9 +105,6 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
         }
         // UPDATE STEP 2 - USER SELECT PROFESIONAL
         if (data.especialidad && data.profesional && data.profesional.id) {
-
-          // this.form.controls['fecha'].reset();
-
           this.getMarkedDays(data);
           const steps: any[] = this.storeService.get('steps');
           if (steps && steps[1]) {
@@ -118,17 +116,17 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
         }
         // CHECK DATE SELECTED
         if (data.fecha && this.form.valid) {
-          // CHECK DAYS AVAILABLES
+          // CHECK IF THERE ARE AVAILABLES DAYS
           if (!this.markedDays.find(x => x === data.fecha.date.day.toString())) {
-            // SET DAY FLAG FALSE
+            // SET DAY FLAG FALSE AND RETURN
             this.storeService.update('validDayFlag', false);
             return;
           }
           // SET DAY FLAG TRUE
           this.storeService.update('validDayFlag', true);
-
+          // SUBMIT FORM
           this.submitForm(this.form.value);
-
+          // UPDATE STEP 3 - USER SELECT VALID DAY
           const steps: any[] = this.storeService.get('steps');
           if (steps && steps[2]) {
             steps[2] = {
@@ -179,6 +177,7 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
 
   handleEspecialidadClick(especialidad: Especialidad) {
     this.form.controls['profesional'].reset();
+    this.form.controls['fecha'].reset();
     this.currentEspecialidad = especialidad;
     if (especialidad && especialidad.profesional) {
       this.filteredProfesionales = especialidad.profesional.sort((a, b) => {
@@ -188,7 +187,7 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
   }
 
   handleProfesionalClick(profesional: Profesional) {
-    console.log(this.form.value.fecha);
+    this.form.controls['fecha'].reset();
     this.currentProfesional = profesional;
     const steps: any[] = this.storeService.get('steps');
     if (steps && steps[1]) {
