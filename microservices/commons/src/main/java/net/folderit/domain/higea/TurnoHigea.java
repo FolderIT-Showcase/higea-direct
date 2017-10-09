@@ -51,7 +51,7 @@ public class TurnoHigea {
     private String turno_hora_actual;
     private int turno_primera_vez;
     private int turno_duracion;
-    private int turno_factor_duracion;
+    private int turno_factor_duracion = 1;
     private String turno_asistencia;
     private String turno_pasado;
 
