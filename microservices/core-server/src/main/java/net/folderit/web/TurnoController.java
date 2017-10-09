@@ -117,6 +117,9 @@ public class TurnoController {
     public ResponseEntity getPDfTurno(@RequestBody Turno turno) throws Exception {
 
         JasperUtil jasperUtil = new JasperUtil();
+        if(turno.getMotivoTurno().getPreparacion().getDescripcion() == null){
+            turno.getMotivoTurno().getPreparacion().setDescripcion("No posee preparación previa.");
+        }
 
         return ResponseEntity.ok(jasperUtil.buildReportTurnoByturno(turno));
 
