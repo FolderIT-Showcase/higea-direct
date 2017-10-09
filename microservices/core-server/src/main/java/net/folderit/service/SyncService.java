@@ -193,7 +193,10 @@ public class SyncService {
         });
         List<MotivoTurno> listOld = metadataService.findAllMotivosTurno();
         List<MotivoTurno> listNew = result.getBody();
-        metadataService.saveAllMotivosTurno(listDiff(listOld, listNew));
+
+        List<MotivoTurno> listNewToAdd = removeEqueals(listNew,listOld);
+
+        metadataService.saveAllMotivosTurno(listNewToAdd);
     }
 
     private <T> List<T> listDiff(List<T> oldList, List<T> newList) {
