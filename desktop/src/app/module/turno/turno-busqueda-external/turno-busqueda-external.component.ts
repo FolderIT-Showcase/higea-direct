@@ -29,6 +29,8 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
   markedDays = [];
 
   currentEspecialidad: Especialidad = null;
+  currentProfesional: Profesional = null;
+
 
   myDatePickerOptions: IMyOptions = {
     dateFormat: 'dd/mm/yyyy',
@@ -61,11 +63,15 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
   subscribeFormChanges() {
     this.subs.push(
       this.form.valueChanges.subscribe(data => {
-        if (!data) return;
-
+        if (!data) {
+          return;
+        }
+        // HANDLER CHANGES IN ESPECIALIDAD INPUT
         if (data.especialidad && this.currentEspecialidad && data.especialidad.id !== this.currentEspecialidad.id) {
+          // RESET PROFESIONAL DATA
           delete data.profesional;
-          let steps: any[] = this.storeService.get('steps');
+          // RESET UI STEPS
+          const steps: any[] = this.storeService.get('steps');
           steps[1] = {
             label: steps[1].label,
             ngClass: 'btn-warning',
@@ -81,11 +87,14 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
             ngClass: 'btn-warning',
             order: 4
           };
+          // RESET MARKED DAYS OF CALENDAR
           this.markedDays = [];
+
         }
 
+        // UPDATE STEP 1 - USER SELECT ESPECIALIDAD
         if (data.especialidad) {
-          let steps: any[] = this.storeService.get('steps');
+          const steps: any[] = this.storeService.get('steps');
           if (steps && steps[0]) {
             steps[0] = {
               label: steps[0].label,
@@ -93,10 +102,13 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
             }
           }
         }
-
+        // UPDATE STEP 2 - USER SELECT PROFESIONAL
         if (data.especialidad && data.profesional && data.profesional.id) {
+
+          // this.form.controls['fecha'].reset();
+
           this.getMarkedDays(data);
-          let steps: any[] = this.storeService.get('steps');
+          const steps: any[] = this.storeService.get('steps');
           if (steps && steps[1]) {
             steps[1] = {
               label: steps[1].label,
@@ -104,18 +116,20 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
             }
           }
         }
-
+        // CHECK DATE SELECTED
         if (data.fecha && this.form.valid) {
+          // CHECK DAYS AVAILABLES
           if (!this.markedDays.find(x => x === data.fecha.date.day.toString())) {
+            // SET DAY FLAG FALSE
             this.storeService.update('validDayFlag', false);
             return;
-
           }
-
+          // SET DAY FLAG TRUE
           this.storeService.update('validDayFlag', true);
 
           this.submitForm(this.form.value);
-          let steps: any[] = this.storeService.get('steps');
+
+          const steps: any[] = this.storeService.get('steps');
           if (steps && steps[2]) {
             steps[2] = {
               label: steps[2].label,
@@ -137,15 +151,15 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
   }
 
   buildEspecialidades() {
-    let especialidadesTmp = [];
-    for (let i in this.profesionales) {
-      for (let j in this.especialidades) {
+    const especialidadesTmp = [];
+    for (const i in this.profesionales) {
+      for (const j in this.especialidades) {
         if (this.profesionales[i].especialidadId === this.especialidades[j].id) {
           this.especialidades[j].profesional.push(this.profesionales[i]);
         }
       }
     }
-    for (let j in this.especialidades) {
+    for (const j in this.especialidades) {
       if (this.especialidades[j].profesional.length !== 0) {
         especialidadesTmp.push(this.especialidades[j]);
       }
@@ -164,23 +178,35 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
   }
 
   handleEspecialidadClick(especialidad: Especialidad) {
-    this.form.controls['profecional'].reset();
+    this.form.controls['profesional'].reset();
     this.currentEspecialidad = especialidad;
     if (especialidad && especialidad.profesional) {
       this.filteredProfesionales = especialidad.profesional.sort((a, b) => {
         return (a.apellido + a.nombre > b.apellido + b.nombre) ? 1 : ((b.apellido + b.nombre > a.apellido + a.nombre) ? -1 : 0);
       });
-    } else {
-      this.filteredProfesionales = [];
+    }
+  }
+
+  handleProfesionalClick(profesional: Profesional) {
+    console.log(this.form.value.fecha);
+    this.currentProfesional = profesional;
+    const steps: any[] = this.storeService.get('steps');
+    if (steps && steps[1]) {
+      steps[2] = {
+        label: steps[0].label,
+        ngClass: 'btn-warning',
+        order: 3
+      }
     }
   }
 
   onSingleItemDetect(especialidad: Especialidad) {
     if (especialidad && especialidad.profesional) {
       this.filteredProfesionales = especialidad.profesional.sort((a, b) => {
-        return (a.apellido + a.nombre > b.apellido + b.nombre) ? 1 : ((b.apellido + b.nombre > a.apellido + a.nombre) ? -1 : 0);});
+        return (a.apellido + a.nombre > b.apellido + b.nombre) ? 1 : ((b.apellido + b.nombre > a.apellido + a.nombre) ? -1 : 0);
+      });
 
-      let steps: any[] = this.storeService.get('steps');
+      const steps: any[] = this.storeService.get('steps');
       if (steps && steps[0]) {
         steps[0] = {
           label: steps[0].label,
@@ -192,9 +218,9 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
   }
 
   submitForm(form) {
+    console.log(form);
 
     if (!form.fecha || !form.fecha.epoc) return;
-
     const fechaDesde = form.fecha.epoc * 1000;
     const ahora = new Date().setHours(0, 0, 0, 0);
     const fechaTurno = new Date(fechaDesde).setHours(0, 0, 0, 0);
@@ -210,8 +236,15 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
     this.storeService.update('especialidad', especialidad);
     this.storeService.update('profesional', form.profesional);
     this.storeService.update('fecha', this.timeStampToDate(form.fecha.epoc * 1000));
+    // GET TURNOS
     if (form.especialidad && form.profesional) {
-      this.turnoService.getTurnos(form.centro, form.especialidad, form.profesional, form.fecha.epoc * 1000);
+      // CHECK PROFESIONAL INPUT TO UPDATE TURNOS
+      if (form.profesional.id === this.currentProfesional.id) {
+        this.turnoService.getTurnos(form.centro, form.especialidad, form.profesional, form.fecha.epoc * 1000);
+      } else {
+        this.storeService.update('turnos', []);
+      }
+
     }
   }
 
