@@ -35,7 +35,11 @@ public class MotivoTurnoHigea {
         motivoTurno.setCodigo(this.tipo_consulta_id.intValue());
 
         Preparacion preparacion = new Preparacion();
-        preparacion.setDescripcion(this.tipo_consulta_observaciones);
+        if(this.tipo_consulta_observaciones == null){
+            preparacion.setDescripcion("No posee preparación previa.");
+        } else {
+            preparacion.setDescripcion(this.tipo_consulta_observaciones);
+        }
 
         motivoTurno.setPreparacion(preparacion);
         motivoTurno.setCoseguro(0D);
