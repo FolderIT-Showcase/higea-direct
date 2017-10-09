@@ -104,7 +104,9 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
         }
         // UPDATE STEP 2 - USER SELECT PROFESIONAL
         if (data.especialidad && data.profesional && data.profesional.id) {
+
           // this.form.controls['fecha'].reset();
+
           this.getMarkedDays(data);
           const steps: any[] = this.storeService.get('steps');
           if (steps && steps[1]) {
