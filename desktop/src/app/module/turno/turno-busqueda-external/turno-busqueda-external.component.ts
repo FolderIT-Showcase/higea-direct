@@ -164,6 +164,7 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
   }
 
   handleEspecialidadClick(especialidad: Especialidad) {
+    this.form.controls['profecional'].reset();
     this.currentEspecialidad = especialidad;
     if (especialidad && especialidad.profesional) {
       this.filteredProfesionales = especialidad.profesional.sort((a, b) => {
