@@ -389,6 +389,7 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
   onSuccessModal() {
     this.successModal.hide();
     this.buildTimeline([]);
+
   }
 
 // nombre, apellido y telefono

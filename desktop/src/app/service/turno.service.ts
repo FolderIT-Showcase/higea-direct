@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import {ApiService} from './api.service';
 import {CentroSalud} from '../domain/centro-salud';
 import {Especialidad} from '../domain/especialidad';
@@ -17,6 +17,7 @@ export class TurnoService {
   pathTurno = `${this.license}/turnos/${this.client}`;
   pathCentroSalud = `${this.license}/centroSalud/${this.client}`;
   pathPersona = `${this.license}/persona/${this.client}`;
+  reservado = new EventEmitter<boolean>();
 
   basePath = `${this.license}/`;
 
@@ -168,6 +169,10 @@ export class TurnoService {
     const path = this.pathManagment + 'managment/sobreturno?nombre=' + data.nombre + '&apellido=' + data.apellido +
       '&email=' + data.email + '&telefono=' + data.telefono + '&fecha=' + fecha;
     return this.api.post(path, null, false);
+  }
+
+  emmitTurnoReservado() {
+    this.reservado.emit(true);
   }
 
 }
