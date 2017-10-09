@@ -96,7 +96,11 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
       this.store.changes.pluck('turnos').subscribe(
         (data: any) => {
           this.clickCounter++;
-          if (!data || !data[0]) this.turnos = [];
+          if (!data || !data[0]) {
+            if (this.clickCounter > 2) {
+              this.clickCounter = 2;
+            }
+            this.turnos = [];}
           else this.turnos = data;
           this.buildTimeline(this.turnos);
         }
