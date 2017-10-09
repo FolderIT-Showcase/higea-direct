@@ -95,13 +95,13 @@ public class SyncService {
         List<Especialidad> listOld = metadataService.getAllEspecialidades();
         List<Especialidad> listNew = result.getBody();
         if(!listOld.isEmpty()) {
-            List<Especialidad> listNewToAdd = listNew.subList(0, listNew.size());
-            List<Especialidad> listOldToRemove = listOld.subList(0, listOld.size());
+            List<Especialidad> listNewToAdd;
+            List<Especialidad> listOldToRemove;
 
             // listOldAux queda con lespecialedades que dejaron de estar disponibles
-            listOldToRemove.remove(listNew);
+            listOldToRemove = removeEqueals(listOld,listNew);
             // listNewAux queda con las nuevas especialidades disponibles que no estaban antes
-            listNewToAdd.remove(listOld);
+            listNewToAdd = removeEqueals(listNew,listOld);
 
             for(Especialidad espToRemove: listOldToRemove){
                 metadataService.deleteEspecialidad(espToRemove.getId());
@@ -128,12 +128,12 @@ public class SyncService {
         // Si la listOld no es vacia, entonces remover y agregar segun corresponda
         if(!listOld.isEmpty()){
             List<Especialidad> listOldEsp = metadataService.getAllEspecialidades();
-            List<Profesional> listNewToAdd = listNew.subList(0,listNew.size());
-            List<Profesional> listOldToRemove = listOld.subList(0,listOld.size());
+            List<Profesional> listNewToAdd ;
+            List<Profesional> listOldToRemove ;
             // listOldAux queda con los profecionales que dejaron de estar disponibles
-            listOldToRemove.remove(listNew);
+            listOldToRemove = removeEqueals(listOld,listNew);
             // listNewAux queda con los nuevos profecionales disponibles que no estaban antes
-            listNewToAdd.remove(listOld);
+            listNewToAdd = removeEqueals(listNew,listOld);
 
             for (Profesional pToRemove: listOldToRemove){
                 for(Especialidad espToEdit: listOldEsp){
@@ -199,6 +199,18 @@ public class SyncService {
     private <T> List<T> listDiff(List<T> oldList, List<T> newList) {
         newList.removeAll(oldList);
         return (!newList.isEmpty() || oldList.size() == newList.size()) ? newList : new ArrayList<>();
+    }
+
+    public <T> List<T> removeEqueals(List<T> listobjOld, List<T> listobjNew){
+        List<T> listobjReturn = new ArrayList<>(listobjOld);
+        for(Object oOld : listobjOld){
+            for (Object oNew: listobjNew){
+                if(oOld.equals(oNew)){
+                    listobjReturn.remove(oOld);
+                }
+            }
+        }
+        return listobjReturn;
     }
 
 }

@@ -13,6 +13,7 @@
   <div class="form-group">
     <app-select
       ngDefaultControl
+      (change)="handleProfesionalClick(form.value.profesional)"
       [placeHolder]="'Médico / Profesional'"
       [formControl]="form.controls['profesional']"
       [list]="filteredProfesionales"

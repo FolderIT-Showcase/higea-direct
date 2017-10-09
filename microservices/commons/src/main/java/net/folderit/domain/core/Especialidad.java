@@ -35,4 +35,15 @@ public class Especialidad implements Serializable {
     public void finalize() throws Throwable {
 
     }
+
+    @Override public boolean equals(Object o) {
+        Especialidad espToComp = (Especialidad) o;
+        if(espToComp.id.equals(this.id)){
+            if (espToComp.nombre.equals(this.nombre)){
+                return true;
+            }
+        }
+        return false;
+    }
+
 }//end Especialidad

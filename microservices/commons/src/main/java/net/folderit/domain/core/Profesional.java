@@ -17,7 +17,7 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(NON_NULL)
-@EqualsAndHashCode(exclude={"especialidadId", "servicioId"})
+/*@EqualsAndHashCode(of={"id", "apellido","nombre"})*/
 public class Profesional implements Serializable {
 
     @Id
@@ -30,5 +30,18 @@ public class Profesional implements Serializable {
 
     public void finalize() throws Throwable {
 
+    }
+
+    @Override public boolean equals(Object o) {
+        Profesional profToComp = (Profesional) o;
+
+        if (profToComp.id.equals(this.id)){
+            if (profToComp.nombre.equals(this.nombre)){
+                if (profToComp.apellido.equals(this.apellido)){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }//end Profesional
