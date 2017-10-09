@@ -210,17 +210,18 @@
 </app-modal>
 
 <app-modal [title]="'Confirmación'" (outModal)="handleSuccessModal($event)">
-  <label>El turno ha sido tomado con éxito</label><br>
+  <label>El turno ha sido tomado con éxito, seleccione imprimir para obtener su preparación para el turno.</label><br>
   <div class="row">
-    <div class="text-right">
-      <div class="col-sm-12 col-md-4 col-md-offset-8">
-        <div class="col-sm-12 text-right">
-          <div class="btn btn-group btn-block">
-            <a (click)="onSuccessModal()" class="btn btn-block btn-success">Salir</a>
+          <div class="col-sm-6">
+            <div class="btn btn-group btn-block">
+              <a (click)="showModalimpresion()" class="btn btn-block btn-info">Imprimir</a>
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
+          <div class="col-sm-6">
+            <div class="btn btn-group btn-block">
+              <a (click)="onSuccessModal()" class="btn btn-block btn-success">Salir</a>
+            </div>
+          </div>
   </div>
 </app-modal>
 
@@ -294,6 +295,30 @@
       <button (click)="hideCondicionalModal()" class="btn btn-default btn-block">CANCELAR</button>
     </div>
   </div>
-
-
 </app-modal>
+
+<div style="max-height:50px!important; overflow-y:scroll;">
+  <app-modal [title]="'Preparación'" (outModal)="handleInprimirModal($event)">
+    <div class="card">
+      <div class="card-content text-left">
+        <label *ngIf="turno.dia"><strong>Día: </strong>{{turno.dia | date: 'EEEE'}}</label><br>
+        <label *ngIf="turno.fecha"><strong>Fecha: </strong>{{turno.fecha | date: 'dd/MM/yyyy'}}</label><br>
+        <label *ngIf="turno.hora"><strong>Hora: </strong>{{turno.hora | date: 'HH:mm'}}</label><br>
+        <label *ngIf="turno.centroSalud"><strong>Centro de Salud: </strong>{{turno.centroSalud.nombre}}</label><br>
+        <label *ngIf="turno.especialidad"><strong>Especialidad: </strong>{{turno.especialidad.nombre}}</label><br>
+        <label *ngIf="turno.profesional"><strong>Profesional: </strong>{{turno.profesional.nombre}}</label><br>
+        <label
+          *ngIf="turno.motivoTurno"><strong>Preparacion: </strong>{{turno.motivoTurno.preparacion.descripcion}}</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="text-right">
+        <div class="col-sm-12 col-md-4 col-md-offset-8">
+          <a (click)="impimirModal.hide(); generarPDF()" class="btn btn-block btn-success">Imprimir</a>
+        </div>
+      </div>
+    </div>
+  </app-modal>
+</div>
+
+

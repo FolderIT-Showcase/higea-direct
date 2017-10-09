@@ -24,13 +24,23 @@ public class MotivoTurnoHigea {
     private String tipo_consulta_factor_duracion;
     private String tipo_consulta_consulta;
     private String tipo_consulta_usa_equipo;
+    private String tipo_consulta_observaciones;
 
 
-    public MotivoTurno convert(Preparacion preparacion) {
+
+    public MotivoTurno convert() {
         MotivoTurno motivoTurno = new MotivoTurno();
-        motivoTurno.setId((long) this.tcg_id );
+        motivoTurno.setId((long) this.tipo_consulta_id );
         motivoTurno.setDescripcion(this.tipo_consulta_nombre);
-        motivoTurno.setCodigo(this.tcg_id.intValue());
+        motivoTurno.setCodigo(this.tipo_consulta_id.intValue());
+
+        Preparacion preparacion = new Preparacion();
+        if(this.tipo_consulta_observaciones == null){
+            preparacion.setDescripcion("No posee preparación previa.");
+        } else {
+            preparacion.setDescripcion(this.tipo_consulta_observaciones);
+        }
+
         motivoTurno.setPreparacion(preparacion);
         motivoTurno.setCoseguro(0D);
         return motivoTurno;

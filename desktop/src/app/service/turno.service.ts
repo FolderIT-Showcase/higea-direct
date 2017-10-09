@@ -83,6 +83,9 @@ export class TurnoService {
 
   getTurnoByPersonaId(id: number) {
     const path = `${this.license}/turnos/${this.client}/persona/${id}`;
+
+    console.log('getTurnosByPersonaId: Path= ' + path);
+
     return this.api.get(path, false);
   }
 
@@ -120,6 +123,10 @@ export class TurnoService {
 
   reservarTurno(turno: Turno, persona: Persona) {
     const path = `${this.pathTurno}/persona/${persona.externalId}`;
+
+    console.log('Reservar Turno: Parth= ' + path);
+    console.log(turno);
+
     return this.api.post(path, turno, false);
   }
 
@@ -150,7 +157,10 @@ export class TurnoService {
   }
 
   getCalendario(profesional: Profesional, fecha: any) {
-    const path = this.pathTurno + '/calendarios?profesional_id=' + profesional.id + '&calendario_fecha=' + fecha + '&servicio_id=8';
+    const path = this.pathTurno + '/calendarios?profesional_id=' + profesional.id
+      + '&calendario_fecha=' + fecha
+      + '&servicio_id=' + profesional.servicioId;
+
     return this.api.get(path, false);
   }
 

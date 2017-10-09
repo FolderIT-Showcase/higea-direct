@@ -19,9 +19,7 @@ import {Contacto} from '../../../domain/contacto';
 import {TipoDocumentos} from '../../../domain/enums/tipo-documento';
 import {Util} from '../../../service/utils.service';
 import {AlertService} from '../../../service/alert.service';
-//Modif 2/10/2017 - bonfanti -
-import {ParametrosWeb} from '../../../domain/parametrosWeb';
-//Fin 2/10/2017 - bonfanti - (Get parametros Web from metadata)
+import {AccessControlUtil} from '../../ui/util/access.control.util';
 
 @Component({
   selector: 'app-turno-resultado-external',
@@ -34,9 +32,6 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
   subs: Subscription[] = [];
   persona: Persona;
   motivos: MotivoTurno[] = [];
-  //Modif 2/10/2017 - bonfanti -
-  parametrosWeb: ParametrosWeb[] = [];
-  //Fin Modif 2/10/2017 - bonfanti -
   motivoTurno: MotivoTurno = new MotivoTurno();
   obras_sociales: ObraSocial[] = [];
   planes: Plan[] = [];
@@ -53,13 +48,16 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
 
   diaValido = true;
 
+  impimirModal: ModalDirective;
+
   constructor(private store: Store,
               private metadataService: MetadataService,
               private fb: FormBuilder,
               private turnoService: TurnoService,
               private personaService: PersonaService,
               private storeService: StoreService,
-              private alertService: AlertService) {
+              private alertService: AlertService,
+              private accessControlUtil: AccessControlUtil,) {
 
     this.turno.especialidad = new Especialidad;
     this.turno.especialidad.nombre = '';
@@ -93,16 +91,17 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
 
     this.metadataService.getObrasSociales().then((data: any) => this.obras_sociales = data);
     this.metadataService.getEspecialidades().then((data: any) => this.especialidades = data);
-    this.metadataService.getMotivosTurno().then((data: any) => this.motivos = data);
-    //Modif 2/10/2017 - bonfanti - (Get parametros Web from metadata)
-    this.metadataService.getParametrosWeb().then((data: any) => this.parametrosWeb = data);
-    // Fin Modif 2/10/2017 - bonfanti -
+    this.metadataService.getMotivosTurno().then((data: any) => {this.motivos = data; console.log(data)});
     this.subs.push(
       this.store.changes.pluck('turnos').subscribe(
         (data: any) => {
           this.clickCounter++;
-          if (!data || !data[0]) this.turnos = [];
-          else this.turnos = data;
+          if (!data || !data[0]) {
+            if (this.clickCounter > 2) {
+              this.clickCounter = 2;
+            }
+            this.turnos = [];
+          } else this.turnos = data;
           this.buildTimeline(this.turnos);
         }
       ));
@@ -231,6 +230,7 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
     }
   }
 
+
   public reservarTurno(turno: Turno) {
 
     if (!this.form.valid) {
@@ -244,9 +244,9 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
     turno.motivoTurno = this.form.value.motivo;
     turno.plan = this.form.value.plan;
     turno.especialidad = especialidad;
-
     delete turno.centroSalud;
-    delete turno.motivoTurno.preparacion;
+
+    // delete turno.motivoTurno.preparacion;
 
     if (!this.persona) {
       const contactos: Contacto[] = [
@@ -301,6 +301,14 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
 
   handleMotivo(motivo) {
     this.motivoTurno = motivo;
+    /*
+    console.log('handleMotivo');
+    console.log(this.motivoTurno);
+    */
+  }
+
+  handleInprimirModal(event) {
+    this.impimirModal = event;
   }
 
   getEspecialidad(turno): string {
@@ -317,14 +325,19 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
     }
   }
 
+
   fetchPerson(numeroDocumento: number) {
     if (!this.form.controls['numeroDocumento'].valid) return;
     this.resetForm();
     this.personaService.getPaciente(numeroDocumento)
       .then((data: any) => {
-
         this.isFieldsetEnabled = true;
-
+        const post_value = this.accessControlUtil.isEnableFor(this.accessControlUtil.PACIENTES_POST);
+        //if (pacientes not exist and post-pacientes-value = N) => Show alert
+        if (data.status && !post_value) {
+          this.alertService.error('Paciente no registrado');
+          this.isFieldsetEnabled = false;
+        }
         if (!data || data.status) {
           this.form = this.fb.group({
             'numeroDocumento': [numeroDocumento, Validators.required],
@@ -401,6 +414,15 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
         'si pudieron aceptar su turno condicional y quedar en lista de espera');
       this.condicionalModal.hide();
     });
+  }
+
+  showModalimpresion() {
+    // this.turno = turno;
+    this.impimirModal.show();
+  }
+
+  generarPDF() {
+    this.turnoService.generarTurnoPDF(this.turno);
   }
 
 }

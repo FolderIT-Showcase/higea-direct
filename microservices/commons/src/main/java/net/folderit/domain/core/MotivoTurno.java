@@ -3,6 +3,7 @@ package net.folderit.domain.core;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -15,6 +16,7 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(NON_NULL)
+/*@EqualsAndHashCode(exclude={"preparacion", "id"})*/
 public class MotivoTurno {
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -28,4 +30,14 @@ public class MotivoTurno {
     private String descripcion;
 
     private Double coseguro;
+
+    @Override public boolean equals(Object o) {
+        MotivoTurno motivoToComp = (MotivoTurno) o;
+        if(motivoToComp.getCodigo() == this.getCodigo()){
+            if (motivoToComp.coseguro.equals(this.coseguro)){
+                return true;
+            }
+        }
+        return false;
+    }
 }

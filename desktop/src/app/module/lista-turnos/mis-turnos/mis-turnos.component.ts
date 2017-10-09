@@ -101,8 +101,7 @@ export class MisTurnosComponent implements OnInit, OnDestroy {
         this.persona = data;
         return this.turnoService.getTurnoByPersonaId(this.persona.externalId);
       })
-      .then(turnos => { console.log(turnos);
-        this.buildTurnos(turnos)});
+      .then(turnos => { this.buildTurnos(turnos)});
 
   }
 

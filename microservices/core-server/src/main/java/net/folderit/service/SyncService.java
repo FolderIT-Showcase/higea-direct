@@ -4,6 +4,7 @@ import net.folderit.domain.core.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ public class SyncService {
         metadataService.clearProfesionales();
     }
 
+    @Scheduled(cron = "* */5 * * * *")
     public void syncAll() {
         syncMotivosTurno();
         syncProfesionales();
@@ -92,7 +94,25 @@ public class SyncService {
         });
         List<Especialidad> listOld = metadataService.getAllEspecialidades();
         List<Especialidad> listNew = result.getBody();
-        metadataService.saveAllEspecialidades(listDiff(listOld, listNew));
+        if(!listOld.isEmpty()) {
+            List<Especialidad> listNewToAdd;
+            List<Especialidad> listOldToRemove;
+
+            // listOldAux queda con lespecialedades que dejaron de estar disponibles
+            listOldToRemove = removeEqueals(listOld,listNew);
+            // listNewAux queda con las nuevas especialidades disponibles que no estaban antes
+            listNewToAdd = removeEqueals(listNew,listOld);
+
+            for(Especialidad espToRemove: listOldToRemove){
+                metadataService.deleteEspecialidad(espToRemove.getId());
+            }
+            if(!listNewToAdd.isEmpty()){
+                metadataService.saveAllEspecialidades(listNewToAdd);
+            }
+
+        } else {
+            metadataService.saveAllEspecialidades(listDiff(listOld, listNew));
+        }
     }
 
     private void syncProfesionales() {
@@ -101,11 +121,33 @@ public class SyncService {
         });
         List<Profesional> listOld = metadataService.getAllProfesionales();
         List<Profesional> listNew = result.getBody();
-
         // TODO: test filter, sacar despues de la demo
-        listNew = nameProfesionals(listNew);
+        //listNew = nameProfesionals(listNew);
 
-        metadataService.saveAllProfesionales(listDiff(listOld, listNew));
+
+        // Si la listOld no es vacia, entonces remover y agregar segun corresponda
+        if(!listOld.isEmpty()){
+            List<Especialidad> listOldEsp = metadataService.getAllEspecialidades();
+            List<Profesional> listNewToAdd ;
+            List<Profesional> listOldToRemove ;
+            // listOldAux queda con los profecionales que dejaron de estar disponibles
+            listOldToRemove = removeEqueals(listOld,listNew);
+            // listNewAux queda con los nuevos profecionales disponibles que no estaban antes
+            listNewToAdd = removeEqueals(listNew,listOld);
+
+            for (Profesional pToRemove: listOldToRemove){
+                for(Especialidad espToEdit: listOldEsp){
+                    boolean save = espToEdit.getProfesional().remove(pToRemove);
+                    if (save){
+                        metadataService.saveEspecialidad(espToEdit);
+                    }
+                }
+                metadataService.deleteProfesional(pToRemove.getId()); }
+
+            metadataService.saveAllProfesionales(listNewToAdd);
+        } else {
+            metadataService.saveAllProfesionales(listDiff(listOld, listNew));
+        }
     }
 
     // @Scheduled(fixedRate = 35000)
@@ -151,12 +193,27 @@ public class SyncService {
         });
         List<MotivoTurno> listOld = metadataService.findAllMotivosTurno();
         List<MotivoTurno> listNew = result.getBody();
-        metadataService.saveAllMotivosTurno(listDiff(listOld, listNew));
+
+        List<MotivoTurno> listNewToAdd = removeEqueals(listNew,listOld);
+
+        metadataService.saveAllMotivosTurno(listNewToAdd);
     }
 
     private <T> List<T> listDiff(List<T> oldList, List<T> newList) {
         newList.removeAll(oldList);
         return (!newList.isEmpty() || oldList.size() == newList.size()) ? newList : new ArrayList<>();
+    }
+
+    public <T> List<T> removeEqueals(List<T> listobjOld, List<T> listobjNew){
+        List<T> listobjReturn = new ArrayList<>(listobjOld);
+        for(Object oOld : listobjOld){
+            for (Object oNew: listobjNew){
+                if(oOld.equals(oNew)){
+                    listobjReturn.remove(oOld);
+                }
+            }
+        }
+        return listobjReturn;
     }
 
 }

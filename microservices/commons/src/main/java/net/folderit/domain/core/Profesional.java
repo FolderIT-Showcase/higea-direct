@@ -3,6 +3,7 @@ package net.folderit.domain.core;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -16,6 +17,7 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(NON_NULL)
+/*@EqualsAndHashCode(of={"id", "apellido","nombre"})*/
 public class Profesional implements Serializable {
 
     @Id
@@ -24,10 +26,22 @@ public class Profesional implements Serializable {
     private String nombre;
     @Transient
     private Long especialidadId;
-    @Transient
     private Long servicioId;
 
     public void finalize() throws Throwable {
 
+    }
+
+    @Override public boolean equals(Object o) {
+        Profesional profToComp = (Profesional) o;
+
+        if (profToComp.id.equals(this.id)){
+            if (profToComp.nombre.equals(this.nombre)){
+                if (profToComp.apellido.equals(this.apellido)){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }//end Profesional

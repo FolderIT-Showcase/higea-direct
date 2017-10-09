@@ -8,7 +8,6 @@ import {LoadingService} from './loading.service';
 import {JwtHelper} from 'angular2-jwt';
 import {AlertService} from './alert.service';
 import * as FileSaver from 'file-saver';
-import {stringify} from "querystring";
 
 @Injectable()
 export class ApiService {
@@ -35,12 +34,6 @@ export class ApiService {
       .then((data: any) => {
         localStorage.setItem('license', this.jwtHelper.decodeToken(data.token).license);
         localStorage.setItem('client', this.jwtHelper.decodeToken(data.token).client);
-        //Modif 2/10/2017 - bonfanti -
-        /*const user: User =  new User();
-        console.log(data.token);
-        user.token = data.token;
-        localStorage.setItem('currentUser', JSON.stringify(user));*/
-        //Fin Modif 2/10/2017 - bonfanti -
       });
   }
 
@@ -111,9 +104,9 @@ export class ApiService {
     return this.mPromise;
   }
 
-  public async getFile(path: string, mimeType: string, filename: string, obj: any, isAuthNecessary: boolean = true) {
+  public async getFile(path: string, mimeType: string, filename: string, obj: any, isAuthNecessary: boolean = false) {
     this.loadingService.start();
-    this.isAuthNecessary(isAuthNecessary);
+   // this.isAuthNecessary(isAuthNecessary);
     this.headers.set('Accept', mimeType);
     const options = {
       responseType: ResponseContentType.Blob,

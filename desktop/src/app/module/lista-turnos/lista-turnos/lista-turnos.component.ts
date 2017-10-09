@@ -37,11 +37,6 @@ export class ListaTurnosComponent implements OnInit {
     this.modalConfirmacion.show();
   }
 
-  showModalimpresion(turno: Turno) {
-    this.turno = turno;
-    this.impimirModal.show();
-  }
-
   confirmDeleteModal() {
     const persona = this.storeService.get('persona');
     this.turnoService.cancelarTurno(this.turno, persona);
@@ -52,6 +47,10 @@ export class ListaTurnosComponent implements OnInit {
     this.impimirModal = event;
   }
 
+  showModalimpresion(turno: Turno) {
+    this.turno = turno;
+    this.impimirModal.show();
+  }
   generarPDF() {
     this.turnoService.generarTurnoPDF(this.turno);
   }
