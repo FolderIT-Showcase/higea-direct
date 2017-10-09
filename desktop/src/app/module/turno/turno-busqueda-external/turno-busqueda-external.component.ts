@@ -164,12 +164,13 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
   }
 
   handleEspecialidadClick(especialidad: Especialidad) {
-    this.form.controls['profesional'].reset();
     this.currentEspecialidad = especialidad;
     if (especialidad && especialidad.profesional) {
       this.filteredProfesionales = especialidad.profesional.sort((a, b) => {
         return (a.apellido + a.nombre > b.apellido + b.nombre) ? 1 : ((b.apellido + b.nombre > a.apellido + a.nombre) ? -1 : 0);
       });
+    } else {
+      this.filteredProfesionales = [];
     }
   }
 
@@ -190,6 +191,7 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
   }
 
   submitForm(form) {
+
     if (!form.fecha || !form.fecha.epoc) return;
 
     const fechaDesde = form.fecha.epoc * 1000;
