@@ -40,6 +40,7 @@ public class Especialidad implements Serializable {
         Especialidad espToComp = (Especialidad) o;
         if(espToComp.id.equals(this.id)){
             if (espToComp.nombre.equals(this.nombre)){
+                if(espToComp.getProfesional().equals(this.getProfesional()))
                 return true;
             }
         }
