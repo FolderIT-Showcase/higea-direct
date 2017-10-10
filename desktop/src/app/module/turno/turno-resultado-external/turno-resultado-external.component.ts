@@ -21,6 +21,7 @@ import {Util} from '../../../service/utils.service';
 import {AlertService} from '../../../service/alert.service';
 import {AccessControlUtil} from '../../ui/util/access.control.util';
 
+
 @Component({
   selector: 'app-turno-resultado-external',
   templateUrl: './turno-resultado-external.component.html'
@@ -88,10 +89,11 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-
     this.metadataService.getObrasSociales().then((data: any) => this.obras_sociales = data);
     this.metadataService.getEspecialidades().then((data: any) => this.especialidades = data);
-    this.metadataService.getMotivosTurno().then((data: any) => {this.motivos = data;});
+    this.metadataService.getMotivosTurno().then((data: any) => {
+      this.motivos = data;
+    });
     this.subs.push(
       this.store.changes.pluck('turnos').subscribe(
         (data: any) => {
@@ -389,6 +391,9 @@ export class TurnoResultadoExternalComponent implements OnInit, OnDestroy {
   onSuccessModal() {
     this.successModal.hide();
     this.buildTimeline([]);
+    // CALL TURNO SERVICE TO RESET FORM
+    this.turnoService.resetForm = 'reset'; // this change will broadcast to every subscriber like below component
+
   }
 
 // nombre, apellido y telefono
