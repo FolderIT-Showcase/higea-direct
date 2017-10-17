@@ -28,7 +28,7 @@ public class SyncService {
         metadataService.clearProfesionales();
     }
 
-    @Scheduled(cron = "* */5 * * * *")
+    @Scheduled(cron = "0 0 6 * * *")
     public void syncAll() {
         syncMotivosTurno();
         syncProfesionales();
@@ -94,6 +94,7 @@ public class SyncService {
         });
         List<Especialidad> listOld = metadataService.getAllEspecialidades();
         List<Especialidad> listNew = result.getBody();
+
         if(!listOld.isEmpty()) {
             List<Especialidad> listNewToAdd;
             List<Especialidad> listOldToRemove;
