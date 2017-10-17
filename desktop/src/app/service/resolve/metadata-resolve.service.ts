@@ -12,9 +12,9 @@ export class MetadataResolveService implements Resolve<any> {
 
   async resolve() {
     const metadata: Metadata = new Metadata;
-    //metadata.paises = await this.metadataService.getPaises();
-    //metadata.provincias = await this.metadataService.getProvincias();
-    //metadata.localidades = await this.metadataService.getLocalidades();
+    metadata.paises = await this.metadataService.getPaises();
+    metadata.provincias = await this.metadataService.getProvincias();
+    metadata.localidades = await this.metadataService.getLocalidades();
     metadata.obrasSociales = await this.metadataService.getObrasSociales();
     metadata.tipoTurnos = await this.metadataService.getAllTiposTurnos();
     metadata.motivos = await this.metadataService.getMotivosTurno();

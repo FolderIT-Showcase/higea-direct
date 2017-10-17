@@ -7,6 +7,7 @@ import {StoreService} from './store.service';
 import {FiltroTurno} from '../domain/filter-turno';
 import {Persona} from '../domain/persona';
 import {Turno} from '../domain/turno';
+import {Subject} from 'rxjs/Subject';
 
 @Injectable()
 export class TurnoService {
@@ -20,6 +21,8 @@ export class TurnoService {
   reservado = new EventEmitter<boolean>();
 
   basePath = `${this.license}/`;
+  // VARIABLE TO RESET TURNO FORM
+  resetValue = new Subject();
 
   constructor(private api: ApiService, private storeService: StoreService) {
     if (this.license === 'core') {
@@ -27,6 +30,11 @@ export class TurnoService {
       this.pathCentroSalud = this.license + '/centroSalud';
       this.pathPersona = this.license + '/persona';
     }
+  }
+
+  set resetForm(value) {
+    this.resetValue.next(value); // this will make sure to tell every subscriber about the change.
+    localStorage.setItem('resetForm', value);
   }
 
   getCentrosDeSalud() {
@@ -124,10 +132,6 @@ export class TurnoService {
 
   reservarTurno(turno: Turno, persona: Persona) {
     const path = `${this.pathTurno}/persona/${persona.externalId}`;
-
-    console.log('Reservar Turno: Parth= ' + path);
-    console.log(turno);
-
     return this.api.post(path, turno, false);
   }
 

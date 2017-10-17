@@ -30,7 +30,7 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
 
   currentEspecialidad: Especialidad = null;
   currentProfesional: Profesional = null;
-
+  message: any;
 
   myDatePickerOptions: IMyOptions = {
     dateFormat: 'dd/mm/yyyy',
@@ -57,9 +57,17 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
         this.especialidades = data;
         this.buildForm();
         this.subscribeFormChanges();
-      })
+        this.subscribeResetForm();
+      });
+
+
   }
 
+  subscribeResetForm() {
+    this.turnoService.resetValue.subscribe((nextValue) => {
+      this.resetForm();// this will happen on every change
+    })
+  }
   subscribeFormChanges() {
     this.subs.push(
       this.form.valueChanges.subscribe(data => {
@@ -70,25 +78,8 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
         if (data.especialidad && this.currentEspecialidad && data.especialidad.id !== this.currentEspecialidad.id) {
           // RESET PROFESIONAL DATA
           delete data.profesional;
-          // RESET UI STEPS
-          const steps: any[] = this.storeService.get('steps');
-          steps[1] = {
-            label: steps[1].label,
-            ngClass: 'btn-warning',
-            order: 2
-          };
-          steps[2] = {
-            label: steps[1].label,
-            ngClass: 'btn-warning',
-            order: 3
-          };
-          steps[3] = {
-            label: steps[1].label,
-            ngClass: 'btn-warning',
-            order: 4
-          };
-          // RESET MARKED DAYS OF CALENDAR
-          this.markedDays = [];
+          // RESET FORM
+          this.resetForm();
         }
 
         // UPDATE STEP 1 - USER SELECT ESPECIALIDAD
@@ -136,6 +127,31 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
         }
       })
     );
+  }
+
+  resetForm() {
+    // RESET FORM CONTROLS
+    this.form.controls['profesional'].reset();
+    this.form.controls['fecha'].reset();
+    // RESET UI STEPS
+    const steps: any[] = this.storeService.get('steps');
+    steps[1] = {
+      label: steps[1].label,
+      ngClass: 'btn-warning',
+      order: 2
+    };
+    steps[2] = {
+      label: steps[1].label,
+      ngClass: 'btn-warning',
+      order: 3
+    };
+    steps[3] = {
+      label: steps[1].label,
+      ngClass: 'btn-warning',
+      order: 4
+    };
+    // RESET MARKED DAYS OF CALENDAR
+    this.markedDays = [];
   }
 
   buildForm() {
@@ -216,7 +232,6 @@ export class TurnoBusquedaAvanzadaExternalComponent implements OnInit, OnDestroy
   }
 
   submitForm(form) {
-
     if (!form.fecha || !form.fecha.epoc) return;
     const fechaDesde = form.fecha.epoc * 1000;
     const ahora = new Date().setHours(0, 0, 0, 0);
