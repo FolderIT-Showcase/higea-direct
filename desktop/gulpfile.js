@@ -15,7 +15,7 @@ var exec = require('child_process').exec;
 var sourceRoot = "dist/";
 var deletePath = [sourceRoot + '/**'];
 var options = {
-  "host": "104.237.155.174",
+  "host": "104.237.155.175",
   "port": 22,
   "package_json_file_path": "package.json",
   "source_files": "dist/*",
